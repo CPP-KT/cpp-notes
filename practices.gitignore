@@ -1,0 +1,6 @@
+# CLion support files
+./cmake-build-debug/*
+CMakeLists.txt
+
+## Test generators
+*.py
