@@ -3,16 +3,12 @@
 #================================
 #title      :run_tests.sh
 #author     :covariancemomentum
-#date       :29.02.2020 12:54
-#version    :1.0
+#date       :07.03.2020 12:22
+#version    :1.1
 #================================
 
-declare -i count_of_tests
-count_of_tests=$(ls -d *.test | wc -w)
-declare -i count_of_passed=0
+echo "<=== Running mandatory tests ===>"
 command_name=$1
-declare -i start_time
-start_time=$(date +%s%N)
 
 for file in *.test
 do
@@ -23,10 +19,18 @@ do
     then
       count_of_passed+=1
     else
-      echo "Test $(basename "$file" .test) failed"
+      echo "Test $(basename "$file" .test) failed:"
+      echo "Expected: $(wc -w < "$file")"
+      echo "Got: $("./$command_name" < "$file")"
+      exit
     fi
   fi
 done
 
-start_time=("$(date +%s%N)"-"$start_time")/1000000
-echo "Testing finished, $count_of_passed out of $count_of_tests passed. Runtime: $start_time ms"
+echo "Mandatory testing finished. Testing time complexity "$(tar -x -v -z -f bigtest.tar.gz)""
+if [ "$(chrt -f 98 perf stat ./"$command_name" < benchmarking.bigtest 2> bench.log)" == "$(wc -w < benchmarking.bigtest)" ]
+then
+  echo "$(grep task-clock bench.log | cut -f1 -d, | sed -e 's/^[[:space:]]*//') ms"
+fi
+rm benchmarking.bigtest
+rm bench.log
