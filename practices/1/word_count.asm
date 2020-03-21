@@ -1,6 +1,6 @@
                 section         .rodata ; this section represents Read-Only DATA
                 ; db is used to declare initialized data in output file
-read_error_msg: db              "read failure", 0x0a ; string to output when read failure occurres
+read_error_msg: db              "read failure", 0x0a ; string to output when read failure occurs
                 ; equ defines constant (aka "define" in C++)
 read_error_len: equ             13 ; length of string above
 sys_exit:       equ             60 ; code of sys_exit syscall
@@ -77,16 +77,16 @@ print_int:
                 dec             rsi
                 mov             byte [rsi], 0x0a
 next_char:
-                xor             edx, edx
-                div             ebx
+                xor             rdx, rdx
+                div             rbx
                 add             dl, '0'
                 dec             rsi
                 mov             [rsi], dl
                 test            rax, rax
                 jnz             next_char
 
-                mov             eax, 1
-                mov             edi, 1
+                mov             rax, 1
+                mov             rdi, 1
                 mov             rdx, rsp
                 sub             rdx, rsi
                 syscall
