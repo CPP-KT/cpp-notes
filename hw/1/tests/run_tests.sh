@@ -9,7 +9,7 @@
 
 command_name=$1
 declare -i count_of_passed=0
-tar -xvzf tests.tar.gz 1>/dev/null 2>/dev/null
+tar -xvzf "$2_tests.tar.gz" 1>/dev/null 2>/dev/null
 for file in *.test
 do
   if [ -f "$file" ]
