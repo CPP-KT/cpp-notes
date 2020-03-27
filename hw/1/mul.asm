@@ -1,17 +1,17 @@
+; r10 contains carry
+; r11 is for_i
+; r12 is for_j
+; r13 is length
                 section         .text
 
                 global          _start
-                %define	        ans r9
-                %define         carry r10
-                %define	        i r11
-                %define         j r12
-                %define         len r13
 _start:
+; this one needs to be rewritten
                 sub             rsp, 4 * 128 * 8
                 lea	        rdi, [rsp + 2 * 128 * 8]
                 mov	        rcx, 2 * 128
                 call	        set_zero
-                lea	        ans, [rsp + 2 * 128 * 8]
+                lea	        r9, [rsp + 2 * 128 * 8]
 
                 lea             rdi, [rsp + 128 * 8]
                 mov             rcx, 128
@@ -30,40 +30,40 @@ _start:
                 jmp             exit
 
 mul_long_long:
-            push	    rcx
+                push	        rcx
 
-            mov             len, rcx
-            mov             i, 0
+                mov             r13, rcx
+                mov             r11, 0
 .for_i:
-            mov             carry, 0
-            mov             j, 0
-            mov             rbp, len
-            clc
+                mov             r10, 0
+                mov             r12, 0
+                mov             rbp, r13
+                clc
 .for_j:
-            mov	        rbx, [rdi + i]
-            mov	        rax, [rsi + j]
-            mul	        rbx
-            ;;младшая часть в rax,старшая часть в rdx, если есть старшая CF = 1 && OF = 1
-            add             rax, carry
-            adc             rdx, 0
-            lea             r14, [i + j]
-            add             [ans + r14], rax
-            adc             rdx, 0
-            mov             carry, rdx
+                mov	        rbx, [rdi + r11]
+                mov	        rax, [rsi + r12]
+                mul	        rbx
+                ;;младшая часть в rax,старшая часть в rdx, если есть старшая CF = 1 && OF = 1
+                add             rax, r10
+                adc             rdx, 0
+                lea             r14, [r11 + r12]
+                add             [r9 + r14], rax
+                adc             rdx, 0
+                mov             r10, rdx
 
-            add             j, 8
-            dec             rbp
-            jnz             .for_j
+                add             r12, 8
+                dec             rbp
+                jnz             .for_j
 
-            add             i, 8
-            dec             rcx
-            jnz             .for_i
+                add             r11, 8
+                dec             rcx
+                jnz             .for_i
 
-            pop             rcx
+                pop             rcx
 
-            mov             rdi, ans
+                mov             rdi, r9
 
-            ret
+                ret
 
 
 ; adds two long number

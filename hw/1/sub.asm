@@ -1,5 +1,4 @@
                 section         .text
-
                 global          _start
 _start:
 
@@ -19,12 +18,12 @@ _start:
 
                 jmp             exit
 
-; substracts two long number
-;    rdi -- address of summand #1 (long number)
-;    rsi -- address of summand #2 (long number)
+; subtracts two long number
+;    rdi -- address of operand #1 (long number)
+;    rsi -- address of operand #2 (long number)
 ;    rcx -- length of long numbers in qwords
 ; result:
-;    sub is written to rdi
+;    subtraction is written to rdi
 sub_long_long:
                 push            rsi
                 push            rdi
@@ -32,20 +31,12 @@ sub_long_long:
 
                 clc
 .loop:
-;                mov             rax, [rsi]
-;                lea             rsi, [rsi + 8]
-;               sbb             [rdi], rax
-;                lea             rdi, [rdi + 8]
-;                dec             rcx
-;                jnz             .loop
                 mov             rax, [rdi]
                 lea             rdi, [rdi + 8]
                 sbb             [rsi], rax
                 lea             rsi, [rsi + 8]
                 dec             rcx
                 jnz             .loop
-
-
 
                 pop             rcx
                 pop             rsi
