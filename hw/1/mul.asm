@@ -1,27 +1,21 @@
-; r10 contains carry
-; r11 is for_i
-; r12 is for_j
-; r13 is length
                 section         .text
 
                 global          _start
 _start:
-; this one needs to be rewritten
-                sub             rsp, 4 * 128 * 8
-                lea	        rdi, [rsp + 2 * 128 * 8]
-                mov	        rcx, 2 * 128
-                call	        set_zero
-                lea	        r9, [rsp + 2 * 128 * 8]
 
-                lea             rdi, [rsp + 128 * 8]
+                sub             rsp, 6 * 128 * 8
+                mov             rdi, rsp
                 mov             rcx, 128
                 call            read_long
-                mov             rdi, rsp
+                lea             rdi, [rsp + 128 * 8]
                 call            read_long
-                lea             rsi, [rsp + 128 * 8]
+                mov             rsi, rsp                  ; first number
+                mov             r9, rdi                   ; second number
+                lea             r10, [rsp + 2 * 128 * 8]  ; reserved number
+                lea             rdi, [rsp + 4 * 128 * 8]  ; result number
                 call            mul_long_long
 
-                mov             rcx, 256
+                lea             rcx, [rcx * 2]
                 call            write_long
 
                 mov             al, 0x0a
@@ -29,40 +23,72 @@ _start:
 
                 jmp             exit
 
+; muls two long number
+;    rsi -- address of multiplier #1 (long number)
+;    r9 -- address of multiplier #2 (long number)
+;    r10 -- reserved space for number
+;    rcx -- length of long numbers in qwords
+; result:
+;    mul is written to rdi, length of result = 2 * rcx
 mul_long_long:
-                push	        rcx
-
-                mov             r13, rcx
-                mov             r11, 0
-.for_i:
-                mov             r10, 0
-                mov             r12, 0
-                mov             rbp, r13
+                push            rsi
+                push            r8
+                push            r9
+                push            r10
+                push            rdi
+                push            rcx
+                push            rbx
+                mov             r11, rcx
+                mov             r8, rdi
                 clc
-.for_j:
-                mov	        rbx, [rdi + r11]
-                mov	        rax, [rsi + r12]
-                mul	        rbx
-                ;;младшая часть в rax,старшая часть в rdx, если есть старшая CF = 1 && OF = 1
-                add             rax, r10
-                adc             rdx, 0
-                lea             r14, [r11 + r12]
-                add             [r9 + r14], rax
-                adc             rdx, 0
-                mov             r10, rdx
+.loop:
+                call            copy_number
+                mov             rdi, r10
+                mov             rbx, [rsi]
+                call            mul_long_short
+                mov             rsi, r10
+                mov             rdi, r8
+                call            add_long_long
+                lea             r8, [r8 + 8]
+                lea             rsi, [rsi + 8]
 
-                add             r12, 8
-                dec             rbp
-                jnz             .for_j
+                dec             r11
+                jnz             .loop
 
-                add             r11, 8
+                pop            rbx
+                pop            rcx
+                pop            rdi
+                pop            r10
+                pop            r9
+                pop            r8
+                pop             rsi
+                ret
+
+; muls two long number
+;    r9 -- src address
+;    r10 -- dst address
+;    rcx -- length of long numbers in qwords
+; result:
+;    r9 is written to r10, length of result = rcx
+copy_number:
+                push            r9
+                push            r10
+                push            rax
+                push            rcx
+
+                clc
+.loop:
+                mov             rax, [r9]
+                mov             [r10], rax
+                add             r10, 8
+                add             r9, 8
                 dec             rcx
-                jnz             .for_i
+                jnz             .loop
 
                 pop             rcx
-
-                mov             rdi, r9
-
+                pop            rax
+                pop             r10
+                pop             r9
                 ret
 
 
@@ -90,6 +116,7 @@ add_long_long:
                 pop             rsi
                 pop             rdi
                 ret
+
 
 ; adds 64-bit number to long number
 ;    rdi -- address of summand #1 (long number)
@@ -127,7 +154,7 @@ mul_long_short:
                 push            rax
                 push            rdi
                 push            rcx
-
+                push            rsi
                 xor             rsi, rsi
 .loop:
                 mov             rax, [rdi]
@@ -140,6 +167,7 @@ mul_long_short:
                 dec             rcx
                 jnz             .loop
 
+                pop             rsi
                 pop             rcx
                 pop             rdi
                 pop             rax
