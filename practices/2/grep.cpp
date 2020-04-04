@@ -2,6 +2,8 @@
 
 using namespace std;
 
+const size_t HAYSTACK_SIZE = 1;
+
 int main(int argc, char *argv[]) {
     if (argc < 3) {
         cout << "Usage: ./grep.out <substring> <filename>\n";
@@ -19,8 +21,8 @@ int main(int argc, char *argv[]) {
     }
 
     for (;;) {
-        char haystack[4];
-        size_t bytes_read = fread(haystack, sizeof(char), 4, file);
+        char haystack[HAYSTACK_SIZE];
+        size_t bytes_read = fread(haystack, sizeof(char), HAYSTACK_SIZE, file);
         if (bytes_read == 0) {
             if (ferror(file)) {
                 perror("File reading failure");
@@ -50,13 +52,14 @@ int main(int argc, char *argv[]) {
                     // Сейчас ищем, в этой позиции совпало, может быть даже уже выиграли
                     if (posInNeedle == needle.length()) {
                         cout << "true\n";
+                        fclose(file);
                         return 0;
                     }
                 }
             }
         }
     }
-
+    fclose(file);
     cout << "false\n";
 
     return 0;
