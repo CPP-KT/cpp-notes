@@ -26,4 +26,4 @@
 
 - Системные вызовы Linux: https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
 - Про страничную адресацию: https://wiki.osdev.org/Paging
-- Презентация с ЭВМ про виртуальную память:http://slides.com/romanmelnikov-1/deck-1/live 
+- Презентация с ЭВМ про виртуальную память:http://slides.com/romanmelnikov-1/deck-1/live c
