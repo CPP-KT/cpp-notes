@@ -2,7 +2,6 @@
 
 КОНСПЕКТЫ СОДЕРЖАТ БАГИ
 
-Конспекты лекций:
 #### 02.08 Введение в ассемблер
 - [Конспект](02.08%20asm%20intro.md)
 #### 02.15  Прерывания, страничная адресация и т.д.
@@ -53,7 +52,6 @@
 - Сайт курса: http://sorokin.github.io/cpp-course/
 - Slack курса: https://cpp-year2019.slack.com/
 
-
 Презентации и ссылки по материалу:
 
 - Презентация про ассемблер: http://sorokin.github.io/cpp-course/lecture-1e.odp
@@ -63,3 +61,6 @@
 - Системные вызовы Linux: https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
 - Про страничную адресацию: https://wiki.osdev.org/Paging
 - Презентация с ЭВМ про виртуальную память:http://slides.com/romanmelnikov-1/deck-1/live c
+
+- [Дополнительная лекция про инструменты разработки](https://www.youtube.com/watch?v=Cu6QYb_j_2Y)
+- [Дополнительная лекция про UB и оптимизации компилятора](https://www.youtube.com/watch?v=nGsD8guQ_dQ)
