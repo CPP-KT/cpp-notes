@@ -43,10 +43,10 @@
 - [Запись №3](https://www.youtube.com/watch?v=oMkF60mU8ig)
 - [Запись №4](https://www.youtube.com/watch?v=0-92_jC7YMU)
 
-#### 05.07 Исключения, гарантии безпоасности исключений, RAII
+#### 05.07 Исключения, гарантии безопасности исключений, RAII
 - [Конспект](05.07%20Exceptions.md)
-- [Запись №1](https://www.youtube.com/watch?v=IcAaaX888xc)
-- [Запись №2](https://www.youtube.com/watch?v=11MKhMYAmnE)
+- [Запись №1](https://www.youtube.com/watch?v=R0tVZ1px5-Q)
+- [Запись №2](https://www.youtube.com/watch?v=8PpW8qS2tEg)
 
 Полезные ссылки:
 
