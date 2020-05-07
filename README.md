@@ -3,14 +3,43 @@
 КОНСПЕКТЫ СОДЕРЖАТ БАГИ
 
 Конспекты лекций:
-- [02.08 Введение в ассемблер](02.08%20asm%20intro.md)
-- [02.15  Прерывания, страничная адресация и т.д.](02.15%20OS%20and%20CPU.md)
-- [02.29  Кэши, конвейер](02.29%20Cache%20and%20Pipeline.md)
-- [03.07  Пересечение синтаксиса C/C++, типы данных](03.07%20Syntax%20and%20types.md)
-- [03.28  Этапы компиляции](03.28%20Compilation.md)
-- [04.04  Классы, абстракция данных](04.04%20Classes.md)
-- [04.11  Ещё про классы, выделение памяти, препроцессор](04.11%20Classes,%20memory%20and%20preprocessor.md)
-- [04.18  Наследование, виртуальные функции](04.18%20Inheritance,%20virtual%20methods.md)
+#### 02.08 Введение в ассемблер
+- [Конспект](02.08%20asm%20intro.md)
+#### 02.15  Прерывания, страничная адресация и т.д.
+- [Конспект](02.15%20OS%20and%20CPU.md)
+- [Запись №1](https://www.youtube.com/watch?v=bTgtesThdSg)
+- [Запись №2](https://www.youtube.com/watch?v=XY8xN1Ug1_k)
+
+#### 02.29  Кэши, конвейер
+- [Конспект](02.29%20Cache%20and%20Pipeline.md)
+- [Запись №1](https://www.youtube.com/watch?v=6vlNFxpSENs)
+- [Запись №2](https://www.youtube.com/watch?v=DddjrdCrCF8)
+
+#### 03.07  Пересечение синтаксиса C/C++, типы данных
+- [Конспект](03.07%20Syntax%20and%20types.md)
+- [Запись №1](https://www.youtube.com/watch?v=rGfQ5vWUS14)
+- [Запись №2](https://www.youtube.com/watch?v=kf2zVHBEfy8)
+
+#### 03.28  Этапы компиляции
+- [Конспект](03.28%20Compilation.md)
+- [Запись №1](https://www.youtube.com/watch?v=Fm-EmbQVrLE)
+- [Запись №2](https://www.youtube.com/watch?v=w0G66pR3JuY)
+- [Запись №3](https://www.youtube.com/watch?v=gsFYkmckcZs)
+- [Практика](https://www.youtube.com/watch?v=jZAWVxcHLKA)
+#### 04.04  Классы, абстракция данных
+- [Конспект](04.04%20Classes.md)
+- [Запись №1](https://www.youtube.com/watch?v=4LkTiNYQYBU)
+- [Запись №2](https://www.youtube.com/watch?v=kjJ-1-VsNRo)
+
+#### 04.11  Ещё про классы, выделение памяти, препроцессор
+- [Конспект](04.11%20Classes,%20memory%20and%20preprocessor.md)
+- [Запись №1](https://www.youtube.com/watch?v=nI6NEPYPRXU)
+- [Запись №2](https://www.youtube.com/watch?v=8JAp3tG6IrA)
+
+#### 04.18, 04.25  Наследование, виртуальные функции
+- [Конспект](04.18%20Inheritance,%20virtual%20methods.md)
+- [Запись №1](https://www.youtube.com/watch?v=IcAaaX888xc)
+- [Запись №2](https://www.youtube.com/watch?v=11MKhMYAmnE)
 
 Полезные ссылки:
 
