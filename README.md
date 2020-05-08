@@ -47,6 +47,11 @@
 - [Запись №1](https://www.youtube.com/watch?v=R0tVZ1px5-Q)
 - [Запись №2](https://www.youtube.com/watch?v=8PpW8qS2tEg)
 
+#### 05.08 Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации
+- [Конспект](05.08%20Memory%20allocation.md)
+- [Запись №1](https://www.youtube.com/watch?v=oDPaXS9tKlw)
+
+
 Полезные ссылки:
 
 - Сайт курса: http://sorokin.github.io/cpp-course/
