@@ -50,6 +50,7 @@
 #### 05.08 Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации
 - [Конспект](05.08%20Memory%20allocation.md)
 - [Запись №1](https://www.youtube.com/watch?v=oDPaXS9tKlw)
+- [Запись №2](https://www.youtube.com/watch?v=i8uYAe0E4PU)
 
 
 Полезные ссылки:
