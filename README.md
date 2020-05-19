@@ -58,6 +58,8 @@
 - [Запись №2](https://www.youtube.com/watch?v=DwDbH7pxzRA)
 - [Практика №3](https://www.youtube.com/watch?v=CY7vxMSBork)
 
+
+
 Полезные ссылки:
 
 - Сайт курса: http://sorokin.github.io/cpp-course/
