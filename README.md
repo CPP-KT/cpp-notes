@@ -56,7 +56,7 @@
 - [Конспект](05.09%20Templates.md)
 - [Запись №1](https://www.youtube.com/watch?v=AXl4_eZ1eis)
 - [Запись №2](https://www.youtube.com/watch?v=DwDbH7pxzRA)
-
+- [Практика №3](https://www.youtube.com/watch?v=CY7vxMSBork)
 
 Полезные ссылки:
 
