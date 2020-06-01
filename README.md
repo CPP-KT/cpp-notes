@@ -63,7 +63,7 @@
 - [Запись №1](https://www.youtube.com/watch?v=RidP1GbfFEA)
 - [Запись №2](https://www.youtube.com/watch?v=HQdf43h3B2o)
 
-#### 05.23 Пространства имён, using-декларации, using-директивы, ADL.
+#### 05.30 Пространства имён, using-декларации, using-директивы, ADL.
 - Конспект будет когда-нибудь
 - [Запись №1](https://www.youtube.com/watch?v=fgD5itE5pCQ)
 
