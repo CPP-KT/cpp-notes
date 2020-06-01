@@ -58,6 +58,15 @@
 - [Запись №2](https://www.youtube.com/watch?v=DwDbH7pxzRA)
 - [Практика №3](https://www.youtube.com/watch?v=CY7vxMSBork)
 
+#### 05.23 Обзор STL, tag-dispatching, SFINAE, пространства имён.
+- Конспект будет когда-нибудь
+- [Запись №1](https://www.youtube.com/watch?v=RidP1GbfFEA)
+- [Запись №2](https://www.youtube.com/watch?v=HQdf43h3B2o)
+
+#### 05.23 Пространства имён, using-декларации, using-директивы, ADL.
+- Конспект будет когда-нибудь
+- [Запись №1](https://www.youtube.com/watch?v=fgD5itE5pCQ)
+
 
 
 Полезные ссылки:
