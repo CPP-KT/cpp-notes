@@ -49,7 +49,7 @@
 - [Запись №1](https://www.youtube.com/watch?v=R0tVZ1px5-Q)
 - [Запись №2](https://www.youtube.com/watch?v=8PpW8qS2tEg)
 
-#### 05.08 Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации
+#### 05.08 Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки
 - [Конспект](05.08%20Memory%20allocation.md)
 - [Запись №1](https://www.youtube.com/watch?v=oDPaXS9tKlw)
 - [Запись №2](https://www.youtube.com/watch?v=i8uYAe0E4PU)
