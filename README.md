@@ -61,7 +61,8 @@
 - [Практика №3](https://www.youtube.com/watch?v=CY7vxMSBork)
 
 #### 05.23 Обзор STL, tag-dispatching, SFINAE, пространства имён.
-- Конспект будет когда-нибудь
+
+- [Конспект](05.23%20STL,%20SFINAE,%20namespaces.md)
 - [Запись №1](https://www.youtube.com/watch?v=RidP1GbfFEA)
 - [Запись №2](https://www.youtube.com/watch?v=HQdf43h3B2o)
 
