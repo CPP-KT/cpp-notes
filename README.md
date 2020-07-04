@@ -62,7 +62,7 @@
 
 #### 05.23 Обзор STL, tag-dispatching, SFINAE, пространства имён.
 
-- [Конспект](05.23%20STL,%20SFINAE,%20namespaces.md)
+- [Конспект](05.23%20STL%2C%20SFINAE.md)
 - [Запись №1](https://www.youtube.com/watch?v=RidP1GbfFEA)
 - [Запись №2](https://www.youtube.com/watch?v=HQdf43h3B2o)
 
