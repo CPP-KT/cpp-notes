@@ -74,22 +74,27 @@
 - [Запись №1](https://www.youtube.com/watch?v=KcNJbEmbqB4)
 - [Запись №2](https://www.youtube.com/watch?v=p4LQfPJb9Q0)
 
+#### 09.12 Интрузивные контейнеры
+- [Конспект](09.12%20Intrusive%20containers.md)
+- [Запись №1](https://www.youtube.com/watch?v=Kf7qkcaWetc)
+- [Разбор практики по intrusive_list](https://www.youtube.com/watch?v=fwPUzKDsQTA)
+- [Код intrusive_list](https://github.com/sorokin/intrusive_list)
 
+#### Дополнительные лекции
+- [Лекция про инструменты разработки](https://www.youtube.com/watch?v=Cu6QYb_j_2Y)
+- [Лекция про UB, strict aliasing и оптимизации компилятора](https://www.youtube.com/watch?v=nGsD8guQ_dQ)
 
-Полезные ссылки:
+#### Полезные ссылки:
 
 - Сайт курса: http://sorokin.github.io/cpp-course/
 - Slack курса: https://cpp-year2019.slack.com/
 
-Презентации и ссылки по материалу:
+#### Презентации и ссылки по материалу:
 
-- Презентация про ассемблер: http://sorokin.github.io/cpp-course/lecture-1e.odp
-- Справочник по инструкциям x86: https://www.felixcloutier.com/x86/
-- nasm документация: https://www.nasm.us/doc/
+- [Презентация про ассемблер](slides/lecture-1.pdf)
+- [Презентация про процессор и оптимизации](slides/lecture-2.pdf)
+- [Справочник по инструкциям x86](https://www.felixcloutier.com/x86/), [nasm документация](https://www.nasm.us/doc/)
 
-- Системные вызовы Linux: https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
-- Про страничную адресацию: https://wiki.osdev.org/Paging
-- Презентация с ЭВМ про виртуальную память:http://slides.com/romanmelnikov-1/deck-1/live c
-
-- [Дополнительная лекция про инструменты разработки](https://www.youtube.com/watch?v=Cu6QYb_j_2Y)
-- [Дополнительная лекция про UB и оптимизации компилятора](https://www.youtube.com/watch?v=nGsD8guQ_dQ)
+- [Системные вызовы Linux](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/)
+- [Про страничную адресацию](https://wiki.osdev.org/Paging)
+- [Презентация с ЭВМ про виртуальную память](http://slides.com/romanmelnikov-1/deck-1/live)
