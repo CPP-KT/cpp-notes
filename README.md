@@ -69,6 +69,11 @@
 - [Конспект](05.30%20Namespaces%2C%20using%2C%20ADL.md)
 - [Запись №1](https://www.youtube.com/watch?v=fgD5itE5pCQ)
 
+#### 09.05 Move-семантика, rvalue-ссылки
+- [Конспект](09.05%20Move%2C%20rvalue-ref.md)
+- [Запись №1](https://www.youtube.com/watch?v=KcNJbEmbqB4)
+- [Запись №2](https://www.youtube.com/watch?v=p4LQfPJb9Q0)
+
 
 
 Полезные ссылки:
