@@ -94,7 +94,6 @@
 - [Презентация про ассемблер](slides/lecture-1.pdf)
 - [Презентация про процессор и оптимизации](slides/lecture-2.pdf)
 - [Справочник по инструкциям x86](https://www.felixcloutier.com/x86/), [nasm документация](https://www.nasm.us/doc/)
-
 - [Системные вызовы Linux](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/)
 - [Про страничную адресацию](https://wiki.osdev.org/Paging)
 - [Презентация с ЭВМ про виртуальную память](http://slides.com/romanmelnikov-1/deck-1/live)
