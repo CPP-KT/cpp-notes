@@ -98,8 +98,8 @@
 
 #### Полезные ссылки:
 
-- Сайт курса: http://sorokin.github.io/cpp-course/
-- Slack курса: https://cpp-year2019.slack.com/
+- [Сайт курса](http://sorokin.github.io/cpp-course/)
+- [Slack курса](https://cpp-year2019.slack.com/)
 
 #### Презентации и ссылки по материалу:
 
