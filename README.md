@@ -87,6 +87,11 @@
 - [Запись №1](https://www.youtube.com/watch?v=L9ohcGR0yFE)
 - [Запись №2](https://www.youtube.com/watch?v=M9h0_xBM7_8)
 
+#### Perfect forwarding, variadic templates
+- [Конспект](https://lejabque.github.io/cpp-notes/17_perfect_forwarding)
+- [Запись №1](https://youtu.be/M9h0_xBM7_8?t=1786)
+- [Запись №2](https://www.youtube.com/watch?v=ydQD7-XSSt4)
+
 #### Дополнительные лекции
 - [Лекция про инструменты разработки](https://www.youtube.com/watch?v=Cu6QYb_j_2Y)
 - [Лекция про UB, strict aliasing и оптимизации компилятора](https://www.youtube.com/watch?v=nGsD8guQ_dQ)
