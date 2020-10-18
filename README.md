@@ -81,6 +81,11 @@
 - [Разбор практики по intrusive_list](https://www.youtube.com/watch?v=fwPUzKDsQTA)
 - [Код intrusive_list](https://github.com/sorokin/intrusive_list)
 
+#### 09.17 Smart pointers: unique_ptr, shared_ptr, weak_ptr
+- [Конспект](https://lejabque.github.io/cpp-notes/09.17%20Smart%20pointers)
+- [Запись №1](https://www.youtube.com/watch?v=L9ohcGR0yFE)
+- [Запись №2](https://www.youtube.com/watch?v=M9h0_xBM7_8)
+
 #### Дополнительные лекции
 - [Лекция про инструменты разработки](https://www.youtube.com/watch?v=Cu6QYb_j_2Y)
 - [Лекция про UB, strict aliasing и оптимизации компилятора](https://www.youtube.com/watch?v=nGsD8guQ_dQ)
