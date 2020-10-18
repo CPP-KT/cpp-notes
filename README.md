@@ -8,7 +8,7 @@
 - [Конспект](https://lejabque.github.io/cpp-notes/01_asm)
 
 #### Прерывания, страничная адресация и т.д.
-- [Конспект](https://lejabque.github.io/cpp-notes/02_os_cpu.md)
+- [Конспект](https://lejabque.github.io/cpp-notes/02_os_cpu)
 - [Запись №1](https://www.youtube.com/watch?v=bTgtesThdSg)
 - [Запись №2](https://www.youtube.com/watch?v=XY8xN1Ug1_k)
 
