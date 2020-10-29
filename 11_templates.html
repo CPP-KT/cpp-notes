@@ -1,0 +1,553 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Конспект - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.1.</strong> Конспект</a></li></ol></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=bTgtesThdSg.html"><strong aria-hidden="true">3.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=XY8xN1Ug1_k.html"><strong aria-hidden="true">3.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=6vlNFxpSENs.html"><strong aria-hidden="true">4.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=DddjrdCrCF8.html"><strong aria-hidden="true">4.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=rGfQ5vWUS14.html"><strong aria-hidden="true">5.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=kf2zVHBEfy8.html"><strong aria-hidden="true">5.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=Fm-EmbQVrLE.html"><strong aria-hidden="true">6.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=w0G66pR3JuY.html"><strong aria-hidden="true">6.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=gsFYkmckcZs.html"><strong aria-hidden="true">6.4.</strong> Запись №3</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=jZAWVxcHLKA.html"><strong aria-hidden="true">6.5.</strong> Практика</a></li></ol></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=4LkTiNYQYBU.html"><strong aria-hidden="true">7.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=kjJ-1-VsNRo.html"><strong aria-hidden="true">7.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=nI6NEPYPRXU.html"><strong aria-hidden="true">8.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=8JAp3tG6IrA.html"><strong aria-hidden="true">8.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=IcAaaX888xc.html"><strong aria-hidden="true">9.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=11MKhMYAmnE.html"><strong aria-hidden="true">9.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=oMkF60mU8ig.html"><strong aria-hidden="true">9.4.</strong> Запись №3</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=0-92_jC7YMU.html"><strong aria-hidden="true">9.5.</strong> Запись №4</a></li></ol></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=R0tVZ1px5-Q.html"><strong aria-hidden="true">10.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=8PpW8qS2tEg.html"><strong aria-hidden="true">10.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=oDPaXS9tKlw.html"><strong aria-hidden="true">11.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=i8uYAe0E4PU.html"><strong aria-hidden="true">11.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="11_templates.html" class="active"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="11_templates.html" class="active"><strong aria-hidden="true">12.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=AXl4_eZ1eis.html"><strong aria-hidden="true">12.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=DwDbH7pxzRA.html"><strong aria-hidden="true">12.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=CY7vxMSBork.html"><strong aria-hidden="true">12.4.</strong> Практика №3</a></li></ol></li><li class="chapter-item expanded "><a href=".12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li><ol class="section"><li class="chapter-item expanded "><a href=".12_stl_sfinae.html"><strong aria-hidden="true">13.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=RidP1GbfFEA.html"><strong aria-hidden="true">13.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=HQdf43h3B2o.html"><strong aria-hidden="true">13.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=fgD5itE5pCQ.html"><strong aria-hidden="true">14.2.</strong> Запись №1</a></li></ol></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=KcNJbEmbqB4.html"><strong aria-hidden="true">15.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=p4LQfPJb9Q0.html"><strong aria-hidden="true">15.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=Kf7qkcaWetc.html"><strong aria-hidden="true">16.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=fwPUzKDsQTA.html"><strong aria-hidden="true">16.3.</strong> Разбор практики по intrusive_list</a></li><li class="chapter-item expanded "><a href="https://github.com/sorokin/intrusive_list.html"><strong aria-hidden="true">16.4.</strong> Код intrusive_list</a></li></ol></li><li class="chapter-item expanded "><a href=".16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li><ol class="section"><li class="chapter-item expanded "><a href=".16_smart_pointers.html"><strong aria-hidden="true">17.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=L9ohcGR0yFE.html"><strong aria-hidden="true">17.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=M9h0_xBM7_8.html"><strong aria-hidden="true">17.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://youtu.be/M9h0_xBM7_8?t=1786.html"><strong aria-hidden="true">18.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=ydQD7-XSSt4.html"><strong aria-hidden="true">18.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="CONTRIBUTING.html"><strong aria-hidden="true">19.</strong> CONTRIBUTING</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Шаблоны" id="Шаблоны">Шаблоны</a></h1>
+<p>Часто очень хочется делать типизированный класс - например, какую-то структуру данных для разных типов. Здесь и применяются шаблоны.</p>
+<p>В Си их не было и было два способа реализовать такое:</p>
+<ul>
+<li>
+<p>Хранить внутри данные &quot;любого типа&quot; как <code>void*</code>, но это неудобно, потому что нельзя хранить ничего, что занимает больше памяти, чем <code>void*</code>.  Можно хранить указатели, но это не очень эффективно из-за кэш-промахов.</p>
+</li>
+<li>
+<p>Через <code>#define</code>:</p>
+</li>
+</ul>
+<pre><code class="language-c++">#define DECLASE_MYVECTOR(vector_name, type)                 \          
+struct vector_name {                                        \
+	void push_back(type);                                     \
+	type operator[](size_t index) const;                      \
+}
+</code></pre>
+<p>У дефайнов несколько проблем: если ссылаться на один тип по-разному через <code>typedef</code>, то будут генериться два разных класса, которые по сути одно и то же. А ещё нельзя создавать с длинными типами типа <code>unsigned short</code>. А ещё может возникнуть дублирование.</p>
+<p>Как это делают <del>нормальные люди</del> в С++:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+// template&lt;class T&gt; это то же самое
+struct vector {
+     void push_back(T const &amp;);
+     T const&amp; operator[](size_t index) const;
+}
+</code></pre>
+<p>Функции тоже можно типизировать:</p>
+<pre><code class="language-c++">template&lt;typename T&gt;
+void swap(T&amp; a, T&amp; b) {
+     T tmp = a;
+     a = b;
+     b = tmp;
+}
+</code></pre>
+<h2><a class="header" href="#Специализации" id="Специализации">Специализации</a></h2>
+<p>Иногда для каких-то типов хочется сделать отдельную реализацию. Например, <code>vector&lt;bool&gt;</code>. Это называется специализацией и делается так:</p>
+<pre><code class="language-c++">template &lt;&gt;
+struct vector&lt;booL&gt; {
+	// ...
+};
+</code></pre>
+<p>С точки зрения языка шаблонным параметром может быть любой тип, но, например, вектор из стандартной библиотеке может принимать не любые типы, а, например, только копируемые и присваиваемые. Поэтому, например, <code>vector&lt;const bool&gt;</code> сделать нельзя, так как он не является присваиваемым.</p>
+<p>Чтобы &quot;заифать типы&quot; есть <code>std::conditional</code>, концептуально он работает как-то так:</p>
+<pre><code class="language-c++">template &lt;bool Cond, typename IfTrue, typename IfFalse&gt;
+struct conditional;
+
+template &lt;typename IfTrue1, typename IfFalse1&gt;
+struct conditional&lt;false, IfTrue1, IfFalse1&gt; {
+	typedef IfFalse1 type;
+};
+template &lt;typename IfTrue1, typename IfFalse1&gt;
+struct conditional&lt;true, IfTrue1, IfFalse1&gt; {
+	typedef IfTrue1 type;
+};
+</code></pre>
+<p>Можно делать partial специализацию, например для указателей:</p>
+<pre><code class="language-c++">template &lt;typename V&gt;
+struct vector&lt;V*&gt; {
+	// ...
+}
+vector&lt;foo*&gt; c; // выберется эта специализация
+</code></pre>
+<p>Есть ли у функций специализации? Да, но нельзя делать partial и вообще чаще всего достаточно перегрузок.</p>
+<pre><code class="language-c++">template&lt;typename T&gt;
+void foo(T*);
+
+template&lt;&gt;
+void foo&lt;int&gt;(int*);
+
+// void foo(int*); 
+</code></pre>
+<p>Чем отличаются две последних функции? Например, на таком коде:</p>
+<pre><code class="language-c++">int main() {
+	foo(nullptr); // не работает со специализацией
+}
+</code></pre>
+<p>Для функций алгоритм выбора такой: </p>
+<ol>
+<li>Выбирается перегрузка.</li>
+<li>Внутри перегрузки выбирается специализация.</li>
+</ol>
+<p>Подробнее про <strong>Template argument deduction</strong> на <a href="https://en.cppreference.com/w/cpp/language/template_argument_deduction">cpprefernce</a>.</p>
+<p>Поэтому когда мы подставляем <code>nullptr</code>, то из него нельзя понять, на какой тип он указывает, поэтому <strong>deduction</strong> фейлится и получаем ошибку. Если же есть <code>void foo(int*)</code>, то выбирается он, как единственный подходящий.</p>
+<p>Есть ещё одно правило: <em>если есть нешаблонная функция, которая идеально совпадает с шаблонной, то выбирается нешаблонная</em>, аналогично всегда выбирается <code>explicit</code> специализация.</p>
+<pre><code class="language-c++">template &lt;typename U, typename V&gt;
+struct mytype{};
+
+template &lt;typename U, typename V&gt;
+struct mytype&lt;U*, V&gt;{};
+
+template &lt;typename U, typename V&gt;
+struct mytype&lt;U, V*&gt;{};
+
+// В таком случае нельзя делать так, будет ошибка ambiguos template instantiation, так как есть два равноправных кандидата
+mytype&lt;long*, double*&gt; f;
+
+// если сделать такую специализацию, то выберется она
+// template &lt;typename U, typename V&gt;
+// struct mytype&lt;U*, V*&gt;{}; 
+</code></pre>
+<p>Можно делать <em>non-type</em> шаблонные параметры (числа или <code>enum</code>):</p>
+<pre><code class="language-c++">template &lt;typename T, size_t N&gt;
+struct array {
+     T data[N];
+}
+// можно делать специализацию:
+template &lt;typename T&gt;
+struct array&lt;T, 0&gt; {};
+
+array&lt;int, 10&gt; a;
+array&lt;int, 0&gt; a;
+</code></pre>
+<p>А ещё есть такое:</p>
+<pre><code class="language-c++">template &lt;template &lt;typename T&gt; class C&gt;
+struct array {
+};
+
+template &lt;typename T&gt; 
+struct cc {
+     
+};
+
+array&lt;cc&gt; a;
+</code></pre>
+<p>Шаблонные параметры могут иметь дефолтные значения, они работают как и у функций:</p>
+<pre><code class="language-c++">struct default_comparer {};
+templte&lt;typename T, typename C = default_comparer&gt;
+struct set {};
+
+set&lt;int&gt; a; // юзает дефолтный C
+</code></pre>
+<h2><a class="header" href="#Немного-про-парсер-c" id="Немного-про-парсер-c">Немного про парсер C++</a></h2>
+<pre><code class="language-c++">struct foo {
+	static float a;
+};
+(foo::a)-b; // может быть бинарное вычитание или каст -b к типу а, чтобы это различать, компилятору нужно резолвить foo
+int a(b); // может быть конструктор или определение функции
+a &lt; b &amp;&amp; c &gt; d; // может быть шаблон a&lt;b&amp;&amp;c&gt; d, а может быть буловое выражение
+</code></pre>
+<p>Как компилятор различает, например, в случае <code>(foo::a)-b</code>? Особенно если это всё не в одной функции. Здесь работает такое правило: <em>по умолчанию считаем, что в скобках не тип</em>.</p>
+<p>Пример:</p>
+<pre><code class="language-c++">struct foo {
+	static float a;
+};
+struct bar {
+	typedef float a;
+};
+
+template&lt;typename T&gt;
+void f() {
+	int b;
+	(T::a)-b; // если хотим тип, то нужно писать (typename T::a)
+}
+
+int main {
+	f&lt;foo&gt;();
+	f&lt;bar&gt;(); // не компилируется
+}
+</code></pre>
+<p>Если хотим, чтобы это читалось как каст, то нужно писать <code>(typename T::a)-b</code>. Кстати, в старых компиляторов <em>Microsoft</em> это не было нужно, так как они откладывали токены и парсили только в момент, когда подставляют функцию.</p>
+<p>Аналогично для шаблонов по умолчанию считается не шаблоном, иначе нужно писать так:</p>
+<pre><code class="language-c++">T::a &lt; b &amp;&amp; c &gt; d; // по умолчанию не шаблон
+typename T::template a &lt; b &amp;&amp; c &gt; d; // это шаблон
+</code></pre>
+<h2><a class="header" href="#Как-это-устроено-внутри" id="Как-это-устроено-внутри">Как это устроено внутри?</a></h2>
+<p><em>На лекции очень много <a href="godbolt.org">godbolt.org</a>, поэтому посмотрите <a href="https://www.youtube.com/watch?v=DwDbH7pxzRA">запись</a> или сами покомпилируйте.</em></p>
+<p>Начнём с шаблонных функций:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+void swap(T&amp; a, T&amp; b) {
+	T tmp = a;
+	a = b;
+	b = tmp;
+}
+auto p = &amp;swap&lt;int&gt;; 
+auto q = &amp;swap&lt;char&gt;; 
+</code></pre>
+<p>Для каждого типа код функции генерируется отдельно. При этом, например, чтобы сделать <code>sizeof(swap(a, b))</code>, компилятору не обязательно подставлять тело функции.</p>
+<h3><a class="header" href="#Немного-про-разные-единицы-трансляции" id="Немного-про-разные-единицы-трансляции">Немного про разные единицы трансляции:</a></h3>
+<pre><code class="language-c++">// swap.h:
+template&lt;typename T&gt;
+int swap(T&amp; a, T&amp; b);
+
+// swap.cpp:
+template &lt;typename T&gt;
+void swap(T&amp; a, T&amp; b) {
+	T tmp = a;
+	a = b;
+	b = tmp;
+}
+
+// main.cpp:
+#include &quot;swap.h&quot;
+int main(){
+	int a, b;
+	swap(a, b);
+}
+</code></pre>
+<p>Такое не скомпилируется. Почему? Каждая единица трансляции транслируется отдельно, а потом всё линкуется. Инстанцирование шаблонов (подстановка) происходит до линковки. По этой причине в <code>swap.cpp</code> мы не можем сгенерить <code>swap&lt;int&gt;</code>, потому что не знаем, что он будет использоваться, а в <code>main.cpp</code> не может сгенерить, потому что нет её тела.</p>
+<p>Можно определить тело шаблонной функции прямо в <code>swap.h</code> и инклудить в разные файлы. Казалось бы, получим ошибку из-за нескольких определений, но нет. Шаблонные функции помечаются компилятором как <code>inline</code> и не выдаёт ошибку, считая, что они все одинаковые.</p>
+<p>Так же нельзя использовать incomplete типы как параметр. А указатели на них можно.</p>
+<p>В стандарте прописано, что инстанцирование происходит только когда необходимо. При этом компилятор может делать это в конце единицы трансляции.</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct foo {
+	T* a;
+	void f();
+	void g(){
+		T a;
+	}
+};
+int main() {
+	foo&lt;void&gt; a; // так скомпилируется
+	a.g(); // а так нет, ошибка из-за void a
+}
+</code></pre>
+<p>В примере выше видно, что если в коде нет вызова функции g, то всё компилируется, так как она не инстанцируется.</p>
+<p>С классами работает аналогично: полное тело класса не подставляется, если не требуется.</p>
+<p>Например:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct foo {
+	T a;
+};
+int main() {
+	foo&lt;void&gt;* a; // так скомпилируется
+	a-&gt;a; // а так нет, опять ошибка из-за void a
+}
+</code></pre>
+<p>Почему это важно понимать? Ну например, мы не можем использовать <code>std::unique_ptr</code> на incomplete типе. Ну как не можем. Можем, но получим ошибку, если в коде есть вызов деструктора или другие обращение к объекту.</p>
+<pre><code class="language-c++">// mytype.h
+#include &lt;memory&gt;
+struct object;
+struct mytype {
+	std::unique_ptr&lt;object&gt; obj;
+};
+// mytype.cpp
+struct object {
+	object(int, int, int){};
+};
+mytype::mytype() : obj(new object(1, 2, 3)){}
+// main.cpp
+#include &quot;mytype.h&quot;
+int main(){
+	mytype a;
+	return 0;
+}
+</code></pre>
+<p>Без <code>main.cpp</code> компилируется, так как у <code>a</code> не вызывался деструктор, поэтому он не инстанцировался. С <code>main.cpp</code> компилятор генерирует деструктор, который вызывает деструкторы всех членов класса, а там <code>unigue_ptr&lt;object&gt;</code>, у которого при компиляции будет инстанцироваться деструктор, а <code>object</code> там <code>incomplete type</code>, поэтому получим ошибку компиляции, так как в <code>unique_ptr</code> есть специальная проверка, что если удаляется <code>incomplete type</code>, то это ошибка. </p>
+<p>Как решить проблему? Сделать явное определение деструктора <code>mytype</code> в <code>mytype.cpp</code>, где у нас определён <code>object</code>.</p>
+<p>Ещё пример:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct base {
+	typename T::mytype a;
+};
+template &lt;typename T&gt;
+struct derived : base&lt;derived&lt;T&gt;&gt; {
+	derived* a; // внутри класса можно ссылаться без шаблонного параметра, будет использоваться текущее инстанцирование
+	typedef T mytype;
+};
+derived&lt;int&gt; a; // не скомпилируется
+</code></pre>
+<p>Почему это не скомпилируется? Посмотрим на пример попроще.</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct base {
+	typename T::mytype a;
+};
+struct derived : base&lt;derived&gt; {
+	typedef int mytype;
+};
+</code></pre>
+<p>Тоже не скомпилируется с ошибкой про incomplete type <code>derived</code>. Почему? Ну потому что <code>derived</code> является incomplete типом, когда инстанцируется <code>base&lt;derived&gt;</code>.</p>
+<p>В предыдущем примере тот же самый эффект: так как <code>derived</code> шаблонный, то он не инстанцируется сразу, но когда мы инстанцируем <code>derived</code>, то он создаётся как incomplete (complete он станет после подстановки базовых классов), происходит подстановка base и получаем ошибку.</p>
+<p><em>Может быть интересно прочитать про идиому <a href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">CRTP</a></em></p>
+<h2><a class="header" href="#Явное-инстанцирование-шаблонов" id="Явное-инстанцирование-шаблонов">Явное инстанцирование шаблонов</a></h2>
+<p>Мы не хотим, чтобы одни и те же лишние инстанцирования были в разных единицах трансляции. Чтобы этого избежать, можно делать так:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+void foo(T) {
+}
+template void foo&lt;int&gt;(int); // генерирует тело функции в этом месте
+template void foo&lt;float&gt;(float);
+template void foo&lt;double&gt;(double);
+</code></pre>
+<h2><a class="header" href="#Подавление-инстанцирования" id="Подавление-инстанцирования">Подавление инстанцирования</a></h2>
+<p>Подавление явного инстанцирования, если знаем, что функции уже где-то инстанцированы и мы не хотим лишних:</p>
+<pre><code class="language-c++">extern template void foo&lt;int&gt;(int); 
+extern template void foo&lt;float&gt;(float);
+</code></pre>
+<p>&quot;Выдаём тело наружу и говорим, что уже проинстанцировано, <code>main</code> не будет пытаться инстанцировать функцию, так как увидит <code>extern</code> и будет работать соответствующе.&quot;</p>
+<p>Последний пример:</p>
+<pre><code class="language-c++">struct arg {
+	struct type {};
+};
+template &lt;typename T&gt;
+struct base {
+	int a;
+	int b;
+};
+template &lt;typename T&gt; 
+struct derived : base&lt;T&gt; {
+	void f() {
+		typename T::type a; // depended имя - зависит от шаблонного параметра
+		a + 1; // не будет ошибки компиляции, так как откладывается до инстанциации
+		arg::type b; // не depended
+		b + 1; // сразу ошибка компиляции
+		x = 5; // является ли depended?
+	}
+}
+
+int main() {
+	// derived&lt;arg&gt; d;
+	// d.f(); // из-за этого происходят ошибки компиляции, если в derived что-то не так, так как происходит инстанцирование 
+	return 0;
+}
+</code></pre>
+<p>Depended имена компилятор откладывает до инстанцирования.</p>
+<p>Является ли <code>x</code> в <code>derived</code> depended? С одной стороны, здесь не участвуют шаблонные параметры, но с другой стороны у нас может быть такая специализация <code>base</code>,  в которой нет его? А ещё этот <code>x</code> может быть глобальной переменной. Тут вопрос, на что мы компилятор должен ссылаться?</p>
+<p>По стандарту определяется следующим образом. Компилятор ищет <code>x</code>, игнорируя базовые классы, так как иначе компилятор не мог бы откидывать любые неизвестные переменные. Если хотим ссылаться на <code>x</code> из базы, то нужно писать явно <code>base&lt;T&gt;::x</code> или <code>this-&gt;x</code>. Тогда он будет depended: если писать <code>base&lt;T&gt;::x</code>, то очевидно, почему, если <code>this-&gt;x</code>, то понятно, что <code>this</code> зависит от шаблонного параметра. При этом компилятор всё равно откладывает это до инстанцирования, даже на таком не выдает ошибку:</p>
+<pre><code class="language-c++">// внутри derived
+		void* x;
+		void f() {
+			this-&gt;x = 5;
+		}
+</code></pre>
+<p>Компилятор имеет право выдавать ошибку, если при подстановке любого типа будет ошибка инстанцирования.</p>
+<p>На эту тему можно почитать про <a href="http://blog.llvm.org/2009/12/dreaded-two-phase-name-lookup.html">two-phase name lookup</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="https://www.youtube.com/watch?v=i8uYAe0E4PU.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="11_templates.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="https://www.youtube.com/watch?v=i8uYAe0E4PU.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="11_templates.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

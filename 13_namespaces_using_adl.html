@@ -1,0 +1,468 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Конспект - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.1.</strong> Конспект</a></li></ol></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=bTgtesThdSg.html"><strong aria-hidden="true">3.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=XY8xN1Ug1_k.html"><strong aria-hidden="true">3.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=6vlNFxpSENs.html"><strong aria-hidden="true">4.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=DddjrdCrCF8.html"><strong aria-hidden="true">4.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=rGfQ5vWUS14.html"><strong aria-hidden="true">5.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=kf2zVHBEfy8.html"><strong aria-hidden="true">5.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=Fm-EmbQVrLE.html"><strong aria-hidden="true">6.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=w0G66pR3JuY.html"><strong aria-hidden="true">6.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=gsFYkmckcZs.html"><strong aria-hidden="true">6.4.</strong> Запись №3</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=jZAWVxcHLKA.html"><strong aria-hidden="true">6.5.</strong> Практика</a></li></ol></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=4LkTiNYQYBU.html"><strong aria-hidden="true">7.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=kjJ-1-VsNRo.html"><strong aria-hidden="true">7.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=nI6NEPYPRXU.html"><strong aria-hidden="true">8.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=8JAp3tG6IrA.html"><strong aria-hidden="true">8.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=IcAaaX888xc.html"><strong aria-hidden="true">9.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=11MKhMYAmnE.html"><strong aria-hidden="true">9.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=oMkF60mU8ig.html"><strong aria-hidden="true">9.4.</strong> Запись №3</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=0-92_jC7YMU.html"><strong aria-hidden="true">9.5.</strong> Запись №4</a></li></ol></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=R0tVZ1px5-Q.html"><strong aria-hidden="true">10.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=8PpW8qS2tEg.html"><strong aria-hidden="true">10.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=oDPaXS9tKlw.html"><strong aria-hidden="true">11.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=i8uYAe0E4PU.html"><strong aria-hidden="true">11.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=AXl4_eZ1eis.html"><strong aria-hidden="true">12.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=DwDbH7pxzRA.html"><strong aria-hidden="true">12.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=CY7vxMSBork.html"><strong aria-hidden="true">12.4.</strong> Практика №3</a></li></ol></li><li class="chapter-item expanded "><a href=".12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li><ol class="section"><li class="chapter-item expanded "><a href=".12_stl_sfinae.html"><strong aria-hidden="true">13.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=RidP1GbfFEA.html"><strong aria-hidden="true">13.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=HQdf43h3B2o.html"><strong aria-hidden="true">13.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html" class="active"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html" class="active"><strong aria-hidden="true">14.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=fgD5itE5pCQ.html"><strong aria-hidden="true">14.2.</strong> Запись №1</a></li></ol></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=KcNJbEmbqB4.html"><strong aria-hidden="true">15.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=p4LQfPJb9Q0.html"><strong aria-hidden="true">15.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=Kf7qkcaWetc.html"><strong aria-hidden="true">16.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=fwPUzKDsQTA.html"><strong aria-hidden="true">16.3.</strong> Разбор практики по intrusive_list</a></li><li class="chapter-item expanded "><a href="https://github.com/sorokin/intrusive_list.html"><strong aria-hidden="true">16.4.</strong> Код intrusive_list</a></li></ol></li><li class="chapter-item expanded "><a href=".16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li><ol class="section"><li class="chapter-item expanded "><a href=".16_smart_pointers.html"><strong aria-hidden="true">17.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=L9ohcGR0yFE.html"><strong aria-hidden="true">17.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=M9h0_xBM7_8.html"><strong aria-hidden="true">17.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://youtu.be/M9h0_xBM7_8?t=1786.html"><strong aria-hidden="true">18.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=ydQD7-XSSt4.html"><strong aria-hidden="true">18.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="CONTRIBUTING.html"><strong aria-hidden="true">19.</strong> CONTRIBUTING</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Пространства-имён-using-декларации-using-директивы-adl" id="Пространства-имён-using-декларации-using-директивы-adl">Пространства имён, using-декларации, using-директивы, ADL.</a></h1>
+<h2><a class="header" href="#Пространства-имён" id="Пространства-имён">Пространства имён</a></h2>
+<p>В Си в библиотеках у функций обычно есть префикс названия библиотеки, например, <code>mpz_add</code> в GMP. Это нужно, чтобы не было двух разных функций с одинаковым именем.</p>
+<p>В C++ для такого используется механизм <code>namespace</code>.</p>
+<pre><code class="language-c++">namespace somelib {
+  struct foo {};
+  void bar();
+}
+namespace somelib { // можно несколько раз открывать
+  void baz(foo*);
+}
+</code></pre>
+<p>Внутри неймспейса можно ссылаться на что угодно из него. Синтаксис обращения снаружи: <code>somelib::foo</code>, где <code>somelib::</code> - квалификатор. Такие имена называются квалифицированными. </p>
+<p>Неймспейсы могут быть вложенными:</p>
+<pre><code class="language-c++">namespace somelib {
+  namespace nested {
+    struct foo {};
+  }
+  void bar (nested::foo const&amp;);
+}
+</code></pre>
+<p>Тогда ссылаться надо так: <code>somelib::nested::foo</code>.</p>
+<p>Как такие ищутся без квалификаторов? Поднимаемся по фигурным скобкам (неймспейсам) вплоть до глобального.</p>
+<p>Если функции на разных уровнях неймспейсов называются по-разному, то выберется первая найденная. Чтобы обратиться к имени из глобального неймспейса, нужно использовать пустой квалификатор <code>::foo</code>. Но это всё про одну единицу трансляции, а что если их несколько?</p>
+<p>Как мы помним, имя, которое передаётся линковщику кодируется и содержит в себе параметры, принимаемые функцией. Если функция в неймспейсе, то в её имени кодируется название неймспейса. Линковщик дальше работает уже с этими декорированными именами, поэтому объявление и определение работают так же, как и без неймспейсов.</p>
+<p>Для неймспейсов можно создавать alias'ы: <code>namespace fs = std::filesystem</code>. Редко используется по причина аналогичным неиспользованию тайпдефов.
+Можно использовать, например, когда поменяли имя неймспейса, но не хотим ломать код, который уже ссылается на старое.</p>
+<h2><a class="header" href="#using-декларация" id="using-декларация">Using-декларация</a></h2>
+<pre><code class="language-c++">namespace ns {
+  void foo(int);
+}
+using ns:foo; // на классы тоже можно
+</code></pre>
+<p>Using-декларация берёт сущность, на которую ссылаемся и как бы объявляет её ещё раз в неймспейсе, в котором она написана.</p>
+<p>При этом правило ODR (one defenition) сохраняется:</p>
+<pre><code class="language-c++">struct bar{};
+using ns::bar; // так нельзя
+</code></pre>
+<p>Для перегрузок функций всё работает как надо.</p>
+<pre><code class="language-c++">namespace ns {
+  void foo(int);
+}
+namespace ns2 {
+  void foo(float);
+}
+int main() {
+  using ns::foo;
+  using ns2::foo;
+  foo(42.5f); 
+  return 0;
+}
+</code></pre>
+<p>Using можно применять не только для неймспейсов, но и для классов.</p>
+<pre><code class="language-c++">struct base1 {
+  void foo(int);
+};
+struct base2 {
+  void foo(float);
+};
+struct derived : base1, base2 {
+  using base1::foo;
+  using base2::foo;
+};
+int main() {
+  derived d;
+  d.foo(42); // без using не делается overload resolution и будет ошибка, так как два кандидата из разных баз
+  return 0;
+}
+</code></pre>
+<p>Ещё можно применить так:</p>
+<pre><code class="language-c++">struct base {
+  void foo(int);
+};
+struct derived : private base {
+  using base::foo;
+};
+int main() {
+  derived d;
+  d.foo(42);
+  return 0;
+}
+</code></pre>
+<p>Аналогично можно и с конструкторами:</p>
+<pre><code class="language-c++">struct my_error : std::runtime_error {
+  using runtime_error::runtime_error;
+};
+</code></pre>
+<p>Можно подключать полностью весь неймспейс: <code>using namespace somelib;</code>. То, что было до этого, называлось <em>using-декларациями</em>, это называется <em>using-директива</em>. По сути, оно говорит при поиске в неймспейсе, где она написана, искать в неймспейсе <code>somelib</code>. Они немного отличаются:</p>
+<pre><code class="language-c++">namespace somelib {
+  struct foo {};
+  void  bar();
+}
+struct foo {};
+// using somelib::foo; такой using приведет к ошибке
+// using somelib::bar; 
+using namespace somelib; // к ошибке компиляции не приводит
+int main() {
+  bar(); // так работает
+  foo(); // а так ошибка компиляции из-за неоднозначности
+}
+</code></pre>
+<p>Если бы namespace, который мы подключили через директиву, подключал в себе ещё какой-то namespace, то мы бы искали в их замыкании.</p>
+<blockquote>
+<p>Понятно, что то, что я привожу, это примеры не жизненные, так лучше не писать.</p>
+</blockquote>
+<pre><code class="language-c++">namespace ns2 {};
+namespace ns1 {
+  struct foo {};
+  using namespace ns2; // юзингает весь неймспейс, то есть в него можно дописать что-то ниже, по смыслу это просто &quot;ссылка&quot; на неймспейс
+}
+namespace ns2 {
+  struct foo {};
+  using namespace ns1;
+}
+using namespace ns1;
+int main() {
+  foo a; // ошибка, так как поднялись в глобал, зашли в ns1, там using namespace ns2, в их замыкании находим два foo
+  ns1::foo a; // это работает, объяснение ниже
+}
+</code></pre>
+<p>Из примеры выше видно, что квалифированные имена работают немного иначе, оно ищет не в замыкании, а сначала ищет в самом неймспейсе, если же в нём нет, то переходит по using namespace. Обычно мы это не заметим, так как неймспейсы используются не так активно и так вообще вряд ли нужно будет писать.</p>
+<p>Когда пишем using и alias в хедерах, то они работают везде, куда инклудят этот хедер, что мы редко хотим, поэтому есть такое правило - в хедерах юзинг-директивы и декларации не писать, так как почти никогда не хотим использовать их для пользователя.</p>
+<p>Сложный пример:</p>
+<pre><code class="language-c++">namespace ns1 {
+  uint32_t const a = 1;
+  uint32_t const b = 1;
+}
+namespace ns2 {
+  uint32_t const a = 2;
+  uint32_t const b = 2;
+  namespace nested {
+    using ns1::a;
+    using ns2::b;
+    void foo() {
+      std::cout &lt;&lt; a &lt;&lt; ' ' &lt;&lt; b &lt;&lt; '\n'; // 1 2
+    }
+  }
+}
+</code></pre>
+<p>А если подключать не декларациями, а <code>using namespace ns1;</code>, то выведет &quot;2 2&quot;. Почему так? Они ищутся не сразу, когда видят директиву, а только когда дойдём до наименьшего общего предка между тем неймспейсом, из которого ищем и тем, которого поюзингали.</p>
+<h2><a class="header" href="#adl" id="adl">ADL</a></h2>
+<pre><code class="language-c++">namespace somelib {
+  struct big_integer {};
+  big_integer operator+(big_integer const&amp;, big_integer const&amp;);
+  void swap(big_intger&amp;, big_integer&amp;);
+}
+int main() {
+  somelib::big_integer a;
+  a + a;
+  swap(a, a);
+}
+</code></pre>
+<p>Казалось бы, оператор <code>+</code> не должен находиться, как и <code>swap</code>. Если бы это работало так, то пришлось бы везде писать <code>somelib::operator+</code> или делать using.</p>
+<p>Кроме поиска имён, который мы обсудили ранее, есть Argument Depended Lookup. Здесь применяется он тоже: он смотрит на типы аргументов и ищет по неймспейсу, из которого эти типы. Такой поиск запускается только для имён, у которых неквалифицированное имя. У поиска ADL и обычного нет приоритетов, они запускаются оба и кандидаты из обоих уходят в overload resolution. Обычно они либо оба найдут одно и то же, либо обычный не найдет ничего и возьмется из ADL (логично?).</p>
+<p>При этом ADL ищет по неймспейсу, в котором класс <code>big_integer</code> был определен. Если мы спрячем определение в неймспейс, а функции сделаем в другом месте, то он их не найдёт.</p>
+<p>Стандартная практика применения: когда есть перегруженные операции или функции типа <code>swap</code>. </p>
+<pre><code class="language-c++">template &lt;typename U, typename V&gt;
+struct my_pair {
+  void swap(my_pair&amp; other) { 
+    using std::swap;
+    swap(u, other.u);
+    swap(v, other.v);
+  }
+}
+</code></pre>
+<p>В таком случае будет запускаться ADL для пользовательских классов и будет находиться их <code>swap</code>. А для встроенных типов будет <code>std::swap</code> добавлять кандидатом.</p>
+<h2><a class="header" href="#Анонимные-неймспейсы" id="Анонимные-неймспейсы">Анонимные неймспейсы</a></h2>
+<p>На лекции про компиляцию мы обсуждали модификатор <code>static</code> для функций.</p>
+<pre><code class="language-c++">static void foo() {}
+</code></pre>
+<p>Такой <code>static</code> делал функции локальными для единицы трансляции. А что с классами?</p>
+<p>Если мы хотим две разных структуры с одинаковым именем, которые не вытаскиваются из своих хедеров, то просто так может что-то сломаться, так как у них будут, например, генерироваться конструктор, деструктор с одинаковыми именами. А ещё их special member функции генерируютя с модификатором inline и тут какие-то из них линковщик просто выкинет.</p>
+<p>А ещё для них будут инстанцироваться шаблоны с одинаковыми декорированными именами, но структуры то разные. Поэтому по стандарту разныъ объявлений классов с одинаковыми именами быть не должно. </p>
+<p>Чтобы такого не происходило, существуют анонимные неймспейсы, которые работают следующим образом.</p>
+<pre><code class="language-c++">namespace {
+  struct my_local_type {
+    double b;
+  };
+  void foo() {}
+  const int a = 42;
+}
+void foo() {
+  std::vector&lt;my_local_type&gt; v;
+  v.push_back(my_local_type());
+}
+</code></pre>
+<p>Такой код эквивалентен:</p>
+<pre><code class="language-c++">namespace XXX {
+  struct my_local_type {
+    double b;
+  };
+  void foo() {}
+  const int a = 42;
+}
+using namespace XXX;
+void foo() {
+  std::vector&lt;my_local_type&gt; v;
+  v.push_back(my_local_type());
+}
+</code></pre>
+<p>К чему это приводит: имя таких классов декорируется именем неймспейса, поэтому не будет конфликтов при линковке. Аналогично, как видно, можно делать для функций и для переменных. В общем, это нужно, чтобы делать сущности локальными.</p>
+<p>Почему это имеет смысл для функций и переменных:</p>
+<pre><code class="language-c++">namespace {
+  int a;
+  int b;
+  int c;
+}
+mytype&lt;&amp;a&gt; va; // здесь это не как шаблон от целочисленного числа, оно сохраняет именно на какую переменную ссылается параметр
+mytype&lt;&amp;b&gt; vb;
+mytype&lt;&amp;c&gt; vc;
+</code></pre>
+<p>В этом примере не будет проблемы, если где-то есть ещё такие объявления, как у <code>va, vb, vc</code>, потому что в этом случае после инстанцирования шаблонов в именах функций закодирован namespace.</p>
+<h2><a class="header" href="#static" id="static">static</a></h2>
+<pre><code class="language-c++">static void foo(); // локальный для единицы трансляции, обсуждали
+struct foo {
+  // могут быть private
+  static void bar(); // нет параметра *this, можно вызывать foo:bar()
+  static int a; // как глобальная переменная, но с именем foo:a, хранится не в каждом экземпляре типа
+};
+int foo() {
+  static int x = 42; // создаётся при первом заходе в функцию, живёт до конца программы и значения будут 43, 44, ...
+  ++x;
+  return x;
+}
+</code></pre>
+<p>Можно словить рекурсивную инициализацию, это UB, какие-то компиляторы выдают исключение, какие-то зацикливаются, какие-то выдают 0:</p>
+<pre><code class="language-c++">int&amp; f();
+int g() {
+  return f()
+}
+int&amp; f() {
+  static int x = g();
+  return x;
+}
+int main() {
+  f();
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="https://www.youtube.com/watch?v=HQdf43h3B2o.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="13_namespaces_using_adl.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="https://www.youtube.com/watch?v=HQdf43h3B2o.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="13_namespaces_using_adl.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,404 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Конспект - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.1.</strong> Конспект</a></li></ol></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=bTgtesThdSg.html"><strong aria-hidden="true">3.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=XY8xN1Ug1_k.html"><strong aria-hidden="true">3.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=6vlNFxpSENs.html"><strong aria-hidden="true">4.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=DddjrdCrCF8.html"><strong aria-hidden="true">4.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=rGfQ5vWUS14.html"><strong aria-hidden="true">5.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=kf2zVHBEfy8.html"><strong aria-hidden="true">5.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=Fm-EmbQVrLE.html"><strong aria-hidden="true">6.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=w0G66pR3JuY.html"><strong aria-hidden="true">6.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=gsFYkmckcZs.html"><strong aria-hidden="true">6.4.</strong> Запись №3</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=jZAWVxcHLKA.html"><strong aria-hidden="true">6.5.</strong> Практика</a></li></ol></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=4LkTiNYQYBU.html"><strong aria-hidden="true">7.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=kjJ-1-VsNRo.html"><strong aria-hidden="true">7.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=nI6NEPYPRXU.html"><strong aria-hidden="true">8.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=8JAp3tG6IrA.html"><strong aria-hidden="true">8.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=IcAaaX888xc.html"><strong aria-hidden="true">9.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=11MKhMYAmnE.html"><strong aria-hidden="true">9.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=oMkF60mU8ig.html"><strong aria-hidden="true">9.4.</strong> Запись №3</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=0-92_jC7YMU.html"><strong aria-hidden="true">9.5.</strong> Запись №4</a></li></ol></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=R0tVZ1px5-Q.html"><strong aria-hidden="true">10.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=8PpW8qS2tEg.html"><strong aria-hidden="true">10.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=oDPaXS9tKlw.html"><strong aria-hidden="true">11.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=i8uYAe0E4PU.html"><strong aria-hidden="true">11.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=AXl4_eZ1eis.html"><strong aria-hidden="true">12.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=DwDbH7pxzRA.html"><strong aria-hidden="true">12.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=CY7vxMSBork.html"><strong aria-hidden="true">12.4.</strong> Практика №3</a></li></ol></li><li class="chapter-item expanded "><a href=".12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li><ol class="section"><li class="chapter-item expanded "><a href=".12_stl_sfinae.html"><strong aria-hidden="true">13.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=RidP1GbfFEA.html"><strong aria-hidden="true">13.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=HQdf43h3B2o.html"><strong aria-hidden="true">13.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=fgD5itE5pCQ.html"><strong aria-hidden="true">14.2.</strong> Запись №1</a></li></ol></li><li class="chapter-item expanded "><a href="14_move_rvalue.html" class="active"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="14_move_rvalue.html" class="active"><strong aria-hidden="true">15.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=KcNJbEmbqB4.html"><strong aria-hidden="true">15.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=p4LQfPJb9Q0.html"><strong aria-hidden="true">15.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=Kf7qkcaWetc.html"><strong aria-hidden="true">16.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=fwPUzKDsQTA.html"><strong aria-hidden="true">16.3.</strong> Разбор практики по intrusive_list</a></li><li class="chapter-item expanded "><a href="https://github.com/sorokin/intrusive_list.html"><strong aria-hidden="true">16.4.</strong> Код intrusive_list</a></li></ol></li><li class="chapter-item expanded "><a href=".16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li><ol class="section"><li class="chapter-item expanded "><a href=".16_smart_pointers.html"><strong aria-hidden="true">17.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=L9ohcGR0yFE.html"><strong aria-hidden="true">17.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=M9h0_xBM7_8.html"><strong aria-hidden="true">17.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://youtu.be/M9h0_xBM7_8?t=1786.html"><strong aria-hidden="true">18.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=ydQD7-XSSt4.html"><strong aria-hidden="true">18.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="CONTRIBUTING.html"><strong aria-hidden="true">19.</strong> CONTRIBUTING</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#move-семантика-rvalue-ссылки" id="move-семантика-rvalue-ссылки">Move-семантика, rvalue-ссылки</a></h1>
+<h2><a class="header" href="#rvo-nrvo" id="rvo-nrvo">RVO, NRVO</a></h2>
+<p>Часто можно услышать, что передавать параметры по значению и возвращать результат из функции по значению дорого. Но это не всегда так.</p>
+<p>Начнём с того, как передаются параметры в функцию. Например, в ABI линукса прописано, что если структура помещается в два регистра, то она передаётся через них. Если структура занимает больше, то есть два варианта:</p>
+<pre><code class="language-c++">void f(mytype x) { // как передаётся параметр?
+    x.a = 42; 
+}
+// псевдокод:
+void f(mytype const&amp; x) {
+    mytype x_copy = x;
+    x_copy.a = 42;
+}
+// вызывающая сторона делает копию и передаёт ссылку
+void f(mytype&amp; x) {
+    x.a = 42;
+}
+</code></pre>
+<p>Можно посмотреть, во что компилируется функция <code>f</code> и увидеть, что это похоже на второй вариант. </p>
+<p>Этот вариант даёт возможность соптимизировать и избегать лишних копирований. Например, в таком случае:</p>
+<pre><code class="language-c++">void g() {
+    f(mytype(1, 2, 3));
+    f(h());
+}
+</code></pre>
+<p>Если в функцию передаётся <code>rvalue</code>, то компилятор не будет делать лишнюю копию. Таким образом, копия делается, только если функция принимает по значению и в неё передаётся <code>lvalue</code>.</p>
+<p>Как работает возвращение по значению:</p>
+<pre><code class="language-c++">mytype f() {
+	return mytype(1, 2, 3);    
+}
+// компилится во что-то, похожее на:
+void f(void* result) {
+    mytype_ctor(result, 1, 2, 3);
+}
+</code></pre>
+<p>Эта оптимизация называется <em>Return value optimization</em>: если из функции возвращается <code>rvalue</code>, то копия не создаётся и объект конструируется уже на месте, куда возвращается значение. Начиная с <strong>C++17</strong> эта оптимизация обязательна для компилятора и вошла в стандарт под названием <em>Copy elision</em>.</p>
+<p>Помимо этого, есть оптимизация <em>NRVO (named RVO)</em>, которая позволяет избежать копирования при возврате automatic storage duration объекта. На данный момент эта оптимизация необязательная, но уже есть <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2020/p2025r0.html">proposal</a> на внедрение этого в стандарт</p>
+<pre><code class="language-c++">std::string f() {
+    std::string tmp;
+    for (;;) {
+        tmp += ...;
+    }
+    return tmp;
+}
+// можно разместить tmp уже на result-е, псевдокод:
+void f(void* result) {
+    string_ctor(result, &quot;abc&quot;);
+    for (;;) {
+        *result += ...;
+    }
+}
+</code></pre>
+<p>Применить её можно не во всех случаях. Например:</p>
+<pre><code class="language-c++">std::string g() {
+    std::string a(&quot;abc&quot;);
+    std::string b(&quot;def&quot;);
+    if (flag) {
+        return a;
+    } else {
+        return b;
+    }
+}
+</code></pre>
+<p>Ещё один пример, когда избегается копирование:</p>
+<pre><code class="language-c++">void g() {
+    mytype a = f(); // здесь не будет вызван конструктор копирования
+}
+</code></pre>
+<p>Так всё работало ещё в <strong>C++03</strong>, в <strong>C++11</strong> помимо оптимизаций, появилась <em>move-семантика</em></p>
+<h2><a class="header" href="#move-семантика" id="move-семантика">Move-семантика</a></h2>
+<p>Многие контейнеры требуют от объектов наличие конструктора копирования. Например, вектору он нужен для увеличения буфера. При этом объект нельзя скопировать побайтово через <code>memcpy</code>, потому что это изменит его адрес, что возможно не для всех объектов (например, для тех, которые передают куда-нибудь наружу указатель <code>this</code>).</p>
+<p>Но есть такие объекты, у которых дорогое копирование, которого можно избежать (например, <code>std::string</code> с буфером), а ещё те, у которых копирование в принципе нельзя определить (как <code>unique_ptr</code>).</p>
+<p>Эту проблему решает семантика перемещений. Она реализуется при помощи перемещающего конструктора (<code>move constructor</code>) и перемещающего оператора присваивания (<code>move assignment</code>).</p>
+<p>Передача объекта в такой конструктор может испортить передаваемый объект, но этот объект должен остаться в таком согласованном состоянии, что у него можно вызвать деструктор. При этом это состояние в общем случае unspecified и полагаться на него не следует.</p>
+<pre><code class="language-c++">struct string {
+    // ...
+    string(string&amp;&amp; other) {
+        data = other.data; // копируем указатель вместо самих данных
+        other.data = nullptr;
+        size = other.size;
+        other.size = 0;
+    }
+    private:
+    char* data;
+}
+</code></pre>
+<p>Move в C++ называется &quot;недеструктивным&quot;, так как объект остаётся валидным, просто в unspecified состоянии.</p>
+<p>Для упрощения синтаксиса в язык были введены <em>rvalue-ссылки</em>, чтобы move оператор и конструктор срабатывал автоматически и не нужно было указывать это как-то явно.</p>
+<h3><a class="header" href="#Ссылки" id="Ссылки">Ссылки</a></h3>
+<p>Начиная с <strong>C++11</strong> обычные ссылки называются lvalue-ссылками. Для rvalue-ссылок свойства ссылок сохраняются, но, они биндятся только к rvalue.</p>
+<pre><code class="language-c++">int main() {
+    int a;
+    int&amp; b = a;
+    int&amp; c = 42;
+    int&amp;&amp; d = a; // ошибка
+    int&amp;&amp; e = 42;
+}
+</code></pre>
+<p>Теперь можно делать перегрузки для rvalue-ссылок:</p>
+<pre><code class="language-c++">template&lt;typename T&gt;
+struct vector {
+    void push_back(T const&amp;);
+    void push_back(T&amp;&amp;);
+}
+</code></pre>
+<p>В каждом месте, где делается <code>push_back</code> от rvalue, будет вызываться перегрузка именно для rvalue-ссылки.</p>
+<p>Важный принцип: именованные переменные они всегда lvalue, независимо от того, какой у неё тип. </p>
+<pre><code class="language-c++">struct person {
+    person(std::string&amp;&amp; name) {
+        // здесь name - lvalue
+        // this.name = name; - простое копирование
+        this.name = std::move(name); // вызовет move-конструктор
+    }
+}
+</code></pre>
+<p>Что такое <code>std::move</code>? Это почти что <code>static_cast</code>. Её сигнатура похожа на следующее:</p>
+<pre><code class="language-c++">template&lt;typename T&gt;
+T&amp;&amp; move(T&amp; obj) {
+    return static_cast&lt;T&amp;&amp;&gt;(obj);
+}
+</code></pre>
+<p>В стандартной библиотеке у move сигнатура немного отличается. Написанная выше функция не может принимать rvalue (например, <code>std::move(42)</code> не скомпилируется), в стандартной библиотеке move устроен таким образом, что он работает и для rvalue тоже.</p>
+<p>Если мы хотим у конструктора, описанного выше, больше параметров, то делать перегрузки на каждую комбинацию сложно. Какое поведение конструктора мы ожидаем? Для параметров, переданных как lvalue, сделать копию, а rvalue переместить. В языке уже есть конструкция, которая делает то же самое - можно просто принять параметр по значению.</p>
+<pre><code class="language-c++">struct person {
+    person(std::string name, std::string surname)
+        : name(std::move(name)), 
+    	  surname(std::move(surname)) {}
+}
+</code></pre>
+<p>Так мы получим нужно поведение за исключением того, что иногда move-конструктор вызовется лишний раз (когда делаем копию и вызываем move). Обычно это оптимизируется и не влияет на производительность, но при необходимости  можно сделать разные перегрузки.</p>
+<p><strong>Не стоит использовать move там, где он не нужен</strong>:</p>
+<p>Иногда может возникать желание написать похожую конструкцию:</p>
+<pre><code class="language-c++">std::string&amp;&amp; foo() {
+    std::string res;
+    res += &quot;abc&quot;;
+    return std::move(res); 
+}
+</code></pre>
+<p>Из-за move такое, скорее всего, скомпилируется, но работать не будет, так как ссылка указывает на локальную переменную, которая уничтожится после выхода из функции.</p>
+<p>Есть правило, что если даже NRVO не сработало, то при возвращении по значению вызовется move.</p>
+<pre><code class="language-c++">std::string foo() {
+    std::string res;
+    res += &quot;abc&quot;;
+    return res; // вызовет move при возврате, если не сработало NRVO
+}
+</code></pre>
+<h2><a class="header" href="#value-category-в-c11" id="value-category-в-c11">Value category в C++11</a></h2>
+<p>В C++11 <a href="https://blog.panicsoftware.com/value-categories-gl-l-x-r-prvalues/">категории значений</a> были расширены. Кроме lvalue и rvalue, появилось xvalue.</p>
+<p><img src="images/09.05_value_category.jpg" alt="img" /></p>
+<p><code>prvalue</code> - то, что раньше мы называли <code>rvalue</code></p>
+<p><code>xvalue</code> - то, что для перегрузок <code>rvalue</code>, а для copy elision `glvalue``</p>
+<pre><code class="language-c++">struct mytype {};
+mytype lvalue;
+mytype&amp; lvalue();
+mytype prvalue();
+mytype&amp;&amp; xvalue(); // overloading: rvalue, copy elision: lvalue
+void test() {
+    mytype c = lvalue; // mytype(mytype)
+    mytype b = prvalue(); // copy elision
+    mytype a = xvalue(); // mytype(mytype&amp;&amp;)
+}
+mytype test2() {
+    return xvalue(); 
+}
+</code></pre>
+<p>С одной стороны, <code>xvalue</code> возвращает rvalue, но мы не можем применить RVO. Поэтому функция <code>xvalue</code> для перегрузок работает как rvalue, а с точки зрения copy elision как lvalue.</p>
+<p>В C++03 время жизни объекта, который биндится к <code>const&amp;</code>, продлевалось для rvalue. В C++11 xvalue ведутся себя подобно lvalue: время жизни объекта продлить нельзя, так как мы его  никак не контролируем.</p>
+<pre><code class="language-c++">void foo() {
+    mytype const&amp; a = prvalue(); // объект живёт столько, сколько эта ссылка
+    mytype&amp;&amp; a = prvalue(); // аналогично продлевает время жизни
+    
+    mytype&amp; a = lvalue(); // не продлевает
+    mytype&amp;&amp; a = xvalue(); // не продлевает
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="https://www.youtube.com/watch?v=fgD5itE5pCQ.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="14_move_rvalue.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="https://www.youtube.com/watch?v=fgD5itE5pCQ.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="14_move_rvalue.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Конспект - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.1.</strong> Конспект</a></li></ol></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=bTgtesThdSg.html"><strong aria-hidden="true">3.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=XY8xN1Ug1_k.html"><strong aria-hidden="true">3.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=6vlNFxpSENs.html"><strong aria-hidden="true">4.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=DddjrdCrCF8.html"><strong aria-hidden="true">4.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=rGfQ5vWUS14.html"><strong aria-hidden="true">5.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=kf2zVHBEfy8.html"><strong aria-hidden="true">5.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=Fm-EmbQVrLE.html"><strong aria-hidden="true">6.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=w0G66pR3JuY.html"><strong aria-hidden="true">6.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=gsFYkmckcZs.html"><strong aria-hidden="true">6.4.</strong> Запись №3</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=jZAWVxcHLKA.html"><strong aria-hidden="true">6.5.</strong> Практика</a></li></ol></li><li class="chapter-item expanded "><a href="06_classes.html" class="active"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="06_classes.html" class="active"><strong aria-hidden="true">7.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=4LkTiNYQYBU.html"><strong aria-hidden="true">7.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=kjJ-1-VsNRo.html"><strong aria-hidden="true">7.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=nI6NEPYPRXU.html"><strong aria-hidden="true">8.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=8JAp3tG6IrA.html"><strong aria-hidden="true">8.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=IcAaaX888xc.html"><strong aria-hidden="true">9.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=11MKhMYAmnE.html"><strong aria-hidden="true">9.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=oMkF60mU8ig.html"><strong aria-hidden="true">9.4.</strong> Запись №3</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=0-92_jC7YMU.html"><strong aria-hidden="true">9.5.</strong> Запись №4</a></li></ol></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=R0tVZ1px5-Q.html"><strong aria-hidden="true">10.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=8PpW8qS2tEg.html"><strong aria-hidden="true">10.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=oDPaXS9tKlw.html"><strong aria-hidden="true">11.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=i8uYAe0E4PU.html"><strong aria-hidden="true">11.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=AXl4_eZ1eis.html"><strong aria-hidden="true">12.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=DwDbH7pxzRA.html"><strong aria-hidden="true">12.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=CY7vxMSBork.html"><strong aria-hidden="true">12.4.</strong> Практика №3</a></li></ol></li><li class="chapter-item expanded "><a href=".12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li><ol class="section"><li class="chapter-item expanded "><a href=".12_stl_sfinae.html"><strong aria-hidden="true">13.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=RidP1GbfFEA.html"><strong aria-hidden="true">13.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=HQdf43h3B2o.html"><strong aria-hidden="true">13.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=fgD5itE5pCQ.html"><strong aria-hidden="true">14.2.</strong> Запись №1</a></li></ol></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=KcNJbEmbqB4.html"><strong aria-hidden="true">15.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=p4LQfPJb9Q0.html"><strong aria-hidden="true">15.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=Kf7qkcaWetc.html"><strong aria-hidden="true">16.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=fwPUzKDsQTA.html"><strong aria-hidden="true">16.3.</strong> Разбор практики по intrusive_list</a></li><li class="chapter-item expanded "><a href="https://github.com/sorokin/intrusive_list.html"><strong aria-hidden="true">16.4.</strong> Код intrusive_list</a></li></ol></li><li class="chapter-item expanded "><a href=".16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li><ol class="section"><li class="chapter-item expanded "><a href=".16_smart_pointers.html"><strong aria-hidden="true">17.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=L9ohcGR0yFE.html"><strong aria-hidden="true">17.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=M9h0_xBM7_8.html"><strong aria-hidden="true">17.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://youtu.be/M9h0_xBM7_8?t=1786.html"><strong aria-hidden="true">18.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=ydQD7-XSSt4.html"><strong aria-hidden="true">18.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="CONTRIBUTING.html"><strong aria-hidden="true">19.</strong> CONTRIBUTING</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Классы-абстракция-данных" id="Классы-абстракция-данных">Классы, абстракция данных</a></h1>
+<p><a href="https://github.com/sorokin/cpp-course/blob/gh-pages/demos/string-demo/main.cpp">Примеры к лекции</a></p>
+<h2><a class="header" href="#Структуры" id="Структуры">Структуры</a></h2>
+<p>С помощью структур можно создавать свои типы. У структуры есть поля и методы. У полей и методов есть модификаторы доступа <code>public</code>, <code>private</code>, <code>protected</code>. По дефолту все поля и методы структуры - <code>public</code>.</p>
+<p>Классы отличаются от структур только тем, что в классах по умолчанию все <code>private</code>, а в структурах <code>public</code>. Далее всё будет называться классами.</p>
+<p>К полям класса можно обращать сразу через указатель на экземпляр:</p>
+<pre><code class="language-c++">complex * c;
+c-&gt;im // то же самое, что (*c).im
+</code></pre>
+<p>В отличие от языка <code>C</code>, в <code>C++</code> можно объявлять методы у структур.</p>
+<pre><code class="language-c++">struct complex {
+	void conjugate() {	
+		im = -im;
+	}
+private:
+	double re;
+     double im;
+};
+</code></pre>
+<p>Чем отличается метод внутри класса от такой функции?</p>
+<pre><code class="language-c++">void conjugate(complex* c) {
+	c-&gt;im = -c-&gt;im; 
+}
+</code></pre>
+<ul>
+<li>
+<p>У метода есть неявный параметр - указатель <code>this</code> на текущий экземпляр.</p>
+</li>
+<li>
+<p>Метод имеет доступ к приватным полям, внешняя функция - нет.</p>
+</li>
+</ul>
+<h4><a class="header" href="#Что-должно-быть-private-а-что-public" id="Что-должно-быть-private-а-что-public">Что должно быть <code>private</code>, а что <code>public</code>?</a></h4>
+<p>Инвариант класса - сохраняющиеся свойства класса. Например, инварианты структуры данных.</p>
+<blockquote>
+<p>То, что может испортить инвариант класса, должно быть private.</p>
+</blockquote>
+<p>Проверять инварианты можно ассертами (assert), но не стоит злоупотреблять ими, потому что это дорогоЮ могут быть полезны при дебаге и тестировании.</p>
+<p>Обычно пишут объявления функций в <code>class.h</code>, а определения в <code>class.cpp</code>. Если определение функции сделано внутри класса, то она неявно помечается как inline, но мы не всегда хотим этого (дольше время компиляции из-за зависимостей и т.д.).</p>
+<pre><code class="language-c++">// struct.h:
+struct complex {
+  void conjugate();
+private:
+  double re;
+  double im;
+}
+// struct.cpp:
+void complex::conjugate(){
+	im = -im;
+}
+</code></pre>
+<p>Как гарантировать какие-то свойства у объекта, который только создан? Это можно реализовать с помощью конструктора.</p>
+<h2><a class="header" href="#Конструкторы" id="Конструкторы">Конструкторы</a></h2>
+<p>Классы можно создавать через конструкторы.</p>
+<pre><code class="language-c++">struct complex {
+	complex(re, im) {
+		this.re = re;
+		this.im = im;
+	}
+	complex() {		// конструктор по умолчанию
+		this.re = 0;
+		this.im = 0;
+	}
+	void conjugate() {	
+		im = -im;
+	}
+private:
+	double re;
+  double im;
+};
+
+void f(complex);
+int main() {
+	complex c; // вызывается конструктор по умолчанию
+	complex d(1., 2.);
+	f(complex(1., 2.));
+}
+</code></pre>
+<p>Если в классе есть конструктор от одного аргумента, то может происходить неявное приведение типов (например, <code>big_integer a = 42</code>, если есть конструктор, который принимает <code>int</code>). Чтобы подавить такое поведение, конструктор нужно объявить с модификатором <code>explicit</code>.</p>
+<p>Так же существуют деструкторы, освобождающие ресурсы при удалении объекта. Они вызываются когда объект выходит из &quot;зоны видимости&quot;:</p>
+<pre><code class="language-C++">~string() {
+	free(data);
+	// ...
+}
+
+void foo() {
+	string S;
+} // вызовется деструктор S при выходе из функции
+</code></pre>
+<h2><a class="header" href="#Немного-про-const-и-указатели" id="Немного-про-const-и-указатели">Немного про const и указатели</a></h2>
+<p>Ключевое слово <code>const</code> - неизменяемое. Относится к тому типу, который стоит слева от него. </p>
+<pre><code class="language-c++">int const PI = 3;
+int const* q = &amp;PI; 
+// int* q = &amp;PI; - кинет ошибку
+*q = 4;
+	
+int* a; - указатель на int
+int const* b; - указатель на константный int
+int* const b; - константный указатель на int
+int const* const c; - константный указатель на константный int
+
+int a = 42;
+int const* p = &amp;a; // так тоже можно, но по этому указателю нельзя будет писать
+</code></pre>
+<p>В функцию, которая принимает указатель, нельзя передать указатель на <code>const</code>, а наоборот - можно.
+Поэтому у аргументов функции полезно не забывать <code>const</code>, если функция не меняет принимаемый аргумент.</p>
+<p>Константными могут быть не только стандартные типы,
+У константных объектов можно вызывать только методы, помеченные <code>const</code>:</p>
+<pre><code class="language-c++">struct complex {
+	//...
+	double real() const {
+		&amp;re; // имеет тип double const *, так как метод const
+		return re;
+	}
+}
+int main(){
+	complex const c(1.1, 2.2);
+	c.re = 42; // так нельзя, так как у const структуры все поля const
+	c.conjugate(); // так нельзя
+	c.real(); // так можно
+}
+</code></pre>
+<h2><a class="header" href="#Операторы" id="Операторы">Операторы</a></h2>
+<p><a href="https://en.cppreference.com/w/cpp/language/operators">cppreference: operator overloading</a></p>
+<p>В С++ есть возможность определять собственные операторы для классов:</p>
+<pre><code class="language-c++">complex operator+(complex a, complex b) {
+	return complex(a.re + b.re, a.im + a.im)
+}
+</code></pre>
+<p>Если вы пишете какой то оператор, то хотя бы один из его элементов должен быть пользовательским типом (нельзя переопределить оператор для <code>int, int</code>, но можно, например, для <code>vector</code> и <code>int</code>).</p>
+<p>Еще пример:</p>
+<pre><code class="language-c++">complex operator+=(complex a, complex b) {}
+</code></pre>
+<p>Мы такое сделать не можем, так как нужно поменять а, то есть передать его по указателю: <code>&amp;a += b</code>, что не очень естественно.
+Сделать такое можно, используя ссылки:</p>
+<table><thead><tr><th>указатель</th><th>ссылка</th></tr></thead><tbody>
+<tr><td><code>int* p = &amp;a;</code></td><td><code>int&amp; r = a;</code></td></tr>
+<tr><td><code>*p = 5;</code></td><td><code>r = 5;</code></td></tr>
+<tr><td><code>int *pp = p</code></td><td><code>int* pr = &amp;r;</code></td></tr>
+<tr><td><code>p-&gt;foo</code></td><td><code>p.foo;</code></td></tr>
+<tr><td><code>p = &amp;b;</code></td><td><code>// нельзя перенаправить</code></td></tr>
+</tbody></table>
+<p>Нужно делать так:</p>
+<pre><code class="language-c++">complex&amp; operator+=(complex &amp;a, complex b) { // возвращает ссылку, так что можно присвоить куда-то результат a += b;
+	// поэтому можно (a += b) += c;
+	return a = a + b;
+}
+</code></pre>
+<p>Если мы принимаем экземпляр класса и нам не нужно его менять, можно передавать его по константной ссылке, тогда мы избегаем лишних копирований (в отличие от передачи по значению):</p>
+<pre><code class="language-c++">std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, complex const&amp; a) {
+	os &lt;&lt; a.real &lt;&lt; &quot; + &quot; &lt;&lt; a.im &lt;&lt; &quot;i&quot;;
+	return os;
+}
+</code></pre>
+<p>Если функция принимает <code>const&amp;</code>, то в неё можно передавать временный объект (rvalue). Если же она принимает обычную ссылку, то только <code>lvalue</code>. <br />
+Аналогично возвращая по ссылке, возвращаем <code>lvalue</code>, а по значению <code>rvalue</code>.</p>
+<h2><a class="header" href="#Перегрузка-операторов-внутри-класса-и-снаружи" id="Перегрузка-операторов-внутри-класса-и-снаружи">Перегрузка операторов внутри класса и снаружи:</a></h2>
+<p>Операторы можно перегружать как функции (снаружи класса) и как методы (внутри класса).  Соответственно, у операторов, перегруженных как методы, первым аргументов будет неявный <code>this</code>. </p>
+<p>У операторов может срабатывать неявное приведение типов (если есть не <code>explicit</code> конструктор). При этом если оператор перегружен как функция, то приводится любой из аргументов, а если как метод, то только правый.</p>
+<p>Примеры:</p>
+<pre><code class="language-c++">// как методы:
+struct A {
+	A (int a); // не explicit конструктор
+	A operator-() const; // -(*this)
+	A operator-(A const&amp; w) const; // (*this) - w, нельзя вызвать (2-v)
+}
+
+// как функции:
+A operator-(A const&amp; v);
+A operator +(A const&amp; v, A const&amp; w);
+// можно вызвать как (2-v), так как есть не explicit конструктор от int
+</code></pre>
+<p>Можно делать аргументы оператора другого типа но тогда его нужно перегрузить как функцию, если первый аргумент другого типа.</p>
+<pre><code class="language-c++">Vector operator*(double d, Vector const&amp; v);
+</code></pre>
+<p>Некоторые операторы необходимо перегружать только внутри класса: <code>(type), [], (), -&gt;, -&gt;*, =</code>. </p>
+<p>Вот так перегружается оператор <code>()</code>, заметьте, что можно сделать это для разного количества аргументов:</p>
+<pre><code class="language-c++">bool operator()(double d) const;
+void operator()(double a, double b);
+</code></pre>
+<p><strong>Пример инкремента и декремента</strong>:</p>
+<p>Чтобы отличать их, постфиксный перегружают с неиспользуемым (<em>dummy</em>) параметром типа <code>int</code>. Когда вызывается постфиксный оператор, всегда передаётся аргумент, хотя можно и вручную вызвать оператор как функцию и передать любое значение:<code>a.operator++(2)</code>.</p>
+<pre><code class="language-c++">struct big_integer {
+     big_integer &amp; operator++() { // prefix
+         // ...
+          return *this;
+     }
+     big_integer operator++(int) { // postfix
+          big_integer tmp(*this);
+          ++(*this);
+          return tmp;
+     }
+}
+</code></pre>
+<p><strong>Пример оператора приведения в стиле C:</strong></p>
+<pre><code class="language-c++">struct String {
+	operator bool() const {  // приведение к bool
+		return size_ != 0;
+	}
+	operator char const*() const {   // приведение к char const*
+  		if (*this) {
+    			return data_;
+    		} else {
+    			return &quot;&quot;;
+   	 	}
+	} 
+	// ...
+}
+</code></pre>
+<p>Аналогично можно перегружать и касты в стиле C++ (static_cast и др.). </p>
+<p>У операторов приведения, как и у конструкторов, можно указывать модификатор <code>explicit</code> и запрещать неявное приведение.</p>
+<p>Некоторые ограничения:</p>
+<ul>
+<li>Оператор <code>-&gt;</code> должен возвращать указатель или объект класса, для которого он переопределён (по ссылке или по значению).</li>
+<li>Операторы <code>&amp;&amp;</code>, <code>||</code> при перегрузке теряют своё <a href="https://en.cppreference.com/w/cpp/language/eval_order">специальное поведение</a> и ведут себя как обычные функции.</li>
+<li>Операторы <code>+=</code> и подобные лучше перегружать внутри класса, а <code>+</code> снаружи через <code>+=</code>. Тогда для <code>+</code> будет работать приведение типов.</li>
+<li>Операторы сравнений стоит определять одновременно и согласованно: если определили какой-то один из них, принято определить и все остальные так, чтобы они не противоречили друг другу.</li>
+<li>Хорошим тоном считается соблюдать стандартный смысл операторов: не перегружать оператор <code>+</code> как умножение.</li>
+<li>Приоритет операторов остаётся стандартным.</li>
+</ul>
+<h2><a class="header" href="#Про-указатели-и-массивы" id="Про-указатели-и-массивы">Про указатели и массивы</a></h2>
+<pre><code class="language-c++">int a[10]; // массивы - полноценные типы
+int* p = a; // неявно приводится в указатель на тип элемента массива
+int b[10] = a; // так не работает, массивы нельзя копировать
+
+void f(int c[10]); // то же самое, что void f(int* c);
+
+int const a[10]; // константный массив константных элементов, не может быть константно что-то одно из них
+
+void f(int const (*p)[10]); // массив по указателю
+void f(int (&amp;c)[10]); // массив по ссылке
+</code></pre>
+<p>Если функция принимает массив: <code>void f(int a[10])</code>, то на самом деле она принимает <code>int *</code> и длина игнорируется. </p>
+<p>Но если функция принимает указатель на массив: <code>void g(int (*p)[10])</code>, то она принимает указатель на массив длины 10. Все размерности, кроме внешней, должны быть определены, так как являются частью типа элемента.</p>
+<p>Важно: <code> int *p[10]</code> - массив указателей, <code>int (*p)[10]</code> - указатель на массив длины 10.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="https://www.youtube.com/watch?v=jZAWVxcHLKA.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="06_classes.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="https://www.youtube.com/watch?v=jZAWVxcHLKA.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="06_classes.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
