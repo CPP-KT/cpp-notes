@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Конспект - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.1.</strong> Конспект</a></li></ol></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=bTgtesThdSg.html"><strong aria-hidden="true">3.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=XY8xN1Ug1_k.html"><strong aria-hidden="true">3.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=6vlNFxpSENs.html"><strong aria-hidden="true">4.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=DddjrdCrCF8.html"><strong aria-hidden="true">4.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=rGfQ5vWUS14.html"><strong aria-hidden="true">5.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=kf2zVHBEfy8.html"><strong aria-hidden="true">5.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="05_compilation.html" class="active"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="05_compilation.html" class="active"><strong aria-hidden="true">6.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=Fm-EmbQVrLE.html"><strong aria-hidden="true">6.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=w0G66pR3JuY.html"><strong aria-hidden="true">6.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=gsFYkmckcZs.html"><strong aria-hidden="true">6.4.</strong> Запись №3</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=jZAWVxcHLKA.html"><strong aria-hidden="true">6.5.</strong> Практика</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Процесс-компиляции-программ" id="Процесс-компиляции-программ">Процесс компиляции программ</a></h1>
+<p><img src="./images/03.28_compilation_graph.png" alt="Compilation graph" /></p>
+<p>Классическая схема этапов компиляции. 
+Есть <a href="https://habr.com/ru/post/478124/">похожая статья на хабре</a>.</p>
+<p><strong>Preprocessing</strong>
+<code>g++ -E -P 1.cpp -o 1.i</code></p>
+<p>Выполняет директивы (<code>#define</code>, <code>#include</code> и другие).</p>
+<p><code>#include</code> - вставляет текст из указанного файла
+<code>#define</code> - задает макрос</p>
+<p><strong>Translation</strong>
+<code>g++ -S -masm=intel 1.i -o 1.s</code></p>
+<p>Трансляция кода в ассемблер.</p>
+<p><strong>Assembling</strong>
+<code>g++ -C 1.s -o 1.o</code> (либо <code>as ...</code>)</p>
+<p>Транслирует ассемблерный код в машинный код.</p>
+<p><code>*.o</code> - объектный файл</p>
+<p><strong>Linking</strong>
+<code>g++ 1.o -o program</code> (либо <code>ld ...</code>)</p>
+<p>Связывает все объектные файлы и библиотеки в один исполняемый файл.
+После этого этапа можно запускать <code>./program</code>.</p>
+<p><code>*.cpp</code> файлы так же называют единицами трансляции</p>
+<p>Пример линкования файликов:</p>
+<pre><code class="language-c++">// a.cpp:						
+int main() {					
+	f();						
+}
+// b.cpp:
+#include&lt;cstdio&gt;
+void f() {
+	prinf(&quot;Hello world&quot;);
+}
+</code></pre>
+<p>Это не скомпилится, так как на этапе до линковки компилятор не знает о существовании <code>f()</code> где то вне <code>a.cpp</code>, поэтому ее надо объявить:</p>
+<pre><code class="language-c++">// a.cpp:						
+void f();					
+int main() {		
+	f();						
+}
+// b.cpp:
+#include&lt;cstdio&gt;
+void f() {
+	prinf(&quot;Hello world&quot;);
+}
+</code></pre>
+<p>Для линковки вместе<code>g++ a.o b.o</code></p>
+<ul>
+<li>Функцию нужно объявлять до её вызова.</li>
+<li>Если в обеих программах есть main, то невозможно будет слинковать (какой main запускать?)</li>
+<li>В main можно не делать <code>return</code>, по умолчанию вернёт 0.</li>
+<li>Можно писать функцию на ассемблере и вызывать из <code>*.cpp</code> файла, потому что на этапе линковки нет разницы.</li>
+<li>Во всех единицах трансляции только одно определение.</li>
+<li>Функцию нужно объявлять до её использования. Если она описана ниже, то транслятор не увидит её и кинет ошибку.</li>
+</ul>
+<h3><a class="header" href="#Некоторые-ключевые-слова" id="Некоторые-ключевые-слова">Некоторые ключевые слова</a></h3>
+<p><strong><code>static</code></strong> - переменная или функция - &quot;не предоставляется наружу&quot;, видна только в одной единице трансляции. При этом если в другой единице есть функция с такой же сигнатурой, но в текущей единице она <code>static</code>, то не будет проблемы с multiple definition, а в текущей единице трансляции выберется <code>static</code>. </p>
+<p>Для функций <code>void f();</code> это объявление (declaration), а <code>void f(){}</code> -- определение (definition).<br />
+Для переменных немного иначе: <br />
+<strong><code>int a</code></strong> - определение <br />
+<strong><code>extern int a</code></strong> - объявление (означает, что переменная объявлена где-то снаружи).</p>
+<p>Глобальные переменные инициализируются нулями при определении, в отличие от локальных.</p>
+<p>Можно заметить, что при линковке нам не важно, откуда приходят функции, исходный код одной из единиц трансляций может быть сразу на ассемблере:</p>
+<pre><code class="language-c++">extern &quot;C&quot; uint32_t fibonacci(uint32_t n);
+// определена, например, в .s файле, но должны выполняться calling conventions
+</code></pre>
+<p><strong><code>extern &quot;C&quot; f</code></strong> - использовать СИшное имя функции. На имена функций можно посмотреть так: <code>nm a.o</code>, <code>nm -C a.o</code>.<br />
+В Си имя функции выглядит как <code>f</code>, в C++ как <code>_Z1fd</code>, где <code>d</code> - типа аргумента, который она принимает (тут <code>double</code>).<br />
+Это связано с тем, что в Си нет перегрузки функций, поэтому там имена функций не декорируются типами их аргументов. <br />
+У функций с разными сигнатурами, но помеченных как <code>extern &quot;C&quot;</code>, после компиляции не будет информации об типах их аргументов, поэтому это даже слинкуется, но работать не будет (ну либо будет, но тут UB, так как, например, типы аргументов ожидаются разные).</p>
+<p>Возьмём теперь объявление <code>printf</code> из <code>cstdio</code> и вставим его вручную:</p>
+<pre><code class="language-c++">extern &quot;C&quot; int printf(const char*, ...);
+int main() {
+	printf(&quot;Hello, world!&quot;);
+}
+</code></pre>
+<p>Такая программа тоже работает. Откуда берётся <code>printf</code>? Ответ кроется в том, что при компиляции командой <code>g++ -c b.cpp</code> вызывается команда линковки <code>ld</code> с ключом, из-за которого файл линкуется с объектными файлами из стандартной библиотеки. Если посмотреть, то можно заметить, что наш файл линкуется с несколькими другими 
+объектными файлами, один из которых содержит функцию <code>_start</code> (это может быть файл <code>crt1.o</code>), которая вызывает <code>main</code>.</p>
+<h2><a class="header" href="#headers" id="headers">Headers</a></h2>
+<p><code>2.h</code> - файлы не участвующие в компиляции, в них пишут объявления функций. Не нужно делать  <code>#include file.cpp</code>, а в <code>.h</code> не нужно определять функции.</p>
+<p>Зачем это нужно? Как сказано выше, во всех единицах трансляции может быть только одно определение функции, потому что иначе получим redefinition error, так как компилятор не сможет выбрать из нескольких определений функции одно. Поэтому делаем на все единицы трансляции одно определение в <code>.cpp</code> файле, в хедерах объявления. Теперь, когда мы будем инклудить хедеры в другие единицы трансляции, у нас будет в них появляться только объявление функций из хедера.</p>
+<p>Структуры/классы пишем в <code>.h</code>. При этом их методы можно определять там же, потому что они воспринимаются компилятором как <code>inline</code>.</p>
+<p>Посмотрим на то, как работает <code>#include</code>:</p>
+<pre><code class="language-c++">// x.h:
+struct x {}; 
+// y.h:
+#include &quot;x.h&quot;
+// z.h:
+#include &quot;x.h&quot;
+
+a.cpp:							
+#include &quot;y.h&quot;		--&gt;		struct x{};
+#include &quot;z.h&quot;				struct x{}; //ошибка компиляции
+</code></pre>
+<p>Решение:</p>
+<ol>
+<li><code>#include &quot;x.h&quot;</code> не писать в хедерах, а только по необходимости в .cpp (не очень решение)</li>
+<li>
+<pre><code class="language-c++"> // x.h:
+ #ifndef X_H
+ #define X_H		// - макрос
+ struct x{};
+ #endif
+</code></pre>
+Это решение называется <strong>include guard</strong>
+Тогда при <code>#include x.h</code> будет проверка, заинклудили ли его уже и не будет проблем.</li>
+<li>Директива  <code>#pragma once</code> - стандарт не поддерживает, но поддерживают, кажется, все компиляторы. Эффект как у <strong>include guard</strong>, но проще писать и нет проблемы с тем, что можем еще где-то сделать лишний <code>#define X_H</code></li>
+</ol>
+<p>Если меняется <em>header</em>, то необходимо перекомпилировать все файлы, которые подключают его (даже не непосредственно), что может быть неприятно.</p>
+<pre><code class="language-c++">#define PI 3.14 
+// препроцессор подставляет вместо PI 3.14
+</code></pre>
+<p>Макросы обычно пишут капсом</p>
+<h2><a class="header" href="#Про-структуры" id="Про-структуры">Про структуры</a></h2>
+<p>Хотим две структуры в разных хедерах <code>a.h</code> и <code>b.h</code>. В структуре <code>a</code> указатель на структуру <code>b</code> и наоборот.</p>
+<pre><code class="language-c++">// main.cpp:
+#include &quot;a.h&quot;
+#include &quot;b.h&quot;
+</code></pre>
+<p>Если в <code>a.h</code> инклудится <code>b.h</code> и наоборот, то получим ошибку во время компиляции. Как фиксить? </p>
+<p>Если нам не требуется знать, что находится внутри структуры, можно использовать <strong>forward declaration</strong>. Например, <code>a.h</code> будет выглядеть так:</p>
+<pre><code class="language-c++">struct b;
+struct a {
+	b* bb;
+};
+</code></pre>
+<p><strong>Важно</strong>: избегайте циклических инклудов, чаще всего это приводит к ошибкам.</p>
+<p>Пока структуру не определили, структура - это <strong>incomplete type</strong>. Например, на момент объявление <code>struct b;</code> в коде выше, <code>b</code> - incomplete. 
+Все, что можно с ними делать - это объявлять функции с их использованим и использовать указатель. 
+Становятся полным типом после определения.</p>
+<p>Бонусом с <strong>forward declaration</strong> получаем, что нужно меньше перекомпилировать, так как меньше инклудов.</p>
+<p>А теперь такой пример:</p>
+<pre><code class="language-c++">// a.cpp
+#include &lt;iostream&gt;
+struct x {
+	int a;
+	// padding
+	double b;
+	int c;
+	int d;
+}
+int main(){
+	x xx = f();
+	std::cout &lt;&lt; xx.a &lt;&lt; &quot; &quot; &lt;&lt; xx.b &lt;&lt; &quot; &quot; &lt;&lt; xx.c &lt;&lt; &quot; &quot; &lt;&lt; xx.d &lt;&lt; &quot;\n&quot;;
+}
+
+// b.cpp
+struct x {
+	int a;
+	int b;
+	int c;
+	int d;
+	int e;
+};
+
+x f() {
+	x result;
+	result.a = 1;
+	result.b = 2;
+	result.c = 3;
+	result.d = 4;
+	result.e = 5;
+}
+</code></pre>
+<p>Тут стоит вспомнить, что структуры при линковке не играют никакой роли, то есть линковщику всё равно, что у нас структура <code>x</code> определена в двух местах. Поэтому такая программа отлично скомпилируется и запустится, но есть одна проблема. В <code>b.cpp</code> определение функции <code>f</code> скомпилируется с учётом смещений в структуре, определённой в этой же единице трансляции, то есть будто там лежит 5 интов.</p>
+<p>Поэтому следует придерживаться правила определять структуры один раз и не писать разные структуры с одним названием.</p>
+<h2><a class="header" href="#inline" id="inline">Inline</a></h2>
+<p>Компилятор сам умеет подставлять тело функций, но только внутри одной единицы трансляции (так как на момент трансляции у него нет функций из других единиц). Проблему с тем, что у нас не может быть больше одного определения функции во всех единицах трансляции, решает следующий модификатор:</p>
+<p><strong><code>inline</code></strong> - <em>рекомендация</em> компилятору заинлайнить функцию (подставить её тело). Их нужно определять в хедере и инклудить во все единицы трансляции, где нужно их использовать. На самом деле, современные компиляторы почти всегда игнорируют изначальный смысл <code>inline</code>. У компиляторов есть свои эвристки (размер функции, насколько упростится код и т.д.), по которым он считает, насколько функцию выгодно подставить. Поэтому <code>inline</code> пользуются только из-за следующего свойства: для функции, помеченной <code>inline</code>, возможно повторное определение, линковщик в таком случае оставляет только одно, предполагая, что они все одинаковые.</p>
+<p>Сейчас у компиляторов есть такая вещь, как <em>link time optimization</em> (ключ компиляции <code>-flto</code>). Компилятор не пытается генерить код на стадии трансляции, генерит там только внутренний промежуточный код, его же записывает в объектные файлы, а затем на стадии линковки инлайнит функции между единицами трансляции и генерит настоящий код. В таком случае линковка может занимать много времени, поэтому применяется при сборке с оптимизациями.</p>
+<p>Если у <code>inline</code> функции несколько разных определений, то линковщик выберет произвольное из них (например, из первой единицы трансляции или вообще разные в разных местах), поэтому нельзя нарушать правило одинаковых определений для <code>inline</code> функций. </p>
+<p>Если нужно именно заинлайнить функцию, то есть нестандартизированные модификаторы типа <code>__forceinline</code>, однако даже они могут игнорироваться компилятором. Инлайнинг функции может снизить производительность, на эту тему можно послушать доклад <a href="https://youtu.be/rJWSSWYL83U?t=1970">Антона Полухина на C++ Russia 2017</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="https://www.youtube.com/watch?v=kf2zVHBEfy8.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="05_compilation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="https://www.youtube.com/watch?v=kf2zVHBEfy8.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="05_compilation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

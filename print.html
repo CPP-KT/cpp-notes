@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> asm intro</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> os_cpu</a></li><li class="chapter-item expanded "><a href="CONTRIBUTING.html"><strong aria-hidden="true">4.</strong> CONTRIBUTING</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.1.</strong> Конспект</a></li></ol></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=bTgtesThdSg.html"><strong aria-hidden="true">3.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=XY8xN1Ug1_k.html"><strong aria-hidden="true">3.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=6vlNFxpSENs.html"><strong aria-hidden="true">4.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=DddjrdCrCF8.html"><strong aria-hidden="true">4.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=rGfQ5vWUS14.html"><strong aria-hidden="true">5.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=kf2zVHBEfy8.html"><strong aria-hidden="true">5.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=Fm-EmbQVrLE.html"><strong aria-hidden="true">6.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=w0G66pR3JuY.html"><strong aria-hidden="true">6.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=gsFYkmckcZs.html"><strong aria-hidden="true">6.4.</strong> Запись №3</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=jZAWVxcHLKA.html"><strong aria-hidden="true">6.5.</strong> Практика</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -494,6 +494,210 @@ void g()
 </code></pre>
 <p>Почему 136 изменилось на 120? Этот эффект называется выравниванием (alignment).
 В качестве основной единицы работы с памятью используется <strong>машинное слово</strong>, размер которого обычно составляет несколько байт. Так называемый &quot;unaligned access&quot; сложен в реализации на аппаратном уровне, поэтому обращения по произвольному адресу либо не поддерживаются (и вызывают исключение процессора), либо поддерживаются, но работают медленно. Обычно компилятор выравнивает данные по границам машинных слов, в нашем случае <code>8 + 16 * k</code>.</p>
+<h1><a class="header" href="#Введение-в-ассемблер-2" id="Введение-в-ассемблер-2">Введение в ассемблер</a></h1>
+<p>Презентация - http://sorokin.github.io/cpp-course/lecture-1e.odp</p>
+<p>Регистр <code>IP</code> (instruction pointer) содержит адрес команды.</p>
+<ul>
+<li><strong>16-битные регистры</strong> (8 штук): AX, CX, DX, BX, SP, BP, SI, DI </li>
+<li><strong>8-битные регистры</strong> (тоже 8): AL, AH, BL, BH, CL, CH, DL, DH. AL + AH = AX, аналогично другие.</li>
+<li><strong>32-битные регистры:</strong> EAX, и другие обычные с приставкой E - extended
+<img src="./images/02.08_memory_cell.png" alt="Memory Cell" /></li>
+</ul>
+<h3><a class="header" href="#Команды-read-write-1" id="Команды-read-write-1">Команды read, write</a></h3>
+<pre><code class="language-nasm">read (address)
+write (address, value)
+</code></pre>
+<h3><a class="header" href="#Команда-mov-1" id="Команда-mov-1">Команда mov</a></h3>
+<p>Команды для хранения в памяти кодируются:</p>
+<pre><code class="language-nasm">89 C2			mov		edx, eax	; EDX = EAX
+B8 05 00 00 00		mov		eax, 5		; EAX = 5
+</code></pre>
+<p><code>mov</code> может копировать содержимое памяти по адресу:</p>
+<pre><code class="language-nasm">	mov		ax, [10]	; Переместить в регистр из памяти по адресу 10
+	mov		ax, [bx]	; Переместить в регистр из памяти по адресу в BX
+	mov		[bx], ax	; Переместить в память по адресу BX содержимое AX
+	mov		[bx], [ax]	; WRONG! из памяти в память нельзя. Оно даже не скомпилируется
+</code></pre>
+<p><em>Забавный факт: <code>[ax]</code> невалидный адрес, больше можно почитать <a href="https://stackoverflow.com/questions/46771338/assembler-x86-code-doesnt-work">здесь</a></em></p>
+<p>Команда <code>mov ax,[bx]</code> читает из ячейки с адресом BX и BX + 1:</p>
+<p><code>AX = mem[BX + 1] * 256 + mem[BX]</code></p>
+<h3><a class="header" href="#Команды-арифметики-1" id="Команды-арифметики-1">Команды арифметики</a></h3>
+<pre><code class="language-nasm">	cmd		dst, src
+
+	add		ax, cx		; AX = AX + CX
+	sub		ax, cx		; AX = AX - CX, аналогично AND, OR, XOR
+	inc		ax		; AX += 1
+	inc		BYTE [bx]	; INC одного байта
+	inc		WORD [bx]	; INC числа из двух байт (дальше DWORD и т.д.)
+	dec		ax		; AX -= 1
+
+	neg		ax		; AX = -AX
+	not		ax		; AX = ~AX(побитово)
+
+	mul		src		; unsigned, в пару DX:AX = src*AX, DX - старшая часть, AX - младшая
+	imul		src		; signed
+	div		src		; unsigned, AX = DX:AX / src, DX = DX:AX % src
+	idiv		src		; signed
+</code></pre>
+<p>Перед делением 16-битного зануляем регистр DX:</p>
+<pre><code class="language-nasm">	xor		dx, dx		; не &quot;mov dx,0&quot;, так как кодируется короче
+	div		bx
+</code></pre>
+<pre><code class="language-nasm">	cwd				; сохраняет знак: берёт старший бит из AX, заполняет им DX
+	idiv		bx
+</code></pre>
+<p>При этом в команде <code>DIV</code> если частное не помещается в <code>AX</code>, то это такая же ошибка, как деление на 0</p>
+<h3><a class="header" href="#Команды-сдвигов-1" id="Команды-сдвигов-1">Команды сдвигов</a></h3>
+<pre><code class="language-nasm">shl - Сдвиг влево
+shr - Логический сдвиг вправо (бит знака теряется)
+sar - Арифметический сдвиг вправо (сохранение знака)
+</code></pre>
+<h2><a class="header" href="#Оптимизации-компилятора-1" id="Оптимизации-компилятора-1">Оптимизации компилятора:</a></h2>
+<p><code>g++ -O2 -S -masm=intel s.cpp</code> -- посмотреть ассемблированный код с оптимизацией.</p>
+<p>Онлайн компилятор-дизассемблер: https://godbolt.org/. Можно поиграться с такой функцией и посмотреть на оптимизации компилятора:</p>
+<pre><code class="language-c++">int foo(int a, int b)
+{
+    return a + b; // a-b компилится по-другому
+}
+</code></pre>
+<h3><a class="header" href="#Команда-lea-1" id="Команда-lea-1">Команда <code>LEA</code></a></h3>
+<pre><code class="language-nasm">	lea		ax, [bx] 	
+	; в [] не только регистр, мб арифметическое выражение из них
+</code></pre>
+<p><code>LEA</code> записывает в dst выражение из [ ] (как &quot;mov src,[dst + ...]&quot;, но пишутся не данные по адресу, а сам адрес).</p>
+<p>Также <code>LEA</code> может использоваться вместо <code>ADD</code>:</p>
+<pre><code class="language-nasm">	lea		ax, [ax + 8]
+	add		ax, 8
+</code></pre>
+<p>Эти две строки делают одно и тоже, только выполняются на разных блоках конвейера, а еще <code>lea</code> не трогает флаги, в отличие от <code>add</code>.</p>
+<p>Подробнее <a href="https://stackoverflow.com/questions/1658294/whats-the-purpose-of-the-lea-instruction">здесь</a> (первые 2 отаета).</p>
+<h3><a class="header" href="#Как-delизбегаетсяdel-оптимизируется-деление-1" id="Как-delизбегаетсяdel-оптимизируется-деление-1">Как <del>избегается</del> оптимизируется деление:</a></h3>
+<p>Деление занимает много больше тактов, чем другие арифметические операции, а во время его вычисления весь конвейер стоит. Компиляторы стараются избегать операции деления, если это возможно.</p>
+<p>Следующий код на C++:</p>
+<pre><code class="language-c++">unsigned foo(unsigned a) // беззнаковый тип
+{
+    return a / 2;
+}
+</code></pre>
+<p>Может быть оптимизирован компилятором до</p>
+<pre><code class="language-nasm">	mov		eax, edi	; Аргумент находится в edi
+	shr		eax		; Логический сдвиг вправо, второй аргумент по умолчанию 1
+	ret
+</code></pre>
+<p>Со знаковым аргументом деление скомпилится так:</p>
+<pre><code class="language-nasm">	mov		eax, edi
+	shr		eax, 31		; Оставляем старший бит (знак)
+	add		eax, edi	; Если число отрицательное, то добавляем 1 (чтобы при a=-1 всё работало)
+	sar		eax		; Арифметический сдвиг вправо на 1 бит
+</code></pre>
+<p>А что будет с <code>unsigned</code> делением на 3? А оно скомпилится вот так:</p>
+<pre><code class="language-nasm">	mov		eax, edi
+	mov		edi, 2863311531	; 0xAAAAAAAB или 2^33/3
+	imul		rax, rdi
+	shr		rax, 33
+</code></pre>
+<p>Почему это лучше? Деление дорогое, а константу можем посчитать при компиляции, получая выигрыш в эффективности.</p>
+<p>Почему это работает? Потому что при арифметике с переполнением деление на константу можно выполнить через умножение:</p>
+<p><code>a / 3 = (a * 2^33) / (3 * 2^33) = (a &gt;&gt; 33) * 2863311531</code></p>
+<h2><a class="header" href="#Команды-перехода-jmp-и-прочие-1" id="Команды-перехода-jmp-и-прочие-1">Команды перехода <code>JMP</code> и прочие</a></h2>
+<pre><code class="language-nasm">.loop: ; метка
+	inc		ax
+	jmp		loop ; как присваивание в регистр IP
+</code></pre>
+<p><code>JMP</code> позволяет сделать бесконечный цикл</p>
+<p>Основные условные переходы:</p>
+<pre><code class="language-nasm">	cmp		ax, bx ; сравнить меняет регистр флага
+	je, jne - jump if (not) equal
+	jg, jng - jump if (not) greater (signed)
+	jl, jnl - jump if (not) less (signed)
+	ja, jna - jump if (not) above (unsigned)
+	jb, jnb - jump if (not) below (unsigned)
+</code></pre>
+<h2><a class="header" href="#Регистры-флагов-flags-registers-1" id="Регистры-флагов-flags-registers-1">Регистры флагов (FLAGS Registers)</a></h2>
+<p>Большой (до 64 бит) регистр, каждый бит - какой-то флаг.
+Выставляются после инструкций (<code>CMP</code>, арифметика и пр.)</p>
+<pre><code class="language-nasm">	ZF - zero flag 		; если рез. 0
+	SF - sign flag 		; если рез. отрицательный
+	CF - carry flag		; если рез. с битом переноса (для unsigned)
+	OF - overflow flag 	; если рез. переполнился (для signed)
+</code></pre>
+<p>Есть команда <code>ADC</code>:  <code>dst = dst + src + CF</code></p>
+<p>Отсюда другие <strong>команды перехода</strong>:</p>
+<pre><code class="language-nasm">	jc, jnc - jump if (not) carry flag
+	jz, jnz - jump if (not) zero flag
+	js, jns - jump if (not) sign flag
+	jo, jno - jump if (not) overflow flag
+	jb, jc  - jump if carry flag
+	ja      - jump if not carry flag &amp;&amp; not zero flag
+	jl      - OF != SF
+	jg      - OF == SF &amp;&amp; !ZF
+</code></pre>
+<p>Флаги для <code>cmp a,b</code>:</p>
+<p><img src="./images/02.08_flags.png" alt="Flags scheme" /></p>
+<p>Многие команды расставляют флаги, выполняя операцию:</p>
+<ul>
+<li><code>cmp</code> - сделать вычитание, но не записывать результат</li>
+<li><code>test</code> - побитовый &amp;, но не записывает результат</li>
+</ul>
+<pre><code class="language-nasm">	test		ax, ax ; проверка на 0
+	jz		L2
+</code></pre>
+<p>Пример программы с метками и прыжками:</p>
+<pre><code class="language-nasm">.loop:
+	mov		dx, ax
+	add		ax, bx
+	mov		bx, dx
+	dec		cx
+	jnz		loop
+</code></pre>
+<h2><a class="header" href="#Вызов-функций-и-выход-из-них-1" id="Вызов-функций-и-выход-из-них-1">Вызов функций и выход из них</a></h2>
+<p>Заходим в функции и выходим из них в порядке стека.
+Есть специальный регистр <code>SP</code>, который указывает на вершину стека.
+Стек - от старших адресов к младшим. </p>
+<pre><code class="language-nasm">	push		src		; SP -= 2, так как 2 байта. mem[SP] = src
+	pop		src		; tmp = mem[SP], SP += 2, dst = tmp
+</code></pre>
+<p>Команды работы со стеком. Стек позволяет сохранять старые значения, которые необходимо вернуть:</p>
+<pre><code class="language-nasm">	call	label			; вызов ф-иии
+	ret				; выход из ф-ии
+	; по своей сути эти строки равносильны:
+	push		next_instr
+	jmp		label
+	...
+	pop		tmp		; return к следующей инструкции
+	jmp		tmp
+</code></pre>
+<h2><a class="header" href="#abi-1" id="abi-1">ABI</a></h2>
+<p><strong>ABI</strong> - application binary interface.</p>
+<p>Программе нужно вызывать какие-то функции операционной системы. ABI - набор соглашений для доступа приложений к операционной системе, там прописано всё про функции и прочее, в том числе размеры типов данных.</p>
+<h2><a class="header" href="#Выделение-памяти-1" id="Выделение-памяти-1">Выделение памяти:</a></h2>
+<pre><code class="language-c++">void f(char const*);
+
+void g()
+{
+    char arr[113];
+    f(arr);
+}
+</code></pre>
+<p>Компилируется в:</p>
+<pre><code class="language-nasm">g():
+        sub             rsp, 136
+        mov             rdi, rsp
+        call            f(char const*)
+        add             rsp, 136
+        ret
+</code></pre>
+<p>К локальным переменным обращаемся через <code>rsp</code>, лежат на стеке. Размер стека - переменная на уровне операционной системы (вроде).</p>
+<p>Обратим внимание на то, что если изменить размер массива на <strong>112</strong>, то этот код скомпилируется в:</p>
+<pre><code class="language-nasm">g():
+        sub             rsp, 120
+        mov             rdi, rsp
+        call            f(char const*)
+        add             rsp, 120
+        ret
+</code></pre>
+<p>Почему 136 изменилось на 120? Этот эффект называется выравниванием (alignment).
+В качестве основной единицы работы с памятью используется <strong>машинное слово</strong>, размер которого обычно составляет несколько байт. Так называемый &quot;unaligned access&quot; сложен в реализации на аппаратном уровне, поэтому обращения по произвольному адресу либо не поддерживаются (и вызывают исключение процессора), либо поддерживаются, но работают медленно. Обычно компилятор выравнивает данные по границам машинных слов, в нашем случае <code>8 + 16 * k</code>.</p>
 <h2><a class="header" href="#Прерывания" id="Прерывания">Прерывания</a></h2>
 <p>Почему программа с вечным циклом не повесит нам весь компьютер, даже если у нас всего одно ядро? Как ОС работает с устройствами? Всё это завязано на перерываниях.</p>
 <p>Что происходит при прерывании: </p>
@@ -593,7 +797,981 @@ int bar()
 	pop		rbp
 	ret
 </code></pre>
-<h1><a class="header" href="#contributing" id="contributing">CONTRIBUTING</a></h1>
+<h2><a class="header" href="#Прерывания-1" id="Прерывания-1">Прерывания</a></h2>
+<p>Почему программа с вечным циклом не повесит нам весь компьютер, даже если у нас всего одно ядро? Как ОС работает с устройствами? Всё это завязано на перерываниях.</p>
+<p>Что происходит при прерывании: </p>
+<ul>
+<li>Значения регистров текущего процесса дампаются в оперативную память</li>
+<li>Подгружаются значения регистров другого процесса и исполнение передаётся ему<br />
+Такая схема называется <em>вытесняющей многозадачностью</em>.</li>
+</ul>
+<p>Способы прерывания на устройства:</p>
+<ul>
+<li><em>Polling</em> - процессор сам опрашивает устройства, когда считает нужным.</li>
+<li><em>Interrupt</em> (прерывание) - устройство само говорит об изменении, процессор вызывает обработчик прерываний.</li>
+</ul>
+<p><strong>Local timer interrupt</strong> - прерывания по таймеру, своё у каждого ядра ЦП.
+ОС заводит таймер, таймер срабатывает, провоцирует прерывание и ОС получает управление в обработчике прерываний.<br />
+На самом деле, всё сложнее, потому что постоянно работающие таймеры это неэкономно, поэтому он, например, отключается, если на ядре ничего не исполняется.</p>
+<p><strong>Rescheduling interrupts</strong> - прерывания, используещиеся для перепланировки (миграции) процесса на другое ядро в целях распределения нагрузки. Реализованы с помощью <a href="https://en.wikipedia.org/wiki/Inter-processor_interrupt">IPI</a>.</p>
+<h2><a class="header" href="#Про-память-1" id="Про-память-1">Про память</a></h2>
+<p>ОС реализует следующие принципы:</p>
+<ul>
+<li><em>hardware abstraction</em> - мышка может быть подключена по-разному подключенной, но программе всё равно</li>
+<li><em>isolation process</em> - программа не может повлиять на другие программы (записать в их память) </li>
+</ul>
+<p>Это достигается следующим образом:</p>
+<p><strong>Физическая память</strong> - реальный модуль памяти (как на ЭВМ)</p>
+<p><strong>Виртуальная память</strong> - пространство памяти процессов, &quot;то, что видит программа&quot;. Обращение по адресу памяти в программе - обращение по адресу в виртуальной памяти. 
+Процесс преобразования из виртуальной в физическую называется <em>трансляцией адресов</em> и реализуется в специальном блоке процессора <a href="https://en.wikipedia.org/wiki/Memory_management_unit">MMU</a></p>
+<p><em>дальше везде рассматривается 32-битная система</em></p>
+<h3><a class="header" href="#Страничная-адресация-1" id="Страничная-адресация-1">Страничная адресация</a></h3>
+<p>Способ организации виртуальной памяти, при котором виртуальные адреса отображаются на физические постранично (обычно 1 страница = 4 КB).</p>
+<p>Память процесса может лежать в физической памяти в любом порядке:</p>
+<p><img src="./images/02.15_memory_disorder.png" alt="Memory Disorder" /></p>
+<p>Адресация реализуется через <em>PageTables</em>.</p>
+<p>Вместо массива на много элементов храним массив (<em>каталог страниц</em>) размера 1024 из указателей на массивы размерами по 1024 (<em>таблицы страниц</em>). Почему это удобнее? Некоторые таблицы можно не хранить, если нужно выделить не все.</p>
+<p>Это выглядит как-то так:</p>
+<p><img src="./images/02.15_page_table.png" alt="Page Table" />
+<img src="./images/02.15_page_tables.png" alt="Page Table" />
+Для ускорения трансляции применяется специальный кеш TLB (Translation lookaside buffer).</p>
+<p>Подробнее можно прочитать тут: https://wiki.osdev.org/Paging</p>
+<h2><a class="header" href="#Механизм-адресации-на-уровне-процессора-1" id="Механизм-адресации-на-уровне-процессора-1">Механизм адресации на уровне процессора:</a></h2>
+<p><strong>Пример адреса:</strong>
+Virtual adress - 0x123456789A</p>
+<p>Младшие 12 бит виртуального адреса: смещение внутри страницы. Следующие 10 бит - индекс в таблице страниц, старшие 10 бит - индекс в каталоге страниц.</p>
+<pre><code class="language-c++">typedef uint32_t page_table_element;
+typedef uint32_t virtual_address;
+struct page_directory
+{
+     uint32_t translate(virtual_address);
+     private:
+     	page_table_element data[1024];
+};
+</code></pre>
+<p>Альтернативы:</p>
+<ul>
+<li><em>Хеш-таблица</em>: плохо взаимодействует с кэшем. Использовалась в PowerPC</li>
+</ul>
+<p>Это всё было про <em>32-битную архитектуру</em>. На <em>64-битной</em> числа так красиво не сходятся. Используют следующее: добавляется ещё один уровень (можно и не один, на самом деле), массивы делают по 512. </p>
+<p>Пример: процессор может транслировать только 48 бит (соответствует размеру дерева из уровней). Физической памяти - 39 бит. Почему? &quot;Сколько пинов у процессора есть, чтобы обращаться к памяти, столько и бит&quot;. 
+Остальные биты в 64-битном адресе заполнены одинаковыми значениями и мы их не используем.</p>
+<p>В регистре <strong>CR3</strong> хранится указатель на каталог страниц для процесса.</p>
+<h2><a class="header" href="#Про-системные-вызовы-стек-вызовов-и-frame-pointer-1" id="Про-системные-вызовы-стек-вызовов-и-frame-pointer-1">Про системные вызовы, стек вызовов и frame pointer</a></h2>
+<p><strong>syscall</strong> - интерфейс взаимодействия процесса программы с ядром ОС. Например, это чтение/запись в файла/терминала, завершение программы с кодом ошибки и т.д.</p>
+<p><strong>rip</strong> - регистр, в котором хранится адрес исполняемой инструкции в памяти</p>
+<pre><code class="language-nasm">main:
+	mov		rdx, 42
+	push		43
+	push		44
+	call		bar
+bar:
+	sub		rsp, 40
+	; 
+	add		rsp,40
+	ret
+</code></pre>
+<p>Как понять, кто вызывал функцию? (WIP)</p>
+<p><strong>Stack frame</strong> (кадр стека) - условная часть стека, принадлежащая вызванной функции. Содержит стековые переменные, адрес возврата и, опционально, описанный далее frame pointer</p>
+<p>Компилятор умеет внедрять в файл специальную отладочную информацию: бесплатно по производительности, но занимает место в памяти.</p>
+<p>Альтернатива: в скомпилированном коде при вызове функции обновляется stack frame pointer (указатель на кадр стека), таким образом кадры образуют односвязный список, а стек можно &quot;раскрутить&quot; (unwind).</p>
+<p>Плюсы: без лишних телодвижений программа может узнать свой стек вызовов без отладчика. Минусы: при обильном вызове функций теряем в производительности.</p>
+<p><strong>rbp</strong> - регистр, который используется для указания на предыдущий кадр стека.</p>
+<p>На https://godbolt.org можно посмотреть, что следующий код:</p>
+<pre><code class="language-nasm">int foo(char const*);
+
+int bar()
+{
+    char arr[40];
+    return foo(arr) + 1;
+}
+</code></pre>
+<p>с флагами <code>-O2  -fno-omit-frame-pointer</code> компилируется во что-то такое:</p>
+<pre><code class="language-nasm">bar:
+	push		rbp
+	mov		rbp, rsp
+	sub		rbp, 40
+	;
+	mov		rsp, rbp
+	pop		rbp
+	ret
+</code></pre>
+<h1><a class="header" href="#Запись-1" id="Запись-1">Запись №1</a></h1>
+<h1><a class="header" href="#Запись-2" id="Запись-2">Запись №2</a></h1>
+<h1><a class="header" href="#Кэш-память" id="Кэш-память">Кэш-память</a></h1>
+<blockquote>
+<p>Optimize for data first, then code. Memory access is probably going to be your biggest bottleneck</p>
+</blockquote>
+<p>Одинаково ли по времени будет работать следующий код?</p>
+<pre><code class="language-python">for i = 0..n:				for i=0..n:
+	for j=0..n:				for j=0..n:
+		a[i][j] = 0 				a[j][i] = 0
+</code></pre>
+<p>У этих двух кодов большая разница из-за процессорного кэша. Первый цикл обращается к памяти последовательно, а второй &quot;скачет&quot; по ней. Поэтому обращения к памяти первого цикла попадают в кэш, а второго - нет. С ростом <strong>N</strong> видна разница между уровнями кэша на графике времени обработки одного элемента:</p>
+<p><img src="./images/02.29_cache_hit_graph.png" alt="Cache Hit Graph" /></p>
+<p>Небольшие пики - скачки из-за попадания в один бакет (заметно на степенях двойки), сильное изменение времени работы происходит, когда данные перестают попадать в кэш какого-то уровня.</p>
+<p><strong>Кэш</strong> реализован через хэш-таблицы (дискретного размера), где ключ - адрес в памяти.
+Линии кэша примерно по <em>64 байта</em> разделенные на группы (buckets), размеры которых называются ассоциативностью кэша.</p>
+<p>Подробнее про кэш  можно прочитать в <a href="https://github.com/DespairedController/computer-architecture/blob/master/1_4/1_4.pdf">конспектах по ЭВМ</a> </p>
+<p><strong>Prefetching</strong> - если много кэш-промахов, запрашиваем заранее подгрузить в кэш. Это работает на уровне кэш-подсистемы процессора, а не компилятора/ОС.</p>
+<p><em>Пример</em>: хранение хэш-таблицы с открытой адресацией. Два варианта: </p>
+<p><img src="./images/02.29_hash_table.png" alt="Hash-Table" /></p>
+<ul>
+<li>
+<p>Если ожидаются частые попадания, то хранить полезнее данные рядом с ключом.</p>
+</li>
+<li>
+<p>Если ожидаются редкие попадания, то лучше хранить ключи и данные отдельно.</p>
+</li>
+</ul>
+<h2><a class="header" href="#tlb---translation-lookaside-buffer" id="tlb---translation-lookaside-buffer">TLB - translation lookaside buffer</a></h2>
+<p>Зачем нужен? Это кэш для ускорения трансляции виртуального адреса в физический. Так же, как и обычный, может быть нескольких уровней.</p>
+<h2><a class="header" href="#huge-pages" id="huge-pages">Huge Pages</a></h2>
+<p><em>Идея</em>: отображать страницу памяти в лежащую подряд физическую память. Тогда проще обходить каталог страниц. Например, если программе нужно прочитать 1 Мбайт непрерывных данных, которых нет в <em>TLB</em> кэше, то нужно сделать обращение к 256 страницам.</p>
+<p>Но использовать тяжело, так как с ними тяжело делать <em>swap</em> (подкачка страниц). Например, в <em>Windows</em> требуются специальные права, чтобы выделять не-swappable память.</p>
+<p><strong>Swap</strong> - хотим выделить памяти больше, чем у нас есть физической (оперативной). Особенно было актуально раньше, когда оперативной памяти было мало. Некоторые страницы из оперативной памяти записывались на диск и помечались недоступными, но при необходимости можно было вытеснить другую страницу и выгрузить нужную с диска.</p>
+<h1><a class="header" href="#Конвейер-pipelining" id="Конвейер-pipelining">Конвейер (Pipelining)</a></h1>
+<p>Ну тут опять всё <a href="https://github.com/DespairedController/computer-architecture/blob/master/2_3-4/2_3-4.pdf">как было на ЭВМ</a>.</p>
+<p>Разбили выполнение команды на несколько стадий, теперь можем повысить частоту, так как каждая стадия стала проще. Выигрыш в том, что можем давать новые данные на каждом такте.</p>
+<p><strong>Спекулятивное исполнение</strong>: условные переходы дорогие, поэтому мы предсказываем переход, выполняем, а если не угадали, то откатываемя. В общем, ничего нового. Также это называется <strong>branch prediction</strong>.
+Можем как выиграть, так и проиграть от этого. Например, <a href="https://stackoverflow.com/questions/11227809/why-is-processing-a-sorted-array-faster-than-processing-an-unsorted-array">в некоторых программах на отсортированном массиве</a> предсказание может улучшить время работы в несколько раз.</p>
+<p>Полезно писать программу так, чтобы уровень зависимостей команд был как можно меньше (это может также пытаться делать компилятор). Например:</p>
+<pre><code class="language-c++">int f(int a, int b, int c, int d)
+{
+ return a * b * c * d;
+}
+</code></pre>
+<p>может скомпилиться в следующий код, чтоб уменьшить количество зависимых умножений:
+<code> (a* b) * (c * d)</code></p>
+<pre><code class="language-nasm"> imul		edi, esi
+ imul		edx, ecx
+ imul		edx, edi
+ mov		eax, edx
+ ret
+</code></pre>
+<p>Похожее происходит с циклами. Посмотрим на алгоритм Хаффмана:</p>
+<pre><code class="language-c++">void count_huffman_weights(char const* src, size_t size)
+{
+     uint32_t count[256] = {0};
+     for (size_t i = 0; i != size; ++i)
+         ++count[src[i]];
+}
+</code></pre>
+<p>может быть разбит компилятором на параллельные исполнения. Так будут выглядеть зависимости:</p>
+<p><img src="./images/02.29_dependencies.png" alt="Dependencies" /></p>
+<p>Но у нас возникают проблемы из-за того, что мы пишем в одни переменные. Как пофиксить? Можем сделать 8 разных массивов-счетчиков. Такая реализация используется в библиотеке <strong>Zstandart</strong></p>
+<pre><code class="language-c++">void count_huffman_weights_improved(char const* src, size_t size)
+{
+ uint32_t count[8][256] = {};
+ size = size / 8 * 8;
+ for (size_t i = 0; i &lt; size;)
+     {
+           ++count[0][src[i++]]; ++count[1][src[i++]]; ++count[2][src[i++]];
+           ++count[3][src[i++]]; ++count[4][src[i++]]; ++count[5][src[i++]];
+           ++count[6][src[i++]]; ++count[7][src[i++]];
+     }
+}
+</code></pre>
+<hr />
+<p>​	Полезные книжки по теме:</p>
+<ul>
+<li>J. Shen, M. Lipasti — Modern Processor Design: Fundamentals of Superscalar Processors</li>
+<li>J. Hennessy, D. Patterson — Computer Architecture: A Quantitative Approach</li>
+</ul>
+<h1><a class="header" href="#Кэш-память-1" id="Кэш-память-1">Кэш-память</a></h1>
+<blockquote>
+<p>Optimize for data first, then code. Memory access is probably going to be your biggest bottleneck</p>
+</blockquote>
+<p>Одинаково ли по времени будет работать следующий код?</p>
+<pre><code class="language-python">for i = 0..n:				for i=0..n:
+	for j=0..n:				for j=0..n:
+		a[i][j] = 0 				a[j][i] = 0
+</code></pre>
+<p>У этих двух кодов большая разница из-за процессорного кэша. Первый цикл обращается к памяти последовательно, а второй &quot;скачет&quot; по ней. Поэтому обращения к памяти первого цикла попадают в кэш, а второго - нет. С ростом <strong>N</strong> видна разница между уровнями кэша на графике времени обработки одного элемента:</p>
+<p><img src="./images/02.29_cache_hit_graph.png" alt="Cache Hit Graph" /></p>
+<p>Небольшие пики - скачки из-за попадания в один бакет (заметно на степенях двойки), сильное изменение времени работы происходит, когда данные перестают попадать в кэш какого-то уровня.</p>
+<p><strong>Кэш</strong> реализован через хэш-таблицы (дискретного размера), где ключ - адрес в памяти.
+Линии кэша примерно по <em>64 байта</em> разделенные на группы (buckets), размеры которых называются ассоциативностью кэша.</p>
+<p>Подробнее про кэш  можно прочитать в <a href="https://github.com/DespairedController/computer-architecture/blob/master/1_4/1_4.pdf">конспектах по ЭВМ</a> </p>
+<p><strong>Prefetching</strong> - если много кэш-промахов, запрашиваем заранее подгрузить в кэш. Это работает на уровне кэш-подсистемы процессора, а не компилятора/ОС.</p>
+<p><em>Пример</em>: хранение хэш-таблицы с открытой адресацией. Два варианта: </p>
+<p><img src="./images/02.29_hash_table.png" alt="Hash-Table" /></p>
+<ul>
+<li>
+<p>Если ожидаются частые попадания, то хранить полезнее данные рядом с ключом.</p>
+</li>
+<li>
+<p>Если ожидаются редкие попадания, то лучше хранить ключи и данные отдельно.</p>
+</li>
+</ul>
+<h2><a class="header" href="#tlb---translation-lookaside-buffer-1" id="tlb---translation-lookaside-buffer-1">TLB - translation lookaside buffer</a></h2>
+<p>Зачем нужен? Это кэш для ускорения трансляции виртуального адреса в физический. Так же, как и обычный, может быть нескольких уровней.</p>
+<h2><a class="header" href="#huge-pages-1" id="huge-pages-1">Huge Pages</a></h2>
+<p><em>Идея</em>: отображать страницу памяти в лежащую подряд физическую память. Тогда проще обходить каталог страниц. Например, если программе нужно прочитать 1 Мбайт непрерывных данных, которых нет в <em>TLB</em> кэше, то нужно сделать обращение к 256 страницам.</p>
+<p>Но использовать тяжело, так как с ними тяжело делать <em>swap</em> (подкачка страниц). Например, в <em>Windows</em> требуются специальные права, чтобы выделять не-swappable память.</p>
+<p><strong>Swap</strong> - хотим выделить памяти больше, чем у нас есть физической (оперативной). Особенно было актуально раньше, когда оперативной памяти было мало. Некоторые страницы из оперативной памяти записывались на диск и помечались недоступными, но при необходимости можно было вытеснить другую страницу и выгрузить нужную с диска.</p>
+<h1><a class="header" href="#Конвейер-pipelining-1" id="Конвейер-pipelining-1">Конвейер (Pipelining)</a></h1>
+<p>Ну тут опять всё <a href="https://github.com/DespairedController/computer-architecture/blob/master/2_3-4/2_3-4.pdf">как было на ЭВМ</a>.</p>
+<p>Разбили выполнение команды на несколько стадий, теперь можем повысить частоту, так как каждая стадия стала проще. Выигрыш в том, что можем давать новые данные на каждом такте.</p>
+<p><strong>Спекулятивное исполнение</strong>: условные переходы дорогие, поэтому мы предсказываем переход, выполняем, а если не угадали, то откатываемя. В общем, ничего нового. Также это называется <strong>branch prediction</strong>.
+Можем как выиграть, так и проиграть от этого. Например, <a href="https://stackoverflow.com/questions/11227809/why-is-processing-a-sorted-array-faster-than-processing-an-unsorted-array">в некоторых программах на отсортированном массиве</a> предсказание может улучшить время работы в несколько раз.</p>
+<p>Полезно писать программу так, чтобы уровень зависимостей команд был как можно меньше (это может также пытаться делать компилятор). Например:</p>
+<pre><code class="language-c++">int f(int a, int b, int c, int d)
+{
+ return a * b * c * d;
+}
+</code></pre>
+<p>может скомпилиться в следующий код, чтоб уменьшить количество зависимых умножений:
+<code> (a* b) * (c * d)</code></p>
+<pre><code class="language-nasm"> imul		edi, esi
+ imul		edx, ecx
+ imul		edx, edi
+ mov		eax, edx
+ ret
+</code></pre>
+<p>Похожее происходит с циклами. Посмотрим на алгоритм Хаффмана:</p>
+<pre><code class="language-c++">void count_huffman_weights(char const* src, size_t size)
+{
+     uint32_t count[256] = {0};
+     for (size_t i = 0; i != size; ++i)
+         ++count[src[i]];
+}
+</code></pre>
+<p>может быть разбит компилятором на параллельные исполнения. Так будут выглядеть зависимости:</p>
+<p><img src="./images/02.29_dependencies.png" alt="Dependencies" /></p>
+<p>Но у нас возникают проблемы из-за того, что мы пишем в одни переменные. Как пофиксить? Можем сделать 8 разных массивов-счетчиков. Такая реализация используется в библиотеке <strong>Zstandart</strong></p>
+<pre><code class="language-c++">void count_huffman_weights_improved(char const* src, size_t size)
+{
+ uint32_t count[8][256] = {};
+ size = size / 8 * 8;
+ for (size_t i = 0; i &lt; size;)
+     {
+           ++count[0][src[i++]]; ++count[1][src[i++]]; ++count[2][src[i++]];
+           ++count[3][src[i++]]; ++count[4][src[i++]]; ++count[5][src[i++]];
+           ++count[6][src[i++]]; ++count[7][src[i++]];
+     }
+}
+</code></pre>
+<hr />
+<p>​	Полезные книжки по теме:</p>
+<ul>
+<li>J. Shen, M. Lipasti — Modern Processor Design: Fundamentals of Superscalar Processors</li>
+<li>J. Hennessy, D. Patterson — Computer Architecture: A Quantitative Approach</li>
+</ul>
+<h1><a class="header" href="#Запись-1-1" id="Запись-1-1">Запись №1</a></h1>
+<h1><a class="header" href="#Запись-2-1" id="Запись-2-1">Запись №2</a></h1>
+<h1><a class="header" href="#Синтаксическое-пересечение-c-и-c" id="Синтаксическое-пересечение-c-и-c">Синтаксическое пересечение C и C++</a></h1>
+<h2><a class="header" href="#Типы-данных" id="Типы-данных">Типы данных</a></h2>
+<h3><a class="header" href="#Целочисленные" id="Целочисленные">Целочисленные:</a></h3>
+<pre><code class="language-c++">signed int // по умолчанию тип знаковый, то же самое, что и int
+// типы и их беззнаковые варианты:
+short		unsigned short
+int		unsigned
+long		unsigned long
+long long	unsigned long long
+</code></pre>
+<p>Стандарт не приписывает конкретных размеров типа, гарантирует только, что не меньше. Размеры типов прописаны в ABI архитектуры.</p>
+<table><thead><tr><th>типы</th><th>32 bit</th><th>win64</th><th>linux64</th></tr></thead><tbody>
+<tr><td>short</td><td>8</td><td>8</td><td>8</td></tr>
+<tr><td>short</td><td>16</td><td>16</td><td>16</td></tr>
+<tr><td>int</td><td>32</td><td>32</td><td>32</td></tr>
+<tr><td>long</td><td>32</td><td>32</td><td>64</td></tr>
+<tr><td>long long</td><td>64</td><td>64</td><td>64</td></tr>
+</tbody></table>
+<p><strong>8-битные типы</strong></p>
+<pre><code class="language-c++">// это 3 разных типа, в отличие от int и signed int
+char    // может быть как знаковый, так и нет
+unsigned char			
+signed char
+</code></pre>
+<p>Как проверить, одинаковые ли типы? Перегрузить функцию.</p>
+<pre><code class="language-c++">void foo(int){}
+void foo(signed int){} // не скомпилируется, так как две функции с одинаковой сигнатурой
+</code></pre>
+<pre><code class="language-c++">void foo(char){}
+void foo(signed char){} // скомпилируется
+</code></pre>
+<p><strong>Существуют типы с фиксированным размером:</strong>
+Следует использовать их, если хотим тип гарантированного размера:</p>
+<pre><code class="language-c++">#inlcude &lt;cstdint&gt;
+int8_t			uint8_t
+int16_t			uint16_t
+int32_t			uint32_t
+int64_t			uint64_t
+</code></pre>
+<pre><code class="language-c++">arr[i]; // какого типа нужно брать i?
+#inlcude &lt;cstddef&gt; // в ней лежат нужные типы
+</code></pre>
+<p><strong><code>size_t</code></strong> - тип, размера которого хватит, чтобы хранить максимальный размер;<br />
+он <code>unsigned</code> (размер на 32bit - 32, на 64bit - 64), у <strong><code>sizeof(...)</code></strong> тип <strong><code>size_t</code></strong>.</p>
+<p><strong><code>ptrdiff_t</code></strong> - тип для разности двух указателей (<code>signed</code>)</p>
+<p>Как выбирать целочисленный тип:</p>
+<ul>
+<li>если данные приходят из существующей функции или уходят в неё, то используем тот же тип, что там.</li>
+<li>если  используется как размер или индекс в контейнере - <code>size_t</code> и <code>ptrdiff_t</code>.</li>
+<li>если знаем, оцениваем размер.</li>
+</ul>
+<h3><a class="header" href="#Типы-с-плавающей-точкой" id="Типы-с-плавающей-точкой">Типы с плавающей точкой:</a></h3>
+<table><thead><tr><th>тип</th><th>размер (обычно)</th></tr></thead><tbody>
+<tr><td>float</td><td>32</td></tr>
+<tr><td>double</td><td>64</td></tr>
+<tr><td>long double</td><td>64/80</td></tr>
+</tbody></table>
+<p>Разделение на мантиссу и экспоненту фиксировано в стандарте <a href="https://standards.ieee.org/standard/754-2019.html">IEEE-754</a></p>
+<p><a href="https://neerc.ifmo.ru/wiki/index.php?title=%D0%9F%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B5%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%87%D0%B8%D1%81%D0%B5%D0%BB">Подробнее на викиконспектах</a> - про денормализованные числа, <code>nan</code>, <code>inf</code> и всё такое.</p>
+<p>Стоит заметить, что из-за особенностей чисел с плавающей точкой (из-за <code>nan</code> и <code>inf</code>) всякие <code>0 * a</code> и <code>a - a</code> не заменяются при компиляции на <code>0</code>.</p>
+<p>А ещё сравнения с <code>nan</code> это всегда <code>false</code>, поэтому нужно быть аккуратнее.</p>
+<blockquote>
+<p><a href="https://www.itu.dk/%7Esestoft/bachelor/IEEE754_article.pdf">David Golberg, What Every Computer Scientist Should Know About Floating-Point Arithmetic</a></p>
+<p><a href="http://notabs.org/fpuaccuracy/">Intel overstates FPU accuracy</a></p>
+</blockquote>
+<h2><a class="header" href="#Структуры-и-указатели" id="Структуры-и-указатели">Структуры и указатели:</a></h2>
+<ol>
+<li><strong>Структура</strong></li>
+</ol>
+<pre><code class="language-c++">struct point {
+	float x;
+	float y;
+	float z;
+};
+
+// обращение к полям:
+void f (point p) {
+	p.x = 5;
+}
+</code></pre>
+<p>Данные структуры хранятся подряд (с точностью до выравнивания).</p>
+<p><a href="https://stackoverflow.com/questions/119123/why-isnt-sizeof-for-a-struct-equal-to-the-sum-of-sizeof-of-each-member">Интересное про sizeof от структуры</a></p>
+<p>А ещё<code>sizeof</code> возвращает столько, сколько структура занимает, когда она лежит в массиве.</p>
+<ol start="2">
+<li><strong>Указатель</strong> - &quot;номер ячейки памяти&quot; (важно указывать, какой тип, но эта информация используется на уровне компилятора). Все указатели имеют одинаковый размер - битность системы.</li>
+</ol>
+<pre><code class="language-c++">int a;
+int *a;
+long *a;
+int *p = &amp;a;	// &amp; - взятие адреса
+*p = 42;	// * - разыменования указателя
+// обращение к полям структуры по указателю:
+void f (point* p) {
+    (*p).x = 5;
+    p-&gt;x = 5;		// эквивалентно
+}
+</code></pre>
+<ol start="3">
+<li><strong>Массивы</strong> </li>
+</ol>
+<pre><code class="language-c++">int* a[10]; // массив указателей
+char buf[4096];
+char* p = buf; // неявное приведение массива к указателю на первый элемент
+</code></pre>
+<p>Функции, принимающие массив фиксированного размера лучше не писать, компилятор все равно изменит на применяющую указатель.</p>
+<pre><code class="language-c++">void f(int a[10]){}
+// компилируется в 
+void f(int* a){}
+</code></pre>
+<h3><a class="header" href="#Арифметика-указателей" id="Арифметика-указателей">Арифметика указателей</a></h3>
+<pre><code class="language-c++">int *p;
+int n;
+p += n; // добавить к указателю
+p -= n; // вычесть из указателя
+ptrdiff_t ans = p - q // разность указателей - количество элементов между ними (знаковое)
+</code></pre>
+<pre><code class="language-c++">for (int* p = a; p != a + 10; ++p)
+int* b[10];   // массив указателей
+int (*b)[10]; // указатель на массив, приоритет показываем скобками
+</code></pre>
+<p>Суффиксные модификаторы имеют больший приоритет.</p>
+<h3><a class="header" href="#Указатели-на-функции" id="Указатели-на-функции">Указатели на функции:</a></h3>
+<pre><code class="language-c++">int* f () {}        //  функция возвращает указатель
+int f(int);
+int (*g)(int) = &amp;f; // указатель на функцию f, сработает и без &amp;
+g(5);               // можно вызывать указатель на функцию, как функцию. 
+// пример использования: передавать компаратор в sort
+</code></pre>
+<p><strong>Разное про указатели:</strong></p>
+<pre><code class="language-c++">int a[50];
+int* p = a;
+p[20] = 5; // *(p+20) = 5
+20[p] = 5; // так тоже можно, но не нужно	
+
+// Указатель на void может хранить 
+// любой другой указатель(другого типа)
+</code></pre>
+<h3><a class="header" href="#Мем-про-switch" id="Мем-про-switch">Мем про switch:</a></h3>
+<pre><code class="language-c++">void f(int a) {
+	switch(a) {
+	case 1:
+		printf(&quot;1&quot;);
+		if (false)
+	case 2:
+		printf(&quot;2&quot;);
+		if (false)
+	case 3:
+		printf(&quot;3);
+	}
+}
+</code></pre>
+<p>Код работает корректно, но писать так не надо. </p>
+<h3><a class="header" href="#lvalue-rvalue" id="lvalue-rvalue">lvalue, rvalue</a></h3>
+<pre><code class="language-c++">int a;
+(a + 1) = 42; // почему не скомпилится?
+</code></pre>
+<p><strong>lvalue</strong> - то, что может стоять слева от оператора присваивания.</p>
+<p><strong>rvalue</strong> - &quot;временные объекты&quot;, им нельзя что-то присваивать.</p>
+<p>Например, <code>a</code> - lvalue, <code>(a+1)</code> - rvalue.</p>
+<pre><code class="language-c++">&amp;a;          // валидно
+&amp;5;          // невалидно, так как 5 - rvalue
+&amp;&amp;a;         // нельзя, так как &amp;a - rvalue
+++a;         // увеличивает и возвращает по ссылке
+a++;         // возвращает копию, а потом увеличивает исходное
+a++++;       // так нельзя, так как a++ - rvalue
+++++a;       // в C++ так можно, так как ++a - lvalue, в C так нельзя
+++a++;       // суффиксный оператор имеет приоритет, поэтому не компилируется (как ++(a++))
++++a;        // первые ++ отдельно парсятся и это не компилится
+(a = 5) = 6; // так можно, так как оператор = возвращает lvalue
+a = b = c;   // равносильно a = (b = c)
+</code></pre>
+<h3><a class="header" href="#Приведение-типов" id="Приведение-типов">Приведение типов:</a></h3>
+<p>Приведение происходит к более &quot;общему типу&quot;:</p>
+<pre><code class="language-c++">5;         // int
+5L;        // long
+5LL;       // long long
+'5';       // char
+'5' + 1;   // int
+'5' + '6'; // int
+1+2L;      // long
+1 + 1u;    // unsigned
+</code></pre>
+<p><img src="https://www.cdn.geeksforgeeks.org/wp-content/uploads/Implicit-Type-Conversion-in-c.png" alt="Image result for c++ types conversion explicit" /></p>
+<h1><a class="header" href="#Синтаксическое-пересечение-c-и-c-1" id="Синтаксическое-пересечение-c-и-c-1">Синтаксическое пересечение C и C++</a></h1>
+<h2><a class="header" href="#Типы-данных-1" id="Типы-данных-1">Типы данных</a></h2>
+<h3><a class="header" href="#Целочисленные-1" id="Целочисленные-1">Целочисленные:</a></h3>
+<pre><code class="language-c++">signed int // по умолчанию тип знаковый, то же самое, что и int
+// типы и их беззнаковые варианты:
+short		unsigned short
+int		unsigned
+long		unsigned long
+long long	unsigned long long
+</code></pre>
+<p>Стандарт не приписывает конкретных размеров типа, гарантирует только, что не меньше. Размеры типов прописаны в ABI архитектуры.</p>
+<table><thead><tr><th>типы</th><th>32 bit</th><th>win64</th><th>linux64</th></tr></thead><tbody>
+<tr><td>short</td><td>8</td><td>8</td><td>8</td></tr>
+<tr><td>short</td><td>16</td><td>16</td><td>16</td></tr>
+<tr><td>int</td><td>32</td><td>32</td><td>32</td></tr>
+<tr><td>long</td><td>32</td><td>32</td><td>64</td></tr>
+<tr><td>long long</td><td>64</td><td>64</td><td>64</td></tr>
+</tbody></table>
+<p><strong>8-битные типы</strong></p>
+<pre><code class="language-c++">// это 3 разных типа, в отличие от int и signed int
+char    // может быть как знаковый, так и нет
+unsigned char			
+signed char
+</code></pre>
+<p>Как проверить, одинаковые ли типы? Перегрузить функцию.</p>
+<pre><code class="language-c++">void foo(int){}
+void foo(signed int){} // не скомпилируется, так как две функции с одинаковой сигнатурой
+</code></pre>
+<pre><code class="language-c++">void foo(char){}
+void foo(signed char){} // скомпилируется
+</code></pre>
+<p><strong>Существуют типы с фиксированным размером:</strong>
+Следует использовать их, если хотим тип гарантированного размера:</p>
+<pre><code class="language-c++">#inlcude &lt;cstdint&gt;
+int8_t			uint8_t
+int16_t			uint16_t
+int32_t			uint32_t
+int64_t			uint64_t
+</code></pre>
+<pre><code class="language-c++">arr[i]; // какого типа нужно брать i?
+#inlcude &lt;cstddef&gt; // в ней лежат нужные типы
+</code></pre>
+<p><strong><code>size_t</code></strong> - тип, размера которого хватит, чтобы хранить максимальный размер;<br />
+он <code>unsigned</code> (размер на 32bit - 32, на 64bit - 64), у <strong><code>sizeof(...)</code></strong> тип <strong><code>size_t</code></strong>.</p>
+<p><strong><code>ptrdiff_t</code></strong> - тип для разности двух указателей (<code>signed</code>)</p>
+<p>Как выбирать целочисленный тип:</p>
+<ul>
+<li>если данные приходят из существующей функции или уходят в неё, то используем тот же тип, что там.</li>
+<li>если  используется как размер или индекс в контейнере - <code>size_t</code> и <code>ptrdiff_t</code>.</li>
+<li>если знаем, оцениваем размер.</li>
+</ul>
+<h3><a class="header" href="#Типы-с-плавающей-точкой-1" id="Типы-с-плавающей-точкой-1">Типы с плавающей точкой:</a></h3>
+<table><thead><tr><th>тип</th><th>размер (обычно)</th></tr></thead><tbody>
+<tr><td>float</td><td>32</td></tr>
+<tr><td>double</td><td>64</td></tr>
+<tr><td>long double</td><td>64/80</td></tr>
+</tbody></table>
+<p>Разделение на мантиссу и экспоненту фиксировано в стандарте <a href="https://standards.ieee.org/standard/754-2019.html">IEEE-754</a></p>
+<p><a href="https://neerc.ifmo.ru/wiki/index.php?title=%D0%9F%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B5%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%87%D0%B8%D1%81%D0%B5%D0%BB">Подробнее на викиконспектах</a> - про денормализованные числа, <code>nan</code>, <code>inf</code> и всё такое.</p>
+<p>Стоит заметить, что из-за особенностей чисел с плавающей точкой (из-за <code>nan</code> и <code>inf</code>) всякие <code>0 * a</code> и <code>a - a</code> не заменяются при компиляции на <code>0</code>.</p>
+<p>А ещё сравнения с <code>nan</code> это всегда <code>false</code>, поэтому нужно быть аккуратнее.</p>
+<blockquote>
+<p><a href="https://www.itu.dk/%7Esestoft/bachelor/IEEE754_article.pdf">David Golberg, What Every Computer Scientist Should Know About Floating-Point Arithmetic</a></p>
+<p><a href="http://notabs.org/fpuaccuracy/">Intel overstates FPU accuracy</a></p>
+</blockquote>
+<h2><a class="header" href="#Структуры-и-указатели-1" id="Структуры-и-указатели-1">Структуры и указатели:</a></h2>
+<ol>
+<li><strong>Структура</strong></li>
+</ol>
+<pre><code class="language-c++">struct point {
+	float x;
+	float y;
+	float z;
+};
+
+// обращение к полям:
+void f (point p) {
+	p.x = 5;
+}
+</code></pre>
+<p>Данные структуры хранятся подряд (с точностью до выравнивания).</p>
+<p><a href="https://stackoverflow.com/questions/119123/why-isnt-sizeof-for-a-struct-equal-to-the-sum-of-sizeof-of-each-member">Интересное про sizeof от структуры</a></p>
+<p>А ещё<code>sizeof</code> возвращает столько, сколько структура занимает, когда она лежит в массиве.</p>
+<ol start="2">
+<li><strong>Указатель</strong> - &quot;номер ячейки памяти&quot; (важно указывать, какой тип, но эта информация используется на уровне компилятора). Все указатели имеют одинаковый размер - битность системы.</li>
+</ol>
+<pre><code class="language-c++">int a;
+int *a;
+long *a;
+int *p = &amp;a;	// &amp; - взятие адреса
+*p = 42;	// * - разыменования указателя
+// обращение к полям структуры по указателю:
+void f (point* p) {
+    (*p).x = 5;
+    p-&gt;x = 5;		// эквивалентно
+}
+</code></pre>
+<ol start="3">
+<li><strong>Массивы</strong> </li>
+</ol>
+<pre><code class="language-c++">int* a[10]; // массив указателей
+char buf[4096];
+char* p = buf; // неявное приведение массива к указателю на первый элемент
+</code></pre>
+<p>Функции, принимающие массив фиксированного размера лучше не писать, компилятор все равно изменит на применяющую указатель.</p>
+<pre><code class="language-c++">void f(int a[10]){}
+// компилируется в 
+void f(int* a){}
+</code></pre>
+<h3><a class="header" href="#Арифметика-указателей-1" id="Арифметика-указателей-1">Арифметика указателей</a></h3>
+<pre><code class="language-c++">int *p;
+int n;
+p += n; // добавить к указателю
+p -= n; // вычесть из указателя
+ptrdiff_t ans = p - q // разность указателей - количество элементов между ними (знаковое)
+</code></pre>
+<pre><code class="language-c++">for (int* p = a; p != a + 10; ++p)
+int* b[10];   // массив указателей
+int (*b)[10]; // указатель на массив, приоритет показываем скобками
+</code></pre>
+<p>Суффиксные модификаторы имеют больший приоритет.</p>
+<h3><a class="header" href="#Указатели-на-функции-1" id="Указатели-на-функции-1">Указатели на функции:</a></h3>
+<pre><code class="language-c++">int* f () {}        //  функция возвращает указатель
+int f(int);
+int (*g)(int) = &amp;f; // указатель на функцию f, сработает и без &amp;
+g(5);               // можно вызывать указатель на функцию, как функцию. 
+// пример использования: передавать компаратор в sort
+</code></pre>
+<p><strong>Разное про указатели:</strong></p>
+<pre><code class="language-c++">int a[50];
+int* p = a;
+p[20] = 5; // *(p+20) = 5
+20[p] = 5; // так тоже можно, но не нужно	
+
+// Указатель на void может хранить 
+// любой другой указатель(другого типа)
+</code></pre>
+<h3><a class="header" href="#Мем-про-switch-1" id="Мем-про-switch-1">Мем про switch:</a></h3>
+<pre><code class="language-c++">void f(int a) {
+	switch(a) {
+	case 1:
+		printf(&quot;1&quot;);
+		if (false)
+	case 2:
+		printf(&quot;2&quot;);
+		if (false)
+	case 3:
+		printf(&quot;3);
+	}
+}
+</code></pre>
+<p>Код работает корректно, но писать так не надо. </p>
+<h3><a class="header" href="#lvalue-rvalue-1" id="lvalue-rvalue-1">lvalue, rvalue</a></h3>
+<pre><code class="language-c++">int a;
+(a + 1) = 42; // почему не скомпилится?
+</code></pre>
+<p><strong>lvalue</strong> - то, что может стоять слева от оператора присваивания.</p>
+<p><strong>rvalue</strong> - &quot;временные объекты&quot;, им нельзя что-то присваивать.</p>
+<p>Например, <code>a</code> - lvalue, <code>(a+1)</code> - rvalue.</p>
+<pre><code class="language-c++">&amp;a;          // валидно
+&amp;5;          // невалидно, так как 5 - rvalue
+&amp;&amp;a;         // нельзя, так как &amp;a - rvalue
+++a;         // увеличивает и возвращает по ссылке
+a++;         // возвращает копию, а потом увеличивает исходное
+a++++;       // так нельзя, так как a++ - rvalue
+++++a;       // в C++ так можно, так как ++a - lvalue, в C так нельзя
+++a++;       // суффиксный оператор имеет приоритет, поэтому не компилируется (как ++(a++))
++++a;        // первые ++ отдельно парсятся и это не компилится
+(a = 5) = 6; // так можно, так как оператор = возвращает lvalue
+a = b = c;   // равносильно a = (b = c)
+</code></pre>
+<h3><a class="header" href="#Приведение-типов-1" id="Приведение-типов-1">Приведение типов:</a></h3>
+<p>Приведение происходит к более &quot;общему типу&quot;:</p>
+<pre><code class="language-c++">5;         // int
+5L;        // long
+5LL;       // long long
+'5';       // char
+'5' + 1;   // int
+'5' + '6'; // int
+1+2L;      // long
+1 + 1u;    // unsigned
+</code></pre>
+<p><img src="https://www.cdn.geeksforgeeks.org/wp-content/uploads/Implicit-Type-Conversion-in-c.png" alt="Image result for c++ types conversion explicit" /></p>
+<h1><a class="header" href="#Запись-1-2" id="Запись-1-2">Запись №1</a></h1>
+<h1><a class="header" href="#Запись-2-2" id="Запись-2-2">Запись №2</a></h1>
+<h1><a class="header" href="#Процесс-компиляции-программ" id="Процесс-компиляции-программ">Процесс компиляции программ</a></h1>
+<p><img src="./images/03.28_compilation_graph.png" alt="Compilation graph" /></p>
+<p>Классическая схема этапов компиляции. 
+Есть <a href="https://habr.com/ru/post/478124/">похожая статья на хабре</a>.</p>
+<p><strong>Preprocessing</strong>
+<code>g++ -E -P 1.cpp -o 1.i</code></p>
+<p>Выполняет директивы (<code>#define</code>, <code>#include</code> и другие).</p>
+<p><code>#include</code> - вставляет текст из указанного файла
+<code>#define</code> - задает макрос</p>
+<p><strong>Translation</strong>
+<code>g++ -S -masm=intel 1.i -o 1.s</code></p>
+<p>Трансляция кода в ассемблер.</p>
+<p><strong>Assembling</strong>
+<code>g++ -C 1.s -o 1.o</code> (либо <code>as ...</code>)</p>
+<p>Транслирует ассемблерный код в машинный код.</p>
+<p><code>*.o</code> - объектный файл</p>
+<p><strong>Linking</strong>
+<code>g++ 1.o -o program</code> (либо <code>ld ...</code>)</p>
+<p>Связывает все объектные файлы и библиотеки в один исполняемый файл.
+После этого этапа можно запускать <code>./program</code>.</p>
+<p><code>*.cpp</code> файлы так же называют единицами трансляции</p>
+<p>Пример линкования файликов:</p>
+<pre><code class="language-c++">// a.cpp:						
+int main() {					
+	f();						
+}
+// b.cpp:
+#include&lt;cstdio&gt;
+void f() {
+	prinf(&quot;Hello world&quot;);
+}
+</code></pre>
+<p>Это не скомпилится, так как на этапе до линковки компилятор не знает о существовании <code>f()</code> где то вне <code>a.cpp</code>, поэтому ее надо объявить:</p>
+<pre><code class="language-c++">// a.cpp:						
+void f();					
+int main() {		
+	f();						
+}
+// b.cpp:
+#include&lt;cstdio&gt;
+void f() {
+	prinf(&quot;Hello world&quot;);
+}
+</code></pre>
+<p>Для линковки вместе<code>g++ a.o b.o</code></p>
+<ul>
+<li>Функцию нужно объявлять до её вызова.</li>
+<li>Если в обеих программах есть main, то невозможно будет слинковать (какой main запускать?)</li>
+<li>В main можно не делать <code>return</code>, по умолчанию вернёт 0.</li>
+<li>Можно писать функцию на ассемблере и вызывать из <code>*.cpp</code> файла, потому что на этапе линковки нет разницы.</li>
+<li>Во всех единицах трансляции только одно определение.</li>
+<li>Функцию нужно объявлять до её использования. Если она описана ниже, то транслятор не увидит её и кинет ошибку.</li>
+</ul>
+<h3><a class="header" href="#Некоторые-ключевые-слова" id="Некоторые-ключевые-слова">Некоторые ключевые слова</a></h3>
+<p><strong><code>static</code></strong> - переменная или функция - &quot;не предоставляется наружу&quot;, видна только в одной единице трансляции. При этом если в другой единице есть функция с такой же сигнатурой, но в текущей единице она <code>static</code>, то не будет проблемы с multiple definition, а в текущей единице трансляции выберется <code>static</code>. </p>
+<p>Для функций <code>void f();</code> это объявление (declaration), а <code>void f(){}</code> -- определение (definition).<br />
+Для переменных немного иначе: <br />
+<strong><code>int a</code></strong> - определение <br />
+<strong><code>extern int a</code></strong> - объявление (означает, что переменная объявлена где-то снаружи).</p>
+<p>Глобальные переменные инициализируются нулями при определении, в отличие от локальных.</p>
+<p>Можно заметить, что при линковке нам не важно, откуда приходят функции, исходный код одной из единиц трансляций может быть сразу на ассемблере:</p>
+<pre><code class="language-c++">extern &quot;C&quot; uint32_t fibonacci(uint32_t n);
+// определена, например, в .s файле, но должны выполняться calling conventions
+</code></pre>
+<p><strong><code>extern &quot;C&quot; f</code></strong> - использовать СИшное имя функции. На имена функций можно посмотреть так: <code>nm a.o</code>, <code>nm -C a.o</code>.<br />
+В Си имя функции выглядит как <code>f</code>, в C++ как <code>_Z1fd</code>, где <code>d</code> - типа аргумента, который она принимает (тут <code>double</code>).<br />
+Это связано с тем, что в Си нет перегрузки функций, поэтому там имена функций не декорируются типами их аргументов. <br />
+У функций с разными сигнатурами, но помеченных как <code>extern &quot;C&quot;</code>, после компиляции не будет информации об типах их аргументов, поэтому это даже слинкуется, но работать не будет (ну либо будет, но тут UB, так как, например, типы аргументов ожидаются разные).</p>
+<p>Возьмём теперь объявление <code>printf</code> из <code>cstdio</code> и вставим его вручную:</p>
+<pre><code class="language-c++">extern &quot;C&quot; int printf(const char*, ...);
+int main() {
+	printf(&quot;Hello, world!&quot;);
+}
+</code></pre>
+<p>Такая программа тоже работает. Откуда берётся <code>printf</code>? Ответ кроется в том, что при компиляции командой <code>g++ -c b.cpp</code> вызывается команда линковки <code>ld</code> с ключом, из-за которого файл линкуется с объектными файлами из стандартной библиотеки. Если посмотреть, то можно заметить, что наш файл линкуется с несколькими другими 
+объектными файлами, один из которых содержит функцию <code>_start</code> (это может быть файл <code>crt1.o</code>), которая вызывает <code>main</code>.</p>
+<h2><a class="header" href="#headers" id="headers">Headers</a></h2>
+<p><code>2.h</code> - файлы не участвующие в компиляции, в них пишут объявления функций. Не нужно делать  <code>#include file.cpp</code>, а в <code>.h</code> не нужно определять функции.</p>
+<p>Зачем это нужно? Как сказано выше, во всех единицах трансляции может быть только одно определение функции, потому что иначе получим redefinition error, так как компилятор не сможет выбрать из нескольких определений функции одно. Поэтому делаем на все единицы трансляции одно определение в <code>.cpp</code> файле, в хедерах объявления. Теперь, когда мы будем инклудить хедеры в другие единицы трансляции, у нас будет в них появляться только объявление функций из хедера.</p>
+<p>Структуры/классы пишем в <code>.h</code>. При этом их методы можно определять там же, потому что они воспринимаются компилятором как <code>inline</code>.</p>
+<p>Посмотрим на то, как работает <code>#include</code>:</p>
+<pre><code class="language-c++">// x.h:
+struct x {}; 
+// y.h:
+#include &quot;x.h&quot;
+// z.h:
+#include &quot;x.h&quot;
+
+a.cpp:							
+#include &quot;y.h&quot;		--&gt;		struct x{};
+#include &quot;z.h&quot;				struct x{}; //ошибка компиляции
+</code></pre>
+<p>Решение:</p>
+<ol>
+<li><code>#include &quot;x.h&quot;</code> не писать в хедерах, а только по необходимости в .cpp (не очень решение)</li>
+<li>
+<pre><code class="language-c++"> // x.h:
+ #ifndef X_H
+ #define X_H		// - макрос
+ struct x{};
+ #endif
+</code></pre>
+Это решение называется <strong>include guard</strong>
+Тогда при <code>#include x.h</code> будет проверка, заинклудили ли его уже и не будет проблем.</li>
+<li>Директива  <code>#pragma once</code> - стандарт не поддерживает, но поддерживают, кажется, все компиляторы. Эффект как у <strong>include guard</strong>, но проще писать и нет проблемы с тем, что можем еще где-то сделать лишний <code>#define X_H</code></li>
+</ol>
+<p>Если меняется <em>header</em>, то необходимо перекомпилировать все файлы, которые подключают его (даже не непосредственно), что может быть неприятно.</p>
+<pre><code class="language-c++">#define PI 3.14 
+// препроцессор подставляет вместо PI 3.14
+</code></pre>
+<p>Макросы обычно пишут капсом</p>
+<h2><a class="header" href="#Про-структуры" id="Про-структуры">Про структуры</a></h2>
+<p>Хотим две структуры в разных хедерах <code>a.h</code> и <code>b.h</code>. В структуре <code>a</code> указатель на структуру <code>b</code> и наоборот.</p>
+<pre><code class="language-c++">// main.cpp:
+#include &quot;a.h&quot;
+#include &quot;b.h&quot;
+</code></pre>
+<p>Если в <code>a.h</code> инклудится <code>b.h</code> и наоборот, то получим ошибку во время компиляции. Как фиксить? </p>
+<p>Если нам не требуется знать, что находится внутри структуры, можно использовать <strong>forward declaration</strong>. Например, <code>a.h</code> будет выглядеть так:</p>
+<pre><code class="language-c++">struct b;
+struct a {
+	b* bb;
+};
+</code></pre>
+<p><strong>Важно</strong>: избегайте циклических инклудов, чаще всего это приводит к ошибкам.</p>
+<p>Пока структуру не определили, структура - это <strong>incomplete type</strong>. Например, на момент объявление <code>struct b;</code> в коде выше, <code>b</code> - incomplete. 
+Все, что можно с ними делать - это объявлять функции с их использованим и использовать указатель. 
+Становятся полным типом после определения.</p>
+<p>Бонусом с <strong>forward declaration</strong> получаем, что нужно меньше перекомпилировать, так как меньше инклудов.</p>
+<p>А теперь такой пример:</p>
+<pre><code class="language-c++">// a.cpp
+#include &lt;iostream&gt;
+struct x {
+	int a;
+	// padding
+	double b;
+	int c;
+	int d;
+}
+int main(){
+	x xx = f();
+	std::cout &lt;&lt; xx.a &lt;&lt; &quot; &quot; &lt;&lt; xx.b &lt;&lt; &quot; &quot; &lt;&lt; xx.c &lt;&lt; &quot; &quot; &lt;&lt; xx.d &lt;&lt; &quot;\n&quot;;
+}
+
+// b.cpp
+struct x {
+	int a;
+	int b;
+	int c;
+	int d;
+	int e;
+};
+
+x f() {
+	x result;
+	result.a = 1;
+	result.b = 2;
+	result.c = 3;
+	result.d = 4;
+	result.e = 5;
+}
+</code></pre>
+<p>Тут стоит вспомнить, что структуры при линковке не играют никакой роли, то есть линковщику всё равно, что у нас структура <code>x</code> определена в двух местах. Поэтому такая программа отлично скомпилируется и запустится, но есть одна проблема. В <code>b.cpp</code> определение функции <code>f</code> скомпилируется с учётом смещений в структуре, определённой в этой же единице трансляции, то есть будто там лежит 5 интов.</p>
+<p>Поэтому следует придерживаться правила определять структуры один раз и не писать разные структуры с одним названием.</p>
+<h2><a class="header" href="#inline" id="inline">Inline</a></h2>
+<p>Компилятор сам умеет подставлять тело функций, но только внутри одной единицы трансляции (так как на момент трансляции у него нет функций из других единиц). Проблему с тем, что у нас не может быть больше одного определения функции во всех единицах трансляции, решает следующий модификатор:</p>
+<p><strong><code>inline</code></strong> - <em>рекомендация</em> компилятору заинлайнить функцию (подставить её тело). Их нужно определять в хедере и инклудить во все единицы трансляции, где нужно их использовать. На самом деле, современные компиляторы почти всегда игнорируют изначальный смысл <code>inline</code>. У компиляторов есть свои эвристки (размер функции, насколько упростится код и т.д.), по которым он считает, насколько функцию выгодно подставить. Поэтому <code>inline</code> пользуются только из-за следующего свойства: для функции, помеченной <code>inline</code>, возможно повторное определение, линковщик в таком случае оставляет только одно, предполагая, что они все одинаковые.</p>
+<p>Сейчас у компиляторов есть такая вещь, как <em>link time optimization</em> (ключ компиляции <code>-flto</code>). Компилятор не пытается генерить код на стадии трансляции, генерит там только внутренний промежуточный код, его же записывает в объектные файлы, а затем на стадии линковки инлайнит функции между единицами трансляции и генерит настоящий код. В таком случае линковка может занимать много времени, поэтому применяется при сборке с оптимизациями.</p>
+<p>Если у <code>inline</code> функции несколько разных определений, то линковщик выберет произвольное из них (например, из первой единицы трансляции или вообще разные в разных местах), поэтому нельзя нарушать правило одинаковых определений для <code>inline</code> функций. </p>
+<p>Если нужно именно заинлайнить функцию, то есть нестандартизированные модификаторы типа <code>__forceinline</code>, однако даже они могут игнорироваться компилятором. Инлайнинг функции может снизить производительность, на эту тему можно послушать доклад <a href="https://youtu.be/rJWSSWYL83U?t=1970">Антона Полухина на C++ Russia 2017</a>.</p>
+<h1><a class="header" href="#Процесс-компиляции-программ-1" id="Процесс-компиляции-программ-1">Процесс компиляции программ</a></h1>
+<p><img src="./images/03.28_compilation_graph.png" alt="Compilation graph" /></p>
+<p>Классическая схема этапов компиляции. 
+Есть <a href="https://habr.com/ru/post/478124/">похожая статья на хабре</a>.</p>
+<p><strong>Preprocessing</strong>
+<code>g++ -E -P 1.cpp -o 1.i</code></p>
+<p>Выполняет директивы (<code>#define</code>, <code>#include</code> и другие).</p>
+<p><code>#include</code> - вставляет текст из указанного файла
+<code>#define</code> - задает макрос</p>
+<p><strong>Translation</strong>
+<code>g++ -S -masm=intel 1.i -o 1.s</code></p>
+<p>Трансляция кода в ассемблер.</p>
+<p><strong>Assembling</strong>
+<code>g++ -C 1.s -o 1.o</code> (либо <code>as ...</code>)</p>
+<p>Транслирует ассемблерный код в машинный код.</p>
+<p><code>*.o</code> - объектный файл</p>
+<p><strong>Linking</strong>
+<code>g++ 1.o -o program</code> (либо <code>ld ...</code>)</p>
+<p>Связывает все объектные файлы и библиотеки в один исполняемый файл.
+После этого этапа можно запускать <code>./program</code>.</p>
+<p><code>*.cpp</code> файлы так же называют единицами трансляции</p>
+<p>Пример линкования файликов:</p>
+<pre><code class="language-c++">// a.cpp:						
+int main() {					
+	f();						
+}
+// b.cpp:
+#include&lt;cstdio&gt;
+void f() {
+	prinf(&quot;Hello world&quot;);
+}
+</code></pre>
+<p>Это не скомпилится, так как на этапе до линковки компилятор не знает о существовании <code>f()</code> где то вне <code>a.cpp</code>, поэтому ее надо объявить:</p>
+<pre><code class="language-c++">// a.cpp:						
+void f();					
+int main() {		
+	f();						
+}
+// b.cpp:
+#include&lt;cstdio&gt;
+void f() {
+	prinf(&quot;Hello world&quot;);
+}
+</code></pre>
+<p>Для линковки вместе<code>g++ a.o b.o</code></p>
+<ul>
+<li>Функцию нужно объявлять до её вызова.</li>
+<li>Если в обеих программах есть main, то невозможно будет слинковать (какой main запускать?)</li>
+<li>В main можно не делать <code>return</code>, по умолчанию вернёт 0.</li>
+<li>Можно писать функцию на ассемблере и вызывать из <code>*.cpp</code> файла, потому что на этапе линковки нет разницы.</li>
+<li>Во всех единицах трансляции только одно определение.</li>
+<li>Функцию нужно объявлять до её использования. Если она описана ниже, то транслятор не увидит её и кинет ошибку.</li>
+</ul>
+<h3><a class="header" href="#Некоторые-ключевые-слова-1" id="Некоторые-ключевые-слова-1">Некоторые ключевые слова</a></h3>
+<p><strong><code>static</code></strong> - переменная или функция - &quot;не предоставляется наружу&quot;, видна только в одной единице трансляции. При этом если в другой единице есть функция с такой же сигнатурой, но в текущей единице она <code>static</code>, то не будет проблемы с multiple definition, а в текущей единице трансляции выберется <code>static</code>. </p>
+<p>Для функций <code>void f();</code> это объявление (declaration), а <code>void f(){}</code> -- определение (definition).<br />
+Для переменных немного иначе: <br />
+<strong><code>int a</code></strong> - определение <br />
+<strong><code>extern int a</code></strong> - объявление (означает, что переменная объявлена где-то снаружи).</p>
+<p>Глобальные переменные инициализируются нулями при определении, в отличие от локальных.</p>
+<p>Можно заметить, что при линковке нам не важно, откуда приходят функции, исходный код одной из единиц трансляций может быть сразу на ассемблере:</p>
+<pre><code class="language-c++">extern &quot;C&quot; uint32_t fibonacci(uint32_t n);
+// определена, например, в .s файле, но должны выполняться calling conventions
+</code></pre>
+<p><strong><code>extern &quot;C&quot; f</code></strong> - использовать СИшное имя функции. На имена функций можно посмотреть так: <code>nm a.o</code>, <code>nm -C a.o</code>.<br />
+В Си имя функции выглядит как <code>f</code>, в C++ как <code>_Z1fd</code>, где <code>d</code> - типа аргумента, который она принимает (тут <code>double</code>).<br />
+Это связано с тем, что в Си нет перегрузки функций, поэтому там имена функций не декорируются типами их аргументов. <br />
+У функций с разными сигнатурами, но помеченных как <code>extern &quot;C&quot;</code>, после компиляции не будет информации об типах их аргументов, поэтому это даже слинкуется, но работать не будет (ну либо будет, но тут UB, так как, например, типы аргументов ожидаются разные).</p>
+<p>Возьмём теперь объявление <code>printf</code> из <code>cstdio</code> и вставим его вручную:</p>
+<pre><code class="language-c++">extern &quot;C&quot; int printf(const char*, ...);
+int main() {
+	printf(&quot;Hello, world!&quot;);
+}
+</code></pre>
+<p>Такая программа тоже работает. Откуда берётся <code>printf</code>? Ответ кроется в том, что при компиляции командой <code>g++ -c b.cpp</code> вызывается команда линковки <code>ld</code> с ключом, из-за которого файл линкуется с объектными файлами из стандартной библиотеки. Если посмотреть, то можно заметить, что наш файл линкуется с несколькими другими 
+объектными файлами, один из которых содержит функцию <code>_start</code> (это может быть файл <code>crt1.o</code>), которая вызывает <code>main</code>.</p>
+<h2><a class="header" href="#headers-1" id="headers-1">Headers</a></h2>
+<p><code>2.h</code> - файлы не участвующие в компиляции, в них пишут объявления функций. Не нужно делать  <code>#include file.cpp</code>, а в <code>.h</code> не нужно определять функции.</p>
+<p>Зачем это нужно? Как сказано выше, во всех единицах трансляции может быть только одно определение функции, потому что иначе получим redefinition error, так как компилятор не сможет выбрать из нескольких определений функции одно. Поэтому делаем на все единицы трансляции одно определение в <code>.cpp</code> файле, в хедерах объявления. Теперь, когда мы будем инклудить хедеры в другие единицы трансляции, у нас будет в них появляться только объявление функций из хедера.</p>
+<p>Структуры/классы пишем в <code>.h</code>. При этом их методы можно определять там же, потому что они воспринимаются компилятором как <code>inline</code>.</p>
+<p>Посмотрим на то, как работает <code>#include</code>:</p>
+<pre><code class="language-c++">// x.h:
+struct x {}; 
+// y.h:
+#include &quot;x.h&quot;
+// z.h:
+#include &quot;x.h&quot;
+
+a.cpp:							
+#include &quot;y.h&quot;		--&gt;		struct x{};
+#include &quot;z.h&quot;				struct x{}; //ошибка компиляции
+</code></pre>
+<p>Решение:</p>
+<ol>
+<li><code>#include &quot;x.h&quot;</code> не писать в хедерах, а только по необходимости в .cpp (не очень решение)</li>
+<li>
+<pre><code class="language-c++"> // x.h:
+ #ifndef X_H
+ #define X_H		// - макрос
+ struct x{};
+ #endif
+</code></pre>
+Это решение называется <strong>include guard</strong>
+Тогда при <code>#include x.h</code> будет проверка, заинклудили ли его уже и не будет проблем.</li>
+<li>Директива  <code>#pragma once</code> - стандарт не поддерживает, но поддерживают, кажется, все компиляторы. Эффект как у <strong>include guard</strong>, но проще писать и нет проблемы с тем, что можем еще где-то сделать лишний <code>#define X_H</code></li>
+</ol>
+<p>Если меняется <em>header</em>, то необходимо перекомпилировать все файлы, которые подключают его (даже не непосредственно), что может быть неприятно.</p>
+<pre><code class="language-c++">#define PI 3.14 
+// препроцессор подставляет вместо PI 3.14
+</code></pre>
+<p>Макросы обычно пишут капсом</p>
+<h2><a class="header" href="#Про-структуры-1" id="Про-структуры-1">Про структуры</a></h2>
+<p>Хотим две структуры в разных хедерах <code>a.h</code> и <code>b.h</code>. В структуре <code>a</code> указатель на структуру <code>b</code> и наоборот.</p>
+<pre><code class="language-c++">// main.cpp:
+#include &quot;a.h&quot;
+#include &quot;b.h&quot;
+</code></pre>
+<p>Если в <code>a.h</code> инклудится <code>b.h</code> и наоборот, то получим ошибку во время компиляции. Как фиксить? </p>
+<p>Если нам не требуется знать, что находится внутри структуры, можно использовать <strong>forward declaration</strong>. Например, <code>a.h</code> будет выглядеть так:</p>
+<pre><code class="language-c++">struct b;
+struct a {
+	b* bb;
+};
+</code></pre>
+<p><strong>Важно</strong>: избегайте циклических инклудов, чаще всего это приводит к ошибкам.</p>
+<p>Пока структуру не определили, структура - это <strong>incomplete type</strong>. Например, на момент объявление <code>struct b;</code> в коде выше, <code>b</code> - incomplete. 
+Все, что можно с ними делать - это объявлять функции с их использованим и использовать указатель. 
+Становятся полным типом после определения.</p>
+<p>Бонусом с <strong>forward declaration</strong> получаем, что нужно меньше перекомпилировать, так как меньше инклудов.</p>
+<p>А теперь такой пример:</p>
+<pre><code class="language-c++">// a.cpp
+#include &lt;iostream&gt;
+struct x {
+	int a;
+	// padding
+	double b;
+	int c;
+	int d;
+}
+int main(){
+	x xx = f();
+	std::cout &lt;&lt; xx.a &lt;&lt; &quot; &quot; &lt;&lt; xx.b &lt;&lt; &quot; &quot; &lt;&lt; xx.c &lt;&lt; &quot; &quot; &lt;&lt; xx.d &lt;&lt; &quot;\n&quot;;
+}
+
+// b.cpp
+struct x {
+	int a;
+	int b;
+	int c;
+	int d;
+	int e;
+};
+
+x f() {
+	x result;
+	result.a = 1;
+	result.b = 2;
+	result.c = 3;
+	result.d = 4;
+	result.e = 5;
+}
+</code></pre>
+<p>Тут стоит вспомнить, что структуры при линковке не играют никакой роли, то есть линковщику всё равно, что у нас структура <code>x</code> определена в двух местах. Поэтому такая программа отлично скомпилируется и запустится, но есть одна проблема. В <code>b.cpp</code> определение функции <code>f</code> скомпилируется с учётом смещений в структуре, определённой в этой же единице трансляции, то есть будто там лежит 5 интов.</p>
+<p>Поэтому следует придерживаться правила определять структуры один раз и не писать разные структуры с одним названием.</p>
+<h2><a class="header" href="#inline-1" id="inline-1">Inline</a></h2>
+<p>Компилятор сам умеет подставлять тело функций, но только внутри одной единицы трансляции (так как на момент трансляции у него нет функций из других единиц). Проблему с тем, что у нас не может быть больше одного определения функции во всех единицах трансляции, решает следующий модификатор:</p>
+<p><strong><code>inline</code></strong> - <em>рекомендация</em> компилятору заинлайнить функцию (подставить её тело). Их нужно определять в хедере и инклудить во все единицы трансляции, где нужно их использовать. На самом деле, современные компиляторы почти всегда игнорируют изначальный смысл <code>inline</code>. У компиляторов есть свои эвристки (размер функции, насколько упростится код и т.д.), по которым он считает, насколько функцию выгодно подставить. Поэтому <code>inline</code> пользуются только из-за следующего свойства: для функции, помеченной <code>inline</code>, возможно повторное определение, линковщик в таком случае оставляет только одно, предполагая, что они все одинаковые.</p>
+<p>Сейчас у компиляторов есть такая вещь, как <em>link time optimization</em> (ключ компиляции <code>-flto</code>). Компилятор не пытается генерить код на стадии трансляции, генерит там только внутренний промежуточный код, его же записывает в объектные файлы, а затем на стадии линковки инлайнит функции между единицами трансляции и генерит настоящий код. В таком случае линковка может занимать много времени, поэтому применяется при сборке с оптимизациями.</p>
+<p>Если у <code>inline</code> функции несколько разных определений, то линковщик выберет произвольное из них (например, из первой единицы трансляции или вообще разные в разных местах), поэтому нельзя нарушать правило одинаковых определений для <code>inline</code> функций. </p>
+<p>Если нужно именно заинлайнить функцию, то есть нестандартизированные модификаторы типа <code>__forceinline</code>, однако даже они могут игнорироваться компилятором. Инлайнинг функции может снизить производительность, на эту тему можно послушать доклад <a href="https://youtu.be/rJWSSWYL83U?t=1970">Антона Полухина на C++ Russia 2017</a>.</p>
+<h1><a class="header" href="#Запись-1-3" id="Запись-1-3">Запись №1</a></h1>
+<h1><a class="header" href="#Запись-2-3" id="Запись-2-3">Запись №2</a></h1>
+<h1><a class="header" href="#Запись-3" id="Запись-3">Запись №3</a></h1>
+<h1><a class="header" href="#Практика" id="Практика">Практика</a></h1>
 
                     </main>
 

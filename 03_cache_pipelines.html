@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Конспект - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.1.</strong> Конспект</a></li></ol></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=bTgtesThdSg.html"><strong aria-hidden="true">3.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=XY8xN1Ug1_k.html"><strong aria-hidden="true">3.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html" class="active"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="03_cache_pipelines.html" class="active"><strong aria-hidden="true">4.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=6vlNFxpSENs.html"><strong aria-hidden="true">4.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=DddjrdCrCF8.html"><strong aria-hidden="true">4.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=rGfQ5vWUS14.html"><strong aria-hidden="true">5.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=kf2zVHBEfy8.html"><strong aria-hidden="true">5.3.</strong> Запись №2</a></li></ol></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.1.</strong> Конспект</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=Fm-EmbQVrLE.html"><strong aria-hidden="true">6.2.</strong> Запись №1</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=w0G66pR3JuY.html"><strong aria-hidden="true">6.3.</strong> Запись №2</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=gsFYkmckcZs.html"><strong aria-hidden="true">6.4.</strong> Запись №3</a></li><li class="chapter-item expanded "><a href="https://www.youtube.com/watch?v=jZAWVxcHLKA.html"><strong aria-hidden="true">6.5.</strong> Практика</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Кэш-память" id="Кэш-память">Кэш-память</a></h1>
+<blockquote>
+<p>Optimize for data first, then code. Memory access is probably going to be your biggest bottleneck</p>
+</blockquote>
+<p>Одинаково ли по времени будет работать следующий код?</p>
+<pre><code class="language-python">for i = 0..n:				for i=0..n:
+	for j=0..n:				for j=0..n:
+		a[i][j] = 0 				a[j][i] = 0
+</code></pre>
+<p>У этих двух кодов большая разница из-за процессорного кэша. Первый цикл обращается к памяти последовательно, а второй &quot;скачет&quot; по ней. Поэтому обращения к памяти первого цикла попадают в кэш, а второго - нет. С ростом <strong>N</strong> видна разница между уровнями кэша на графике времени обработки одного элемента:</p>
+<p><img src="./images/02.29_cache_hit_graph.png" alt="Cache Hit Graph" /></p>
+<p>Небольшие пики - скачки из-за попадания в один бакет (заметно на степенях двойки), сильное изменение времени работы происходит, когда данные перестают попадать в кэш какого-то уровня.</p>
+<p><strong>Кэш</strong> реализован через хэш-таблицы (дискретного размера), где ключ - адрес в памяти.
+Линии кэша примерно по <em>64 байта</em> разделенные на группы (buckets), размеры которых называются ассоциативностью кэша.</p>
+<p>Подробнее про кэш  можно прочитать в <a href="https://github.com/DespairedController/computer-architecture/blob/master/1_4/1_4.pdf">конспектах по ЭВМ</a> </p>
+<p><strong>Prefetching</strong> - если много кэш-промахов, запрашиваем заранее подгрузить в кэш. Это работает на уровне кэш-подсистемы процессора, а не компилятора/ОС.</p>
+<p><em>Пример</em>: хранение хэш-таблицы с открытой адресацией. Два варианта: </p>
+<p><img src="./images/02.29_hash_table.png" alt="Hash-Table" /></p>
+<ul>
+<li>
+<p>Если ожидаются частые попадания, то хранить полезнее данные рядом с ключом.</p>
+</li>
+<li>
+<p>Если ожидаются редкие попадания, то лучше хранить ключи и данные отдельно.</p>
+</li>
+</ul>
+<h2><a class="header" href="#tlb---translation-lookaside-buffer" id="tlb---translation-lookaside-buffer">TLB - translation lookaside buffer</a></h2>
+<p>Зачем нужен? Это кэш для ускорения трансляции виртуального адреса в физический. Так же, как и обычный, может быть нескольких уровней.</p>
+<h2><a class="header" href="#huge-pages" id="huge-pages">Huge Pages</a></h2>
+<p><em>Идея</em>: отображать страницу памяти в лежащую подряд физическую память. Тогда проще обходить каталог страниц. Например, если программе нужно прочитать 1 Мбайт непрерывных данных, которых нет в <em>TLB</em> кэше, то нужно сделать обращение к 256 страницам.</p>
+<p>Но использовать тяжело, так как с ними тяжело делать <em>swap</em> (подкачка страниц). Например, в <em>Windows</em> требуются специальные права, чтобы выделять не-swappable память.</p>
+<p><strong>Swap</strong> - хотим выделить памяти больше, чем у нас есть физической (оперативной). Особенно было актуально раньше, когда оперативной памяти было мало. Некоторые страницы из оперативной памяти записывались на диск и помечались недоступными, но при необходимости можно было вытеснить другую страницу и выгрузить нужную с диска.</p>
+<h1><a class="header" href="#Конвейер-pipelining" id="Конвейер-pipelining">Конвейер (Pipelining)</a></h1>
+<p>Ну тут опять всё <a href="https://github.com/DespairedController/computer-architecture/blob/master/2_3-4/2_3-4.pdf">как было на ЭВМ</a>.</p>
+<p>Разбили выполнение команды на несколько стадий, теперь можем повысить частоту, так как каждая стадия стала проще. Выигрыш в том, что можем давать новые данные на каждом такте.</p>
+<p><strong>Спекулятивное исполнение</strong>: условные переходы дорогие, поэтому мы предсказываем переход, выполняем, а если не угадали, то откатываемя. В общем, ничего нового. Также это называется <strong>branch prediction</strong>.
+Можем как выиграть, так и проиграть от этого. Например, <a href="https://stackoverflow.com/questions/11227809/why-is-processing-a-sorted-array-faster-than-processing-an-unsorted-array">в некоторых программах на отсортированном массиве</a> предсказание может улучшить время работы в несколько раз.</p>
+<p>Полезно писать программу так, чтобы уровень зависимостей команд был как можно меньше (это может также пытаться делать компилятор). Например:</p>
+<pre><code class="language-c++">int f(int a, int b, int c, int d)
+{
+ return a * b * c * d;
+}
+</code></pre>
+<p>может скомпилиться в следующий код, чтоб уменьшить количество зависимых умножений:
+<code> (a* b) * (c * d)</code></p>
+<pre><code class="language-nasm"> imul		edi, esi
+ imul		edx, ecx
+ imul		edx, edi
+ mov		eax, edx
+ ret
+</code></pre>
+<p>Похожее происходит с циклами. Посмотрим на алгоритм Хаффмана:</p>
+<pre><code class="language-c++">void count_huffman_weights(char const* src, size_t size)
+{
+     uint32_t count[256] = {0};
+     for (size_t i = 0; i != size; ++i)
+         ++count[src[i]];
+}
+</code></pre>
+<p>может быть разбит компилятором на параллельные исполнения. Так будут выглядеть зависимости:</p>
+<p><img src="./images/02.29_dependencies.png" alt="Dependencies" /></p>
+<p>Но у нас возникают проблемы из-за того, что мы пишем в одни переменные. Как пофиксить? Можем сделать 8 разных массивов-счетчиков. Такая реализация используется в библиотеке <strong>Zstandart</strong></p>
+<pre><code class="language-c++">void count_huffman_weights_improved(char const* src, size_t size)
+{
+ uint32_t count[8][256] = {};
+ size = size / 8 * 8;
+ for (size_t i = 0; i &lt; size;)
+     {
+           ++count[0][src[i++]]; ++count[1][src[i++]]; ++count[2][src[i++]];
+           ++count[3][src[i++]]; ++count[4][src[i++]]; ++count[5][src[i++]];
+           ++count[6][src[i++]]; ++count[7][src[i++]];
+     }
+}
+</code></pre>
+<hr />
+<p>​	Полезные книжки по теме:</p>
+<ul>
+<li>J. Shen, M. Lipasti — Modern Processor Design: Fundamentals of Superscalar Processors</li>
+<li>J. Hennessy, D. Patterson — Computer Architecture: A Quantitative Approach</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="https://www.youtube.com/watch?v=XY8xN1Ug1_k.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="03_cache_pipelines.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="https://www.youtube.com/watch?v=XY8xN1Ug1_k.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="03_cache_pipelines.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
