@@ -3,9 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title></title>
-        
-        <meta name="robots" content="noindex" />
+        <title>asm intro</title>
         
         
 
@@ -91,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> asm intro</a></li><li class="chapter-item expanded "><a href="CONTRIBUTING.html"><strong aria-hidden="true">3.</strong> CONTRIBUTING</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html" class="active"><strong aria-hidden="true">2.</strong> asm intro</a></li><li class="chapter-item expanded "><a href="CONTRIBUTING.html"><strong aria-hidden="true">3.</strong> CONTRIBUTING</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -157,8 +155,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#about--links" id="about--links">About &amp; Links</a></h1>
-<h1><a class="header" href="#Введение-в-ассемблер" id="Введение-в-ассемблер">Введение в ассемблер</a></h1>
+                        <h1><a class="header" href="#Введение-в-ассемблер" id="Введение-в-ассемблер">Введение в ассемблер</a></h1>
 <p>Презентация - http://sorokin.github.io/cpp-course/lecture-1e.odp</p>
 <p>Регистр <code>IP</code> (instruction pointer) содержит адрес команды.</p>
 <ul>
@@ -362,14 +359,21 @@ void g()
 </code></pre>
 <p>Почему 136 изменилось на 120? Этот эффект называется выравниванием (alignment).
 В качестве основной единицы работы с памятью используется <strong>машинное слово</strong>, размер которого обычно составляет несколько байт. Так называемый &quot;unaligned access&quot; сложен в реализации на аппаратном уровне, поэтому обращения по произвольному адресу либо не поддерживаются (и вызывают исключение процессора), либо поддерживаются, но работают медленно. Обычно компилятор выравнивает данные по границам машинных слов, в нашем случае <code>8 + 16 * k</code>.</p>
-<h1><a class="header" href="#contributing" id="contributing">CONTRIBUTING</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
+                        
+                            <a rel="next" href="CONTRIBUTING.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -379,7 +383,15 @@ void g()
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a rel="prev" href="index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
+                
+                    <a rel="next" href="CONTRIBUTING.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
@@ -412,14 +424,6 @@ void g()
         <!-- Custom JS scripts -->
         
 
-        
-        
-        <script type="text/javascript">
-        window.addEventListener('load', function() {
-            window.setTimeout(window.print, 100);
-        });
-        </script>
-        
         
 
     </body>
