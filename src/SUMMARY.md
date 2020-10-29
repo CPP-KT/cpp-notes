@@ -35,5 +35,3 @@
 - [Smart pointers: unique_ptr, shared_ptr, weak_ptr](./16_smart_pointers.md)
 
 - [Perfect forwarding, variadic templates](./17_perfect_forwarding.md)
-
-- [CONTRIBUTING](./CONTRIBUTING.md)
