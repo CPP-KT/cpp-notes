@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> asm intro</a></li><li class="chapter-item expanded "><a href="CONTRIBUTING.html"><strong aria-hidden="true">3.</strong> CONTRIBUTING</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../index.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="../01_asm.html"><strong aria-hidden="true">2.</strong> asm intro</a></li><li class="chapter-item expanded "><a href="../CONTRIBUTING.html"><strong aria-hidden="true">3.</strong> CONTRIBUTING</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -157,9 +157,379 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#about--links" id="about--links">About &amp; Links</a></h1>
-<h1><a class="header" href="#asm-intro" id="asm-intro">asm intro</a></h1>
-<h1><a class="header" href="#contributing" id="contributing">CONTRIBUTING</a></h1>
+                        <h1><a class="header" href="#cpp-notes" id="cpp-notes">cpp-notes</a></h1>
+<p>КОНСПЕКТЫ СОДЕРЖАТ БАГИ</p>
+<p>Помимо лекций, конспекты включают в себя дополнения из конспектов <a href="https://github.com/sorokin/cpp-notes">@sorokin</a> и <a href="https://github.com/hazzus/cpp-conspects">@hazzus</a></p>
+<h4><a class="header" href="#Введение-в-ассемблер" id="Введение-в-ассемблер">Введение в ассемблер</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/01_asm">Конспект</a></li>
+</ul>
+<h4><a class="header" href="#Прерывания-страничная-адресация-и-тд" id="Прерывания-страничная-адресация-и-тд">Прерывания, страничная адресация и т.д.</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/02_os_cpu">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=bTgtesThdSg">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=XY8xN1Ug1_k">Запись №2</a></li>
+</ul>
+<h4><a class="header" href="#Кэши-конвейер" id="Кэши-конвейер">Кэши, конвейер</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/03_cache_pipelines">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=6vlNFxpSENs">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=DddjrdCrCF8">Запись №2</a></li>
+</ul>
+<h4><a class="header" href="#Пересечение-синтаксиса-cc-типы-данных" id="Пересечение-синтаксиса-cc-типы-данных">Пересечение синтаксиса C/C++, типы данных</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/04_syntax_types">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=rGfQ5vWUS14">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=kf2zVHBEfy8">Запись №2</a></li>
+</ul>
+<h4><a class="header" href="#Этапы-компиляции" id="Этапы-компиляции">Этапы компиляции</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/05_compilation">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=Fm-EmbQVrLE">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=w0G66pR3JuY">Запись №2</a></li>
+<li><a href="https://www.youtube.com/watch?v=gsFYkmckcZs">Запись №3</a></li>
+<li><a href="https://www.youtube.com/watch?v=jZAWVxcHLKA">Практика</a></li>
+</ul>
+<h4><a class="header" href="#Классы-абстракция-данных" id="Классы-абстракция-данных">Классы, абстракция данных</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/06_classes">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=4LkTiNYQYBU">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=kjJ-1-VsNRo">Запись №2</a></li>
+</ul>
+<h4><a class="header" href="#Ещё-про-классы-выделение-памяти-препроцессор" id="Ещё-про-классы-выделение-памяти-препроцессор">Ещё про классы, выделение памяти, препроцессор</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/07_classes_memory_preprocessor">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=nI6NEPYPRXU">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=8JAp3tG6IrA">Запись №2</a></li>
+</ul>
+<h4><a class="header" href="#Наследование-виртуальные-функции" id="Наследование-виртуальные-функции">Наследование, виртуальные функции</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/08_inheritance">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=IcAaaX888xc">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=11MKhMYAmnE">Запись №2</a></li>
+<li><a href="https://www.youtube.com/watch?v=oMkF60mU8ig">Запись №3</a></li>
+<li><a href="https://www.youtube.com/watch?v=0-92_jC7YMU">Запись №4</a></li>
+</ul>
+<h4><a class="header" href="#Исключения-гарантии-безопасности-исключений-raii" id="Исключения-гарантии-безопасности-исключений-raii">Исключения, гарантии безопасности исключений, RAII</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/09_exceptions">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=R0tVZ1px5-Q">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=8PpW8qS2tEg">Запись №2</a></li>
+</ul>
+<h4><a class="header" href="#Механизмы-ОС-для-аллокации-памяти-аллокаторы-памяти-small-object-и-copy-on-write-оптимизации-статические-и-динамические-библиотеки" id="Механизмы-ОС-для-аллокации-памяти-аллокаторы-памяти-small-object-и-copy-on-write-оптимизации-статические-и-динамические-библиотеки">Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/10_memory_allocation">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=oDPaXS9tKlw">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=i8uYAe0E4PU">Запись №2</a></li>
+</ul>
+<h4><a class="header" href="#Шаблоны-templates" id="Шаблоны-templates">Шаблоны (templates)</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/11_templates">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=AXl4_eZ1eis">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=DwDbH7pxzRA">Запись №2</a></li>
+<li><a href="https://www.youtube.com/watch?v=CY7vxMSBork">Практика №3</a></li>
+</ul>
+<h4><a class="header" href="#Обзор-stl-tag-dispatching-sfinae-пространства-имён" id="Обзор-stl-tag-dispatching-sfinae-пространства-имён">Обзор STL, tag-dispatching, SFINAE, пространства имён</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/12_stl_sfinae">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=RidP1GbfFEA">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=HQdf43h3B2o">Запись №2</a></li>
+</ul>
+<h4><a class="header" href="#Пространства-имён-using-декларации-using-директивы-adl" id="Пространства-имён-using-декларации-using-директивы-adl">Пространства имён, using-декларации, using-директивы, ADL</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/13_namespaces_using_adl">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=fgD5itE5pCQ">Запись №1</a></li>
+</ul>
+<h4><a class="header" href="#move-семантика-rvalue-ссылки" id="move-семантика-rvalue-ссылки">Move-семантика, rvalue-ссылки</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/14_move_rvalue">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=KcNJbEmbqB4">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=p4LQfPJb9Q0">Запись №2</a></li>
+</ul>
+<h4><a class="header" href="#Интрузивные-контейнеры" id="Интрузивные-контейнеры">Интрузивные контейнеры</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/15_intrusive_containers">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=Kf7qkcaWetc">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=fwPUzKDsQTA">Разбор практики по intrusive_list</a></li>
+<li><a href="https://github.com/sorokin/intrusive_list">Код intrusive_list</a></li>
+</ul>
+<h4><a class="header" href="#smart-pointers-unique_ptr-shared_ptr-weak_ptr" id="smart-pointers-unique_ptr-shared_ptr-weak_ptr">Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/16_smart_pointers">Конспект</a></li>
+<li><a href="https://www.youtube.com/watch?v=L9ohcGR0yFE">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=M9h0_xBM7_8">Запись №2</a></li>
+</ul>
+<h4><a class="header" href="#perfect-forwarding-variadic-templates" id="perfect-forwarding-variadic-templates">Perfect forwarding, variadic templates</a></h4>
+<ul>
+<li><a href="https://lejabque.github.io/cpp-notes/17_perfect_forwarding">Конспект</a></li>
+<li><a href="https://youtu.be/M9h0_xBM7_8?t=1786">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=ydQD7-XSSt4">Запись №2</a></li>
+</ul>
+<h4><a class="header" href="#Дополнительные-лекции" id="Дополнительные-лекции">Дополнительные лекции</a></h4>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=Cu6QYb_j_2Y">Лекция про инструменты разработки</a></li>
+<li><a href="https://www.youtube.com/watch?v=nGsD8guQ_dQ">Лекция про UB, strict aliasing и оптимизации компилятора</a></li>
+</ul>
+<h4><a class="header" href="#Полезные-ссылки" id="Полезные-ссылки">Полезные ссылки:</a></h4>
+<ul>
+<li><a href="http://sorokin.github.io/cpp-course/">Сайт курса</a></li>
+<li><a href="https://cpp-year2019.slack.com/">Slack курса</a></li>
+</ul>
+<h4><a class="header" href="#Презентации-и-ссылки-по-материалу" id="Презентации-и-ссылки-по-материалу">Презентации и ссылки по материалу:</a></h4>
+<ul>
+<li><a href="../slides/lecture-1.pdf">Презентация про ассемблер</a></li>
+<li><a href="../slides/lecture-2.pdf">Презентация про процессор и оптимизации</a></li>
+<li><a href="../slides/intrusive.pdf">Презентация про интрузивный список</a></li>
+<li><a href="../slides/shared_ptr.pdf">Презентация про shared_ptr</a></li>
+<li><a href="https://www.felixcloutier.com/x86/">Справочник по инструкциям x86</a>, <a href="https://www.nasm.us/doc/">nasm документация</a></li>
+<li><a href="https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/">Системные вызовы Linux</a></li>
+<li><a href="https://wiki.osdev.org/Paging">Про страничную адресацию</a></li>
+<li><a href="http://slides.com/romanmelnikov-1/deck-1/live">Презентация с ЭВМ про виртуальную память</a></li>
+</ul>
+<h1><a class="header" href="#Введение-в-ассемблер-1" id="Введение-в-ассемблер-1">Введение в ассемблер</a></h1>
+<p>Презентация - http://sorokin.github.io/cpp-course/lecture-1e.odp</p>
+<p>Регистр <code>IP</code> (instruction pointer) содержит адрес команды.</p>
+<ul>
+<li><strong>16-битные регистры</strong> (8 штук): AX, CX, DX, BX, SP, BP, SI, DI </li>
+<li><strong>8-битные регистры</strong> (тоже 8): AL, AH, BL, BH, CL, CH, DL, DH. AL + AH = AX, аналогично другие.</li>
+<li><strong>32-битные регистры:</strong> EAX, и другие обычные с приставкой E - extended
+<img src=".././images/02.08_memory_cell.png" alt="Memory Cell" /></li>
+</ul>
+<h3><a class="header" href="#Команды-read-write" id="Команды-read-write">Команды read, write</a></h3>
+<pre><code class="language-nasm">read (address)
+write (address, value)
+</code></pre>
+<h3><a class="header" href="#Команда-mov" id="Команда-mov">Команда mov</a></h3>
+<p>Команды для хранения в памяти кодируются:</p>
+<pre><code class="language-nasm">89 C2			mov		edx, eax	; EDX = EAX
+B8 05 00 00 00		mov		eax, 5		; EAX = 5
+</code></pre>
+<p><code>mov</code> может копировать содержимое памяти по адресу:</p>
+<pre><code class="language-nasm">	mov		ax, [10]	; Переместить в регистр из памяти по адресу 10
+	mov		ax, [bx]	; Переместить в регистр из памяти по адресу в BX
+	mov		[bx], ax	; Переместить в память по адресу BX содержимое AX
+	mov		[bx], [ax]	; WRONG! из памяти в память нельзя. Оно даже не скомпилируется
+</code></pre>
+<p><em>Забавный факт: <code>[ax]</code> невалидный адрес, больше можно почитать <a href="https://stackoverflow.com/questions/46771338/assembler-x86-code-doesnt-work">здесь</a></em></p>
+<p>Команда <code>mov ax,[bx]</code> читает из ячейки с адресом BX и BX + 1:</p>
+<p><code>AX = mem[BX + 1] * 256 + mem[BX]</code></p>
+<h3><a class="header" href="#Команды-арифметики" id="Команды-арифметики">Команды арифметики</a></h3>
+<pre><code class="language-nasm">	cmd		dst, src
+
+	add		ax, cx		; AX = AX + CX
+	sub		ax, cx		; AX = AX - CX, аналогично AND, OR, XOR
+	inc		ax		; AX += 1
+	inc		BYTE [bx]	; INC одного байта
+	inc		WORD [bx]	; INC числа из двух байт (дальше DWORD и т.д.)
+	dec		ax		; AX -= 1
+
+	neg		ax		; AX = -AX
+	not		ax		; AX = ~AX(побитово)
+
+	mul		src		; unsigned, в пару DX:AX = src*AX, DX - старшая часть, AX - младшая
+	imul		src		; signed
+	div		src		; unsigned, AX = DX:AX / src, DX = DX:AX % src
+	idiv		src		; signed
+</code></pre>
+<p>Перед делением 16-битного зануляем регистр DX:</p>
+<pre><code class="language-nasm">	xor		dx, dx		; не &quot;mov dx,0&quot;, так как кодируется короче
+	div		bx
+</code></pre>
+<pre><code class="language-nasm">	cwd				; сохраняет знак: берёт старший бит из AX, заполняет им DX
+	idiv		bx
+</code></pre>
+<p>При этом в команде <code>DIV</code> если частное не помещается в <code>AX</code>, то это такая же ошибка, как деление на 0</p>
+<h3><a class="header" href="#Команды-сдвигов" id="Команды-сдвигов">Команды сдвигов</a></h3>
+<pre><code class="language-nasm">shl - Сдвиг влево
+shr - Логический сдвиг вправо (бит знака теряется)
+sar - Арифметический сдвиг вправо (сохранение знака)
+</code></pre>
+<h2><a class="header" href="#Оптимизации-компилятора" id="Оптимизации-компилятора">Оптимизации компилятора:</a></h2>
+<p><code>g++ -O2 -S -masm=intel s.cpp</code> -- посмотреть ассемблированный код с оптимизацией.</p>
+<p>Онлайн компилятор-дизассемблер: https://godbolt.org/. Можно поиграться с такой функцией и посмотреть на оптимизации компилятора:</p>
+<pre><code class="language-c++">int foo(int a, int b)
+{
+    return a + b; // a-b компилится по-другому
+}
+</code></pre>
+<h3><a class="header" href="#Команда-lea" id="Команда-lea">Команда <code>LEA</code></a></h3>
+<pre><code class="language-nasm">	lea		ax, [bx] 	
+	; в [] не только регистр, мб арифметическое выражение из них
+</code></pre>
+<p><code>LEA</code> записывает в dst выражение из [ ] (как &quot;mov src,[dst + ...]&quot;, но пишутся не данные по адресу, а сам адрес).</p>
+<p>Также <code>LEA</code> может использоваться вместо <code>ADD</code>:</p>
+<pre><code class="language-nasm">	lea		ax, [ax + 8]
+	add		ax, 8
+</code></pre>
+<p>Эти две строки делают одно и тоже, только выполняются на разных блоках конвейера, а еще <code>lea</code> не трогает флаги, в отличие от <code>add</code>.</p>
+<p>Подробнее <a href="https://stackoverflow.com/questions/1658294/whats-the-purpose-of-the-lea-instruction">здесь</a> (первые 2 отаета).</p>
+<h3><a class="header" href="#Как-delизбегаетсяdel-оптимизируется-деление" id="Как-delизбегаетсяdel-оптимизируется-деление">Как <del>избегается</del> оптимизируется деление:</a></h3>
+<p>Деление занимает много больше тактов, чем другие арифметические операции, а во время его вычисления весь конвейер стоит. Компиляторы стараются избегать операции деления, если это возможно.</p>
+<p>Следующий код на C++:</p>
+<pre><code class="language-c++">unsigned foo(unsigned a) // беззнаковый тип
+{
+    return a / 2;
+}
+</code></pre>
+<p>Может быть оптимизирован компилятором до</p>
+<pre><code class="language-nasm">	mov		eax, edi	; Аргумент находится в edi
+	shr		eax		; Логический сдвиг вправо, второй аргумент по умолчанию 1
+	ret
+</code></pre>
+<p>Со знаковым аргументом деление скомпилится так:</p>
+<pre><code class="language-nasm">	mov		eax, edi
+	shr		eax, 31		; Оставляем старший бит (знак)
+	add		eax, edi	; Если число отрицательное, то добавляем 1 (чтобы при a=-1 всё работало)
+	sar		eax		; Арифметический сдвиг вправо на 1 бит
+</code></pre>
+<p>А что будет с <code>unsigned</code> делением на 3? А оно скомпилится вот так:</p>
+<pre><code class="language-nasm">	mov		eax, edi
+	mov		edi, 2863311531	; 0xAAAAAAAB или 2^33/3
+	imul		rax, rdi
+	shr		rax, 33
+</code></pre>
+<p>Почему это лучше? Деление дорогое, а константу можем посчитать при компиляции, получая выигрыш в эффективности.</p>
+<p>Почему это работает? Потому что при арифметике с переполнением деление на константу можно выполнить через умножение:</p>
+<p><code>a / 3 = (a * 2^33) / (3 * 2^33) = (a &gt;&gt; 33) * 2863311531</code></p>
+<h2><a class="header" href="#Команды-перехода-jmp-и-прочие" id="Команды-перехода-jmp-и-прочие">Команды перехода <code>JMP</code> и прочие</a></h2>
+<pre><code class="language-nasm">.loop: ; метка
+	inc		ax
+	jmp		loop ; как присваивание в регистр IP
+</code></pre>
+<p><code>JMP</code> позволяет сделать бесконечный цикл</p>
+<p>Основные условные переходы:</p>
+<pre><code class="language-nasm">	cmp		ax, bx ; сравнить меняет регистр флага
+	je, jne - jump if (not) equal
+	jg, jng - jump if (not) greater (signed)
+	jl, jnl - jump if (not) less (signed)
+	ja, jna - jump if (not) above (unsigned)
+	jb, jnb - jump if (not) below (unsigned)
+</code></pre>
+<h2><a class="header" href="#Регистры-флагов-flags-registers" id="Регистры-флагов-flags-registers">Регистры флагов (FLAGS Registers)</a></h2>
+<p>Большой (до 64 бит) регистр, каждый бит - какой-то флаг.
+Выставляются после инструкций (<code>CMP</code>, арифметика и пр.)</p>
+<pre><code class="language-nasm">	ZF - zero flag 		; если рез. 0
+	SF - sign flag 		; если рез. отрицательный
+	CF - carry flag		; если рез. с битом переноса (для unsigned)
+	OF - overflow flag 	; если рез. переполнился (для signed)
+</code></pre>
+<p>Есть команда <code>ADC</code>:  <code>dst = dst + src + CF</code></p>
+<p>Отсюда другие <strong>команды перехода</strong>:</p>
+<pre><code class="language-nasm">	jc, jnc - jump if (not) carry flag
+	jz, jnz - jump if (not) zero flag
+	js, jns - jump if (not) sign flag
+	jo, jno - jump if (not) overflow flag
+	jb, jc  - jump if carry flag
+	ja      - jump if not carry flag &amp;&amp; not zero flag
+	jl      - OF != SF
+	jg      - OF == SF &amp;&amp; !ZF
+</code></pre>
+<p>Флаги для <code>cmp a,b</code>:</p>
+<p><img src=".././images/02.08_flags.png" alt="Flags scheme" /></p>
+<p>Многие команды расставляют флаги, выполняя операцию:</p>
+<ul>
+<li><code>cmp</code> - сделать вычитание, но не записывать результат</li>
+<li><code>test</code> - побитовый &amp;, но не записывает результат</li>
+</ul>
+<pre><code class="language-nasm">	test		ax, ax ; проверка на 0
+	jz		L2
+</code></pre>
+<p>Пример программы с метками и прыжками:</p>
+<pre><code class="language-nasm">.loop:
+	mov		dx, ax
+	add		ax, bx
+	mov		bx, dx
+	dec		cx
+	jnz		loop
+</code></pre>
+<h2><a class="header" href="#Вызов-функций-и-выход-из-них" id="Вызов-функций-и-выход-из-них">Вызов функций и выход из них</a></h2>
+<p>Заходим в функции и выходим из них в порядке стека.
+Есть специальный регистр <code>SP</code>, который указывает на вершину стека.
+Стек - от старших адресов к младшим. </p>
+<pre><code class="language-nasm">	push		src		; SP -= 2, так как 2 байта. mem[SP] = src
+	pop		src		; tmp = mem[SP], SP += 2, dst = tmp
+</code></pre>
+<p>Команды работы со стеком. Стек позволяет сохранять старые значения, которые необходимо вернуть:</p>
+<pre><code class="language-nasm">	call	label			; вызов ф-иии
+	ret				; выход из ф-ии
+	; по своей сути эти строки равносильны:
+	push		next_instr
+	jmp		label
+	...
+	pop		tmp		; return к следующей инструкции
+	jmp		tmp
+</code></pre>
+<h2><a class="header" href="#abi" id="abi">ABI</a></h2>
+<p><strong>ABI</strong> - application binary interface.</p>
+<p>Программе нужно вызывать какие-то функции операционной системы. ABI - набор соглашений для доступа приложений к операционной системе, там прописано всё про функции и прочее, в том числе размеры типов данных.</p>
+<h2><a class="header" href="#Выделение-памяти" id="Выделение-памяти">Выделение памяти:</a></h2>
+<pre><code class="language-c++">void f(char const*);
+
+void g()
+{
+    char arr[113];
+    f(arr);
+}
+</code></pre>
+<p>Компилируется в:</p>
+<pre><code class="language-nasm">g():
+        sub             rsp, 136
+        mov             rdi, rsp
+        call            f(char const*)
+        add             rsp, 136
+        ret
+</code></pre>
+<p>К локальным переменным обращаемся через <code>rsp</code>, лежат на стеке. Размер стека - переменная на уровне операционной системы (вроде).</p>
+<p>Обратим внимание на то, что если изменить размер массива на <strong>112</strong>, то этот код скомпилируется в:</p>
+<pre><code class="language-nasm">g():
+        sub             rsp, 120
+        mov             rdi, rsp
+        call            f(char const*)
+        add             rsp, 120
+        ret
+</code></pre>
+<p>Почему 136 изменилось на 120? Этот эффект называется выравниванием (alignment).
+В качестве основной единицы работы с памятью используется <strong>машинное слово</strong>, размер которого обычно составляет несколько байт. Так называемый &quot;unaligned access&quot; сложен в реализации на аппаратном уровне, поэтому обращения по произвольному адресу либо не поддерживаются (и вызывают исключение процессора), либо поддерживаются, но работают медленно. Обычно компилятор выравнивает данные по границам машинных слов, в нашем случае <code>8 + 16 * k</code>.</p>
+<h1><a class="header" href="#contributing" id="contributing">Contributing</a></h1>
+<h3><a class="header" href="#Внесение-изменений" id="Внесение-изменений">Внесение изменений:</a></h3>
+<ol>
+<li>Сделать fork репозитория</li>
+<li>Склонить его к себе</li>
+</ol>
+<pre><code class="language-bash">git clone https://github.com/YOUR_NAME/cpp-notes
+</code></pre>
+<ol start="3">
+<li>Внести правки, сделать коммит, запушить</li>
+</ol>
+<pre><code class="language-bash">git commit -m &quot;Your commit message&quot;
+git push origin master
+</code></pre>
+<ol start="4">
+<li>Зайти на github, нажать кнопку new pull request, предложить свои изменения в master основного репозитория</li>
+</ol>
+<h3><a class="header" href="#Добавление-изменений-основного-репозитория-в-ваш" id="Добавление-изменений-основного-репозитория-в-ваш">Добавление изменений основного репозитория в ваш:</a></h3>
+<ol>
+<li>Сначала нужно добавить основной репозиторий в remote (этот шаг нужно делать один раз)</li>
+</ol>
+<pre><code class="language-bash">git remote add source https://github.com/lejabque/cpp-notes
+git remote -v # должен отобразиться в списке
+</code></pre>
+<ol start="2">
+<li>Получить изменения из основного репозитория</li>
+</ol>
+<pre><code class="language-bash">git fetch source
+</code></pre>
+<ol start="3">
+<li>Поребейзить ваш мастер на мастер основного репозитория</li>
+</ol>
+<pre><code class="language-bash">git checkout master
+git rebase source/master
+</code></pre>
+<ol start="4">
+<li>Запушить изменения в свой репозиторий</li>
+</ol>
+<pre><code class="language-bash">git push origin master # если нужен форспуш, добавьте -f
+</code></pre>
 
                     </main>
 
