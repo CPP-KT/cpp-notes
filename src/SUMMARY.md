@@ -35,3 +35,5 @@
 - [Smart pointers: unique_ptr, shared_ptr, weak_ptr](./16_smart_pointers.md)
 
 - [Perfect forwarding, variadic templates](./17_perfect_forwarding.md)
+
+- [Decltype, declval, auto, nullptr](./18_decltype_auto_nullptr.md)

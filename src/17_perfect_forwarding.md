@@ -126,9 +126,9 @@ T&& forward(typename type_identity<T>::type& obj) {
 
 В STL вместо `type_identity` используется `remove_reference`. Так же есть перегрузка для rvalue (`T&&`), которая применяется, например, для форварда значения, возвращаемого функцией.
 
-## Variadic template
+## Variadic templates
 
-Осталось понять, как делать функцию, принимающую произвольное число шаблонных параметров. Для этого в C++ сделали специальный синтаксис:
+Осталось понять, как делать функцию, принимающую произвольное число шаблонных параметров. Для этого в C++ сделали специальный синтаксис variadic шаблонов:
 
 ```c++
 template <typename... T>
@@ -138,3 +138,136 @@ void g(T&& ...args) {
 ```
 
 Можно думать, что `...` пишутся там, где обычно аргументы перечисляются через запятую.
+
+Проще всего понять, как они работают, на примерах:
+
+```c++
+template <typename... U>
+struct tuple {};
+
+void g(int, float, char);
+
+struct agg {
+    int a;
+    float b;
+    char c;
+}
+
+template <typename... V>
+void f(V... args) {
+    tuple<V...> t;
+    g(args...);
+    agg a = {args...};
+}
+
+int main() {
+    f<int, float, char>(1, 1.f, '1');
+}
+```
+
+Так же можно использовать variadic в перечислении базовых классов:
+
+```c++
+template <typename... U>
+struct tuple : U... {
+    using U::foo...;
+};
+```
+
+Как это работает в общем случае? `...` показывают, на каком уровне нужно раскрыть аргументы.
+
+```c++
+template <typename... V>
+struct tuple {};
+
+template <typename... V2>
+struct tuple2 {};
+
+template <typename... V>
+void f(V... args) {  // void f(int arg0, float arg1, char arg2);
+    tuple<tuple2<V...>> t1;  // tuple<tuple2<int, float, char>>
+    tuple<tuple2<V>...> t2;  // tuple<tuple2<int>, tuple2<float>, tuple2<char>>
+}
+
+template <typename... U>
+void g(U&&... args) {
+    f(std::forward<U>(args)...);  // раскрываются в f, forward от каждого
+}
+```
+
+Можно раскрывать одновременно два variadic'a одинакового размера (или один с самим собой):
+
+```c++
+template <typename... V>
+void f(V... args) {  // void f(int arg0, float arg1, char arg2);
+    tuple<tuple2<V, V>...> t3;  // tuple<tuple2<int, int>, tuple2<float, float>, tuple2<char, char>>
+}
+```
+
+Если `...` несколько, то раскрываются сначала внутренние:
+
+```c++
+template <typename... V>
+void f(V... args) {  // void f(int arg0, float arg1, char arg2);
+    tuple<tuple2<V, V...>...> t4; 
+    // tuple<tuple 2<int, int, float, char>,
+    //       tuple2<float, int, float, char>,
+    //       tuple2<char, int, float, char>>
+}
+```
+
+Как передавать два пака шаблонов? Для классов так делать нельзя, для них пак параметров должен быть последним в списке.
+
+```c++
+template <typename... U, typename... V> // COMPILE ERROR
+struct x {}; 
+
+template <typename... U, typename V> // COMPILE ERROR
+struct y{}; 
+
+template <typename U, typename... V> // OK
+struct t {}; 
+```
+
+Это важно только для primary шаблона, для partial специализаций нет, так как они выводятся, а не указываются явно:
+
+```c++
+template <typename... UArgs, typename... VArgs>
+struct x<tuple<UArgs...>, tuple<VArgs...>>
+{};
+
+int main() {
+    x<tuple<int, float>, tuple<double, char>> xx;
+}
+```
+
+Для функций шаблонные параметры тоже могут выводиться,  поэтому для функций нет ограничений на то, что пак должен быть последним.
+
+```c++
+template <typename... U, typename... V>
+void h(tuple<U...>, tuple<V...>) {
+    tuple<tuple2<U, V>...> t3;
+}
+```
+
+### Несколько примеров применения
+
+```c++
+template <typename T, typename... Args>
+std::unique_ptr<T> make_unique(Args&& ...args) {
+    return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
+}
+```
+
+Так же реализован `make_shared` для`std::shared_ptr` и `emplace_back` для `std::vector`
+
+```c++
+template <typename... Ts>
+void write() {}
+
+template <typename T0, typename... Ts>
+void write(T0 const& arg0, Ts const& ...args) {
+    std::cout << arg0;
+    write(args...);
+}
+```
