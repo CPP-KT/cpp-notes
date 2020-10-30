@@ -18,6 +18,7 @@
 
 - [Сайт курса](https://cpp-kt.github.io/course/)
 - [Slack курса](https://cpp-year2019.slack.com/)
+- [Telegram-чат курса](https://t.me/y2019cpp)
 
 #### Презентации и ссылки по материалу:
 
