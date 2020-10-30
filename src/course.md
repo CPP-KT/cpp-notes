@@ -6,7 +6,7 @@
 
 [Сайт с конспектом.](https://lejabque.github.io/cpp-notes/)
 
-Конспекты содержат баги, поэтому [не стесняйтесь вносить правки.](./CONTRIBUTING.md)
+Конспекты содержат баги, поэтому [не стесняйтесь вносить правки.](https://github.com/lejabque/cpp-notes/blob/master/CONTRIBUTING.md)
 
 Помимо лекций, конспекты включают в себя дополнения из конспектов [@sorokin](https://github.com/sorokin/cpp-notes) и [@hazzus](https://github.com/hazzus/cpp-conspects)
 
