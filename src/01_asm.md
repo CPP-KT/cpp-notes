@@ -89,9 +89,9 @@ sar - Арифметический сдвиг вправо (сохранение
 Онлайн компилятор-дизассемблер: https://godbolt.org/. Можно поиграться с такой функцией и посмотреть на оптимизации компилятора:
 
 ```c++
-int foo(int a, int b)
-{
-    return a + b; // a-b компилится по-другому
+int foo(int a, int b) {
+    return a + b; // использует lea вместо add
+    // a - b использует sub
 }
 ```
 
@@ -113,7 +113,7 @@ int foo(int a, int b)
 
 Эти две строки делают одно и тоже, только выполняются на разных блоках конвейера, а еще `lea` не трогает флаги, в отличие от `add`.
 
-Подробнее [здесь](https://stackoverflow.com/questions/1658294/whats-the-purpose-of-the-lea-instruction) (первые 2 отаета).
+Подробнее [здесь](https://stackoverflow.com/questions/1658294/whats-the-purpose-of-the-lea-instruction) (первые 2 ответа).
 
 ### Как ~~избегается~~ оптимизируется деление:
 
