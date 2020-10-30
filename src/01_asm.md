@@ -1,7 +1,7 @@
 # Введение в ассемблер
-- [Презентация](slides/lecture-1.pdf)
-- [Запись №1](https://www.youtube.com/watch?v=bTgtesThdSg)
-- [Запись №2](https://www.youtube.com/watch?v=XY8xN1Ug1_k)
+- [Слайды с лекции](slides/lecture-1.pdf)
+- [Запись лекции №1](https://www.youtube.com/watch?v=bTgtesThdSg)
+- [Запись лекции №2](https://www.youtube.com/watch?v=XY8xN1Ug1_k)
 ---
 ## Основные регистры и команды
 
@@ -11,7 +11,6 @@
 - **8-битные регистры** (тоже 8): AL, AH, BL, BH, CL, CH, DL, DH. AL + AH = AX, аналогично другие.
 - **32-битные регистры:** EAX, и другие обычные с приставкой E - extended
   ![Memory Cell](./images/02.08_memory_cell.png)
-  
 ### Команды read, write
 
 ```nasm

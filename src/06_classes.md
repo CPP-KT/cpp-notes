@@ -1,9 +1,8 @@
 # Классы, абстракция данных
-
 - [Пример к лекции](https://github.com/sorokin/cpp-course/blob/gh-pages/demos/string-demo/main.cpp)
-- [Запись №1](https://www.youtube.com/watch?v=4LkTiNYQYBU)
-- [Запись №2](https://www.youtube.com/watch?v=kjJ-1-VsNRo)
-
+- [Запись лекции №1](https://www.youtube.com/watch?v=4LkTiNYQYBU)
+- [Запись лекции №2](https://www.youtube.com/watch?v=kjJ-1-VsNRo)
+---
 ## Структуры
 
 С помощью структур можно создавать свои типы. У структуры есть поля и методы. У полей и методов есть модификаторы доступа `public`, `private`, `protected`. По дефолту все поля и методы структуры - `public`.

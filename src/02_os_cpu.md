@@ -1,6 +1,6 @@
 # ОС, процессор и память
-- [Запись №1](https://www.youtube.com/watch?v=bTgtesThdSg)
-- [Запись №2](https://www.youtube.com/watch?v=XY8xN1Ug1_k)
+- [Запись лекции №1](https://www.youtube.com/watch?v=bTgtesThdSg)
+- [Запись лекции №2](https://www.youtube.com/watch?v=XY8xN1Ug1_k)
 ---
 ## Прерывания
 

@@ -1,6 +1,6 @@
 # Синтаксическое пересечение C и C++
-- [Запись №1](https://www.youtube.com/watch?v=rGfQ5vWUS14)
-- [Запись №2](https://www.youtube.com/watch?v=kf2zVHBEfy8)
+- [Запись лекции №1](https://www.youtube.com/watch?v=rGfQ5vWUS14)
+- [Запись лекции №2](https://www.youtube.com/watch?v=kf2zVHBEfy8)
 ---
 ## Типы данных
 ### Целочисленные:

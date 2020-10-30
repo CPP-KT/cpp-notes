@@ -1,12 +1,10 @@
 # Интрузивные контейнеры 
 
 В лекции часто упоминается статья ["Avoiding game crashes related to linked lists"](https://www.codeofhonor.com/blog/avoiding-game-crashes-related-to-linked-lists) про то, как в Starcarft применяли интрузивные списки, и статья [Intrusive linked lists in practice](https://www.data-structures-in-practice.com/intrusive-linked-lists/)
-
-- [Презентация](slides/intrusive.pdf)
-- [Запись №1](https://www.youtube.com/watch?v=Kf7qkcaWetc)
+- [Слайды с лекции](slides/intrusive.pdf)
+- [Запись лекции №1](https://www.youtube.com/watch?v=Kf7qkcaWetc)
 - [Разбор практики по intrusive_list](https://www.youtube.com/watch?v=fwPUzKDsQTA)
 - [Код intrusive_list](https://github.com/sorokin/intrusive_list)
-
 ---
 
 ## Мотивационный пример
