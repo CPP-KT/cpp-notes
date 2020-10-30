@@ -1,7 +1,7 @@
 # Кэш-память
-- [Презентация](slides/lecture-3.pdf)
-- [Запись №1](https://www.youtube.com/watch?v=6vlNFxpSENs)
-- [Запись №2](https://www.youtube.com/watch?v=DddjrdCrCF8)
+- [Слайды с лекции](slides/lecture-3.pdf)
+- [Запись лекции №1](https://www.youtube.com/watch?v=6vlNFxpSENs)
+- [Запись лекции №2](https://www.youtube.com/watch?v=DddjrdCrCF8)
 ---
 > Optimize for data first, then code. Memory access is probably going to be your biggest bottleneck
 

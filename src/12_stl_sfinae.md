@@ -1,8 +1,7 @@
 # Обзор STL, tag-dispatching, SFINAE.
-
-- [Запись №1](https://www.youtube.com/watch?v=RidP1GbfFEA)
-- [Запись №2](https://www.youtube.com/watch?v=HQdf43h3B2o)
-
+- [Запись лекции №1](https://www.youtube.com/watch?v=RidP1GbfFEA)
+- [Запись лекции №2](https://www.youtube.com/watch?v=HQdf43h3B2o)
+---
 ## STL
 Стандартные sequence containers:
 - array
@@ -269,7 +268,7 @@ int main() {
   bar(); // ошибка "couldn't infer template argument 'T'", так как нет информации из аргумента, какой типа T
   bar(1, 2.); // ошибка "deduced conflicting types for parameter 'T'", первый параметр int, второй double, не понятно, какой T выводить
 }
-``` 
+```
 Из depended имён выводить не можем:
 ```c++
 template <typename T>

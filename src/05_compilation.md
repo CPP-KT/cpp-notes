@@ -1,7 +1,7 @@
 # Процесс компиляции программ
-- [Запись №1](https://www.youtube.com/watch?v=Fm-EmbQVrLE)
-- [Запись №2](https://www.youtube.com/watch?v=w0G66pR3JuY)
-- [Запись №3](https://www.youtube.com/watch?v=gsFYkmckcZs)
+- [Запись лекции №1](https://www.youtube.com/watch?v=Fm-EmbQVrLE)
+- [Запись лекции №2](https://www.youtube.com/watch?v=w0G66pR3JuY)
+- [Запись лекции №3](https://www.youtube.com/watch?v=gsFYkmckcZs)
 - [Практика](https://www.youtube.com/watch?v=jZAWVxcHLKA)
 ---
 ![Compilation graph](./images/03.28_compilation_graph.png)
