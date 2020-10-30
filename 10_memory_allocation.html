@@ -160,6 +160,10 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#Механизмы-ОС-для-аллокации-памяти-аллокаторы-памяти-small-object-и-copy-on-write-оптимизации" id="Механизмы-ОС-для-аллокации-памяти-аллокаторы-памяти-small-object-и-copy-on-write-оптимизации">Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации</a></h1>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=oDPaXS9tKlw">Запись №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=i8uYAe0E4PU">Запись №2</a></li>
+</ul>
 <p><em>Первую часть лекции лучше смотреть запись, так как там много профилирования и я не хочу вставлять это в конспект</em></p>
 <h2><a class="header" href="#Аллокация-памяти-на-linux-mmap" id="Аллокация-памяти-на-linux-mmap">Аллокация памяти на Linux (mmap)</a></h2>
 <p>На Linux страницы памяти выделяются через <a href="http://man7.org/linux/man-pages/man2/mmap.2.html">mmap</a>, а освобождают через <code>munmap</code>. Он выделяет &quot;лениво&quot; и без обращений к памяти почти нет разницы, сколько выделять. Это можно заметить, если протестировать выделения с обращениями и без.</p>
