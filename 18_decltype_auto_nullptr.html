@@ -1,0 +1,342 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Decltype, declval, auto, nullptr - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="18_decltype_auto_nullptr.html" class="active"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#decltype-declval-auto-nullptr" id="decltype-declval-auto-nullptr">Decltype, declval, auto, nullptr</a></h1>
+<h2><a class="header" href="#decltype" id="decltype">decltype</a></h2>
+<p>Иногда возвращаемый тип не хочется писать руками.</p>
+<pre><code class="language-c++">int f();
+??? g() {
+    return f()
+}
+</code></pre>
+<p>В C++11 появилась конструкция, которая позволяет по выражению узнать его тип:</p>
+<pre><code class="language-c++">int main() {
+    decltype(2 + 2) a = 42; // int a = 42;
+}
+
+decltype(f()) g() {
+    return f();
+}
+</code></pre>
+<p><code>decltype </code>сделан так, чтобы его было удобно использовать для возврата значений:</p>
+<pre><code class="language-c++">int foo();
+int&amp; bar();
+int&amp;&amp; baz();
+// decltype(foo()) int
+// decltype(bar()) int&amp;
+// decltype(baz()) int&amp;&amp;
+
+// decltype(expr)
+// type для (prvalue)
+// type&amp; для (lvalue)
+// type&amp;&amp; для (xvalue)
+</code></pre>
+<p>О <code>decltype</code> можно думать как о двух языковых конструкциях в одном синтаксисе</p>
+<pre><code class="language-c++">// decltype (expr) - работает, как написано выше
+// decltype (var_name) - возвращает тип этой переменной
+</code></pre>
+<p><code>decltype</code> определён таким образом, что он работает и для членов класса:</p>
+<pre><code class="language-c++">struct x {
+    int a;
+};
+
+int main() {
+    x::a; // COMPILE ERROR
+    decltype(x::a);
+    
+    int a;
+    decltype(a) b = 42; // int b = 42
+    decltype((a)) c = a; // int&amp; c = a
+}
+</code></pre>
+<p>Последнее работает так, потому что <code>(a</code>) это выражение и оно имеет тип <code>int&amp;</code>, а <code>a</code> - это имя переменной.</p>
+<h2><a class="header" href="#declval" id="declval">declval</a></h2>
+<p>Иногда хочется узнать типа чего-то, что зависит от шаблонных аргументов функции, но просто сделать это с помощью <code>decltype</code> не получится, так как компилятор встречает обращение к параметру, когда ещё не дошёл до них.</p>
+<p>Для этого есть синтаксическая конструкция <code>declval</code>:</p>
+<pre><code class="language-c++">int foo(int);
+float foo(float);
+
+template &lt;typename Arg0&gt;
+decltype(foo(declval&lt;Arg0&gt;())) qux(Arg0&amp;&amp; arg0) {
+    return foo(std::forward&lt;Arg0&gt;(arg0));
+}
+</code></pre>
+<p>Сигнатура у <code>declval</code> такая:</p>
+<pre><code class="language-C++">template &lt;typename T&gt;
+T declval();
+</code></pre>
+<p>Для неё не нужно тело функции, так как <code>decltype</code> не генерирует машинный код и считается на этапе компиляции.</p>
+<p>В языке есть несколько мест с похожей логикой - например, <code>sizeof</code>. Такие места называются <em>unevaluated contexts</em>.</p>
+<p>При использовании сигнатуры, как выше, могут возникать проблемы с неполными типами (просто не скомпилируется). Это происходит из-за того, что если функция возвращает структуру, то в точке, где вызывается эта функция, эта структура должна быть complete типом. Чтобы обойти это, делают так:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+T&amp;&amp; declval();
+</code></pre>
+<h2><a class="header" href="#trailing-return-types" id="trailing-return-types">Trailing return types</a></h2>
+<p>Чтобы не писать <code>declval</code>, сделали возможной следующую конструкцию:</p>
+<pre><code class="language-c++">template &lt;typename Args&gt;
+auto qux(Args&amp;&amp; ...args) -&gt; decltype(foo(std::forward&lt;Args&gt;(args)...)) {
+    return foo(std::forward&lt;Args&gt;(args)...);
+}
+</code></pre>
+<h2><a class="header" href="#auto" id="auto">auto</a></h2>
+<p>Можно заметить, что в <code>return</code> и <code>decltype</code> повторяется одно и то же выражение. Для этого добавили возможность писать <code>decltype(auto)</code>:</p>
+<pre><code class="language-c++">int main() {
+    decltype(auto) b = 2 + 2; // int b = 2 + 2
+}
+
+template &lt;typename Args&gt;
+decltype(auto) qux(Args&amp;&amp; ...args) {
+    return foo(std::forward&lt;Args&gt;(args)...);
+}
+</code></pre>
+<p>Возникает вопрос, а зачем там вообще <code>decltype</code>, можно ли его заменить на просто <code>auto</code>? Для этого стоит сказать о том, как работает <code>auto</code>.</p>
+<p>Правило вывода типов у <code>auto</code> почти полностью совпадают с тем, как выводятся шаблонные параметры. Поэтому <code>auto</code> отбрасывает ссылки и <code>cv</code>.</p>
+<pre><code class="language-c++">int&amp; bar();
+
+int main() {
+    auto c = bar(); // int c = bar()
+    auto&amp; c = bar(); // int&amp; c = bar()
+}
+</code></pre>
+<p>Поэтому обычный <code>auto</code> в возвращаемом типе отбрасывает ссылки с <code>cv</code>, поэтому чаще всего нам нужно <code>decltype(auto)</code>.</p>
+<p>И ещё стоит сказать, что если у функции несколько <code>return</code>'ов, которые выводятся в разные типы, то использовать <code>decltype</code> и <code>auto</code> нельзя:</p>
+<pre><code class="language-c++">auto f(bool flag) { // COMPILE ERROR
+    if (flag) {
+        return 1;
+    } else {
+        return 1u;
+    }
+}
+</code></pre>
+<h2><a class="header" href="#nullptr" id="nullptr">nullptr</a></h2>
+<p>До C++11 для нулевого указателя использовалось либо 0, либо макрос <code>NULL</code>. Правило было такое - числовая константа, которая вычисляется в 0, может приводиться неявно в нулевой указатель.</p>
+<p>Это привело бы к проблеме при использовании форвардинга, так как тип бы выводился в <code>int</code>.</p>
+<p>В C++11 появился отдельный тип <code>nullptr_t</code>, который может приводиться к любому указателю. Определено это примерно так:</p>
+<pre><code class="language-c++">struct nullptr_t {
+    template &lt;typename T&gt;
+    opeartor T*() const {
+        return 0;
+    }
+}
+nullptr_t const nullptr;
+</code></pre>
+<p>Единственное отличие в том, что в C++11 <code>nullptr</code> это keyword, встроенный в язык, а не глобальная переменная. Но к типу всё ещё можно обратиться через <code>decltype(nullptr)</code>, в стандартной библиотеке есть <code>std::nullptr_t</code>, который так и определён.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="17_perfect_forwarding.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="17_perfect_forwarding.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

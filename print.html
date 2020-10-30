@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="18_decltype_auto_nullptr.html"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -3536,14 +3536,237 @@ T&amp;&amp; forward(typename type_identity&lt;T&gt;::type&amp; obj) {
 }
 </code></pre>
 <p>В STL вместо <code>type_identity</code> используется <code>remove_reference</code>. Так же есть перегрузка для rvalue (<code>T&amp;&amp;</code>), которая применяется, например, для форварда значения, возвращаемого функцией.</p>
-<h2><a class="header" href="#variadic-template" id="variadic-template">Variadic template</a></h2>
-<p>Осталось понять, как делать функцию, принимающую произвольное число шаблонных параметров. Для этого в C++ сделали специальный синтаксис:</p>
+<h2><a class="header" href="#variadic-templates" id="variadic-templates">Variadic templates</a></h2>
+<p>Осталось понять, как делать функцию, принимающую произвольное число шаблонных параметров. Для этого в C++ сделали специальный синтаксис variadic шаблонов:</p>
 <pre><code class="language-c++">template &lt;typename... T&gt;
 void g(T&amp;&amp; ...args) {
     f(std::forward&lt;T&gt;(args)...);
 }
 </code></pre>
 <p>Можно думать, что <code>...</code> пишутся там, где обычно аргументы перечисляются через запятую.</p>
+<p>Проще всего понять, как они работают, на примерах:</p>
+<pre><code class="language-c++">template &lt;typename... U&gt;
+struct tuple {};
+
+void g(int, float, char);
+
+struct agg {
+    int a;
+    float b;
+    char c;
+}
+
+template &lt;typename... V&gt;
+void f(V... args) {
+    tuple&lt;V...&gt; t;
+    g(args...);
+    agg a = {args...};
+}
+
+int main() {
+    f&lt;int, float, char&gt;(1, 1.f, '1');
+}
+</code></pre>
+<p>Так же можно использовать variadic в перечислении базовых классов:</p>
+<pre><code class="language-c++">template &lt;typename... U&gt;
+struct tuple : U... {
+    using U::foo...;
+};
+</code></pre>
+<p>Как это работает в общем случае? <code>...</code> показывают, на каком уровне нужно раскрыть аргументы.</p>
+<pre><code class="language-c++">template &lt;typename... V&gt;
+struct tuple {};
+
+template &lt;typename... V2&gt;
+struct tuple2 {};
+
+template &lt;typename... V&gt;
+void f(V... args) {  // void f(int arg0, float arg1, char arg2);
+    tuple&lt;tuple2&lt;V...&gt;&gt; t1;  // tuple&lt;tuple2&lt;int, float, char&gt;&gt;
+    tuple&lt;tuple2&lt;V&gt;...&gt; t2;  // tuple&lt;tuple2&lt;int&gt;, tuple2&lt;float&gt;, tuple2&lt;char&gt;&gt;
+}
+
+template &lt;typename... U&gt;
+void g(U&amp;&amp;... args) {
+    f(std::forward&lt;U&gt;(args)...);  // раскрываются в f, forward от каждого
+}
+</code></pre>
+<p>Можно раскрывать одновременно два variadic'a одинакового размера (или один с самим собой):</p>
+<pre><code class="language-c++">template &lt;typename... V&gt;
+void f(V... args) {  // void f(int arg0, float arg1, char arg2);
+    tuple&lt;tuple2&lt;V, V&gt;...&gt; t3;  // tuple&lt;tuple2&lt;int, int&gt;, tuple2&lt;float, float&gt;, tuple2&lt;char, char&gt;&gt;
+}
+</code></pre>
+<p>Если <code>...</code> несколько, то раскрываются сначала внутренние:</p>
+<pre><code class="language-c++">template &lt;typename... V&gt;
+void f(V... args) {  // void f(int arg0, float arg1, char arg2);
+    tuple&lt;tuple2&lt;V, V...&gt;...&gt; t4; 
+    // tuple&lt;tuple 2&lt;int, int, float, char&gt;,
+    //       tuple2&lt;float, int, float, char&gt;,
+    //       tuple2&lt;char, int, float, char&gt;&gt;
+}
+</code></pre>
+<p>Как передавать два пака шаблонов? Для классов так делать нельзя, для них пак параметров должен быть последним в списке.</p>
+<pre><code class="language-c++">template &lt;typename... U, typename... V&gt; // COMPILE ERROR
+struct x {}; 
+
+template &lt;typename... U, typename V&gt; // COMPILE ERROR
+struct y{}; 
+
+template &lt;typename U, typename... V&gt; // OK
+struct t {}; 
+</code></pre>
+<p>Это важно только для primary шаблона, для partial специализаций нет, так как они выводятся, а не указываются явно:</p>
+<pre><code class="language-c++">template &lt;typename... UArgs, typename... VArgs&gt;
+struct x&lt;tuple&lt;UArgs...&gt;, tuple&lt;VArgs...&gt;&gt;
+{};
+
+int main() {
+    x&lt;tuple&lt;int, float&gt;, tuple&lt;double, char&gt;&gt; xx;
+}
+</code></pre>
+<p>Для функций шаблонные параметры тоже могут выводиться,  поэтому для функций нет ограничений на то, что пак должен быть последним.</p>
+<pre><code class="language-c++">template &lt;typename... U, typename... V&gt;
+void h(tuple&lt;U...&gt;, tuple&lt;V...&gt;) {
+    tuple&lt;tuple2&lt;U, V&gt;...&gt; t3;
+}
+</code></pre>
+<h3><a class="header" href="#Несколько-примеров-применения" id="Несколько-примеров-применения">Несколько примеров применения</a></h3>
+<pre><code class="language-c++">template &lt;typename T, typename... Args&gt;
+std::unique_ptr&lt;T&gt; make_unique(Args&amp;&amp; ...args) {
+    return std::unique_ptr&lt;T&gt;(new T(std::forward&lt;Args&gt;(args)...));
+}
+</code></pre>
+<p>Так же реализован <code>make_shared</code> для<code>std::shared_ptr</code> и <code>emplace_back</code> для <code>std::vector</code></p>
+<pre><code class="language-c++">template &lt;typename... Ts&gt;
+void write() {}
+
+template &lt;typename T0, typename... Ts&gt;
+void write(T0 const&amp; arg0, Ts const&amp; ...args) {
+    std::cout &lt;&lt; arg0;
+    write(args...);
+}
+</code></pre>
+<h1><a class="header" href="#decltype-declval-auto-nullptr" id="decltype-declval-auto-nullptr">Decltype, declval, auto, nullptr</a></h1>
+<h2><a class="header" href="#decltype" id="decltype">decltype</a></h2>
+<p>Иногда возвращаемый тип не хочется писать руками.</p>
+<pre><code class="language-c++">int f();
+??? g() {
+    return f()
+}
+</code></pre>
+<p>В C++11 появилась конструкция, которая позволяет по выражению узнать его тип:</p>
+<pre><code class="language-c++">int main() {
+    decltype(2 + 2) a = 42; // int a = 42;
+}
+
+decltype(f()) g() {
+    return f();
+}
+</code></pre>
+<p><code>decltype </code>сделан так, чтобы его было удобно использовать для возврата значений:</p>
+<pre><code class="language-c++">int foo();
+int&amp; bar();
+int&amp;&amp; baz();
+// decltype(foo()) int
+// decltype(bar()) int&amp;
+// decltype(baz()) int&amp;&amp;
+
+// decltype(expr)
+// type для (prvalue)
+// type&amp; для (lvalue)
+// type&amp;&amp; для (xvalue)
+</code></pre>
+<p>О <code>decltype</code> можно думать как о двух языковых конструкциях в одном синтаксисе</p>
+<pre><code class="language-c++">// decltype (expr) - работает, как написано выше
+// decltype (var_name) - возвращает тип этой переменной
+</code></pre>
+<p><code>decltype</code> определён таким образом, что он работает и для членов класса:</p>
+<pre><code class="language-c++">struct x {
+    int a;
+};
+
+int main() {
+    x::a; // COMPILE ERROR
+    decltype(x::a);
+    
+    int a;
+    decltype(a) b = 42; // int b = 42
+    decltype((a)) c = a; // int&amp; c = a
+}
+</code></pre>
+<p>Последнее работает так, потому что <code>(a</code>) это выражение и оно имеет тип <code>int&amp;</code>, а <code>a</code> - это имя переменной.</p>
+<h2><a class="header" href="#declval" id="declval">declval</a></h2>
+<p>Иногда хочется узнать типа чего-то, что зависит от шаблонных аргументов функции, но просто сделать это с помощью <code>decltype</code> не получится, так как компилятор встречает обращение к параметру, когда ещё не дошёл до них.</p>
+<p>Для этого есть синтаксическая конструкция <code>declval</code>:</p>
+<pre><code class="language-c++">int foo(int);
+float foo(float);
+
+template &lt;typename Arg0&gt;
+decltype(foo(declval&lt;Arg0&gt;())) qux(Arg0&amp;&amp; arg0) {
+    return foo(std::forward&lt;Arg0&gt;(arg0));
+}
+</code></pre>
+<p>Сигнатура у <code>declval</code> такая:</p>
+<pre><code class="language-C++">template &lt;typename T&gt;
+T declval();
+</code></pre>
+<p>Для неё не нужно тело функции, так как <code>decltype</code> не генерирует машинный код и считается на этапе компиляции.</p>
+<p>В языке есть несколько мест с похожей логикой - например, <code>sizeof</code>. Такие места называются <em>unevaluated contexts</em>.</p>
+<p>При использовании сигнатуры, как выше, могут возникать проблемы с неполными типами (просто не скомпилируется). Это происходит из-за того, что если функция возвращает структуру, то в точке, где вызывается эта функция, эта структура должна быть complete типом. Чтобы обойти это, делают так:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+T&amp;&amp; declval();
+</code></pre>
+<h2><a class="header" href="#trailing-return-types" id="trailing-return-types">Trailing return types</a></h2>
+<p>Чтобы не писать <code>declval</code>, сделали возможной следующую конструкцию:</p>
+<pre><code class="language-c++">template &lt;typename Args&gt;
+auto qux(Args&amp;&amp; ...args) -&gt; decltype(foo(std::forward&lt;Args&gt;(args)...)) {
+    return foo(std::forward&lt;Args&gt;(args)...);
+}
+</code></pre>
+<h2><a class="header" href="#auto" id="auto">auto</a></h2>
+<p>Можно заметить, что в <code>return</code> и <code>decltype</code> повторяется одно и то же выражение. Для этого добавили возможность писать <code>decltype(auto)</code>:</p>
+<pre><code class="language-c++">int main() {
+    decltype(auto) b = 2 + 2; // int b = 2 + 2
+}
+
+template &lt;typename Args&gt;
+decltype(auto) qux(Args&amp;&amp; ...args) {
+    return foo(std::forward&lt;Args&gt;(args)...);
+}
+</code></pre>
+<p>Возникает вопрос, а зачем там вообще <code>decltype</code>, можно ли его заменить на просто <code>auto</code>? Для этого стоит сказать о том, как работает <code>auto</code>.</p>
+<p>Правило вывода типов у <code>auto</code> почти полностью совпадают с тем, как выводятся шаблонные параметры. Поэтому <code>auto</code> отбрасывает ссылки и <code>cv</code>.</p>
+<pre><code class="language-c++">int&amp; bar();
+
+int main() {
+    auto c = bar(); // int c = bar()
+    auto&amp; c = bar(); // int&amp; c = bar()
+}
+</code></pre>
+<p>Поэтому обычный <code>auto</code> в возвращаемом типе отбрасывает ссылки с <code>cv</code>, поэтому чаще всего нам нужно <code>decltype(auto)</code>.</p>
+<p>И ещё стоит сказать, что если у функции несколько <code>return</code>'ов, которые выводятся в разные типы, то использовать <code>decltype</code> и <code>auto</code> нельзя:</p>
+<pre><code class="language-c++">auto f(bool flag) { // COMPILE ERROR
+    if (flag) {
+        return 1;
+    } else {
+        return 1u;
+    }
+}
+</code></pre>
+<h2><a class="header" href="#nullptr" id="nullptr">nullptr</a></h2>
+<p>До C++11 для нулевого указателя использовалось либо 0, либо макрос <code>NULL</code>. Правило было такое - числовая константа, которая вычисляется в 0, может приводиться неявно в нулевой указатель.</p>
+<p>Это привело бы к проблеме при использовании форвардинга, так как тип бы выводился в <code>int</code>.</p>
+<p>В C++11 появился отдельный тип <code>nullptr_t</code>, который может приводиться к любому указателю. Определено это примерно так:</p>
+<pre><code class="language-c++">struct nullptr_t {
+    template &lt;typename T&gt;
+    opeartor T*() const {
+        return 0;
+    }
+}
+nullptr_t const nullptr;
+</code></pre>
+<p>Единственное отличие в том, что в C++11 <code>nullptr</code> это keyword, встроенный в язык, а не глобальная переменная. Но к типу всё ещё можно обратиться через <code>decltype(nullptr)</code>, в стандартной библиотеке есть <code>std::nullptr_t</code>, который так и определён.</p>
 
                     </main>
 

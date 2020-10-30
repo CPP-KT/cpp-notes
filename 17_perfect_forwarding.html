@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html" class="active"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html" class="active"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="18_decltype_auto_nullptr.html"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -257,14 +257,117 @@ T&amp;&amp; forward(typename type_identity&lt;T&gt;::type&amp; obj) {
 }
 </code></pre>
 <p>В STL вместо <code>type_identity</code> используется <code>remove_reference</code>. Так же есть перегрузка для rvalue (<code>T&amp;&amp;</code>), которая применяется, например, для форварда значения, возвращаемого функцией.</p>
-<h2><a class="header" href="#variadic-template" id="variadic-template">Variadic template</a></h2>
-<p>Осталось понять, как делать функцию, принимающую произвольное число шаблонных параметров. Для этого в C++ сделали специальный синтаксис:</p>
+<h2><a class="header" href="#variadic-templates" id="variadic-templates">Variadic templates</a></h2>
+<p>Осталось понять, как делать функцию, принимающую произвольное число шаблонных параметров. Для этого в C++ сделали специальный синтаксис variadic шаблонов:</p>
 <pre><code class="language-c++">template &lt;typename... T&gt;
 void g(T&amp;&amp; ...args) {
     f(std::forward&lt;T&gt;(args)...);
 }
 </code></pre>
 <p>Можно думать, что <code>...</code> пишутся там, где обычно аргументы перечисляются через запятую.</p>
+<p>Проще всего понять, как они работают, на примерах:</p>
+<pre><code class="language-c++">template &lt;typename... U&gt;
+struct tuple {};
+
+void g(int, float, char);
+
+struct agg {
+    int a;
+    float b;
+    char c;
+}
+
+template &lt;typename... V&gt;
+void f(V... args) {
+    tuple&lt;V...&gt; t;
+    g(args...);
+    agg a = {args...};
+}
+
+int main() {
+    f&lt;int, float, char&gt;(1, 1.f, '1');
+}
+</code></pre>
+<p>Так же можно использовать variadic в перечислении базовых классов:</p>
+<pre><code class="language-c++">template &lt;typename... U&gt;
+struct tuple : U... {
+    using U::foo...;
+};
+</code></pre>
+<p>Как это работает в общем случае? <code>...</code> показывают, на каком уровне нужно раскрыть аргументы.</p>
+<pre><code class="language-c++">template &lt;typename... V&gt;
+struct tuple {};
+
+template &lt;typename... V2&gt;
+struct tuple2 {};
+
+template &lt;typename... V&gt;
+void f(V... args) {  // void f(int arg0, float arg1, char arg2);
+    tuple&lt;tuple2&lt;V...&gt;&gt; t1;  // tuple&lt;tuple2&lt;int, float, char&gt;&gt;
+    tuple&lt;tuple2&lt;V&gt;...&gt; t2;  // tuple&lt;tuple2&lt;int&gt;, tuple2&lt;float&gt;, tuple2&lt;char&gt;&gt;
+}
+
+template &lt;typename... U&gt;
+void g(U&amp;&amp;... args) {
+    f(std::forward&lt;U&gt;(args)...);  // раскрываются в f, forward от каждого
+}
+</code></pre>
+<p>Можно раскрывать одновременно два variadic'a одинакового размера (или один с самим собой):</p>
+<pre><code class="language-c++">template &lt;typename... V&gt;
+void f(V... args) {  // void f(int arg0, float arg1, char arg2);
+    tuple&lt;tuple2&lt;V, V&gt;...&gt; t3;  // tuple&lt;tuple2&lt;int, int&gt;, tuple2&lt;float, float&gt;, tuple2&lt;char, char&gt;&gt;
+}
+</code></pre>
+<p>Если <code>...</code> несколько, то раскрываются сначала внутренние:</p>
+<pre><code class="language-c++">template &lt;typename... V&gt;
+void f(V... args) {  // void f(int arg0, float arg1, char arg2);
+    tuple&lt;tuple2&lt;V, V...&gt;...&gt; t4; 
+    // tuple&lt;tuple 2&lt;int, int, float, char&gt;,
+    //       tuple2&lt;float, int, float, char&gt;,
+    //       tuple2&lt;char, int, float, char&gt;&gt;
+}
+</code></pre>
+<p>Как передавать два пака шаблонов? Для классов так делать нельзя, для них пак параметров должен быть последним в списке.</p>
+<pre><code class="language-c++">template &lt;typename... U, typename... V&gt; // COMPILE ERROR
+struct x {}; 
+
+template &lt;typename... U, typename V&gt; // COMPILE ERROR
+struct y{}; 
+
+template &lt;typename U, typename... V&gt; // OK
+struct t {}; 
+</code></pre>
+<p>Это важно только для primary шаблона, для partial специализаций нет, так как они выводятся, а не указываются явно:</p>
+<pre><code class="language-c++">template &lt;typename... UArgs, typename... VArgs&gt;
+struct x&lt;tuple&lt;UArgs...&gt;, tuple&lt;VArgs...&gt;&gt;
+{};
+
+int main() {
+    x&lt;tuple&lt;int, float&gt;, tuple&lt;double, char&gt;&gt; xx;
+}
+</code></pre>
+<p>Для функций шаблонные параметры тоже могут выводиться,  поэтому для функций нет ограничений на то, что пак должен быть последним.</p>
+<pre><code class="language-c++">template &lt;typename... U, typename... V&gt;
+void h(tuple&lt;U...&gt;, tuple&lt;V...&gt;) {
+    tuple&lt;tuple2&lt;U, V&gt;...&gt; t3;
+}
+</code></pre>
+<h3><a class="header" href="#Несколько-примеров-применения" id="Несколько-примеров-применения">Несколько примеров применения</a></h3>
+<pre><code class="language-c++">template &lt;typename T, typename... Args&gt;
+std::unique_ptr&lt;T&gt; make_unique(Args&amp;&amp; ...args) {
+    return std::unique_ptr&lt;T&gt;(new T(std::forward&lt;Args&gt;(args)...));
+}
+</code></pre>
+<p>Так же реализован <code>make_shared</code> для<code>std::shared_ptr</code> и <code>emplace_back</code> для <code>std::vector</code></p>
+<pre><code class="language-c++">template &lt;typename... Ts&gt;
+void write() {}
+
+template &lt;typename T0, typename... Ts&gt;
+void write(T0 const&amp; arg0, Ts const&amp; ...args) {
+    std::cout &lt;&lt; arg0;
+    write(args...);
+}
+</code></pre>
 
                     </main>
 
@@ -276,6 +379,10 @@ void g(T&amp;&amp; ...args) {
                             </a>
                         
 
+                        
+                            <a rel="next" href="18_decltype_auto_nullptr.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
                         
 
                         <div style="clear: both"></div>
@@ -290,6 +397,10 @@ void g(T&amp;&amp; ...args) {
                     </a>
                 
 
+                
+                    <a rel="next" href="18_decltype_auto_nullptr.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
                 
             </nav>
 
