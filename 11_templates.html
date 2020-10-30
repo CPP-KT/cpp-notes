@@ -183,7 +183,7 @@ struct vector_name {                                        \
 }
 </code></pre>
 <p>У дефайнов несколько проблем: если ссылаться на один тип по-разному через <code>typedef</code>, то будут генериться два разных класса, которые по сути одно и то же. А ещё нельзя создавать с длинными типами типа <code>unsigned short</code>. А ещё может возникнуть дублирование.</p>
-<p>Как это делают <del>нормальные люди</del> в С++:</p>
+<p>Как это делают <del>нормальные люди</del> в C++:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 // template&lt;class T&gt; это то же самое
 struct vector {
