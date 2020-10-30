@@ -1,5 +1,8 @@
 # Обзор STL, tag-dispatching, SFINAE.
 
+- [Запись №1](https://www.youtube.com/watch?v=RidP1GbfFEA)
+- [Запись №2](https://www.youtube.com/watch?v=HQdf43h3B2o)
+
 ## STL
 Стандартные sequence containers:
 - array

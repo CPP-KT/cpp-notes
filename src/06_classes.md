@@ -1,5 +1,8 @@
 # Классы, абстракция данных
-[Примеры к лекции](https://github.com/sorokin/cpp-course/blob/gh-pages/demos/string-demo/main.cpp)
+
+- [Пример к лекции](https://github.com/sorokin/cpp-course/blob/gh-pages/demos/string-demo/main.cpp)
+- [Запись №1](https://www.youtube.com/watch?v=4LkTiNYQYBU)
+- [Запись №2](https://www.youtube.com/watch?v=kjJ-1-VsNRo)
 
 ## Структуры
 

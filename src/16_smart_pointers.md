@@ -1,7 +1,12 @@
 # Умные указатели
 
-Может быть полезно почитать оригинальный [конспект от Вани](https://github.com/sorokin/cpp-notes/blob/master/smart-pointers.tex) по этой теме и посмотреть [слайды лекции](slides/shared_ptr.pdf).
+Может быть полезно почитать оригинальный [конспект от Вани](https://github.com/sorokin/cpp-notes/blob/master/smart-pointers.tex) по этой теме.
+
+- [Презентаия](slides/shared_ptr.pdf)
+- [Запись №1](https://www.youtube.com/watch?v=L9ohcGR0yFE)
+- [Запись №2](https://www.youtube.com/watch?v=M9h0_xBM7_8)
 - - -
+
 ## std::unique_ptr
 
 ### Мотивационный пример

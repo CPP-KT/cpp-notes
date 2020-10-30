@@ -1,4 +1,10 @@
 # Наследование и виртуальные функции
+
+- [Запись №1](https://www.youtube.com/watch?v=IcAaaX888xc)
+- [Запись №2](https://www.youtube.com/watch?v=11MKhMYAmnE)
+- [Запись №3](https://www.youtube.com/watch?v=oMkF60mU8ig)
+- [Запись №4](https://www.youtube.com/watch?v=0-92_jC7YMU)
+
 ```c++
 struct vehicle {
 	std::string registration_number;
