@@ -1,6 +1,6 @@
  # Decltype, declval, auto, nullptr
-- [Запись лекции №1](https://www.youtube.com/watch?v=ydQD7-XSSt4)
----
+
+[Запись лекции №1](https://www.youtube.com/watch?v=ydQD7-XSSt4)
 ## decltype
 
 Иногда возвращаемый тип не хочется писать руками.
