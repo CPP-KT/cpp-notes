@@ -1,6 +1,9 @@
 # Введение в ассемблер
-
-Презентация - http://sorokin.github.io/cpp-course/lecture-1e.odp
+- [Презентация](slides/lecture-1.pdf)
+- [Запись №1](https://www.youtube.com/watch?v=bTgtesThdSg)
+- [Запись №2](https://www.youtube.com/watch?v=XY8xN1Ug1_k)
+---
+## Основные регистры и команды
 
 Регистр `IP` (instruction pointer) содержит адрес команды.
 

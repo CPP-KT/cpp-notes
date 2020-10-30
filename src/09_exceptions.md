@@ -1,5 +1,8 @@
 # Исключения, гарантии безопасности исключений, RAII
 
+- [Запись №1](https://www.youtube.com/watch?v=R0tVZ1px5-Q)
+- [Запись №2](https://www.youtube.com/watch?v=8PpW8qS2tEg)
+
 ```c++
 bool do_something() {
 	FILE* file = fopen("1.txt");

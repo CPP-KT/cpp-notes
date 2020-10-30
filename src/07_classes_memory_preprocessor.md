@@ -1,5 +1,8 @@
 # Ещё немного про классы
-[Пример к лекции](https://github.com/sorokin/cpp-course/blob/gh-pages/demos/string-demo/main.cpp)
+
+- [Пример к лекции](https://github.com/sorokin/cpp-course/blob/gh-pages/demos/string-demo/main.cpp)
+- [Запись №1](https://www.youtube.com/watch?v=nI6NEPYPRXU)
+- [Запись №2](https://www.youtube.com/watch?v=8JAp3tG6IrA)
 
 ## Special member функции
 Такие функции компилятор сгенерирует сам, если не написать их.
