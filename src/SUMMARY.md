@@ -37,3 +37,13 @@
 - [Perfect forwarding, variadic templates](./17_perfect_forwarding.md)
 
 - [Decltype, declval, auto, nullptr](./18_decltype_auto_nullptr.md)
+
+- [Анонимные функции, type erasure, std::function](./19_lambdas_type_erasure.md)
+
+- [Сигналы, reetrancy, обработки ошибок](./20_signals_reetrancy_errors.md)
+
+- [Optional, variant, tuple, string_view](./21_optional_variant_tuple_stringview.md)
+
+- [Статическая и динамическая инициализация, constexpr](./22_constexpr.md)
+
+
