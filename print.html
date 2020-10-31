@@ -4441,7 +4441,7 @@ int main() {
     return result;
 }
 </code></pre>
-<h1><a class="header" href="#constexpr" id="constexpr">constexpr</a></h1>
+<h1><a class="header" href="#initialization-allign-constexpr" id="initialization-allign-constexpr">initialization, allign, constexpr</a></h1>
 <h2><a class="header" href="#Статическая-и-динамическая-инициализация" id="Статическая-и-динамическая-инициализация">Статическая и динамическая инициализация</a></h2>
 <pre><code class="language-c++">int a = 42;
 int f() {
@@ -4454,6 +4454,27 @@ int a = 42; // инициализируется в момент компиляц
 int b = f(); // инициализируется
 </code></pre>
 <p><code>a</code> инициализируется на этапе компиляции, под <code>b</code> просто резевируются 4 байта, а её инициализация происходит в момент старта программы. </p>
+<p>В C++ все функции по дефолту исполняются в рантайме, но иногда мы хотим получить значение на этапе компиляции. Это можно сделать таким костылём?</p>
+<pre><code class="language-c++">template &lt;size_t a, size_t b&gt;
+struct max {
+    static size_t const value = a &lt; b ? b : a;
+}
+
+template &lt;typename A, typename B&gt;
+struct variant {
+    char stg[max&lt;sizeof(A), sizeof(B)&gt;::value];
+}
+
+</code></pre>
+<p>В C++11 разрешили делать функции, которые выполняются в компайл-тайме:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+constexpr T const&amp; max(T const&amp; a, T const&amp; b) {
+    return a &lt; b ? b : a;
+}
+</code></pre>
+<p>Если функция <code>constexpr</code>, то она должна внутри вызывать только <code>constexpr</code> функции.</p>
+<p>С появлением <code>constexpr</code> функций обнаружилась нужда, например, в <code>constexpr</code> переменных. При этом константные переменные со статической инициализацией могут использоваться в компайл-тайме.</p>
+<p>// TODO</p>
 
                     </main>
 
