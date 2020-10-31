@@ -1,0 +1,319 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Анонимные функции, type erasure, std::function - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="18_decltype_auto_nullptr.html"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="19_lambdas_type_erasure.html" class="active"><strong aria-hidden="true">20.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="20_signals_reetrancy_errors.html"><strong aria-hidden="true">21.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="21_optional_variant_tuple_stringview.html"><strong aria-hidden="true">22.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="22_constexpr.html"><strong aria-hidden="true">23.</strong> Статическая и динамическая инициализация, constexpr</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Анонимные-функции-type-erasure-stdfunction" id="Анонимные-функции-type-erasure-stdfunction">Анонимные функции, type erasure, std::function</a></h1>
+<ul>
+<li><a href="http://hubicka.blogspot.com/2014/01/devirtualization-in-c-part-1.html">Статья про девиртуализацию</a></li>
+<li><a href="https://www.youtube.com/watch?v=ItNnt_7D5w0">Запись лекции №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=bTVLDJjEMlU">Запись лекции №2</a></li>
+</ul>
+<hr />
+<h2><a class="header" href="#Мотивирующий-пример-и-оптимизации" id="Мотивирующий-пример-и-оптимизации">Мотивирующий пример и оптимизации</a></h2>
+<p>Какой вариант быстрее?</p>
+<pre><code class="language-c++">bool int_less(int a, int b) {
+    return a &lt; b;
+}
+
+template &lt;typename T&gt;
+struct less {
+    bool operator()(T const&amp; a, T const&amp; b) const {
+        return a &lt; b;
+    }
+};
+
+int foo (vector&amp; v) {
+    std::sort(v.begin(), v.end(), less&lt;int&gt;());
+    std::sort(v.begin(), v.end(), &amp;int_less);
+}
+</code></pre>
+<p>Оказывается, что первый вариант работает процентов на 30 быстрее на случайных массивах и в 3 раза на отсортированных.</p>
+<p>Это происходит за счёт того, что когда в <code>sort</code> передаётся объект, на этапе компиляции известно тело функции, которая будет вызываться, и его можно заинлайнить. Когда передаётся указатель на функцию, компилятору не известно, куда он ссылается, поэтому соптимизировать это нельзя.</p>
+<p>Если скомпилировать с <code>-flto</code>, компилятор может соптимизировать, но только в том случае, если в <code>sort</code> передаётся указатель только на одну функцию. При этом с <code>-O3</code> может произойти так, что даже если передавать указатели на разные функции, время работы будет одинаковым.</p>
+<p><code>-flto</code> уже упоминалось в лекции про компиляцию программ, это ключик, который включает <em>link time optimization</em>, смысл которой понятен из названия.</p>
+<p><code>-O3</code> добавляет некоторые оптимизации, например, <code>-fipa-cp-clone</code>, которая создаёт копию функции и оптимизирует её, если в неё передаётся константа. Почему эти оптимизации не включены по умолчанию? Из-за них может ухудшаться производительность. Например, эта оптимизация может создать много копий функции, что заметно увеличит размер бинарного файла. Почему это плохо? Помимо кэша для данных, у процессора есть кэш инструкций, в таком случае он будет забиваться копиями функции и ухудшаться общую производительность. Это можно не заметить на микробенчмарках, но при сборке всего проекта будет заметно равномерное ухудшение, причина которого неочевидна.</p>
+<p>Оптимизация, которая заменяет вызов функции по указателю (или виртуальной функции) на вызов самой функции, называется <a href="http://hubicka.blogspot.com/2014/01/devirtualization-in-c-part-1.html">девиртуализацией</a>.</p>
+<p>Помимо этого, девиртуализация может быть &quot;спекулятивной&quot; (в GCC она называется <code>-fdevirtualize-speculatively</code>), эта оптимизация генерирует примерно такой код:</p>
+<pre><code class="language-c++">bool int_less(int a, int b) {
+    return a &lt; b;
+}
+
+void sort(int* a, bool(*comp)(int, int)) {
+    // ...
+    if (comp == &amp;int_less) {
+        int_less(a[4], a[5]);
+    } else {
+        comp(a[4], a[5]);
+    }
+}
+</code></pre>
+<p>Такая оптимизация может быть выгодной, если <code>if</code> находится в цикле и это инвариант, поэтому бранч будет отрабатывать только один раз, а не на каждой итерации.</p>
+<p>Такая оптимизация даёт выигрыш, если использовать её с <em>profile-guided optimization</em> - техникой оптимизации, которая заключается в запуске программы на каких-то репрезентативных данных и последующей её оптимизации, в зависимости от профайлинга. Например, если чаще всего компаратор это <code>int_less</code>, то применится предыдущая оптимизация.</p>
+<h2><a class="header" href="#Анонимные-функции" id="Анонимные-функции">Анонимные функции</a></h2>
+<p>До C++11 при необходимости отсортировать контейнер по кастомному компаратору, нужно было писать структуру или функцию, указатель на которую передаётся. Начиная с C++11, это можно делать следующим образом:</p>
+<pre><code class="language-c++">int main() {
+    std::vector&lt;int&gt; v;
+    std::sort(v.begin(), v.end(), [](int a, int b) -&gt; bool {
+        return a % 10 &lt; b % 10;
+    });
+}
+</code></pre>
+<p>Такая конструкция называется лямбдой. На самом деле, это генерит почти такой же код, как определение структуры и передача её объекта. Компилятор генерит структуру с <code>operator()</code>, тип его возвращаемого значения выводится из <code>return</code>'ов (как <code>auto</code>), но его можно указать и явно (как в примере выше).</p>
+<p>Синтаксис у лямбд следующий: в круглых скобках - аргументы, которые принимает функция, в фигурных - тело функции, а квадратные скобки нужны для захвата переменных из контекста (такой объект называется <em>closure</em>).</p>
+<pre><code class="language-c++">struct mod_comparer {
+    mod_comparer(int mod) : mod(mod) {}
+    
+    bool operator()(int a, int b) const {
+        return a % mod &lt; b % mod;
+    }
+  private:
+    int mod;
+}
+
+void foo(int mod) {
+    std::vector&lt;int&gt; v;
+    std::sort(v.begin(), v.end(), mod_comparer(mod));
+    std::sort(v.begin(), v.end(), [mod](int a, int b) -&gt; {
+        return a % mod &lt; b % mod;
+    });
+}
+</code></pre>
+<p>Захват в примере выше происходит по значению, захватывать можно и по ссылке. Кроме того, можно захватить весь контекст по значению, а некоторые по ссылке</p>
+<pre><code class="language-c++">int main() {
+    int x, y, z;
+    [x, &amp;y, z](){}; // y - по ссылке, остальные по значению
+    [=](){}; // всё по значению
+    [=, &amp;y](){}; // всё по значению, y - по ссылке
+    [&amp;](){}; // всё по ссылке
+    [&amp;, x](){}; // всё по ссылке, x - по значению
+}
+</code></pre>
+<p>При захвате всего контекста, <code>this</code> захватывается тоже. При этом при захвате всего контекста, захватывается только то, к чему есть обращение в теле лямбды.</p>
+<p>Если в теле лямбды, которая объявлена внутри класса, используется <code>this</code>, то это <code>this</code>, который соответствует структуре, а не внутреннему представлению лямбды. Это происходит из-за того, что все имена резолвятся в коде ещё до создания структуры. </p>
+<p>Смотреть на то, во что разворачиваются лямбды, можно на <a href="https://cppinsights.io/">C++ insights</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="18_decltype_auto_nullptr.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="20_signals_reetrancy_errors.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="18_decltype_auto_nullptr.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="20_signals_reetrancy_errors.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

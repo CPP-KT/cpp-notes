@@ -1,0 +1,436 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Сигналы, reetrancy, обработки ошибок - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="18_decltype_auto_nullptr.html"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="19_lambdas_type_erasure.html"><strong aria-hidden="true">20.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="20_signals_reetrancy_errors.html" class="active"><strong aria-hidden="true">21.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="21_optional_variant_tuple_stringview.html"><strong aria-hidden="true">22.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="22_constexpr.html"><strong aria-hidden="true">23.</strong> Статическая и динамическая инициализация, constexpr</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Сигналы-reentrancy-стратегии-обработки-ошибок" id="Сигналы-reentrancy-стратегии-обработки-ошибок">Сигналы, reentrancy, стратегии обработки ошибок</a></h1>
+<h2><a class="header" href="#Сигналы" id="Сигналы">Сигналы</a></h2>
+<p><strong>Сигналы</strong> - механизм &quot;подписки&quot; нескольких функций на события в другой. Иногда их называют listeners или observers.</p>
+<p>В совсем наивном виде можно делать это так:</p>
+<pre><code class="language-c++">struct signal {
+    using slot_t = std::function&lt;void()&gt;;
+    signal();
+    void connect(slot_t slot) {
+        slots.push_back(std::move(slot));
+    }
+    void operator()() const {
+        for (slot t const&amp; slot : slots) {
+            slot();
+        }
+    }
+  private:
+	std::vector&lt;std::function&lt;void()&gt;&gt; slots;  
+};
+</code></pre>
+<p>Как удалять подписку на событие? Есть два подхода: возвращать <code>id</code> или использовать <code>linked_list</code>.</p>
+<p>Посмотрим на первый:</p>
+<pre><code class="language-c++">struct signal {
+    using id_t = uint64_t;
+    using slot_t = std::function&lt;void()&gt;;
+    signal();
+    struct connection {
+        connection(signal* sig, id_t id)
+          : sig(sig), 
+        	id(id) {}
+        void disconnect() {
+            sig-&gt;slots.erase(id);
+        }
+      private:
+        signal* sig;
+        id_it id;
+    }
+    connection connect(slot_t slot) {
+        next_id++;
+        slots.insert({id, std::move(slot)});
+        return connection(this, id);
+    }
+    void operator()() const {
+        for (slot t const&amp; p : slots) {
+            p.second();
+        }
+    }
+  private:
+    id_t next_id = 0;
+	std::unordered_map&lt;id_t, slot_t&gt; slots;  
+};
+</code></pre>
+<p>Проблема такой реализации, что не будет работать такой пример:</p>
+<pre><code class="language-c++">struct timer {
+    timer(unsigned timeout);
+    signal::connection connect_on_timeout(signal::slot_t slot) {
+        return on_timeout.connect(slot);
+    }
+  private:
+    signal on_timeout;
+};
+
+struct user {
+    user(timer&amp; global_timer) 
+        : global_timer(global_timer) {}
+    
+    void foo() {
+        conn = global_timer.connect_on_timeout([this] {timer_elapsed()});
+    }
+    
+    void timer_elapsed() {
+        conn.disconnect();
+        // ...
+    }
+  private:
+	timer&amp; global_timer;
+    connection conn;
+};
+</code></pre>
+<p>Проблема в том, что в <code>operator()</code> в цикле мы вызовем <code>disconnect</code> и удалим слот, что инвалидирует итератор в range-based for'e.</p>
+<p>Как это фиксить? Можно удалять <code>disconnected</code> не сразу, а после прохода по мапе. Можно воспользоваться тем, что <code>std::function</code> имеет пустое состояние.</p>
+<pre><code class="language-c++">void operator()() const {
+    for (auto i = slots.begin(), i != slots.end; ++i) {
+        if (i-&gt;second) {
+            i-&gt;second();
+        }
+    }
+    for (auto i = slots.begin(); i != slots.end;) {
+        if (i-&gt;second) {
+            ++i;
+        } else {
+            i = slots.erase(i);
+        }
+    }
+}
+</code></pre>
+<p>Тогда нужно пометить <code>slots</code> модификатором <code>mutable</code>, так как <code>operator()</code> у нас <code>const</code>.</p>
+<p>Чтобы <code>map</code> чистился не только если вызывается <code>operator()</code> , добавим поле <code>mutable bool inside_emit = false;</code> и модифицируем <code>operator()</code> и функцию <code>disconnect</code>:</p>
+<pre><code class="language-c++">void operator()() const {
+    inside_emit = true;
+    for (auto i = slots.begin(), i != slots.end; ++i) {
+        if (i-&gt;second) {
+            i-&gt;second();
+        }
+    }
+    inside_emit = false;
+    for (auto i = slots.begin(); i != slots.end;) {
+        if (i-&gt;second) {
+            ++i;
+        } else {
+            i = slots.erase(i);
+        }
+    }
+}
+
+void disconnect() {
+    auto it = sig-&gt;slots.find(id);
+    if (sig-&gt;inside_emit) {
+        it-&gt;second = slot_t();
+    } else {
+        sig-&gt;slots.erase(it);
+    }
+}
+</code></pre>
+<p>Теперь проблема в том, что <code>operator()</code> получился небезопасным - в случае исключений, не возвращается <code>inside_emit = false</code>, поэтому нужно ещё поймать исключение и проставить ему значение <code>false</code>, а в <code>catch</code>почистить мапу.</p>
+<p>Такая реализация близка к тому, что нужно в 95% случаев, но есть случай, когда это не будет работать. Если в примере выше таймер не был глобальным, а был заведён нами:</p>
+<pre><code class="language-c++">struct user {
+    user() = default;
+    
+    void foo() {
+        timer.reset(new::timer(100));
+        conn = global_timer.connect_on_timeout([this] {timer_elapsed()});
+    }
+    
+    void timer_elapsed() {
+        timer.reset();
+    }
+  private:
+	std::unique_ptr&lt;timer&gt; timer;
+    connection conn;
+};
+</code></pre>
+<p>В <code>time_elapsed()</code> удаляем таймер, но внутри таймера был <code>signal</code>, который тоже удалится.</p>
+<p>Ещё одна проблема - рекурсивные вызовы.</p>
+<pre><code class="language-c++">// emit
+//     slot1
+//     slot2
+//     slot3
+//         ...
+//             emit
+//                 slot1
+//                 slot2
+//                 slot3
+//                 slot4
+//                 slot5
+//                 leave_emit
+//                     erase
+//     slot4
+//     slot5
+//     leave_emit
+</code></pre>
+<p>Проблема в том, что внутренний <code>emit</code> сделает <code>erase</code>, а снаружи мы всё ещё итерируемся по слотам. Одно из решений такой проблемы - сделать счётчик <code>mutable size_t inside_emit = 0</code>. </p>
+<p>Осталась проблема с тем, когда <code>signal</code> удаляется. Одна из вещей, которая это фиксит - та часть данных, которая должна переживать сам класс, хранится отдельно через <code>shared_ptr</code>. Второй вариант - поле <code>mutable bool* destroyed = nullptr;</code></p>
+<pre><code class="language-c++">void operator()() const {
+	++inside_emit;
+	bool* old_destroyed = destroyed;
+	bool is_destroyed = false;
+	destroyed = &amp;is_destroyed;
+	try {
+		for (auto i = slots.begin(); i != slots.end(); ++i) {
+			if (*i) {
+                (*i)();
+				if (is_destroyed) {
+					*old_destroyed = true;
+					return;
+				}
+			}
+        }
+	} catch (...) {
+		destroyed = old_destroyed;
+		leave_emit();
+        throw;
+    }
+	destroyed = old_destroyed;
+	leave_emit();
+}
+~signal() {
+    if (destroyed) {
+        *destroyed = true;
+    }
+}
+void leave_emit() const noexcept {
+	--inside_emit;
+	if (inside_emit != 0)
+		return;
+	for (auto i = slots.begin(); i != slots.end();) {
+        if (*i) {
+            ++i;
+        } else {
+            i = slots.erase(i);
+        }
+	}
+}
+</code></pre>
+<p>Весь код можно посмотреть <a href="https://gist.github.com/sorokin/76fde61a9038519ee42b122f05b78dfc">на gist</a>.</p>
+<p>Как можно заметить, писать свои сигналы (а особенно читать) - не самая тривиальная задача. Поэтому, на самом деле, лучше пользоваться <code>Boost.Signals</code>, про них есть <a href="https://habr.com/ru/post/171471/">статья на хабре</a>. Если пользуетесь сигналами из библиотек, то нужно внимательно проверять гарантии, например, на удаления и рекурсивные emit'ы.</p>
+<p><em>Замечание:</em> семейство проблем, которые мы фиксили, называется <em>reentrancy</em>.  Это многозначный термин, в основном объединяющий проблемы с глобальными или статичными данными. Программа в целом или её отдельная процедура называется реентераабельной, если она разработана таким образом, что одна и та же копия инструкций программы в памяти может быть совместно использована несколькими пользователями или процессами. Например, написанный выше <code>signal</code> - реентерабельный.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="19_lambdas_type_erasure.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="21_optional_variant_tuple_stringview.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="19_lambdas_type_erasure.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="21_optional_variant_tuple_stringview.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

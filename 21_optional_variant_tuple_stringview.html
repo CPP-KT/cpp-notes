@@ -1,0 +1,617 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Optional, variant, tuple, string_view - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="18_decltype_auto_nullptr.html"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="19_lambdas_type_erasure.html"><strong aria-hidden="true">20.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="20_signals_reetrancy_errors.html"><strong aria-hidden="true">21.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="21_optional_variant_tuple_stringview.html" class="active"><strong aria-hidden="true">22.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="22_constexpr.html"><strong aria-hidden="true">23.</strong> Статическая и динамическая инициализация, constexpr</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#optional-variant-tuple-string_view" id="optional-variant-tuple-string_view">optional, variant, tuple, string_view</a></h1>
+<h2><a class="header" href="#optional" id="optional">optional</a></h2>
+<h3><a class="header" href="#Пример" id="Пример">Пример:</a></h3>
+<pre><code class="language-c++">struct deferred_value {
+	int compute_value() const;
+	int get_value() const {
+    	if (!is_initialized) {
+        	cached_value = compute_value();
+        	is_initialized = true;
+        }
+        return cached_value;
+	}
+  private:
+    mutable bool is_initialized = false;
+    mutable int cached_value;
+};
+</code></pre>
+<p>Проблема такого кода - две переменных, связь которых не очень очевидна, если они будут в составе какоого-нибудь большого класса. Если это не очевидно для компилятора, то будет плохо оптимизациям.</p>
+<p>Можно сделать так:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct deferred_value {
+	T compute_value() const;
+	T get_value() const {
+    	if (!cached_value) {
+        	cached_value = std::make_unique&lt;T&gt;(compute_value());
+        }
+        return *cached_value;
+	}
+  private:
+    mutable std::unique_ptr&lt;T&gt; cached_value;
+};
+</code></pre>
+<p>Вместо двух переменных одна, ожидаем, что <code>cached_value</code> может быть нулевым. Но теперь получили динамическую аллокацию.</p>
+<h3><a class="header" href="#Реализация-optional" id="Реализация-optional">Реализация optional:</a></h3>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct optional {
+    optional() : is_initialized(false) {}
+    optional(T value) : is_initialized(true) {
+        new(&amp;storage) T(std::move(value));
+    }
+    ~optional {
+        if (is_initialized) {
+            retinterpret_cast&lt;T&amp;&gt;(storage).~T();
+        }
+    }
+  private:
+    bool is_initialized;
+    std::aligned_storage_t&lt;sizeof(T), aligonf(T)&gt; storage;
+};
+</code></pre>
+<p>Такой класс есть в стандартной библиотеке и называется <code>std::optional</code>.</p>
+<p>В стандартной библиотеке у <code>optional</code> есть конструктор и метод <code>emplace</code>, создающие объект уже внутри <code>optional</code> (полезно, если объект дорого копировать и перемещать).</p>
+<pre><code class="language-c++">template&lt;class... Args&gt;
+constexpr explicit optional( std::in_place_t, Args&amp;&amp;... args );
+// std::optional&lt;std::string&gt; o5(std::in_place, 3, 'A');
+</code></pre>
+<p>У него есть дополнительный аргумент <code>std::inplace_t</code>, который нужен, чтобы различать, передают аргументы для конструктора объекта <code>T</code> или просто для <code>optional</code>.</p>
+<p>Разыменование пустого <code>optional</code> это UB, но метод <code>value</code> бросается исключение.</p>
+<p>Проблема наивной реализации <code>optional</code> в том, что она не сохраняет тривиальности класса <code>T</code>. Например, если класс <code>T</code> имеет пустой деструктор (<code>is_trivially_destructible&lt;T&gt;</code>), то хотелось бы, чтобы и <code>optional </code>имел такой деструктор.</p>
+<p>Реализовать это через <em>SFINAE</em> не получится, так как у деструктора нет аргументов. Можно сделать базовый класс:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct optional_storage {
+    bool is_initialized;
+    std::aligned_storage_t&lt;sizeof(T), aligonf(T)&gt; storage;
+};
+
+template &lt;typename T, bool TriviallyDestructible&gt;
+struct optional_base : optional_storage&lt;T&gt; {
+    ~optional_base() {
+        if (this-&gt;is_initialized) {
+            retinterpret_cast&lt;T&amp;&gt;(this-&gt;storage).~T();
+        }
+    }
+};
+
+template &lt;bool TriviallyDestructible&gt;
+struct optional_base {
+    ~optional_base() {
+        /// ...
+    }
+};
+
+template &lt;&gt;
+struct optional_base&lt;true&gt; : optional_storage&lt;T&gt; {  
+};
+
+template &lt;typename T&gt;
+struct optional: optional_storage&lt;T, std::is_trivially_destructible&lt;T&gt;&gt; {  
+    // ...
+};
+</code></pre>
+<p>Примерно так это и реализована в стандартной библииотеке, хоть и получается, что на каждую тривиальность по базовому классу.</p>
+<h2><a class="header" href="#variant" id="variant">variant</a></h2>
+<p>Предположим, что мы хотим хранить в <code>deffered_value</code> либо посчитанное значение, либо функцию, которая может его посчитать. Когда значение уже посчитано, хранить функцию нам не нужно. Такое можно было бы оптимизировать с помощью <code>union</code>. Для этого в стандартной библиотеке уже есть класс <code>std::variant</code>. </p>
+<pre><code class="language-c++">int main() {
+    std::variant&lt;A, B, C&gt; v;
+}
+</code></pre>
+<p>Тогда реализация выглядела бы так:</p>
+<pre><code class="language-c++">template &lt;typename compute_func_t, T&gt;
+struct deffered_value {
+  T get() const {
+      if (compute_func_t* f = std::get_if&lt;compute_func_t&gt;(&amp;state)) {
+          state = (*f)();
+      }
+      return std::get&lt;T&gt;(state);
+  }
+  private:
+    mutable std::variant&lt;compute_func_t, T&gt; state;
+}
+</code></pre>
+<p>В <code>std::variant</code> можно обращать как по индексу (<code>std::get&lt;1&gt;</code>), так и по типу (<code>std::get&lt;T&gt;</code>). Если несколько типов одинаковые, то идентификация по типу не скомпилируется.</p>
+<p><code>std::get_if&lt;T&gt;</code> возвращает нулевой указатель, если альтернатива не совпадает, иначе указатель на объект типа <code>T</code>, лежащий в <code>variant</code>.</p>
+<h3><a class="header" href="#visitor" id="visitor">visitor</a></h3>
+<p>Представим такую ситуацию:</p>
+<pre><code class="language-c++">struct base {
+    virtual void foo() = 0;
+    virtual ~base() = default;
+};
+struct derived1 : base {};
+struct derived2 : base {};
+struct derived3 : base {};
+void foo(base&amp; b) {
+    b.foo();
+}
+</code></pre>
+<p>Функций вида <code>foo</code> может быть очень много, при этом каждая из них не очень осмысленная. Чтобы избежать такой ситуации, используется паттерн visitor. </p>
+<pre><code class="language-c++">struct base_visitor {
+    virtual void visit(derived1&amp;) = 0;
+    virtual void visit(derived2&amp;) = 0;
+    virtual void visit(derived3&amp;) = 0;
+  protected:
+    ~base_visitor() = default;
+};
+
+struct foo_visitor final : base_visitor {
+    void visit(derived1&amp;) {}
+    void visit(derived2&amp;) {}
+    void visit(derived3&amp;) {}
+};
+
+struct derived1 : base {
+    void accept(base_visitor&amp; v) {
+        v.visit(*this);
+    }
+};
+
+struct derived2 : base {
+    void accept(base_visitor&amp; v) {
+        v.visit(*this);
+    }
+};
+
+struct derived3 : base {
+    void accept(base_visitor&amp; v) {
+        v.visit(*this);
+    }
+};
+
+void foo(base&amp; b) {
+    foo_visitor v;
+    b.accept(v);
+}
+</code></pre>
+<p>Это лучше тем, что если появится ещё один класс <code>derived4</code>, то нужно будет добавить функцию в <code>visitor</code>, не меняя интерфейс класса (особенно это важно, если его изменение недосупно). </p>
+<p>Пример использования в реальной жизни - обход АСТ (абстрактного синтаксического дерева), не меняя интерфейс его узлов.</p>
+<p>Возвращаясь к <code>variant</code>: для <code>std::variant</code> есть <code>std::visit</code></p>
+<pre><code class="language-c++">template &lt;typename compute_func_t, T&gt;
+struct deffered_value {
+	struct state_visitor {
+        void operator()(compute_func_t const&amp; compute) {}
+        void operator()(T const&amp; val) {}
+    }
+	T get() const {
+        std::visit(state_visitor(), state);
+	}
+  private:
+    mutable std::variant&lt;compute_func_t, T&gt; state;
+}
+</code></pre>
+<p>Это не очень удобно, так как приходится создавать новый класс. Можно ли сделать это с помощью лямбды? К сожалению, у них нет перегрузок, но это можно реализовать отдельно:</p>
+<pre><code class="language-c++">template &lt;typename A, typename B&gt;
+struct overloaded : A, B {
+    using A::operator();
+    using B::operator();
+}
+</code></pre>
+<p>Это называют <em>overload pattern</em>, который в общем случае выглядит как-то так::</p>
+<pre><code class="language-c++">struct overloaded;
+
+template &lt;typename Func0&gt;
+struct overloaded&lt;Func0&gt; : std::remove_reference_t&lt;Func0&gt; {
+    overloaded(Func0&amp;&amp; func0)
+        : Func0(std::forward&lt;Func0&gt;(func0)) {}
+    using std::remove_reference_t&lt;Func0&gt;::operator();
+};
+
+template &lt;typename Func0, typename... Funcs&gt;
+struct overloaded&lt;Func0, Funcs...&gt; : std::remove_reference_t&lt;Func0&gt;, overloaded&lt;Funcs...&gt; {
+    overloaded(Func0&amp;&amp; func0, Funcs&amp;&amp;... funcs)
+        : Func0(std::forward&lt;Func0&gt;(func0)),
+    	  overloaded&lt;Funcs...&gt;(std::forward&lt;Funcs&gt;(funcs)...) {}
+    using std::remove_reference_t&lt;Func0&gt;::operator();
+    using overloaded&lt;Funcs...&gt;::operator();
+}
+
+template &lt;typename... Funcs&gt;
+overloaded&lt;Funcs...&gt; overload(Funcs&amp;&amp;... funcs) {
+    return overloaded&lt;Funcs...&gt;(std::forward&lt;Funcs&gt;(funcs)...);
+}
+</code></pre>
+<p>Про <code>std::visit</code> есть интересная статья <a href="https://bitbashing.io/std-visit.html">std::visit is everything wrong with modern C++</a>.</p>
+<p>На <a href="https://en.cppreference.com/w/cpp/language/using_declaration">cppreference</a> приведён пример такого <code>Overloader</code>:</p>
+<pre><code class="language-c++">template &lt;typename... Ts&gt;
+struct Overloader : Ts... {
+    using Ts::operator()...; // exposes operator() from every base
+};
+ 
+template &lt;typename... 	T&gt;
+Overloader(T...) -&gt; Overloader&lt;T...&gt;; // C++17 deduction guide, not needed in C++20
+// нужно, чтобы выводились шаблонные параметры класса
+
+int main() {
+    auto o = Overloader{ [] (auto const&amp; a) {std::cout &lt;&lt; a;},
+                         [] (float f) {std::cout &lt;&lt; std::setprecision(3) &lt;&lt; f;} };
+}
+</code></pre>
+<p><em>Note</em>: такой <code>Overloader</code> является <a href="https://en.cppreference.com/w/cpp/language/aggregate_initialization">aggregate</a>, поэтому ему можно не писать конструктор и инициализировать базовые классы через <code>{}</code>.</p>
+<h3><a class="header" href="#variant-и-исключения" id="variant-и-исключения">variant и исключения</a></h3>
+<p>Если все альтернативы <code>variant</code>тривиально-копируемые, то он копируется просто побайтово.</p>
+<pre><code class="language-c++">using type = std::variant&lt;int, char, double&gt;;
+void copy (type&amp; a, type const&amp; b) {
+    a = b;
+}
+</code></pre>
+<p>Иначе при копировании будет происходить switch по альтернативам, например, для такого <code>variant</code>.</p>
+<pre><code class="language-c++">struct foo {
+    foo(foo const&amp;);
+    int a;
+    double b;
+}
+using type = std::variant&lt;int, char, double, foo&gt;;
+void copy (type&amp; a, type const&amp; b) {
+    a = b;
+}
+</code></pre>
+<p>Аналогично с деструктором и т.д.</p>
+<h3><a class="header" href="#Реализация-variant" id="Реализация-variant">Реализация variant</a></h3>
+<pre><code class="language-c++">template &lt;typename A, typename B&gt;
+struct variant {
+    variant&amp; operator=(variant const&amp; other) {
+        destroy_current();
+        construct_new(other);
+    }
+    std::aligned_storage_t&lt;std::max(sizeof(A), sizeof(B)),
+    						std::max(alignof(A), alignof(B))&gt; storage;
+};
+</code></pre>
+<p>При дизайне <code>variant</code> возникает вопрос, стоит ли разрешать делать его таким, что он не содержит ни одного из значений.</p>
+<p>Если такого значения нет, то не понятно, что должен делать дефолтный конструктор. Помимо этого, &quot;пустое состояние&quot; даёт возможность сделать weak-гарантии у оператора присваивания. Но пустое состояние иметь не очень хорошо, // TODO: почему?</p>
+<p>В Boost делали так: хранили два стораджа, а в нём либо указатель на объект, либо сам объект, в зависимости от гарантий.</p>
+<pre><code class="language-c++">template &lt;typename A, typename B&gt;
+struct variant {
+    variant&amp; operator=(variant&amp;&amp; other) {
+        void* p = copy_current_to_dynamic();
+        destruct_current();
+        try {
+            construct_new(std::move(other));
+        } catch (...) {
+            current = p;
+            throw;
+        }
+        
+        void* move_current_to_dynamic() {
+            switch (index) {
+                case 0: {
+                        A* p = new A(std::move(current.a_static));
+                        current.a_static.~A();
+                        return p;
+                    }
+                case 1: {
+                        B* p = new B(std::move(current.b_static));
+                        current.b_static.~B();
+                        return p;
+                    }
+            }
+        }
+        delete p;
+    }
+    size_t index;
+    union {
+        A a_static;
+        B b_static;
+        A* a_dynamic;
+        B* b_dynamic;
+    }
+};
+</code></pre>
+<p>Минус такого подхода в том, что возникает слишком много случаев.</p>
+<p><em>Boost.Variant1</em> использовали double storage (storage в два раза больше), <em>Boost.Variant2</em> использовали подход как в примере выше, а <code>std::variant</code> - пустое значение, но спрятанное в интерфейсе.</p>
+<p>У <code>std::variant</code> есть метод <code>valueless_by_exception</code>. Основная идея в том, что если выбрасывается исключение, то ожидается, что variant в таком состоянии живёт до обработки исключения, где его нужно привести в валидное состояние.</p>
+<h2><a class="header" href="#tuple-pair" id="tuple-pair">tuple, pair</a></h2>
+<p>Частный случай <code>tuple</code> - <code>std::pair</code>. Например, пару возвращает <code>insert</code> у мапы.</p>
+<pre><code class="language-c++">int main() {
+    std::map&lt;std::string, int&gt; m;
+    auto p = m.insert({&quot;abc&quot;, 42}); // tuple&lt;iterator, bool&gt;
+    p.first;
+    p.second;
+    
+    std::pair&lt;std::stirng, int&gt; x(&quot;abc&quot;, 42);
+}
+</code></pre>
+<p>По сути, <code>tuple</code> - структура, у полей которой нет имён. </p>
+<p>Пример, когда он может быть полезен:</p>
+<pre><code class="language-c++">void print(std::string const&amp; str) {
+	std::cout &lt;&lt; str;
+}
+
+int main() {
+    print(&quot;hello, world&quot;);
+	auto f = std::bind(print, std::string(&quot;hello, world&quot;)); // фиксирует аргумент у функции
+    f();
+}
+</code></pre>
+<p>Как может быть реализован <code>bind</code>:</p>
+<pre><code class="language-c++">template &lt;typename F, typename Arg&gt;
+struct bound {
+    bound(F&amp;&amp; f, Arg&amp;&amp; arg)
+        : f(std::forward&lt;F&gt;(f), std::forward&lt;Arg&gt;(arg)) {}
+    
+    auto operator()() const {
+        return f(arg);
+    }
+  prviate:
+    F f;
+    Arg arg;
+};
+
+template &lt;typename F, typename Arg&gt;
+auto bind(F&amp;&amp; f, Arg&amp;&amp; arg) {
+    return bound&lt;std::decay_t&lt;F&gt;, std::decay_t&lt;Arg&gt;&gt;
+        (std::forward&lt;F&gt;(f), std::forward&lt;Arg(arg));
+}
+
+template &lt;typename F, typename Arg&gt;
+bound&lt;F, Arg&gt; bind(F&amp;&amp; f, Arg&amp;&amp; arg) {
+    return bound&lt;F, Arg&gt;(std::forward&lt;F&gt;(f), std::forward&lt;Arg&gt;(arg));
+}
+</code></pre>
+<p>Чтобы обобщить это на несколько аргументов, можно хранить в <code>bound</code> <code>tuple</code> из аргументов и использовать функцию <code>std::apply(f, args)</code>.</p>
+<h2><a class="header" href="#string_view" id="string_view">string_view</a></h2>
+<h3><a class="header" href="#Мотивирующий-пример" id="Мотивирующий-пример">Мотивирующий пример</a></h3>
+<p>Пример реализации хэш-функции <a href="https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function">FNV</a>:</p>
+<pre><code class="language-c++">uint32_t const offset_basis = 0x811c9dc5u;
+uint32_t const prime = 0x01000193u;
+
+uint32_t fnv1a(std::string const&amp; str) {
+    uint32_t result = offset_basis;
+    for (char c : str) {
+        result ^= static_cast&lt;uint8_t&gt;(c);
+        result *= prime;
+    }
+    return result;
+}
+
+int main() {
+    fnv1a(&quot;hello&quot;); // конструируется string, лишняя аллокация
+}
+</code></pre>
+<p>Такая реализация не очень подходит, если передаётся строковый литерал.</p>
+<p>Можно было бы сделать реализацию от <code>char const* data</code> и размера, а остальные через неё - это самая общая и эффективная перегрузка. Проблема в том, что такую функцию не очень удобно вызывать, например, от литералов, так как каждый раз нужно указывать размер.</p>
+<p>К чему это всё? Часто встречаются такие Си-стайл функции, которые принимают указатель и размер, но из синтаксиса не очевидно, что указатель и размер как-то связаны. Для отражения этой идеи в стандартной библиотеке в  С++17 появился класс <code>std::string_view</code>:</p>
+<pre><code class="language-c++">struct string_view {
+    char const* data;
+    size_t size;
+};
+</code></pre>
+<p>С помощью него можно переписать функцию следующим образом:</p>
+<pre><code class="language-c++">uint32_t fnv1a(std::string_view str) {
+    uint32_t result = offset_basis;
+    for (size_t i = 0; i != str.size(); ++i) {
+        result ^= static_cast&lt;uint8_t&gt;(str[i]);
+        result *= prime;
+    }
+    return result;
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="20_signals_reetrancy_errors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="22_constexpr.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="20_signals_reetrancy_errors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="22_constexpr.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
