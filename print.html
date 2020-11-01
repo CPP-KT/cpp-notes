@@ -3759,11 +3759,12 @@ int main() {
 nullptr_t const nullptr;
 </code></pre>
 <p>Единственное отличие в том, что в C++11 <code>nullptr</code> это keyword, встроенный в язык, а не глобальная переменная. Но к типу всё ещё можно обратиться через <code>decltype(nullptr)</code>, в стандартной библиотеке есть <code>std::nullptr_t</code>, который так и определён.</p>
-<p>Анонимные функции, type erasure, std::function</p>
+<h1><a class="header" href="#Анонимные-функции-type-erasure-stdfunction" id="Анонимные-функции-type-erasure-stdfunction">Анонимные функции, type erasure, std::function</a></h1>
 <ul>
 <li><a href="http://hubicka.blogspot.com/2014/01/devirtualization-in-c-part-1.html">Статья про девиртуализацию</a></li>
 <li><a href="https://www.youtube.com/watch?v=ItNnt_7D5w0">Запись лекции №1</a></li>
 <li><a href="https://www.youtube.com/watch?v=bTVLDJjEMlU">Запись лекции №2</a></li>
+<li><a href="https://www.youtube.com/watch?v=4yLK5vv_-Jc">Запись лекции №3</a></li>
 <li><a href="https://github.com/sorokin/function">Код std::function</a></li>
 <li><a href="https://files.meetup.com/1455470/Type%20Erasure.pdf">Презентация про type erasure</a></li>
 </ul>
@@ -3851,8 +3852,67 @@ void foo(int mod) {
 </code></pre>
 <p>При захвате всего контекста, <code>this</code> захватывается тоже. При этом при захвате всего контекста, захватывается только то, к чему есть обращение в теле лямбды.</p>
 <p>Если в теле лямбды, которая объявлена внутри класса, используется <code>this</code>, то это <code>this</code>, который соответствует структуре, а не внутреннему представлению лямбды. Это происходит из-за того, что все имена резолвятся в коде ещё до создания структуры. </p>
+<p>В общем случае, синтаксис лямбды выглядит так:</p>
+<pre><code class="language-c++">[capture-list] (params) specifiers exception-specification -&gt; return-type { body }
+</code></pre>
+<ul>
+<li>
+<p><em>capture-list</em> - список захвата, о котором рассказано выше. </p>
+<p>Кроме упомянутых возможностей захвата, в C++14 появилась возможность захватывать новую переменную с заданным значением (<code>[x = 2 + 3]</code> или move-only типы <code>[x = std::move(x)]</code>), а так же захватывать ссылки по новому имени (<code>[&amp;x = a]</code>), где <code>a</code> может быть любой ссылкой, например, элементом массива.</p>
+<p>Если переменная захвачена по значению, то её может изменять только лямбда, помеченная спецификатором <code>mutable</code></p>
+</li>
+<li>
+<p><em>params</em> - список параметров, при этом параметры по умолчанию появились только в C++14</p>
+</li>
+<li>
+<p><em>specifiers</em> - спецификаторы. Например, <code>mutable</code> позволяет изменять переменные, захваченные по значению, и вызывать у них не-const методы. При этом значение переменной снаружи не изменится, так как при захвате по значению они копируются.</p>
+</li>
+<li>
+<p><em>exception-specification</em> - спецификаторы <code>throw</code>, <code>noexcept</code> (как у обычных функций)</p>
+</li>
+<li>
+<p><em>return-type</em> - тип возвращаемого значения. Если он не указан, то будет выведен таким же образом, как и для функции с возвращаемым типом <code>auto</code> (со всеми вытекающими отсюда правилами и ограничениями, см. <a href="./18_decltype_auto_nullptr.html">конспект по этой теме</a>). Если тип возвращаемого значения не указан и функция не принимает никаких параметров, то круглые скобки для параметров можно не писать.</p>
+</li>
+</ul>
 <p>Смотреть на то, во что разворачиваются лямбды, можно на <a href="https://cppinsights.io/">C++ insights</a>.</p>
-<h3><a class="header" href="#Шаблонные-лямбды" id="Шаблонные-лямбды">Шаблонные лямбды</a></h3>
+<h3><a class="header" href="#Свойства-лямбд" id="Свойства-лямбд">Свойства лямбд</a></h3>
+<p>Так как лямбды - это некоторые классы (типы), то имеет смысл рассуждать про свойства этих классов.</p>
+<ul>
+<li>
+<p>Есть <code>operator()</code>.</p>
+</li>
+<li>
+<p>Есть конструктор копирования и перемещения.</p>
+</li>
+<li>
+<p>Нет присваивания.</p>
+</li>
+<li>
+<p>До C++20 запрещён дефолтный конструктор, в C++20 разрёшен, если лямбда ничего не захватывает.</p>
+</li>
+<li>
+<p>Незахватывающие лямбды имеют оператор конверсии в указатель на функцию:</p>
+<pre><code class="language-c++">int main {
+    auto b = [](){
+        // ...
+    };
+    void (*a)();
+    a = b;
+}
+</code></pre>
+</li>
+<li>
+<p>При копировании лямбды, копируются все захваченные по значению еременные, а захват по ссылке не продлевает время жизни объектов. Такой код работает неправильно:</p>
+<pre><code class="language-c++">auto foo() {
+    std::vector&lt;int&gt; v;
+  return [&amp;v] {
+        // ...
+  };
+} // v уничтожится при выходе из функции, обращение внутри лямбды - UB
+</code></pre>
+</li>
+</ul>
+<p><strong>Мем:</strong> в C++ есть унарный <code>+</code>, который для чисел и указателей не меняет. Но если применить его к лямбде, то она сконвертится в указатель на функцию, и он применится к ней.Шаблонные лямбды</p>
 <p>Может ли лямбда быть шаблонной? </p>
 <p>Чтобы говорить об этом, нужно понимать, шаблон у чего имеется в виду - у класса или у <code>operator()</code>.</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
@@ -3896,24 +3956,6 @@ int main() {
 template &lt;typename A, typename B&gt;
 void foo(A a, B b) {}; // эквивалентно
 </code></pre>
-<h3><a class="header" href="#Свойства-лямбд" id="Свойства-лямбд">Свойства лямбд</a></h3>
-<p>Так как лямбды - это некоторые классы (типы), то имеет смысл рассуждать про свойства этих классов.</p>
-<ul>
-<li>есть <code>operator()</code></li>
-<li>есть конструктор копирования и перемещения</li>
-<li>нет присваивания</li>
-<li>до C++20 запрещён дефолтный конструктор, в C++20 разрёшен, если лямбда ничего не захватывает</li>
-<li>незахватывающие лямбды имеют оператор конверсии в указатель на функцию</li>
-</ul>
-<pre><code class="language-c++">int main {
-    auto b = [](){
-        // ...
-    };
-	void (*a)();
-    a = b;
-}
-</code></pre>
-<p><strong>Мем:</strong> в C++ есть унарный <code>+</code>, который для чисел и указателей не меняет. Но если применить его к лямбде, то она сконвертится в указатель на функцию, и он применится к ней.</p>
 <h2><a class="header" href="#stdfunction" id="stdfunction">std::function</a></h2>
 <p>В некоторых случаях может захотеться сохранить в переменную лямбду, в зависимости от условия.</p>
 <pre><code class="language-c++">void (bool flag) {
@@ -3989,7 +4031,6 @@ struct function&lt;Ret (Args...)&gt; {
     // ...
 }
 </code></pre>
-<p>В общем случае такой приём называется <a href="https://files.meetup.com/1455470/Type%20Erasure.pdf"><em>type erasure</em></a>. В принципе, это очень похоже на таблицу виртуальных функций, только написанную руками. Поэтому function можно реализовать и с помощью виртуальных функций.</p>
 <h3><a class="header" href="#Как-хранить-методы-в-function" id="Как-хранить-методы-в-function">Как хранить методы в function?</a></h3>
 <p>Указатель на метод нельзя вызывать просто через круглые скобки, так как его нужно вызывать на определённом объекте.</p>
 <pre><code class="language-c++">struct mytype {
@@ -4010,7 +4051,14 @@ void foo() {
     g(p, 42);
 }
 </code></pre>
-<p><em>Вместо <code>std::mem_fn</code> можно было бы использовать <code>std::bind</code>.</em></p>
+<p>Вместо <code>std::mem_fn</code> можно было бы использовать <code>std::bind</code>, который реализован примерно так:</p>
+<pre><code class="language-c++">template &lt;typename F, typename... Args&gt;
+auto bind(F f, Args... args) {
+    return [f, args...]() {
+        return f(args...);
+    }
+}
+</code></pre>
 <p>Но проще пользоваться для этого лямбдами:</p>
 <pre><code class="language-c++">void foo() {
     void (mytype::* f)(int) = &amp;mytype::myfunc;
@@ -4020,6 +4068,171 @@ void foo() {
         p-&gt;myfunc(a);
     };
 }
+</code></pre>
+<h3><a class="header" href="#Рекурсивный-вызов-лямбд" id="Рекурсивный-вызов-лямбд">Рекурсивный вызов лямбд</a></h3>
+<p><code>std::function</code> позволяет решить проблему рекурсивного вызова лямбд.</p>
+<p>Лямбда-функции можно вызывать рекурсивно, но следующий код не скомпилируется:</p>
+<pre><code class="language-c++">int main() {
+    auto fib = [&amp;fib] (int n) {
+        return (n &lt;= 1) ? 1 : fib(n - 1) + fib(n - 2);
+    };
+    std::cout &lt;&lt; fib(4) &lt;&lt; std::endl;
+}
+</code></pre>
+<p>Это происходит из-за того, что тип переменной <code>fib</code> ещё не выведен в момент её использования, а указать его явно мы не может. Это решается несколькими способами: можно передавать лямбде её же как параметр, а можно сохранить её в <code>std::function</code>:</p>
+<pre><code class="language-c++">int main() {
+    std::function&lt;int(int)&gt; fib = [&amp;fib] (int n) {
+        return (n &lt;= 1) ? 1 : fib(n - 1) + fib(n - 2);
+    };
+    std::cout &lt;&lt; fib(4) &lt;&lt; std::endl;
+}
+</code></pre>
+<p>Идейно это работает так же, как передача в конструктор объекта ссылку на него самого же:</p>
+<pre><code class="language-c++">struct mytype {
+    mytype(mytype const&amp;);
+};
+
+int main() {
+    mytype a = a;
+}
+</code></pre>
+<p>Обратите внимание, что <code>fact</code> захватывается по ссылке, в этом случае нельзя захватывать по значению, так как в момент захвата переменной<code>fib</code> ещё не присвоено значение.</p>
+<h2><a class="header" href="#stdany" id="stdany">std::any</a></h2>
+<p>Продолжая тему <em>type erasure</em> - в стандартной библиотеке есть тип <code>std::any</code>, который может хранить внутри себя объект любого типа.</p>
+<pre><code class="language-c++">int main() {
+    std::any a = 42;
+    int v = any_cast&lt;int&amp;&gt;(a);
+    
+    a = std::string(&quot;hello&quot;);
+    std::string s = any_cast&lt;std::string&amp;&gt;(a);
+    
+    a = mytype();
+}
+</code></pre>
+<p>При <code>any_cast</code> к неправильному типу, получим исключение <code>bad_any_cast</code>.</p>
+<h3><a class="header" href="#Реализация-any" id="Реализация-any">Реализация any</a></h3>
+<p>any можно реализовать аналогично реализации function, которая приведена выше. Но можно реализовать проще через динамический полиморфизм: </p>
+<pre><code class="language-c++">struct any {
+    struct base_concept {
+        virtual ~base_concept() {}
+        
+        virtual base_concept* clone() = 0;
+    };
+    
+    template &lt;typename T&gt;
+    struct model : base_concept {
+        model(T value)
+            : value(std::move(value)) {}
+        model&lt;T&gt;* clone() override {
+            return new model&lt;T&gt;(value);
+        }
+        T value;
+    }
+    
+    template &lt;typename T&gt;
+    any(T val) 
+    	: obj(new model&lt;T&gt;(val)) {}
+    
+    any(any const&amp; other) 
+        : obj(other.obj ? other.obj-&gt;clone : nullptr) {}
+	~any() {
+        delete obj;
+    }
+  private:
+    void* obj;
+    
+    template &lt;typename T&gt;
+    friend T* any_cast(any* a);
+};
+template &lt;typename T&gt;
+T* any_cast(any* a) {
+	if (a) {
+		// if (model&lt;T&gt;* m = dynamic_cast&lt;model&lt;T&gt;*&gt;(a-&gt;obj)) {
+        if (typeid(*a-&gt;obj) == typeid(any::model&lt;T&gt;)) {
+			return &amp;static_cast&lt;any::model&lt;T&gt;*&gt;(a-&gt;obj)-&gt;value;
+		} else {
+            throw std::bad_any_cast;
+        }
+	}
+	return nullptr;
+} 
+</code></pre>
+<p>Базовый класс принято называть <code>concept</code>, но это стало ключевым словом в C++20, поэтому <code>base_concept</code>, а производный от него принято называть <code>model</code>. </p>
+<p><em>Note:</em> как можно заметить, у функции <code>clone()</code> в derived-классе возвращаемый тип не совпадает с тем, который указан в базовом. Так можно делать, если в базовом классе функция возвращает указатель или ссылку на базовый класс, то в производном можно возвращать указатель или ссылку на него же.</p>
+<p>Иногда может возникнуть желание, чтобы комплировалось c <code>-fnortti</code> (например, чтобы избежать оверхеда на виртуальные таблицы). Можно попытаться сделать так:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+void noop() {}
+
+struct any {
+    struct base_concept {
+        // ...
+        typedef void (*func_t)();
+    	virtual func_t get_tag() = 0;
+    }
+    template &lt;typename T&gt;
+    struct model : base_concept {
+        // ...
+        func_t get_tag() override {
+            return &amp;noop&lt;T&gt;;
+        }
+    }
+    // ...
+}
+template &lt;typename T&gt;
+T* any_cast(any* a) {
+	if (a) {
+        if (a-&gt;obj-&gt;get_tag() == &amp;noop&lt;T&gt;) {
+			return &amp;static_cast&lt;any::model&lt;T&gt;*&gt;(a-&gt;obj)-&gt;value;
+		} else {
+            throw std::bad_any_cast;
+        }
+	}
+	return nullptr;
+} 
+</code></pre>
+<p>Заводим функцию <code>noop&lt;T&gt;</code>, которая для каждого типа <code>T</code> в одном экземпляре, так как то, как работает линковщик, гарантирует нам это. </p>
+<p>Можно вместо функции, использовать глобальную шаблонную переменную:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+char tag;
+</code></pre>
+<h2><a class="header" href="#any_iterator" id="any_iterator">any_iterator</a></h2>
+<p>Часто возникает вопрос, почему у итераторов нет общего базового класса. Обычный ответ на этот вопрос заключается в том, что для итераторов недостаточно интерфайса виртуальных функций (например, для операторов сравнения).</p>
+<p>Обычно с итераторами работают по значению, а если бы мы хотели использовать базовый класс, то пришлось бы работать с ними через указатели, что добавляет уровень индирекшна и снижает эффективность.</p>
+<p>Тем не менее, бывают случаи, когда эффективность не важна, но нужна полиморфность итераторов. Такая концепция называется <a href="http://thbecker.net/free_software_utilities/type_erasure_for_cpp_iterators/any_iterator.html"><em>any_iterator</em></a>. В стандартной библиотеке его <del>пока ещё</del> нет, но есть в <a href="https://www.boost.org/doc/libs/1_59_0/boost/range/detail/any_iterator.hpp">boost</a> что-то похожее для ranges.</p>
+<pre><code class="language-c++">int main() {
+    std::vector&lt;int&gt; v;
+    std::list&lt;int&gt; l;
+    int* p;
+    any_bidirectional_iterator&lt;int&gt; i = v.begin();
+    ++i;
+    i = l.begin();
+    *i;
+    i = p;
+}
+</code></pre>
+<h2><a class="header" href="#type-erasure" id="type-erasure">Type erasure</a></h2>
+<p>В общем случае такой приём (как в function и any) называется <a href="https://files.meetup.com/1455470/Type%20Erasure.pdf"><em>type erasure</em></a>. Иногда это очень похоже на таблицу виртуальных функций, только написанную руками, но у него есть несколько преимуществ:</p>
+<ul>
+<li>
+<p>Это эффективная модель, когда не нужен полиморфизм</p>
+</li>
+<li>
+<p>Хорошо работает с <a href="https://isocpp.org/wiki/faq/value-vs-ref-semantics">value-семантикой</a> (перемещения, копирования) - тип ведёт себя так, как будто это обычное значение</p>
+</li>
+<li>
+<p>Можно использовать полиморфно классы, у которых нет общего базового, но общий интерфейс</p>
+</li>
+</ul>
+<p>Пример третьего пункта: у классов <code>std::fstream</code> и <code>std::stringstream</code> общий интерфейс, который был продуман заранее. Но это может быть не очевидно на этапе дизайна, поэтому это вполне могли бы быть два разных класса. Тогда, если бы возникло желание использовать их в одном месте, можно было бы прибегнуть к type erasure.</p>
+<h2><a class="header" href="#type-alias" id="type-alias">Type alias</a></h2>
+<p>Иногда возникает желание сделать шаблонный <code>typedef</code>. Так как <code>typedef</code> пришёл из C, шаблонов у неё не было, поэтому ближайшее, что можно было получить - это сделать шаблонную структуру с <code>typedef</code> внутри неё (например, <code>type_traits </code> реализованы таким образом). Поэтому в C++11 появились <em>type alias</em> со следующим синтаксисом:</p>
+<pre><code class="language-c++">template &lt;typename Ret&gt;
+typedef Ret (*func_t)(); // так нельзя
+
+template &lt;typename Ret&gt;
+using func_t = ReturnType (*)(); // а так можно
+
+using void_ptr = void*;
 </code></pre>
 <h1><a class="header" href="#Сигналы-reentrancy-стратегии-обработки-ошибок" id="Сигналы-reentrancy-стратегии-обработки-ошибок">Сигналы, reentrancy, стратегии обработки ошибок</a></h1>
 <h2><a class="header" href="#Сигналы" id="Сигналы">Сигналы</a></h2>
