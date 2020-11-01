@@ -3759,11 +3759,13 @@ int main() {
 nullptr_t const nullptr;
 </code></pre>
 <p>Единственное отличие в том, что в C++11 <code>nullptr</code> это keyword, встроенный в язык, а не глобальная переменная. Но к типу всё ещё можно обратиться через <code>decltype(nullptr)</code>, в стандартной библиотеке есть <code>std::nullptr_t</code>, который так и определён.</p>
-<h1><a class="header" href="#Анонимные-функции-type-erasure-stdfunction" id="Анонимные-функции-type-erasure-stdfunction">Анонимные функции, type erasure, std::function</a></h1>
+<p>Анонимные функции, type erasure, std::function</p>
 <ul>
 <li><a href="http://hubicka.blogspot.com/2014/01/devirtualization-in-c-part-1.html">Статья про девиртуализацию</a></li>
 <li><a href="https://www.youtube.com/watch?v=ItNnt_7D5w0">Запись лекции №1</a></li>
 <li><a href="https://www.youtube.com/watch?v=bTVLDJjEMlU">Запись лекции №2</a></li>
+<li><a href="https://github.com/sorokin/function">Код std::function</a></li>
+<li><a href="https://files.meetup.com/1455470/Type%20Erasure.pdf">Презентация про type erasure</a></li>
 </ul>
 <hr />
 <h2><a class="header" href="#Мотивирующий-пример-и-оптимизации" id="Мотивирующий-пример-и-оптимизации">Мотивирующий пример и оптимизации</a></h2>
@@ -3778,6 +3780,8 @@ struct less {
         return a &lt; b;
     }
 };
+// можно сделать класс со static-функцией, но это не даёт выигрыша
+// так как ABI устроен так, что пустые структуры можно не копировать
 
 int foo (vector&amp; v) {
     std::sort(v.begin(), v.end(), less&lt;int&gt;());
@@ -3848,6 +3852,175 @@ void foo(int mod) {
 <p>При захвате всего контекста, <code>this</code> захватывается тоже. При этом при захвате всего контекста, захватывается только то, к чему есть обращение в теле лямбды.</p>
 <p>Если в теле лямбды, которая объявлена внутри класса, используется <code>this</code>, то это <code>this</code>, который соответствует структуре, а не внутреннему представлению лямбды. Это происходит из-за того, что все имена резолвятся в коде ещё до создания структуры. </p>
 <p>Смотреть на то, во что разворачиваются лямбды, можно на <a href="https://cppinsights.io/">C++ insights</a>.</p>
+<h3><a class="header" href="#Шаблонные-лямбды" id="Шаблонные-лямбды">Шаблонные лямбды</a></h3>
+<p>Может ли лямбда быть шаблонной? </p>
+<p>Чтобы говорить об этом, нужно понимать, шаблон у чего имеется в виду - у класса или у <code>operator()</code>.</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct less {
+  bool operator()(T const&amp; a, T const&amp; b) const {
+      return a &lt; b;
+  }  
+};
+
+struct polymorphic_less {
+  template &lt;typename T&gt;
+  bool operator()(T const&amp; a, T const&amp; b) const {
+      return a &lt; b;
+  }  
+};
+
+void foo() {
+    std::vector&lt;int&gt; v;
+    std::sort(v.begin(), v.end(), less&lt;int&gt;());
+    std::sort(v.begin(), v.end(), polymorphic_less());
+}
+</code></pre>
+<p>Делать лямбду шаблонной, как шаблонный класс, смысла не имеет, так как мы её создаём один раз.</p>
+<p>В C++20 можно писать лямбдам шаблонные параметры:</p>
+<pre><code class="language-c++">int main() {
+    auto less = []&lt;typename T&gt;(T a, T b) { return a &lt; b; };
+    bool val = less(42, 43);
+}
+</code></pre>
+<p>До C++20 существовал <code>auto</code> для типов аргументов (не только для лямбд, но и для обычных функций). По сути, это означало, что для аргумента неявно создаётся шаблонный параметров:</p>
+<pre><code class="language-c++">void foo(auto a) {}
+
+int main() {
+    foo(1.0);
+    foo&lt;int&gt;(42); // можно даже явно передать тип
+}
+</code></pre>
+<p>Такой синтаксис имеет ограничение - нельзя иметь параметры только одного типа, так как на каждый создаётся свой шаблонный параметр:</p>
+<pre><code class="language-c++">void foo(auto a, auto b) {};
+
+template &lt;typename A, typename B&gt;
+void foo(A a, B b) {}; // эквивалентно
+</code></pre>
+<h3><a class="header" href="#Свойства-лямбд" id="Свойства-лямбд">Свойства лямбд</a></h3>
+<p>Так как лямбды - это некоторые классы (типы), то имеет смысл рассуждать про свойства этих классов.</p>
+<ul>
+<li>есть <code>operator()</code></li>
+<li>есть конструктор копирования и перемещения</li>
+<li>нет присваивания</li>
+<li>до C++20 запрещён дефолтный конструктор, в C++20 разрёшен, если лямбда ничего не захватывает</li>
+<li>незахватывающие лямбды имеют оператор конверсии в указатель на функцию</li>
+</ul>
+<pre><code class="language-c++">int main {
+    auto b = [](){
+        // ...
+    };
+	void (*a)();
+    a = b;
+}
+</code></pre>
+<p><strong>Мем:</strong> в C++ есть унарный <code>+</code>, который для чисел и указателей не меняет. Но если применить его к лямбде, то она сконвертится в указатель на функцию, и он применится к ней.</p>
+<h2><a class="header" href="#stdfunction" id="stdfunction">std::function</a></h2>
+<p>В некоторых случаях может захотеться сохранить в переменную лямбду, в зависимости от условия.</p>
+<pre><code class="language-c++">void (bool flag) {
+    ??? func;
+    if (flag) {
+        func = [](){};
+    } else {
+        func = [](){};
+    }
+}
+</code></pre>
+<p>Так как <code>func</code> присваиваются объекты разных типов, в зависимости от <code>flag</code>, то не понятно, каким типом должен быть<code>func</code>.</p>
+<p>Для такого в стандартной библиотеке есть <code>std::function</code>. Единственное ограничение - ему нужна сигнатура функции.</p>
+<pre><code class="language-c++">void (bool flag) {
+    std::function&lt;void (int, int)&gt; func; // void (int, int) - это тип функции.
+    if (flag) {
+        func = [](int a, int b){};
+    } else {
+        func = [](int a, int b){};
+    }
+}
+</code></pre>
+<p><code>std::function</code> может оборачивать любой функциональный объект, который можно копировать и вызывать, используя круглые скобки. Это может быть не только лямбда, но и указатель на функцию.</p>
+<h3><a class="header" href="#Возможная-реализация" id="Возможная-реализация">Возможная реализация</a></h3>
+<p>Что нужно сохранять?</p>
+<p>Можно было бы делать в хипе копию объекта, от которого создаётся function и сохранять на неё указатель. Но тогда не понятно, как его удалять, так как нужно скастить обратно к типу, который пришёл. Чтобы удалять, нужно знать, какой деструктор вызывать, поэтому можно сохранить функцию, которая  будет удалять объект. Аналогично придётся сделать для того, чтобы вызывать объект.</p>
+<p>Пример для двух аргументов и без возвращаемого значения:</p>
+<pre><code class="language-c++">#include &lt;functional&gt;
+
+template &lt;typename F&gt;
+void delete_func(void* obj) {
+    delete static_cast&lt;F*&gt;(obj);
+}
+
+template &lt;typename F&gt;
+void invoke_func(void* obj, int a, int b) {
+    return static_cast&lt;F*&gt;(obj)(a, b);
+}
+
+template &lt;typename T&gt;
+struct function {
+    typedef void(*deleter_t)(void*);
+    typedef void(*invoker_t)(void*, int, int);
+    
+    function(); 
+    template &lt;typename F&gt;
+    function (F f) 
+        : obj(obj),
+    	  deleter(delete_func&lt;F&gt;),
+    	  invoker(invoke_func&lt;F&gt;)
+	{}
+    
+    void operator()(int a, int b) {
+        return invoker(obj a, b);
+    }
+    
+    ~function() {
+        deleter(obj);
+    }
+  private:
+    void* obj;
+    deleter_t deleter;
+    invoker_t invoker;
+}
+</code></pre>
+<p>Чтобы сделать это для <a href="https://github.com/sorokin/function">общего случая</a>, достаточно просто добавить variadic шаблонные параметры для аргументов и шаблонный параметр для возвращаемого значения:</p>
+<pre><code class="language-c++">template &lt;typename Sig&gt;
+struct function;
+
+template &lt;typename Ret, typename... Args.
+struct function&lt;Ret (Args...)&gt; {
+    // специализация для того, чтобы развернуть сигнатуру
+    // ...
+}
+</code></pre>
+<p>В общем случае такой приём называется <a href="https://files.meetup.com/1455470/Type%20Erasure.pdf"><em>type erasure</em></a>. В принципе, это очень похоже на таблицу виртуальных функций, только написанную руками. Поэтому function можно реализовать и с помощью виртуальных функций.</p>
+<h3><a class="header" href="#Как-хранить-методы-в-function" id="Как-хранить-методы-в-function">Как хранить методы в function?</a></h3>
+<p>Указатель на метод нельзя вызывать просто через круглые скобки, так как его нужно вызывать на определённом объекте.</p>
+<pre><code class="language-c++">struct mytype {
+    void myfunc(int a);
+}
+
+void foo() {
+    void (mytype::* f)(int) = &amp;mytype::myfunc;
+    mytype* p;
+    (p-&gt;*f)(42);
+}
+</code></pre>
+<p>В C++11 появилась вспомогательная функция <code>std::mem_fn</code>:</p>
+<pre><code class="language-c++">void foo() {
+    void (mytype::* f)(int) = &amp;mytype::myfunc;
+    mytype* p;
+    auto g = std::mem_fn(f);
+    g(p, 42);
+}
+</code></pre>
+<p><em>Вместо <code>std::mem_fn</code> можно было бы использовать <code>std::bind</code>.</em></p>
+<p>Но проще пользоваться для этого лямбдами:</p>
+<pre><code class="language-c++">void foo() {
+    void (mytype::* f)(int) = &amp;mytype::myfunc;
+    mytype* p;
+    std::function&lt;void (mytype*, int)&gt; x = std::mem_fn(f);
+    std::function&lt;void (mytype*, int)&gt; y = [](mytype* p, int a){
+        p-&gt;myfunc(a);
+    };
+}
+</code></pre>
 <h1><a class="header" href="#Сигналы-reentrancy-стратегии-обработки-ошибок" id="Сигналы-reentrancy-стратегии-обработки-ошибок">Сигналы, reentrancy, стратегии обработки ошибок</a></h1>
 <h2><a class="header" href="#Сигналы" id="Сигналы">Сигналы</a></h2>
 <p><strong>Сигналы</strong> - механизм &quot;подписки&quot; нескольких функций на события в другой. Иногда их называют listeners или observers.</p>
