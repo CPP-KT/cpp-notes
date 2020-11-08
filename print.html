@@ -4477,6 +4477,12 @@ void leave_emit() const noexcept {
 <p>Чаще всего такие ошибки сообщаются вызывающей стороне, но в некоторых случаях такое не работает. Пример такого случая - исключение, если бы оно произошло в вызове слота в <code>signal</code>. Должны ли после исключения вызываться оставшиеся слоты? Должно ли оно пробрасываться наверх? Если оно пробрасывается в вызывающую сторону, то не понятно, от какого из слотов оно.  На самом деле, стратегия report to caller имеет смысл только в том случае, когда вызывающая сторона &quot;заинтересована в успехе операции&quot;, чем не является случай с сигналом, поэтому если в слоте происходит ошибка, то он должен сам её поймать и сделать что-то разумное. </p>
 <p>Имеет ли смысл для таких ситуаций abort? Пример такого - случай нехватки памяти, который не понятно, как разумно обработать. Ещё один пример - ошибка открытия файла, который является внутренней частью программы (например, какой-нибудь конфиг).</p>
 <h1><a class="header" href="#optional-variant-tuple-string_view" id="optional-variant-tuple-string_view">optional, variant, tuple, string_view</a></h1>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=bJl0xlPdPj0">Запись лекции №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=NAA0z66IEvE">Запись лекции №2</a></li>
+<li><a href="https://www.youtube.com/watch?v=hrUtXP1sZXk">Запись лекции №3</a></li>
+<li><a href="https://www.youtube.com/watch?v=Dp2AIvae27M">Запись лекции №4</a></li>
+</ul>
 <h2><a class="header" href="#optional" id="optional">optional</a></h2>
 <h3><a class="header" href="#Пример-1" id="Пример-1">Пример:</a></h3>
 <pre><code class="language-c++">struct deferred_value {
@@ -4551,23 +4557,17 @@ struct optional_base : optional_storage&lt;T&gt; {
     }
 };
 
-template &lt;bool TriviallyDestructible&gt;
-struct optional_base {
-    ~optional_base() {
-        /// ...
-    }
-};
-
-template &lt;&gt;
-struct optional_base&lt;true&gt; : optional_storage&lt;T&gt; {  
+template &lt;typename T&gt;
+struct optional_base&lt;T, true&gt; : optional_storage&lt;T&gt; {
+    ~optional_base() = default,
 };
 
 template &lt;typename T&gt;
-struct optional: optional_storage&lt;T, std::is_trivially_destructible&lt;T&gt;&gt; {  
+struct optional: optional_base&lt;T, std::is_trivially_destructible&lt;T&gt;&gt; {  
     // ...
 };
 </code></pre>
-<p>Примерно так это и реализована в стандартной библииотеке, хоть и получается, что на каждую тривиальность по базовому классу.</p>
+<p>Примерно так это и реализовано в стандартной библиотеке, хоть и получается, что на каждую тривиальность нужно заводить по базовому классу.</p>
 <h2><a class="header" href="#variant" id="variant">variant</a></h2>
 <p>Предположим, что мы хотим хранить в <code>deffered_value</code> либо посчитанное значение, либо функцию, которая может его посчитать. Когда значение уже посчитано, хранить функцию нам не нужно. Такое можно было бы оптимизировать с помощью <code>union</code>. Для этого в стандартной библиотеке уже есть класс <code>std::variant</code>. </p>
 <pre><code class="language-c++">int main() {
@@ -4587,9 +4587,11 @@ struct deffered_value {
     mutable std::variant&lt;compute_func_t, T&gt; state;
 }
 </code></pre>
+<p>Проблемное место <code>variant</code> - это то, как к нему обращаться. Все способы имеют свои проблемы.</p>
 <p>В <code>std::variant</code> можно обращать как по индексу (<code>std::get&lt;1&gt;</code>), так и по типу (<code>std::get&lt;T&gt;</code>). Если несколько типов одинаковые, то идентификация по типу не скомпилируется.</p>
 <p><code>std::get_if&lt;T&gt;</code> возвращает нулевой указатель, если альтернатива не совпадает, иначе указатель на объект типа <code>T</code>, лежащий в <code>variant</code>.</p>
-<h3><a class="header" href="#visitor" id="visitor">visitor</a></h3>
+<p>Интерфейс такого обращения не позволяет проверить, что рассмотрены все альтернативы. Чтобы получать в таком случае ошибку компиляции, у <code>variant</code> есть специальный  механизм.</p>
+<h3><a class="header" href="#Паттерн-visitor" id="Паттерн-visitor">Паттерн visitor</a></h3>
 <p>Представим такую ситуацию:</p>
 <pre><code class="language-c++">struct base {
     virtual void foo() = 0;
@@ -4602,7 +4604,7 @@ void foo(base&amp; b) {
     b.foo();
 }
 </code></pre>
-<p>Функций вида <code>foo</code> может быть очень много, при этом каждая из них не очень осмысленная. Чтобы избежать такой ситуации, используется паттерн visitor. </p>
+<p>Функций вида <code>foo</code> может быть очень много, при этом каждая из них не очень осмысленная. Чтобы избежать такой ситуации, используется паттерн <em>visitor</em>. </p>
 <pre><code class="language-c++">struct base_visitor {
     virtual void visit(derived1&amp;) = 0;
     virtual void visit(derived2&amp;) = 0;
@@ -4615,6 +4617,11 @@ struct foo_visitor final : base_visitor {
     void visit(derived1&amp;) {}
     void visit(derived2&amp;) {}
     void visit(derived3&amp;) {}
+};
+
+struct base {
+    virtual void accept(base_visitor&amp; v) = 0;
+    virtual ~base() = default;
 };
 
 struct derived1 : base {
@@ -4657,13 +4664,13 @@ struct deffered_value {
 }
 </code></pre>
 <p>Это не очень удобно, так как приходится создавать новый класс. Можно ли сделать это с помощью лямбды? К сожалению, у них нет перегрузок, но это можно реализовать отдельно:</p>
-<pre><code class="language-c++">template &lt;typename A, typename B&gt;
+<pre><code class="language-c++">template &lt;typename A, typename B&gt; // A, B - любые функторы или лямбды
 struct overloaded : A, B {
     using A::operator();
     using B::operator();
 }
 </code></pre>
-<p>Это называют <em>overload pattern</em>, который в общем случае выглядит как-то так::</p>
+<p>Это называют <em>overload pattern</em>, который в общем случае выглядит как-то так:</p>
 <pre><code class="language-c++">struct overloaded;
 
 template &lt;typename Func0&gt;
@@ -4687,7 +4694,7 @@ overloaded&lt;Funcs...&gt; overload(Funcs&amp;&amp;... funcs) {
     return overloaded&lt;Funcs...&gt;(std::forward&lt;Funcs&gt;(funcs)...);
 }
 </code></pre>
-<p>Про <code>std::visit</code> есть интересная статья <a href="https://bitbashing.io/std-visit.html">std::visit is everything wrong with modern C++</a>.</p>
+<p>Про <code>std::visit</code> и <em>overload pattern</em> есть интересная статья <a href="https://bitbashing.io/std-visit.html">&quot;std::visit is everything wrong with modern C++&quot;</a>.</p>
 <p>На <a href="https://en.cppreference.com/w/cpp/language/using_declaration">cppreference</a> приведён пример такого <code>Overloader</code>:</p>
 <pre><code class="language-c++">template &lt;typename... Ts&gt;
 struct Overloader : Ts... {
@@ -4711,7 +4718,7 @@ void copy (type&amp; a, type const&amp; b) {
     a = b;
 }
 </code></pre>
-<p>Иначе при копировании будет происходить switch по альтернативам, например, для такого <code>variant</code>.</p>
+<p>Иначе в копировании будет происходить switch по альтернативам, например, для такого <code>variant</code>.</p>
 <pre><code class="language-c++">struct foo {
     foo(foo const&amp;);
     int a;
@@ -4723,23 +4730,28 @@ void copy (type&amp; a, type const&amp; b) {
 }
 </code></pre>
 <p>Аналогично с деструктором и т.д.</p>
+<p>Какие гарантии исключений у операций с <code>variant</code>? Это зависит от того, как реализовать его.</p>
 <h3><a class="header" href="#Реализация-variant" id="Реализация-variant">Реализация variant</a></h3>
+<p>Можно предположить что-то такое (на самом деле сделано не так):</p>
 <pre><code class="language-c++">template &lt;typename A, typename B&gt;
 struct variant {
     variant&amp; operator=(variant const&amp; other) {
         destroy_current();
-        construct_new(other);
+        construct_new(other); // какие гарантии, если исключение?
     }
     std::aligned_storage_t&lt;std::max(sizeof(A), sizeof(B)),
     						std::max(alignof(A), alignof(B))&gt; storage;
 };
 </code></pre>
 <p>При дизайне <code>variant</code> возникает вопрос, стоит ли разрешать делать его таким, что он не содержит ни одного из значений.</p>
-<p>Если такого значения нет, то не понятно, что должен делать дефолтный конструктор. Помимо этого, &quot;пустое состояние&quot; даёт возможность сделать weak-гарантии у оператора присваивания. Но пустое состояние иметь не очень хорошо, // TODO: почему?</p>
-<p>В Boost делали так: хранили два стораджа, а в нём либо указатель на объект, либо сам объект, в зависимости от гарантий.</p>
+<p>Если такого значения нет, то не понятно, что должен делать дефолтный конструктор. Помимо этого, &quot;пустое состояние&quot; даёт возможность сделать weak-гарантии у оператора присваивания (так как есть какое-то состояние, в которое переходит <code>variant</code>, если старый объект разрушили, а новый создать не получилосЬ). Но пустое состояние иметь не очень хорошо - изначально мы делали <code>variant</code>, когда боролись с неинициализированной переменной. Здесь можно провести аналогию между пустым состоянием <code>variant</code>'a и нулевым указателем - если функция принимает указатель, не понятно, правда ли, что он всегда ненулевой. Очень часто люди считают, что указатель должен быть ненулевым (например, <code>printf</code>). - аналогично с <code>variant</code>.</p>
+<p>Для функций, где <code>variant</code> мог бы стать пустым при исключении, можно просто сделать базовые гарантии.</p>
+<p>Можно ли как-нибудь реализовать <code>variant</code> так, чтобы у него не было пустого значения, но  гарантии оператора присваивания были хотя бы <em>weak</em> (либо <em>strong</em>)?</p>
+<p>Один из подходов (в Boost делали так): хранить два стораджа (<em>double buffering</em>). Минус такого решения - занимает в 2 раза больше места, зато можно сделать <em>strong</em> гарантии.</p>
+<p>Ещё одна возможная реализация -  с динамической аллокацией:</p>
 <pre><code class="language-c++">template &lt;typename A, typename B&gt;
 struct variant {
-    variant&amp; operator=(variant&amp;&amp; other) {
+	variant&amp; operator=(variant&amp;&amp; other) {
         void* p = copy_current_to_dynamic();
         destruct_current();
         try {
@@ -4774,21 +4786,24 @@ struct variant {
     }
 };
 </code></pre>
-<p>Минус такого подхода в том, что возникает слишком много случаев.</p>
-<p><em>Boost.Variant1</em> использовали double storage (storage в два раза больше), <em>Boost.Variant2</em> использовали подход как в примере выше, а <code>std::variant</code> - пустое значение, но спрятанное в интерфейсе.</p>
-<p>У <code>std::variant</code> есть метод <code>valueless_by_exception</code>. Основная идея в том, что если выбрасывается исключение, то ожидается, что variant в таком состоянии живёт до обработки исключения, где его нужно привести в валидное состояние.</p>
+<p>Минус такого подхода в том, что возникает слишком много случаев при операциях обращения.</p>
+<p>В<code>Boost.Variant1</code> использовали double buffering, в <code>Boost.Variant2</code> использовали подход как в примере выше.</p>
+<p>В <code>std::variant</code> сделали пустое значение, но спрятанное в интерфейсе. Одним из ключевых предложений для <code>std::variant</code>было сделать его таким, что это невалидное состоятоние у него появляется <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0088r0.pdf">крайне редко</a>, а обращение к нему в таком состоянии - UB. Часть комитета была против, поэтому был принят компромиссный вариант с пустым <code>variant</code> и бросанием исключения при попытке извлечь из него значение.</p>
+<p>В итоге у <code>std::variant</code> есть метод <code>valueless_by_exception()</code>. В <code>get</code> и <code>get_if</code> это не замечается, в <code>visit</code> бросается исключение, дефолтный конструктор <code>variant</code> не создаёт объект пустым, а использует первую альтернативу. Основная идея в том, что если выбрасывается исключение, то ожидается, что variant в таком состоянии живёт до обработки исключения, где его нужно привести в валидное состояние.</p>
+<p>На эту тему есть интересный пост <a href="https://isocpp.org/blog/2015/11/the-variant-saga-a-happy-ending">&quot;The Variant Saga: A happy ending?&quot;</a> от автора proposal по variant в стандартную библиотеку.</p>
+<p>Иногда может захотеться иметь явное пустое состояние (например, если у всех типов нет дефолтных конструкторов). Для этого есть helper-класс <code>std::monostate</code>.</p>
 <h2><a class="header" href="#tuple-pair" id="tuple-pair">tuple, pair</a></h2>
-<p>Частный случай <code>tuple</code> - <code>std::pair</code>. Например, пару возвращает <code>insert</code> у мапы.</p>
+<p>Частный случай <code>tuple</code> - <code>std::pair</code>. По сути, это просто структура из двух мемберов - <code>fist</code> и <code>second</code>. Например, пару возвращает <code>insert</code> у мапы, кроме того, парами являются и <code>value_type</code> у мапы (из ключа и значение).</p>
 <pre><code class="language-c++">int main() {
     std::map&lt;std::string, int&gt; m;
-    auto p = m.insert({&quot;abc&quot;, 42}); // tuple&lt;iterator, bool&gt;
+    auto p = m.insert({&quot;abc&quot;, 42}); // std::pair&lt;iterator, bool&gt;
     p.first;
     p.second;
     
     std::pair&lt;std::stirng, int&gt; x(&quot;abc&quot;, 42);
 }
 </code></pre>
-<p>По сути, <code>tuple</code> - структура, у полей которой нет имён. </p>
+<p>По сути, <code>tuple</code> - структура, у полей которой нет имён, можно сказать, что это обощение пары на <code>n</code> элементов.</p>
 <p>Пример, когда он может быть полезен:</p>
 <pre><code class="language-c++">void print(std::string const&amp; str) {
 	std::cout &lt;&lt; str;
@@ -4800,7 +4815,7 @@ int main() {
     f();
 }
 </code></pre>
-<p>Как может быть реализован <code>bind</code>:</p>
+<p><code>bind</code> можно реализовать следующим образом::</p>
 <pre><code class="language-c++">template &lt;typename F, typename Arg&gt;
 struct bound {
     bound(F&amp;&amp; f, Arg&amp;&amp; arg)
@@ -4825,7 +4840,11 @@ bound&lt;F, Arg&gt; bind(F&amp;&amp; f, Arg&amp;&amp; arg) {
     return bound&lt;F, Arg&gt;(std::forward&lt;F&gt;(f), std::forward&lt;Arg&gt;(arg));
 }
 </code></pre>
-<p>Чтобы обобщить это на несколько аргументов, можно хранить в <code>bound</code> <code>tuple</code> из аргументов и использовать функцию <code>std::apply(f, args)</code>.</p>
+<p>Чтобы обобщить это на несколько аргументов, можно хранить в <code>bound</code> <code>tuple</code> из аргументов и использовать функцию <code>std::apply(f, args)</code> - она раскрывает <code>tuple</code> в аргументы и вызывает функцию <code>f</code>.</p>
+<p>Обычно <code>tuple</code> реализован через наследование, рекурсивно:</p>
+<pre><code class="language-c++">struct tuple : V0, tuple&lt;Vs...&gt;
+{}
+</code></pre>
 <h2><a class="header" href="#string_view" id="string_view">string_view</a></h2>
 <h3><a class="header" href="#Мотивирующий-пример-2" id="Мотивирующий-пример-2">Мотивирующий пример</a></h3>
 <p>Пример реализации хэш-функции <a href="https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function">FNV</a>:</p>
@@ -4847,8 +4866,9 @@ int main() {
 </code></pre>
 <p>Такая реализация не очень подходит, если передаётся строковый литерал.</p>
 <p>Можно было бы сделать реализацию от <code>char const* data</code> и размера, а остальные через неё - это самая общая и эффективная перегрузка. Проблема в том, что такую функцию не очень удобно вызывать, например, от литералов, так как каждый раз нужно указывать размер.</p>
-<p>К чему это всё? Часто встречаются такие Си-стайл функции, которые принимают указатель и размер, но из синтаксиса не очевидно, что указатель и размер как-то связаны. Для отражения этой идеи в стандартной библиотеке в  C++17 появился класс <code>std::string_view</code>:</p>
+<p>К чему это всё? Часто встречаются такие Си-стайл функции, которые принимают указатель и размер, но синтаксис не подразумевает, что указатель и размер как-то связаны. Для отражения этой идеи в стандартной библиотеке в  C++17 появился класс <code>std::string_view</code>:</p>
 <pre><code class="language-c++">struct string_view {
+    // ...
     char const* data;
     size_t size;
 };
@@ -4862,7 +4882,47 @@ int main() {
     }
     return result;
 }
+int main() {
+    fnv1a(&quot;hello&quot;);
+    std::string s(&quot;hello&quot;);
+    fnv1a(s);
+}
 </code></pre>
+<p>Поскольку <code>string_view</code> не владеет данными, а просто ссылается на них, то для него действуют те же ограничения, что и для указателей: пока он ссылается на какие-то данные, они должны существовать.</p>
+<p>Ещё один пример применения<code>string_view</code>  - &quot;сослаться&quot; на подстроку.</p>
+<h3><a class="header" href="#Касты" id="Касты">Касты</a></h3>
+<p>Интересно, что то, как приводится <code>std::string</code> и <code>std::string_view</code> отличается от приведения к <code>char const*</code>:</p>
+<ul>
+<li>
+<p><code>char const*</code> в <code>std::string</code> - implicit</p>
+</li>
+<li>
+<p><code>std::string</code> в <code>char const* </code>- <code>.c_str()</code></p>
+</li>
+<li>
+<p><code>std::string_view</code> в <code>std::string</code> - explicit</p>
+</li>
+<li>
+<p><code>std::string</code> в <code>std::string_view</code> - implicit</p>
+</li>
+</ul>
+<p>Кажется, что и <code>char const*</code>, и <code>std::string_view</code> не владеют данными, а просто ссылаются на них, но почему-то в приведении ведут себя по-разному. С практической точки зрения понятно, почему конверсия в <code>std::string_view</code> implicit - так можно передавать строки в функции, которые принимают <code>string_view</code>.</p>
+<h3><a class="header" href="#user-defined-literals" id="user-defined-literals">user-defined literals</a></h3>
+<p>В C++11 появился механизм, который позволяет писать user-defined literals для пользовательских классов. Этот механизм применяется в стандартной библиотеке для суффиксов строковых литералов:</p>
+<pre><code class="language-c++">void print(std::string_view str) {
+    std::cout &lt;&lt; str;
+}
+
+int main() {
+    using namespace std::literals;
+    std::bind(print, &quot;hello&quot;s); // s - std::string
+    print(&quot;abc&quot;sv); // sv - string_view
+}
+</code></pre>
+<p>Реализовано это как <code>operator&quot;&quot;sv</code> с разными перегрузками:</p>
+<pre><code class="language-c++">string_view operator&quot;&quot;sv(const char* str, size_t len).
+</code></pre>
+<p>Суффиксы, которые не начинаются с подчеркивания, зарезервированы для стандартной библиотеке. Поэтому, если использовать без подчеркивания, то будет ворнинг, потому что в каком-то из компиляторов суффикс может быть уже занят расширением стандартной библиотеки.</p>
 <h1><a class="header" href="#initialization-allign-constexpr" id="initialization-allign-constexpr">initialization, allign, constexpr</a></h1>
 <h2><a class="header" href="#Статическая-и-динамическая-инициализация" id="Статическая-и-динамическая-инициализация">Статическая и динамическая инициализация</a></h2>
 <pre><code class="language-c++">int a = 42;
@@ -4897,6 +4957,41 @@ constexpr T const&amp; max(T const&amp; a, T const&amp; b) {
 <p>Если функция <code>constexpr</code>, то она должна внутри вызывать только <code>constexpr</code> функции.</p>
 <p>С появлением <code>constexpr</code> функций обнаружилась нужда, например, в <code>constexpr</code> переменных. При этом константные переменные со статической инициализацией могут использоваться в компайл-тайме.</p>
 <p>// TODO</p>
+<h2><a class="header" href="#if-constexpr" id="if-constexpr">if constexpr</a></h2>
+<p>Вернёмся к реализациию <a href="https://github.com/sorokin/function">function</a>.</p>
+<p>В его имплементации использовался класс <code>type_descriptor</code> со SFINAE. Нам повезло, что критерий для объекта был только один (<code>fits_small_storage</code>), если бы их было несколько, то это выглядело бы сильно хуже. Но даже в нашем случае это выглядит громоздко, например, мы  заводим функцию <code>initialize_storage</code>, которая используется только один раз.</p>
+<p>Мы могли бы сделать это через <code>if</code>, но так получится не всегда:</p>
+<pre><code class="language-c++">struct mytype1 {
+    static constexpr bool has_foo = true;
+    void foo();
+};
+
+struct mytype2 {
+    static constexpr bool has_foo = false;
+    void bar();
+};
+
+template &lt;typename T&gt;
+void f(T obj) {
+    if (T::has_foo) {
+        obj.foo();
+    } else {
+        obj.bar();
+    }
+}
+</code></pre>
+<p>Дело в том, что при компиляции <code>if</code> оставляет обе ветки, но одна из них не скомпилируется, если у объекта нет какой-то из функций.</p>
+<p>В языке для этого появилась конструкция <code>if constexpr</code>. Тогда код будет выглядеть следующим образом:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+void f(T obj) {
+    if constexpr (T::has_foo) {
+        obj.foo();
+    } else {
+        obj.bar();
+    }
+}
+</code></pre>
+<p><code>if constexpr</code> работает следующим образом: он требует, чтобы условие было <code>constexpr</code> выражением и делает бранчинг на этапе компиляции, не подставляя ту ветку, которая не подходит условию.</p>
 
                     </main>
 

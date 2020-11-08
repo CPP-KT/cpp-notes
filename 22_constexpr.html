@@ -193,6 +193,41 @@ constexpr T const&amp; max(T const&amp; a, T const&amp; b) {
 <p>Если функция <code>constexpr</code>, то она должна внутри вызывать только <code>constexpr</code> функции.</p>
 <p>С появлением <code>constexpr</code> функций обнаружилась нужда, например, в <code>constexpr</code> переменных. При этом константные переменные со статической инициализацией могут использоваться в компайл-тайме.</p>
 <p>// TODO</p>
+<h2><a class="header" href="#if-constexpr" id="if-constexpr">if constexpr</a></h2>
+<p>Вернёмся к реализациию <a href="https://github.com/sorokin/function">function</a>.</p>
+<p>В его имплементации использовался класс <code>type_descriptor</code> со SFINAE. Нам повезло, что критерий для объекта был только один (<code>fits_small_storage</code>), если бы их было несколько, то это выглядело бы сильно хуже. Но даже в нашем случае это выглядит громоздко, например, мы  заводим функцию <code>initialize_storage</code>, которая используется только один раз.</p>
+<p>Мы могли бы сделать это через <code>if</code>, но так получится не всегда:</p>
+<pre><code class="language-c++">struct mytype1 {
+    static constexpr bool has_foo = true;
+    void foo();
+};
+
+struct mytype2 {
+    static constexpr bool has_foo = false;
+    void bar();
+};
+
+template &lt;typename T&gt;
+void f(T obj) {
+    if (T::has_foo) {
+        obj.foo();
+    } else {
+        obj.bar();
+    }
+}
+</code></pre>
+<p>Дело в том, что при компиляции <code>if</code> оставляет обе ветки, но одна из них не скомпилируется, если у объекта нет какой-то из функций.</p>
+<p>В языке для этого появилась конструкция <code>if constexpr</code>. Тогда код будет выглядеть следующим образом:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+void f(T obj) {
+    if constexpr (T::has_foo) {
+        obj.foo();
+    } else {
+        obj.bar();
+    }
+}
+</code></pre>
+<p><code>if constexpr</code> работает следующим образом: он требует, чтобы условие было <code>constexpr</code> выражением и делает бранчинг на этапе компиляции, не подставляя ту ветку, которая не подходит условию.</p>
 
                     </main>
 
