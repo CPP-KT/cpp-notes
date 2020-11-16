@@ -6,5 +6,5 @@ src = "src"
 title = "C++ course notes"
 
 [output.html]
-default-theme = "light"
+default-theme = "ayu"
 git-repository-url = "https://github.com/lejabque/cpp-notes"
