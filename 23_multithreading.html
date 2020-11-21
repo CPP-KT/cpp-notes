@@ -1,0 +1,405 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Многопоточность - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="18_decltype_auto_nullptr.html"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="19_lambdas_type_erasure.html"><strong aria-hidden="true">20.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="20_signals_reetrancy_errors.html"><strong aria-hidden="true">21.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="21_optional_variant_tuple_stringview.html"><strong aria-hidden="true">22.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="22_constexpr.html"><strong aria-hidden="true">23.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="23_multithreading.html" class="active"><strong aria-hidden="true">24.</strong> Многопоточность</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Многопоточность" id="Многопоточность">Многопоточность</a></h1>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=q9A2nvqW0QQ">Запись лекции №1</a></li>
+</ul>
+<h2><a class="header" href="#Зачем-нужна" id="Зачем-нужна">Зачем нужна?</a></h2>
+<p><em>Поток исполнения - независимая последовательность выполнения инструкций внутри одного процесса с общей памятью, но собственными регистрами и стеком</em>.</p>
+<p>Банальное применение - чтобы использовать несколько имеющихся ядер, необходимо в программе завести несколько потоков.</p>
+<p>Стоит отметить, что нагрузить ядра можно не только несколькими потоками, но и несколькими процессами. Кроме того, API для работы с несколькими потоками появился ещё до того, как процессы с несколькими ядрами стали популярными - получается, что потребность в потоках возникла не только для нагрузки ядер. Одно из применений - использовать потоки для функций, которые должны работать параллельно основной программе (запускаем какую-нибудь функцию из библиотеки, но не хотим, чтобы она была блокирующей - например, если параллельно нужно читать ввод от пользователя).</p>
+<p>API для работы с потоками в C++ появился в 11-м стандарте и был расширен в 20-м. До этого стандарт не предоставлял ничего для работы с многопоточными программами, поэтому люди делали всё средствами ОС.</p>
+<h2><a class="header" href="#stdthread" id="stdthread">std::thread</a></h2>
+<p>Просто пример:</p>
+<pre><code class="language-c++">int main() {
+	std::thread th([]{
+        std::cout &lt;&lt; &quot;Hello, world!\n&quot;;
+    });
+    th.join();
+}
+</code></pre>
+<p>Конструктор <code>std::thread</code> принимает функциональный объект, который нужно исполнить в другом потоке. </p>
+<p>Деструктор потока аварийно завершает программу вызовом <code>std::terminate</code>, если на момент вызова деструктора поток все ещё работает и не была сделана ни одна из следующих операций: <code>join</code> - дождаться, пока поток выйдет, <code>detach</code> - &quot;отделить поток&quot;, он продолжит исполняться, а объект <code>std::thread</code> перестанет быть привязан к этому потоку.</p>
+<p>Может возникнуть вопрос, почему не выбрали одну из этих операций, чтобы вызывать её дефолтно в деструкторе. Если это был бы <code>detach</code>, то не понятно, что происходит в таком случае:</p>
+<pre><code class="language-c++">int main() {
+	std::thread th([]{
+        std::cout &lt;&lt; &quot;Hello, world!\n&quot;;
+    });
+    th.detach();
+}
+</code></pre>
+<p>После выхода из <code>main</code> всё равно все потоки будут убиты при завершении программы, кроме того, при выходе из <code>main</code> вызываются деструкторы глобальных переменных (например, <code>std::cout</code>), к которым может обращаться поток, поэтому делать <code>detach</code> не очень хорошо. В принципе, <code>detach</code> нужен вообще достаточно редко, потому что в основном поток привязан к каким-то глобальным данным (как в примере выше, к глобальной переменной <code>std::cout</code>). </p>
+<p>Делать <code>join</code> по дефолту тоже не сработает - некоторые потоки могут остаться бесконечно ждать, если потоку не сообщили, что он должен выходить (например, если поток повиснет в ожидании ввода каких-нибудь данных).</p>
+<p>В C++20 появился механизм, позволяющий сообщить потоку, что ему нужно выходить. В связи с этим появился <code>std::jthread</code>, деструктор которого по умолчанию сообщает потоку, что нужно выйти, а потом делает <code>join</code>.</p>
+<p>Способа принудительно завершить поток в стандартной библиотеке нет. Почему? Если бы такой способ был, то он бы завершал поток в неопределённой точке, что было бы странно для многих программ - например, если бы тред делал какие-то операции со структурой данных, в таком случае она бы осталась в невалидном состоянии. Такие механизмы есть у ОС - в Windows есть <code>TerminateThread</code>, в описании которого сказано следующее: <em>You should call TerminateThread only if you know exactly what the target thread is doing, and you control all of the code that the target thread could possibly be running at the time of the termination.</em> В принципе, её можно было бы использовать, если мы точно уверены, что поток крутится в каком-нибудь бесконечном цикле и не делает в нём никаких выделений памяти и не трогает глобальные данные. Из-за того, что такая фича редко нужна, она не была внесена в стандартную библиотеку.</p>
+<h2><a class="header" href="#stdmutex" id="stdmutex">std::mutex</a></h2>
+<pre><code class="language-c++">std::array&lt;int, 1000&gt; accounts;
+
+void transfer(size_t to, size_t from, int amount) {
+	if (accounts[from] &lt; amount) {
+        throw std::runtime_error(&quot;insufficient funds&quot;);
+    }
+    accounts[from] -= amount;
+    accounts[to] += amount;
+}
+</code></pre>
+<p>Если функция <code>transfer</code> вызывается из нескольких потоков, то это считается UB. Может возникнуть следующая проблема: если вызывается <code>transfer(1, 2, 100)</code> из двух разных потоков, а <code>accounts[2] == 101</code>, то может возникнуть так, что они оба сначала проверят, что на счету достаточно денег, а потом вычтут по 100. Кроме того, нет никакой гарантии, что операция <code>-=</code> транслируется не в одну инструкцию, а в несколько что тоже может вызвать проблему. В общем случае, такую проблему называют <em>race condition</em> (состояние гонки). </p>
+<p>Нам может помочь примитив синхронизации под названием <em>mutex</em> (от слов <em>mutual exclusion</em> - взаимное исключение). В стандартной библиотеке это класс <code>std::mutex</code> с двумя операциями: <code>lock</code> и <code>unlock</code>. У него может быть два состояния - разблокирован (по умолчанию при создании) и разблокирован. Вызов <code>lock</code> ждёт, пока <code>mutex</code> будет разблокирован, а потом блокирует его. Метод <code>unlock</code>, очевидно, разблокирует <code>mutex</code>. </p>
+<pre><code class="language-c++">std::mutex m;
+std::array&lt;int, 1000&gt; accounts;
+
+void transfer(size_t to, size_t from, int amount) {
+    m.lock();
+	if (accounts[from] &lt; amount) {
+        m.unlock();
+        throw std::runtime_error(&quot;insufficient funds&quot;);
+    }
+    accounts[from] -= amount;
+    accounts[to] += amount;
+    m.unlock();
+}
+</code></pre>
+<p>В стандартной библиотеке есть <code>std::lock_guard</code> - RAII-обёртка над мьютексом, которая в конструкторе блокирует мьютекс, а в деструкторе разблокирует. Кроме того, обычно мьютекс привязан к каким-то данным, а не функциям, работающим с ними - например, в примере выше, идейно можно думать, что это часть <code>accounts</code>, поэтому иногда мьютекс с данными можно объединить в один объект.</p>
+<p>Проблема такого примера в том, что мы блокируем все аккаунты одновременно, лишаясь параллельности. С одной стороны, это плохо, с другой, функция <code>transfer</code> не обязательна должна уметь параллельно работать с несколькими аккаунтами - например, если программа в несколько потоков делает кучу другой работы, но иногда вызывает <code>transfer</code>. Здесь можно сослаться на известный <a href="https://en.wikipedia.org/wiki/Amdahl%27s_law">Закон Амдала</a>, который говорит о том, что рост производительности с увеличиением числа потоков, ограничен долей операций, которые можно идеально распараллелить.</p>
+<p>Допустим, что нам хочется, чтобы независимые по данным вызовы функции <code>transfer</code> могли работать параллельно - можно создать больше мьютексов! Такой приём называется <em>мелкогранулярными блокировками</em>. </p>
+<pre><code class="language-c++">struct account {
+    std::mutex m;
+    int32_t balance;
+};
+
+std::array&lt;account, 1000&gt; accounts;
+
+void transfer(size_t to, size_t from, int amount) {
+    std::lock_guard&lt;std::mutex&gt; lg_from(accounts[from].m);
+    std::lock_guard&lt;std::mutex&gt; lg_to(accounts[to].m);
+	if (accounts[from].balance &lt; amount) {
+        throw std::runtime_error(&quot;insufficient funds&quot;);
+    }
+    accounts[from].balance -= amount;
+    accounts[to].balance += amount;
+}
+</code></pre>
+<p>И тут мы сталкиваемся с ситуацией, которая называется <em>deadlock</em>: при вызовах <code>transfer(a, b, 42)</code>, <code>transfer(b, a, 42)</code> может произойти так, что первый поток залочит мьютекс <code>a</code>, второй залочит <code>b</code> и в итоге первый поток будет бесконечно ждать <code>b</code>, который заблокирован вторым потоком, который бесконечно ждёт <code>a</code>, в итоге программа зависнет. Формально, <em>deadlock</em> - это ситуация, при которой ни один поток находится в ожидании ресурсов, занятых друг другом, и не может продолжить своё исполнение.</p>
+<p>Это фиксится введением порядка на мьютекса - назначим им номера и введём на них отношения порядка, в котором будем их блокировать (например, в примере выше номерами могут быть номера аккаунтов, а блокировать можно всегда меньший). <em>Кстати, повторная блокировка мьютекса внутри одного потока это UB, поэтому в примере надо проверить<code>from != to</code>.</em></p>
+<p>Почему блокировать в каком-то порядке всегда это верно? Можно представить ориентированный граф, в котором вершины это мьютексы, а ребро <code>uv</code> означает, что в программе есть место, в котором, удерживая мьютекс <code>u</code>, поток попытается заблокировать мьютекс <code>v</code>. Утверждается, что если в этом графе нет циклов, то дедлок возникнуть не может. Если же на мьютексах введён порядок, то цикла возникнуть не могут, так как все рёбра будут проведены от меньшего к большему.</p>
+<p>Ещё одна примера кода выше - мьютекст на каждый аккаунт заводить дорого, так как <code>sizeof</code> мьютекса это 40 байт. Можно, к примеру, завести по мьютексу на какую-то часть аккаунтов (например, по мьютексу на каждые 100 аккаунтов).</p>
+<p>Проблема возникала из-за того, что мы блокировали один мьютекс и ждали разблокировки следующего, не отпуская заблокированный. Если бы мы, например, блокировали один, затем пробовали заблокировать второй, если же не получилось, отпускали первый и повторяли всё заново, то это позволило бы решить проблему.  У <code>std::mutex</code> есть метод <code>try_lock</code>, который возвращает <code>false</code> для заблокированного мьютекста, иначе блокирует его и возвращает <code>true</code>. </p>
+<p>Кроме того, в стандартной библиотеке есть функция <code>std::lock</code>, которая блокирует несколько объектов, избегая дедлоков неспецифицированной последовательностью вызовов функций <code>lock</code>, <code>unlock</code>, <code>try_lock</code>. В таком случае нельзя использовать <code>lock_guard</code>, потому что он в конструкторе пытается залочить мьютекс. Можно воспользоваться <code>unique_lock</code>, который имеет более тонкую настройку и даёт возможность создать незаблокированный лок:</p>
+<pre><code class="language-c++">void transfer(size_t to, size_t from, int32_t amount) {
+    if (from == to) {
+        return;
+    }
+    std::unique_lock&lt;std::mutex&gt; lg_from(accounts[from].m, std::defer_lock);
+    std::unique_lock&lt;std::mutex&gt; lg_to(accounts[to].m, std::defer_lock);
+    std::lock(lg_from, lg_to);
+    // ...
+}
+</code></pre>
+<h2><a class="header" href="#stdconditional_variable" id="stdconditional_variable">std::conditional_variable</a></h2>
+<p>Нельзя просто вставить в каждую функцию очереди мьютекс:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct concurrent_queue {
+    void push(T value) {
+        std::lock_guard&lt;std::mutex&gt; lg(m);
+        q.push_back(std::move(value));
+    }
+    
+    bool empty() const {
+        std::lock_guard&lt;std::mutex&gt; lg(m);
+        return q.empty();
+    }
+    
+    T pop() {
+        std::lock_guard&lt;std::mutex&gt; lg(m);
+        T result = q.front();
+        q.pop_front();
+        return result;
+    }
+private:
+    mutable std::mutex m;
+    std::deque&lt;T&gt; q;
+}
+</code></pre>
+<p>Это не будет работать, когда функция <code>pop</code> вызывается одним потоком у непустой очереди, но пока он ждёт мьютекс, другой поток её опустошает. Одно из решений - возвращать <code>std::optional&lt;T&gt;</code>  из <code>pop</code>.</p>
+<p>Иногда может понадобиться &quot;ждущий pop&quot;. Например, можно крутить в цикле какой-нибудь <code>try_pop</code>, но это не очень выгодно - он не будет совершать полезной работы. Появляется желание уметь &quot;усыпить поток&quot; и потом &quot;пробудить его&quot; из другого потока - для этого существует специальный класс <code>std::conditional_variable</code>. С помощью него можно переписать очередь следующим образом:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct concurrent_queue {
+    void push(T value) {
+        std::lock_guard&lt;std::mutex&gt; lg(m);
+        q.push_back(std::move(value));
+		lg.unlock();
+        cv.notify_one();
+    }
+    
+    bool empty() const {
+        std::lock_guard&lt;std::mutex&gt; lg(m);
+        return q.empty();
+    }
+    
+    T pop() {
+        std::unique_lock&lt;std::mutex&gt; lg(m);
+        while (q.empty()) {
+            cv.wait(lg);
+            lg.lock();
+        }
+        T result = q.front();
+        q.pop_front();
+        return result;
+    }
+private:
+    mutable std::mutex m;
+    std::deque&lt;T&gt; q;
+    std::conditional_variable cv;
+}
+</code></pre>
+<p>У него существует несколько операций:</p>
+<ul>
+<li>wait - поток начинает спать</li>
+<li>notify_one - пробуждает один поток</li>
+<li>notify_all - пробуждает все потоки</li>
+</ul>
+<p><code>wait</code> принимает в качестве аргумента <code>unique_lock</code>. Это нужно, чтобы между <code>unlock</code> и вызовом <code>wait</code> другой поток ничего не испортил. В примере выше <code>while</code> в тех случаях, когда между пробуждением потока и захватом блокировки, условие снова другим потоком нарушается.</p>
+<p>Существует специальная перегрузка у <code>wait</code> для таких ситуаций:</p>
+<pre><code class="language-c++">cv.wait(lg, [&amp;]{
+    return !q.empty();
+})
+</code></pre>
+<p>Кажется, что можно оптимизировать функцию <code>push</code> следующим образом  - если очередь не пуста, то не пробуждать потоки.</p>
+<pre><code class="language-c++">void push(T value) {
+	std::lock_guard&lt;std::mutex&gt; lg(m);
+	bool was_empty = q.empty()
+	q.push_back(std::move(value));
+	if (was_empty) {
+		cv.notify_one();
+	}
+}
+</code></pre>
+<p>Проблема в том, что если ждут несколько <code>pop</code>, то при нескольких вставок в очередь подряд, пробудится только один <code>pop</code>, если он не успеет отработать до добавления следующего элемента.</p>
+<p>Может появиться желание ограничить размер очереди, например, если в неё пушат сильно быстрее, чем попают. В таком случае можно сделать ждущий <code>push</code>, заведя для этого вторую <code>conditional_variable</code>. </p>
+<h2><a class="header" href="#Как-это-устроено-внутри" id="Как-это-устроено-внутри">Как это устроено внутри?</a></h2>
+<p>Для реализации этих примитивов нужно иметь возможность &quot;усыпить поток&quot;, что возможно только с использованием средств ОС. В игрушечных реализациях используют <code>sleep</code> или <code>std::this_thread::yield</code>. Проблема <code>yield</code> в том, что операционная система (а конкретно scheduler) может решить продолжить выполнять этот поток, даже если есть другие кандидаты - как минимум, переключаться на другой поток дороже из-за сброса TLB-кэша и т.д. В ОС есть специальные операции, которые в каком-то смысле говорят, что данный поток будет ждать чего-то. В Linux это называется <code>futex</code>, который говорит, что поток будет ждать &quot;по какой-то переменной. адресу в памяти&quot; и пробуждает другой поток. </p>
+<p>Бывают случаи, когда засыпать потоку может быть невыгодно и можно просто немного подождаться, пока мьютекс не разлочится. Для этого применяется примитив синхронизации под названием <code>spinlock</code>, который просто крутится в цикле, проверяя, не залочен ли. Большинство реализацией мьютексов совмещают эти подходы: крутятся в цикле какое-то время, а потом засыпают, если мьютекс не разблокировался. В x86 есть специальная инструкция <em>Spin Loop Hint</em>, которую можно вставить внутрь цикла спинлока, чтобы процессор как-нибудьы оптимизировал это.</p>
+<h2><a class="header" href="#stdatomic" id="stdatomic">std::atomic</a></h2>
+<p>В начале лекции мы говорили о том, что многопоточный не read-only доступ к обычным данным это UB. Почему так было специфицировано? </p>
+<p>Во-первых, на это влияет количество разных архитектур процессоров - во многих из них отличаются инструкции, они предоставляют разные гарантии. Во-вторых, не любую переменную можно модифицировать атомарно. Атомарность - это неделимость операции с точки зрения других потоков (&quot;они не видят её промежуточного результата&quot;). Особенно это вызывает проблемы, если переменная находится на стыке кэш-линий, из-за чего возникает необходимость атомарно работать с двумя кэш-линиями сразу, в x86 такое возможно, но со спецэффектами уровня &quot;другие ядра не могут читать из памяти в этот момент&quot; (гуглится по запросу <a href="https://lwn.net/Articles/790464/">split lock</a>). </p>
+<p>В C++ есть класс <code>std::atomic</code> со специализациями для всех встроенных (и не только) типов, предоставляющий атомарный доступ к переменным. Несмотря на то, что многие операции для него транслируются в те же инструкции, что и операции с обычными переменными (например, в xv86 <code>load</code> и <code>store</code> для <code>std::atomic&lt;int&gt;</code> это будет просто <code>mov</code>), нельзя считать, что можно пользоваться обычными типами вместо атомиков. Во-первых, в разных архитектурах атомики могут транслироваться в разные инструкции (например, в ARM для этого есть специальные инструкции). Во-вторых, обычные переменные</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="22_constexpr.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="22_constexpr.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
