@@ -24,3 +24,4 @@
 - [Optional, variant, tuple, string_view](./21_optional_variant_tuple_stringview.md)
 - [Статическая и динамическая инициализация, constexpr](./22_constexpr.md)
 - [Многопоточность](./23_multithreading.md)
+- [Многопоточность](./24_qt.md)
