@@ -7,8 +7,8 @@
 - [C++ and Beyond 2012: Herb Sutter - atomic Weapons 2 of 2](https://www.youtube.com/watch?v=KeLBd2EJLOU)
 - [Запись лекции №4](https://www.youtube.com/watch?v=RtQqEre0Ag8)
 - [Запись лекции №5](https://www.youtube.com/watch?v=HcIaqm9b5hU)
-- [CppCon 2019: Olivier Giroux “The One-Decade Task: Putting std::atomic in CUDA.”
-](https://www.youtube.com/watch?v=VogqOscJYvk)
+- [CppCon 2019: Olivier Giroux “The One-Decade Task: Putting std::atomic in CUDA.”](https://www.youtube.com/watch?v=VogqOscJYvk)
+- [Запись лекции №6](https://www.youtube.com/watch?v=SiGqozCBXDE)
 
 ## Зачем нужна? 
 
