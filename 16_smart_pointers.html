@@ -190,7 +190,7 @@
 }
 </code></pre>
 <h3><a class="header" href="#Реализация" id="Реализация">Реализация</a></h3>
-<p><code>unique_ptr</code> - самый простой из умных указателей. Внутри он хранит указатель <code>T* ptr</code> и вызывает <code>delete</code> от него в конструкторе.</p>
+<p><code>unique_ptr</code> - самый простой из умных указателей. Внутри он хранит указатель <code>T* ptr</code> и вызывает <code>delete</code> от него в деструкторе.</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 struct unique_ptr {
     unique_ptr()
