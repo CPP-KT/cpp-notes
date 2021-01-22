@@ -249,7 +249,7 @@ struct unique_ptr {
 };
 </code></pre>
 <h3><a class="header" href="#Настраиваемый-deleter" id="Настраиваемый-deleter">Настраиваемый deleter</a></h3>
-<p>До этого мы говорили, что деструктор у <code>unique_ptr</code> вызывает <code>delete</code> от указателя. В общем случае это не всегда верно. Например, память под объект могла быть выделена кастомным аллокатором или <code>malloc</code>, <code>new[]</code>. Для такого использования <code>std::unique_ptr</code> поддерживает пользователский <code>deleter</code>. По умолчанию в качестве <code>deleter</code> используется класс <code>std::default_delete</code>, который вызывает <code>delete</code> на указателе. </p>
+<p>До этого мы говорили, что деструктор у <code>unique_ptr</code> вызывает <code>delete</code> от указателя. В общем случае это не всегда верно. Например, память под объект могла быть выделена кастомным аллокатором или <code>malloc</code>, <code>new[]</code>. Для такого использования <code>std::unique_ptr</code> поддерживает пользовательский <code>deleter</code>. По умолчанию в качестве <code>deleter</code> используется класс <code>std::default_delete</code>, который вызывает <code>delete</code> на указателе. </p>
 <p>Реализация <code>unique_ptr</code> с <code>deleter</code> могла бы выглядеть так:</p>
 <pre><code class="language-c++">template&lt;typename T, typename D = default_delete&lt;T&gt;&gt;
 struct unique_ptr {
@@ -267,12 +267,12 @@ struct unique_ptr {
 <p>К сожалению, в реальности реализацияя сложнее из-за следующих причин:</p>
 <ul>
 <li>Шаблонный параметр <code>D</code> может быть не только самим <code>deleter</code>, но и ссылкой на него, поэтому ссылку с <code>D</code> нужно снимать.</li>
-<li><code>Deleter</code> не обязан содержать <code>typedef pointer</code>. Если он отствутет, <code>unique_ptr</code> должен использовать <code>T*</code> вместо него. Это можно сделать SFINAE-проверкой.</li>
+<li><code>Deleter</code> не обязан содержать <code>typedef pointer</code>. Если он отсутствует, <code>unique_ptr</code> должен использовать <code>T*</code> вместо него. Это можно сделать SFINAE-проверкой.</li>
 <li>Часто <code>deleter</code> это пустой объект, поэтому, чтобы не увеличивать размер <code>unique_ptr</code>, пользуются empty-base оптимизацией.</li>
 </ul>
 <p>При перемещении <code>unique_ptr</code>, перемещается и его <code>deleter</code>. Отдельный случай - это неявные приведения, так как <code>unique_ptr</code> от разных типов могут иметь разные <code>deleter</code>. При использовании кастомных <code>deleter</code>, <code>unique_ptr&lt;T1, D1&gt;</code> приводится к <code>unique_ptr&lt;T2, D2&gt;</code>, если выполнено одно из двух условий:</p>
 <ul>
-<li><code>D2</code> - ссылка, <code>D1</code> совпадает с `D2``</li>
+<li><code>D2</code> - ссылка, <code>D1</code> совпадает с <code>D2</code></li>
 <li><code>D2</code> - не ссылка, <code>D1</code> приводится к <code>D2</code></li>
 </ul>
 <h4><a class="header" href="#unique_ptr-для-массивов" id="unique_ptr-для-массивов">unique_ptr для массивов</a></h4>
@@ -301,7 +301,7 @@ struct unique_ptr&lt;E[], D&gt; {
 <h2><a class="header" href="#stdshared_ptr" id="stdshared_ptr">std::shared_ptr</a></h2>
 <h3><a class="header" href="#Термин-владение" id="Термин-владение">Термин &quot;владение&quot;</a></h3>
 <p>Владением называют ответственность за удаление объекта. Например, <code>unique_ptr</code> отвественен за удаление объекта, на который он ссылается, соответственно говорят, что <code>unique_ptr</code> владеет объектом, на который он ссылается. Функция <code>reset(p)</code> передаёт владение объектом, а функция <code>release()</code> наоборот, забирает владение объектом.</p>
-<p>В некоторых случаях у объекта может быть несколько владельцев. Это называется разделяемым владением и работает следующим образом: за удаление объекта ответственен последний владелец. Для умных указателей существует два способа реализации такого владения: подсчёт ссылок и провязка всех владельцев в двусвязный список. <code>std::shared_ptr</code> использует подсчёт ссылок. Указатель, использующий провязку владельцев в двусвязй список, в стандартной библиотеке отстствует, но часто его называют <code>linked_ptr</code>.</p>
+<p>В некоторых случаях у объекта может быть несколько владельцев. Это называется разделяемым владением и работает следующим образом: за удаление объекта ответственен последний владелец. Для умных указателей существует два способа реализации такого владения: подсчёт ссылок и провязка всех владельцев в двусвязный список. <code>std::shared_ptr</code> использует подсчёт ссылок. Указатель, использующий провязку владельцев в двусвязный список, в стандартной библиотеке отсутствует, но часто его называют <code>linked_ptr</code>.</p>
 <h3><a class="header" href="#Пример-применения" id="Пример-применения">Пример применения</a></h3>
 <p><code>shared_ptr</code> очень похож на логику, которая нужна для реализации оптимизации Copy-on-Write.</p>
 <p><code>shared_ptr&lt;data const&gt;</code>можно использовать, если не нужно модифицировать значение.</p>
@@ -366,7 +366,7 @@ std::shared_ptr&lt;T&gt; p2(p);
 <p>Такой код некорректен, так как у <code>p1</code> и <code>p2</code> разные счётчики ссылок, поэтому объект <code>*p</code> удалится дважды. Такая ситуация называется разделением (<em>split</em>) счётчика ссылок. Разделение счётчика ссылок - ошибка, поэтому в корректных программах оно возникать не должно.</p>
 <p>Чтобы не происходило разделение счётчика ссылок, не нужно оборачивать один сырой указатель в <code>shared_ptr</code> дважды. Использование <code>std::make_shared</code> или использование <code>std::enable_shared_from_this</code> также позволяет избежать разделения счётчика ссылок.</p>
 <h3><a class="header" href="#Настраиваемый-deleter-1" id="Настраиваемый-deleter-1">Настраиваемый deleter</a></h3>
-<p>Если в <code>shared_ptr</code>, например, похранить массив (или любой объект, созданный не с помощью <code>new</code>), то, по аналогии с <code>unique_ptr</code>, нам нужен <code>deleter</code>. Его можно похранить в куске памяти рядом с счётчиком ссылок.</p>
+<p>Если в <code>shared_ptr</code>, например, похранить массив (или любой объект, созданный не с помощью <code>new</code>), то, по аналогии с <code>unique_ptr</code>, нам нужен <code>deleter</code>. Он может храниться, например, в памяти рядом с счётчиком ссылок.</p>
 <p><img src="images/09.17_shared_ptr.png" alt="shared_ptr" /></p>
 <h3><a class="header" href="#aliasing-constructor" id="aliasing-constructor">Aliasing constructor</a></h3>
 <p>Иногда возникает желание ссылаться с помощью <code>shared_ptr</code> на объект и его мемберов.</p>
@@ -382,16 +382,16 @@ struct vehicle {
     std::array&lt;wheel, 4&gt; wheels;
 }
 std::shared_ptr&lt;vehicle&gt; v(new vehicle);
-std::shared_ptr&lt;wheel&gt;  (v, &amp;v-&gt;wheels[2]);
+std::shared_ptr&lt;wheel&gt; w(v, &amp;v-&gt;wheels[2]);
 </code></pre>
-<p>Когда любой из них будет удаляться, он должен удалить целиком <code>vehicle</code>, поэтому <code>deleter</code> у них общий, кроме того хранится <code>ptr</code> на исходный объект, чтобы передать его в <code>vehicle</code>.</p>
+<p>В таком случае оба указателя отвечают за удаление объекта <code>vehicle</code> (в зависимости от того, какой из указатель раньше будет разрушен), поэтому <code>deleter</code> у них общий, кроме того в управляющем блоке хранится <code>ptr</code> на исходный объект, чтобы передать его в <code>deleter</code>.</p>
 <p><img src="images/09.17_aliasing.png" alt="shared_ptr" /></p>
 <p>Одно из применений такого конструктора - указатели в дереве. Пока будет существовать хотя бы один указатель на элемент дерева, всё дерево будет продолжать существовать.</p>
 <h3><a class="header" href="#stdmake_shared" id="stdmake_shared">std::make_shared</a></h3>
 <p>Рассмотрим следующий пример кода:</p>
 <pre><code class="language-c++">shared_ptr&lt;mytype&gt; sp(new mytype(1, 2, 3));
 </code></pre>
-<p>Такой код аллоцирует два объекта в куче - один при созаднии <code>new mytype</code>, другой - счётчик ссылок внутри <code>shared_ptr</code>. Таким образом, такое использование удваивает количество аллокаций, что не очень хорошо.</p>
+<p>Такой код аллоцирует два объекта в куче - один при создании <code>new mytype</code>, другой - счётчик ссылок внутри <code>shared_ptr</code>. Таким образом, такое использование удваивает количество аллокаций, что не очень хорошо.</p>
 <p>Для решения этой проблемы существует специальная функция <code>make_shared</code>:</p>
 <pre><code class="language-c++">template&lt;typename T, typename... Args&gt;
 shared_ptr&lt;T&gt; make_shared(Args&amp;&amp;... args);
@@ -418,7 +418,7 @@ shared_ptr&lt;T&gt; make_shared(Args&amp;&amp;... args);
 <p>В этом примере <code>weak_ptr</code> не мешают удаляться виджетам. Метод<code>lock</code> у <code>weak_ptr</code> создаёт новый <code>shared_ptr</code> на объект, если объект ещё не удалён, иначе возвращает пустой <code>shared_ptr</code>.</p>
 <p>Проблема примера выше в том, что из <code>cache</code> никогда не удаляются вхождения, даже если объекты удалены. При этом, так как у нас будут висеть <code>weak_ptr</code>, не будут удаляться <code>control_block</code>'и (счётчики ссылок в памяти). </p>
 <p>Это можно решить, например, <a href="https://gist.github.com/sorokin/7f23a639b3a8733f10ab77b06da28e44">кастомным делитером</a>, который будет удалять из мапы. Проблема реализации, приведённой по ссылке, в том, что там не применяется <code>make_shared</code>, так как у объекта кастомный <code>deleter</code>. Это можно решить с помощью <a href="https://gist.github.com/sorokin/811648e5e305ab1d62e7a750e2b53d27">обёртки над объектом</a>, деструктор которой будет удалять объект из мапы. Тогда можно применить <em>aliasing constructor</em>, чтобы получать указатели не на обёртку, а на сам объект - member обёртки.</p>
-<p>Так же стоит упомянуть, что использование <code>make_shared</code> с <code>weak_ptr</code> может быть неэффективным. Так как <code>make_shared</code> создаёт объект и счётчик ссылок одним блоком памяти, то даже когда счётчик сильных ссылок обнулится, <code>control_block</code> продолжит существовать, пока жив хотя бы один <code>weak_ptr</code>. Таким образом память, выделенная под объект, не будет освобождена (хотя деструктор объекта вызовется).</p>
+<p>Так же стоит упомянуть, что использование <code>make_shared</code> с <code>weak_ptr</code> может быть неэффективным. Так как <code>make_shared</code> создаёт объект и счётчик ссылок одним блоком памяти, то даже когда счётчик сильных ссылок обнулится, <code>control_block</code> продолжит существовать, пока жив хотя бы один <code>weak_ptr</code>. Таким образом память, выделенная под объект, не будет освобождена до удаления <code>control block</code> (хотя деструктор объекта вызовется).</p>
 <h3><a class="header" href="#stdenable_shared_from_this" id="stdenable_shared_from_this">std::enable_shared_from_this</a></h3>
 <p>Если хотим вернуть <code>shared_ptr</code> от <code>this</code>, то нельзя сделать это просто как <code>std::shared_ptr(this)</code>, так как на каждый <code>shared_ptr</code> будут разные <code>control_block</code>'и. В стандартной библиотеке для этого есть класс <code>std::enable_shared_from_this</code>:</p>
 <pre><code class="language-c++">struct mytype : std::enable_shared_from_this&lt;mytype&gt; {
@@ -436,6 +436,16 @@ shared_ptr&lt;T&gt; make_shared(Args&amp;&amp;... args);
 </code></pre>
 <p>Поэтому, если от объекта не создавался <code>shared_ptr</code>, вызов функции <code>shared_from_this()</code>  начиная с C++17 бросит исключение <code>std::bad_weak_ptr</code>, а до C++17 ведёт к UB.</p>
 <p>При этом, даже если объект наследуется от <code>enable_shared_from_this</code>, создание нескольких <code>shared_ptr</code> от указателя на один объект не гарантирует, что это будет эквивалентно вызовам <code>shared_from_this()</code> и является UB.</p>
+<h3><a class="header" href="#Приведения-shared_ptr-к-указателям" id="Приведения-shared_ptr-к-указателям">Приведения shared_ptr к указателям</a></h3>
+<p>В стандартной библиотеке <a href="https://en.cppreference.com/w/cpp/memory/shared_ptr/pointer_cast">реализованы</a> все 4 вида кастов (<code>static</code>, <code>dynamic</code>, <code>const</code>, <code>reinterpret</code>) для <code>shared_ptr</code> - они создают новый инстант <code>shared_ptr</code>, который хранит указатель приведённый соответствующим кастом и разделяет владение (счётчик ссылок) с исходным <code>shared_ptr</code>.</p>
+<p>Внутри это выглядит так (на примере <code>static_cast</code>):</p>
+<pre><code class="language-c++">template &lt;class T, class U&gt; 
+std::shared_ptr&lt;T&gt; static_pointer_cast( const std::shared_ptr&lt;U&gt;&amp; r ) noexcept {
+    auto p = static_cast&lt;typename std::shared_ptr&lt;T&gt;::element_type*&gt;(r.get());
+    return std::shared_ptr&lt;T&gt;(r, p);
+}
+</code></pre>
+<p><code>dynamic_cast</code> выглядит немного иначе - в случае &quot;неудачного каста&quot; (который возвращает <code>nullptr</code>) создаётся пустой <code>shared_ptr</code>.</p>
 
                     </main>
 

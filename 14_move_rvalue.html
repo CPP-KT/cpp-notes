@@ -254,9 +254,9 @@ void f(void* result) {
 <h3><a class="header" href="#Ссылки" id="Ссылки">Ссылки</a></h3>
 <p>Начиная с <strong>C++11</strong> обычные ссылки называются lvalue-ссылками. Для rvalue-ссылок свойства ссылок сохраняются, но, они биндятся только к rvalue.</p>
 <pre><code class="language-c++">int main() {
-    int a;
+    int a = 0;
     int&amp; b = a;
-    int&amp; c = 42;
+    int&amp; c = 42; // ошибка
     int&amp;&amp; d = a; // ошибка
     int&amp;&amp; e = 42;
 }

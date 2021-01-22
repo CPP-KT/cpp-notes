@@ -246,10 +246,7 @@ void g(T&amp;&amp; a) {
     f(forward&lt;T&gt;(a));
 }
 </code></pre>
-<p>Такой <code>forward</code> может быть не очень хорошим по нескольким причинам:</p>
-<ul>
-<li>Если забыть написать тип явно в вызове, то он будет выводится и выведется не так, как нам надо. </li>
-</ul>
+<p>Такой <code>forward</code> может быть не очень хорошим по той причине, что если забыть написать тип явно в вызове, то он будет выводится и может вывестись не так, как нам надо (в случае перегрузки для rvalue-ссылки <code>T&amp;&amp;</code> может выводиться <code>T -&gt; int&amp;</code>) <em>TODO: Если знаете, когда неверно выводится для перегрузки <code>T&amp;</code>, напишите.</em></p>
 <p>Это фиксится следующим образом:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 struct type_identity {
@@ -261,7 +258,7 @@ T&amp;&amp; forward(typename type_identity&lt;T&gt;::type&amp; obj) {
     return static_cast&lt;T&amp;&amp;&gt;(obj);
 }
 </code></pre>
-<p>В STL вместо <code>type_identity</code> используется <code>remove_reference</code>. Так же есть перегрузка для rvalue (<code>T&amp;&amp;</code>), которая применяется, например, для форварда значения, возвращаемого функцией.</p>
+<p>В STL вместо <code>type_identity</code> используется <code>remove_reference</code>. Так же есть перегрузка для rvalue (<code>T&amp;&amp;</code>), которая полезна, например, для форварда значения, возвращаемого функцией.</p>
 <h2><a class="header" href="#variadic-templates" id="variadic-templates">Variadic templates</a></h2>
 <p>Осталось понять, как делать функцию, принимающую произвольное число шаблонных параметров. Для этого в C++ сделали специальный синтаксис variadic шаблонов:</p>
 <pre><code class="language-c++">template &lt;typename... T&gt;

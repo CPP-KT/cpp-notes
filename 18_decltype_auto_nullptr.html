@@ -211,12 +211,17 @@ int main() {
     decltype((a)) c = a; // int&amp; c = a
 }
 </code></pre>
-<p>Последнее работает так, потому что <code>(a</code>) это выражение и оно имеет тип <code>int&amp;</code>, а <code>a</code> - это имя переменной.</p>
+<p>Последнее работает так, потому что <code>(a)</code> это выражение и оно имеет тип <code>int&amp;</code>, а <code>a</code> - это имя переменной.</p>
 <h2><a class="header" href="#declval" id="declval">declval</a></h2>
-<p>Иногда хочется узнать тип чего-то, что зависит от шаблонных аргументов функции, но просто сделать это с помощью <code>decltype</code> не получится, так как компилятор встречает обращение к параметру, когда ещё не дошёл до них.</p>
+<p>Иногда хочется узнать тип чего-то, что зависит от шаблонных аргументов функции, но просто сделать это с помощью <code>decltype</code> не получится, так как тогда компилятор встречает обращение к параметру функции, когда ещё не дошёл до его объявления.</p>
 <p>Для этого есть синтаксическая конструкция <code>declval</code>:</p>
 <pre><code class="language-c++">int foo(int);
 float foo(float);
+
+template &lt;typename Arg0&gt;
+decltype(foo(arg0)) qux(Arg0&amp;&amp; arg0) { // COMPILE ERROR
+    return foo(std::forward&lt;Arg0&gt;(arg0));
+}
 
 template &lt;typename Arg0&gt;
 decltype(foo(declval&lt;Arg0&gt;())) qux(Arg0&amp;&amp; arg0) {
