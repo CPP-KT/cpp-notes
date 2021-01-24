@@ -166,7 +166,7 @@ struct concurrent_queue {
 private:
     mutable std::mutex m;
     std::deque<T> q;
-}
+};
 ```
 
 Это не будет работать, когда функция `pop` вызывается одним потоком у непустой очереди, но пока он ждёт мьютекс, другой поток её опустошает. Одно из решений - возвращать `std::optional<T>`  из `pop`.
@@ -177,17 +177,17 @@ private:
 template <typename T>
 struct concurrent_queue {
     void push(T value) {
-        std::lock_guard<std::mutex> lg(m);
+        std::unique_lock<std::mutex> lg(m);
         q.push_back(std::move(value));
-		lg.unlock();
+        lg.unlock();
         cv.notify_one();
     }
-    
+
     bool empty() const {
         std::lock_guard<std::mutex> lg(m);
         return q.empty();
     }
-    
+
     T pop() {
         std::unique_lock<std::mutex> lg(m);
         while (q.empty()) {
@@ -201,8 +201,8 @@ struct concurrent_queue {
 private:
     mutable std::mutex m;
     std::deque<T> q;
-    std::conditional_variable cv;
-}
+    std::condition_variable cv;
+};
 ```
 
 У него существует несколько операций:
