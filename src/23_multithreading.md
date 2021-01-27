@@ -26,7 +26,7 @@ API для работы с потоками в C++ появился в 11-м с�
 
 ```c++
 int main() {
-	std::thread th([]{
+    std::thread th([]{
         std::cout << "Hello, world!\n";
     });
     th.join();
@@ -41,7 +41,7 @@ int main() {
 
 ```c++
 int main() {
-	std::thread th([]{
+    std::thread th([]{
         std::cout << "Hello, world!\n";
     });
     th.detach();
@@ -64,7 +64,7 @@ int main() {
 std::array<int, 1000> accounts;
 
 void transfer(size_t to, size_t from, int amount) {
-	if (accounts[from] < amount) {
+    if (accounts[from] < amount) {
         throw std::runtime_error("insufficient funds");
     }
     accounts[from] -= amount;
@@ -82,7 +82,7 @@ std::array<int, 1000> accounts;
 
 void transfer(size_t to, size_t from, int amount) {
     m.lock();
-	if (accounts[from] < amount) {
+    if (accounts[from] < amount) {
         m.unlock();
         throw std::runtime_error("insufficient funds");
     }
@@ -109,7 +109,7 @@ std::array<account, 1000> accounts;
 void transfer(size_t to, size_t from, int amount) {
     std::lock_guard<std::mutex> lg_from(accounts[from].m);
     std::lock_guard<std::mutex> lg_to(accounts[to].m);
-	if (accounts[from].balance < amount) {
+    if (accounts[from].balance < amount) {
         throw std::runtime_error("insufficient funds");
     }
     accounts[from].balance -= amount;
@@ -234,12 +234,12 @@ cv.wait(lg, [&]{
 
 ```c++
 void push(T value) {
-	std::lock_guard<std::mutex> lg(m);
-	bool was_empty = q.empty()
-	q.push_back(std::move(value));
-	if (was_empty) {
-		cv.notify_one();
-	}
+    std::lock_guard<std::mutex> lg(m);
+    bool was_empty = q.empty()
+    q.push_back(std::move(value));
+    if (was_empty) {
+        cv.notify_one();
+    }
 }
 ```
 
@@ -284,7 +284,7 @@ int32_t get_balance(size_t account) {
 }
 ```
 
-Операция `compare_exchange` принимает два аргумента `expected` и `desired` и записывает в атомик значение `desired`, если там записано значение `expected`. 
+Операция `compare_exchange` принимает два аргумента `expected` и `desired` и записывает в атомик значение `desired`, если там записано значение `expected`, иначе в `expected` записывается значение из атомика.
 
 Есть `compare_exchange_weak` и `compare_exchange_strong`:`weak`-форме разрешено "спонтанно фейлиться" (вести себя так, будто `*this != excepted`, даже если они равны), `strong`-форма гарантирует ожидаемое поведение (внутри там что-то вроде цикла). В случаях, как выше, выгоднее использовать `weak`-форму, потому что у нас уже есть внешний цикл. На x86 разницы между ними нет, там обе формы выражаются одной ассемблерной инструкцией.
 
@@ -346,7 +346,7 @@ void produce() {
 
 void try_consume() {
     if (value_present.load(std::memory_order_acquire)) {
-    	std::string  tmp = value;
+        std::string  tmp = value;
     }
 }
 ```
@@ -375,7 +375,7 @@ int main() {
 
 Также `memory_order_relaxed` можно использовать при записи в память до создания других потоков, потому что  их создание так же гарантирует, что они увидят все записи, сделанные до этого.
 
-Если посмотреть на [маппинг](https://www.cl.cam.ac.uk/~pes20/cpp/cpp0xmappings.html) между операциями атомика и инструкциями процессора, то для x86 имеет смысл использовать разные`memory_order `только для записи, потому что там любой `load` мапится в `mov`.
+Если посмотреть на [маппинг](https://www.cl.cam.ac.uk/~pes20/cpp/cpp0xmappings.html) между операциями атомика и инструкциями процессора, то для x86 имеет смысл использовать разные `memory_order` только для записи, потому что там любой `load` мапится в `mov`.
 
 ## volatile
 
@@ -526,7 +526,7 @@ private:
             on_next_number(current_val);
         }
     }
-	
+    
     std::mutex m1;
     std::function<void (uint64_t)> const on_next_number;
     uint64_t current_val;
@@ -582,8 +582,8 @@ int main() {
 
 ```c++
 int main() {
-	std::jthread jt{ [](std::stop_token st) {
-        while (!st.requested_stop()) {
+    std::jthread jt{ [](std::stop_token st) {
+        while (!st.stop_requested()) {
             // ...
         }
     }};
@@ -628,7 +628,7 @@ int main() {
     struct sigaction new_action;
     new_action.sa_handler = &sigsegv_handler;
     sigemptyset(&new_action.sa_mask);
-	new_action.sa_flags = 0;
+    new_action.sa_flags = 0;
     sigaction(SIGSEGV, &new_action, nullptr);
     *p = 42; // SIGSEGV
 }
@@ -653,20 +653,20 @@ int main() {
 
 ```c++
 int main() {
-    std::thread th([]
-		{
-			for (;;) {
-                std::string s;
-                std::cin >> s; // блокирующая, внутри есть pthread_testcancel
-                // вылетает abi::__forced_unwind
-                if (!std::cin) {
-                    break;
-                }
-                std::cout << s << '\n';
-            }})
-	std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::thread th([]{
+        for (;;) {
+            std::string s;
+            std::cin >> s; // блокирующая, внутри есть pthread_testcancel
+            // вылетает abi::__forced_unwind
+            if (!std::cin) {
+                break;
+            }
+            std::cout << s << '\n';
+        }
+    });
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     pthread_cancel(th.native_handle());
-	th.join();
+    th.join();
 }
 ```
 
