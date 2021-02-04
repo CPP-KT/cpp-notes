@@ -179,7 +179,7 @@
 <h2><a class="header" href="#stdthread" id="stdthread">std::thread</a></h2>
 <p>Просто пример:</p>
 <pre><code class="language-c++">int main() {
-	std::thread th([]{
+    std::thread th([]{
         std::cout &lt;&lt; &quot;Hello, world!\n&quot;;
     });
     th.join();
@@ -189,7 +189,7 @@
 <p>Деструктор потока аварийно завершает программу вызовом <code>std::terminate</code>, если на момент вызова деструктора поток все ещё работает и не была сделана ни одна из следующих операций: <code>join</code> - дождаться, пока поток выйдет, <code>detach</code> - &quot;отделить поток&quot;, он продолжит исполняться, а объект <code>std::thread</code> перестанет быть привязан к этому потоку.</p>
 <p>Может возникнуть вопрос, почему не выбрали одну из этих операций, чтобы вызывать её дефолтно в деструкторе. Если это был бы <code>detach</code>, то не понятно, что происходит в таком случае:</p>
 <pre><code class="language-c++">int main() {
-	std::thread th([]{
+    std::thread th([]{
         std::cout &lt;&lt; &quot;Hello, world!\n&quot;;
     });
     th.detach();
@@ -204,7 +204,7 @@
 <pre><code class="language-c++">std::array&lt;int, 1000&gt; accounts;
 
 void transfer(size_t to, size_t from, int amount) {
-	if (accounts[from] &lt; amount) {
+    if (accounts[from] &lt; amount) {
         throw std::runtime_error(&quot;insufficient funds&quot;);
     }
     accounts[from] -= amount;
@@ -218,7 +218,7 @@ std::array&lt;int, 1000&gt; accounts;
 
 void transfer(size_t to, size_t from, int amount) {
     m.lock();
-	if (accounts[from] &lt; amount) {
+    if (accounts[from] &lt; amount) {
         m.unlock();
         throw std::runtime_error(&quot;insufficient funds&quot;);
     }
@@ -240,7 +240,7 @@ std::array&lt;account, 1000&gt; accounts;
 void transfer(size_t to, size_t from, int amount) {
     std::lock_guard&lt;std::mutex&gt; lg_from(accounts[from].m);
     std::lock_guard&lt;std::mutex&gt; lg_to(accounts[to].m);
-	if (accounts[from].balance &lt; amount) {
+    if (accounts[from].balance &lt; amount) {
         throw std::runtime_error(&quot;insufficient funds&quot;);
     }
     accounts[from].balance -= amount;
@@ -339,12 +339,12 @@ private:
 </code></pre>
 <p>Кажется, что можно оптимизировать функцию <code>push</code> следующим образом  - если очередь не пуста, то не пробуждать потоки.</p>
 <pre><code class="language-c++">void push(T value) {
-	std::lock_guard&lt;std::mutex&gt; lg(m);
-	bool was_empty = q.empty()
-	q.push_back(std::move(value));
-	if (was_empty) {
-		cv.notify_one();
-	}
+    std::lock_guard&lt;std::mutex&gt; lg(m);
+    bool was_empty = q.empty()
+    q.push_back(std::move(value));
+    if (was_empty) {
+        cv.notify_one();
+    }
 }
 </code></pre>
 <p>Проблема в том, что если ждут несколько <code>pop</code>, то может произойти следующее: в очередь произойдёт вставка, она сделает notify только одного <code>pop</code>, затем произойдёт ещё несколько вставок, которые не пробудят другие <code>pop</code>, потому что очередь ещё не пуста.</p>
@@ -376,7 +376,7 @@ int32_t get_balance(size_t account) {
     return accounts[account].load();
 }
 </code></pre>
-<p>Операция <code>compare_exchange</code> принимает два аргумента <code>expected</code> и <code>desired</code> и записывает в атомик значение <code>desired</code>, если там записано значение <code>expected</code>. </p>
+<p>Операция <code>compare_exchange</code> принимает два аргумента <code>expected</code> и <code>desired</code> и записывает в атомик значение <code>desired</code>, если там записано значение <code>expected</code>, иначе в <code>expected</code> записывается значение из атомика.</p>
 <p>Есть <code>compare_exchange_weak</code> и <code>compare_exchange_strong</code>:<code>weak</code>-форме разрешено &quot;спонтанно фейлиться&quot; (вести себя так, будто <code>*this != excepted</code>, даже если они равны), <code>strong</code>-форма гарантирует ожидаемое поведение (внутри там что-то вроде цикла). В случаях, как выше, выгоднее использовать <code>weak</code>-форму, потому что у нас уже есть внешний цикл. На x86 разницы между ними нет, там обе формы выражаются одной ассемблерной инструкцией.</p>
 <h3><a class="header" href="#memory_order" id="memory_order">memory_order</a></h3>
 <p>Почти у всех операций с атомиками есть дополнительный параметр <code>memory_order</code>, у которого всегда есть дефолтное значение. На эту тему рекомендуется посмотреть <a href="https://www.youtube.com/watch?v=A8eCGOqgvH4">C++ and Beyond 2012: Herb Sutter - atomic Weapons 1 of 2</a>, далее следует краткий пересказ основных поинтов доклада.</p>
@@ -423,7 +423,7 @@ void produce() {
 
 void try_consume() {
     if (value_present.load(std::memory_order_acquire)) {
-    	std::string  tmp = value;
+        std::string  tmp = value;
     }
 }
 </code></pre>
@@ -445,7 +445,7 @@ int main() {
 }
 </code></pre>
 <p>Также <code>memory_order_relaxed</code> можно использовать при записи в память до создания других потоков, потому что  их создание так же гарантирует, что они увидят все записи, сделанные до этого.</p>
-<p>Если посмотреть на <a href="https://www.cl.cam.ac.uk/%7Epes20/cpp/cpp0xmappings.html">маппинг</a> между операциями атомика и инструкциями процессора, то для x86 имеет смысл использовать разные<code>memory_order </code>только для записи, потому что там любой <code>load</code> мапится в <code>mov</code>.</p>
+<p>Если посмотреть на <a href="https://www.cl.cam.ac.uk/%7Epes20/cpp/cpp0xmappings.html">маппинг</a> между операциями атомика и инструкциями процессора, то для x86 имеет смысл использовать разные <code>memory_order</code> только для записи, потому что там любой <code>load</code> мапится в <code>mov</code>.</p>
 <h2><a class="header" href="#volatile" id="volatile">volatile</a></h2>
 <p>Модификатор <code>volatile</code> у переменных в C++ никак не связан с многопоточностью. Если вы вдруг забыли это, то есть <a href="http://isvolatileusefulwiththreads.in/C++/">полезный сайт</a>, к которому всегда можно обратиться.</p>
 <p>Почему у людей возникает сомнение в этом? Во-первых, <code>volatile</code> в других языках имеет другой смысл: например, в Java это аналог атомиков. Во-вторых, строго говоря, набор ограничений на volatile переменные похож на те, которые накладываются на атомики, но не одинаков. В-третьих, до C++11 и в Си <code>volatile</code> использовался при работе с потоками - например, в MSVC есть ключик для совместимости со старыми программами, заменяющий <code>volatile</code> переменные на атомики.</p>
@@ -568,7 +568,7 @@ private:
             on_next_number(current_val);
         }
     }
-	
+    
     std::mutex m1;
     std::function&lt;void (uint64_t)&gt; const on_next_number;
     uint64_t current_val;
@@ -614,8 +614,8 @@ int main() {
 <p>Почти наверняка, когда запускаем какой-то поток или даём какому-то потоку сделать какую-то операцию, от него хочется получить какой-то ответ или результат. Есть проблема - может произойти так, что в момент, когда операция завершится, её результат уже не будет никому нужен, тогда возникает несколько вопросов - не получится ли так, что когда операция завершилась, поток обращается к каким-то несуществующим объектам или из программы вышли совсем. Это пример, когда полезна следующая техника <em>cancellation</em> - сообщить потоку, что он больше не нужен и может выходить, например, это можно сделать через <code>std::atomic&lt;bool&gt;</code>.</p>
 <p>В C++20 такое стандартизовали, появился <code>std::jthread</code> с похожим функционалом. У него есть <code>stop_token</code>:</p>
 <pre><code class="language-c++">int main() {
-	std::jthread jt{ [](std::stop_token st) {
-        while (!st.requested_stop()) {
+    std::jthread jt{ [](std::stop_token st) {
+        while (!st.stop_requested()) {
             // ...
         }
     }};
@@ -645,7 +645,7 @@ int main() {
     struct sigaction new_action;
     new_action.sa_handler = &amp;sigsegv_handler;
     sigemptyset(&amp;new_action.sa_mask);
-	new_action.sa_flags = 0;
+    new_action.sa_flags = 0;
     sigaction(SIGSEGV, &amp;new_action, nullptr);
     *p = 42; // SIGSEGV
 }
@@ -663,20 +663,20 @@ int main() {
 </code></pre>
 <p>Как это работает? <code>pthread_testcancel()</code> пробрасывает исключение, если поток отменён.  Его можно использовать самостоятельно, но в куче блокирующих операций из стандартной библиотеки эта проверка уже стоит (например, в read). Применяется это как-то так:</p>
 <pre><code class="language-c++">int main() {
-    std::thread th([]
-		{
-			for (;;) {
-                std::string s;
-                std::cin &gt;&gt; s; // блокирующая, внутри есть pthread_testcancel
-                // вылетает abi::__forced_unwind
-                if (!std::cin) {
-                    break;
-                }
-                std::cout &lt;&lt; s &lt;&lt; '\n';
-            }})
-	std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::thread th([]{
+        for (;;) {
+            std::string s;
+            std::cin &gt;&gt; s; // блокирующая, внутри есть pthread_testcancel
+            // вылетает abi::__forced_unwind
+            if (!std::cin) {
+                break;
+            }
+            std::cout &lt;&lt; s &lt;&lt; '\n';
+        }
+    });
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     pthread_cancel(th.native_handle());
-	th.join();
+    th.join();
 }
 </code></pre>
 <p>Хоть это API и кажется удобным, но его хейтят по некоторым причинам:</p>
