@@ -217,8 +217,7 @@ B8 05 00 00 00		mov		eax, 5		; EAX = 5
 	mov		[bx], ax	; Переместить в память по адресу BX содержимое AX
 	mov		[bx], [ax]	; WRONG! из памяти в память нельзя. Оно даже не скомпилируется
 </code></pre>
-<p><em>Забавный факт: <code>[ax]</code> невалидный адрес, больше можно почитать <a href="https://stackoverflow.com/questions/46771338/assembler-x86-code-doesnt-work">здесь</a></em></p>
-<p>Команда <code>mov ax,[bx]</code> читает из ячейки с адресом BX и BX + 1:</p>
+<p>Команда <code>mov ax, [bx]</code> читает из ячейки с адресом BX и BX + 1:</p>
 <p><code>AX = mem[BX + 1] * 256 + mem[BX]</code></p>
 <h3><a class="header" href="#Команды-арифметики" id="Команды-арифметики">Команды арифметики</a></h3>
 <pre><code class="language-nasm">	cmd		dst, src
