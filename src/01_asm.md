@@ -231,7 +231,7 @@ unsigned foo(unsigned a) // беззнаковый тип
 
 ```nasm
 	push		src		; SP -= 2, так как 2 байта. mem[SP] = src
-	pop		src		; tmp = mem[SP], SP += 2, dst = tmp
+	pop		tmp		; tmp = mem[SP], SP += 2, dst = tmp
 ```
 Команды работы со стеком. Стек позволяет сохранять старые значения, которые необходимо вернуть:
 ```nasm
