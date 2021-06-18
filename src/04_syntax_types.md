@@ -183,7 +183,7 @@ void f(int a) {
 		printf("2");
 		if (false)
 	case 3:
-		printf("3);
+		printf("3");
 	}
 }
 ```
