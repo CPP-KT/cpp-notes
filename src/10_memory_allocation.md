@@ -97,7 +97,7 @@ int main(){
 // five.cpp
 int sum(int a, int b);
 int main(){
-  std::cout << sum(2, 2);
+  std::cout << sum(2, 3);
 }
 ```
 Компилируем:
