@@ -1396,7 +1396,7 @@ typedef unsigned long long uint64_t;
 #endif
 </code></pre>
 <p>Директива <code>#if</code> препроцессирует свой аргумент, а затем парсит то, что получилось как арифметическое выражение. Если после препроцессирования в аргументе <code>#if</code> остаются идентификаторы, то они заменяются на 0, кроме идентификатора <code>true</code>, который заменяется на 1.</p>
-<p>Одно из применений <code>#if</code> - это <code>include guard</code>, которые уже обсуждались <a href="https://github.com/lejabque/cpp-notes/blob/master/src/05_compilation.md">ранее</a>.</p>
+<p>Одно из применений <code>#if</code> - это <code>include guard</code>, которые уже обсуждались <a href="https://github.com/lejabque/cpp-notes/blob/master/src/05_compilation.md#headers">ранее</a>.</p>
 <h3><a class="header" href="#Проблемы-макросов" id="Проблемы-макросов">Проблемы макросов</a></h3>
 <p>Основной сложностью <a href="http://www.stroustrup.com/bs_faq2.html#macro">см. также FAQ Бьярна Страуструпа на тему, почему макросы это плохо.</a> при использовании макросов препроцессора является то, что препроцессор оперирует на уровне токенов, не зная ничего про контекст где макрос раскрывается. Предположим, что определен макрос <code>errno</code>, а где-то ниже программист пытается определить локальную переменную <code>errno</code>.</p>
 <pre><code class="language-c++">#define errno (*errno_location())
