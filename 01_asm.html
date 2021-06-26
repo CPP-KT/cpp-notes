@@ -325,7 +325,7 @@ sar - Арифметический сдвиг вправо (сохранение
 Есть специальный регистр <code>SP</code>, который указывает на вершину стека.
 Стек - от старших адресов к младшим. </p>
 <pre><code class="language-nasm">	push		src		; SP -= 2, так как 2 байта. mem[SP] = src
-	pop		src		; tmp = mem[SP], SP += 2, dst = tmp
+	pop		tmp		; tmp = mem[SP], SP += 2, dst = tmp
 </code></pre>
 <p>Команды работы со стеком. Стек позволяет сохранять старые значения, которые необходимо вернуть:</p>
 <pre><code class="language-nasm">	call	label			; вызов ф-иии

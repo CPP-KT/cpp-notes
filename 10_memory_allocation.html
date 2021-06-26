@@ -236,7 +236,7 @@ int main(){
 // five.cpp
 int sum(int a, int b);
 int main(){
-  std::cout &lt;&lt; sum(2, 2);
+  std::cout &lt;&lt; sum(2, 3);
 }
 </code></pre>
 <p>Компилируем:</p>
@@ -244,10 +244,10 @@ int main(){
 g++ -c four.cpp -o four.o
 g++ -c five.cpp -o five.o
 
-g++ four.u sum.o -o four
+g++ four.o sum.o -o four
 g++ five.o sum.o -o five
 </code></pre>
-<p>Предположим, что <code>sum</code> это не один объектных файл, а целая библиотека из кучи файлов. Хочется сослаться на неё одним именем (и распространять тоже один файл, а не кучу объектных). Для этого существуют библиотеки:</p>
+<p>Предположим, что <code>sum</code> это не один объектный файл, а целая библиотека из кучи файлов. Хочется сослаться на неё одним именем (и распространять тоже один файл, а не кучу объектных). Для этого существуют библиотеки:</p>
 <pre><code class="language-shell">ar rcs libsum.a sum.o        # rcs - 
 g++ four.o -lsum -L. -o four # -lsum - указывает на имя библиотеки
 g++ five.o -lsum -L. -o five #  -L. - каталог (здесь это текущий каталог)

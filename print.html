@@ -353,7 +353,7 @@ sar - Арифметический сдвиг вправо (сохранение
 Есть специальный регистр <code>SP</code>, который указывает на вершину стека.
 Стек - от старших адресов к младшим. </p>
 <pre><code class="language-nasm">	push		src		; SP -= 2, так как 2 байта. mem[SP] = src
-	pop		src		; tmp = mem[SP], SP += 2, dst = tmp
+	pop		tmp		; tmp = mem[SP], SP += 2, dst = tmp
 </code></pre>
 <p>Команды работы со стеком. Стек позволяет сохранять старые значения, которые необходимо вернуть:</p>
 <pre><code class="language-nasm">	call	label			; вызов ф-иии
@@ -739,7 +739,7 @@ p[20] = 5; // *(p+20) = 5
 		printf(&quot;2&quot;);
 		if (false)
 	case 3:
-		printf(&quot;3);
+		printf(&quot;3&quot;);
 	}
 }
 </code></pre>
@@ -1396,7 +1396,7 @@ typedef unsigned long long uint64_t;
 #endif
 </code></pre>
 <p>Директива <code>#if</code> препроцессирует свой аргумент, а затем парсит то, что получилось как арифметическое выражение. Если после препроцессирования в аргументе <code>#if</code> остаются идентификаторы, то они заменяются на 0, кроме идентификатора <code>true</code>, который заменяется на 1.</p>
-<p>Одно из применений <code>#if</code> - это <code>include guard</code>, которые уже обсуждались <a href="https://github.com/lejabque/cpp-notes/blob/master/03.28%20Compilation.md">ранее</a>.</p>
+<p>Одно из применений <code>#if</code> - это <code>include guard</code>, которые уже обсуждались <a href="https://github.com/lejabque/cpp-notes/blob/master/src/05_compilation.md">ранее</a>.</p>
 <h3><a class="header" href="#Проблемы-макросов" id="Проблемы-макросов">Проблемы макросов</a></h3>
 <p>Основной сложностью <a href="http://www.stroustrup.com/bs_faq2.html#macro">см. также FAQ Бьярна Страуструпа на тему, почему макросы это плохо.</a> при использовании макросов препроцессора является то, что препроцессор оперирует на уровне токенов, не зная ничего про контекст где макрос раскрывается. Предположим, что определен макрос <code>errno</code>, а где-то ниже программист пытается определить локальную переменную <code>errno</code>.</p>
 <pre><code class="language-c++">#define errno (*errno_location())
@@ -1944,7 +1944,7 @@ int main(){
 // five.cpp
 int sum(int a, int b);
 int main(){
-  std::cout &lt;&lt; sum(2, 2);
+  std::cout &lt;&lt; sum(2, 3);
 }
 </code></pre>
 <p>Компилируем:</p>
@@ -1952,10 +1952,10 @@ int main(){
 g++ -c four.cpp -o four.o
 g++ -c five.cpp -o five.o
 
-g++ four.u sum.o -o four
+g++ four.o sum.o -o four
 g++ five.o sum.o -o five
 </code></pre>
-<p>Предположим, что <code>sum</code> это не один объектных файл, а целая библиотека из кучи файлов. Хочется сослаться на неё одним именем (и распространять тоже один файл, а не кучу объектных). Для этого существуют библиотеки:</p>
+<p>Предположим, что <code>sum</code> это не один объектный файл, а целая библиотека из кучи файлов. Хочется сослаться на неё одним именем (и распространять тоже один файл, а не кучу объектных). Для этого существуют библиотеки:</p>
 <pre><code class="language-shell">ar rcs libsum.a sum.o        # rcs - 
 g++ four.o -lsum -L. -o four # -lsum - указывает на имя библиотеки
 g++ five.o -lsum -L. -o five #  -L. - каталог (здесь это текущий каталог)
