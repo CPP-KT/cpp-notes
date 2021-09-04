@@ -213,7 +213,7 @@ std::string foo() {
 
 `prvalue` - то, что раньше мы называли `rvalue`
 
-`xvalue` - то, что для перегрузок `rvalue`, а для copy elision `glvalue``
+`xvalue` - то, что для перегрузок `rvalue`, а для copy elision `glvalue`
 
 
 ```c++
