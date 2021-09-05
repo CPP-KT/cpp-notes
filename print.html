@@ -2440,7 +2440,7 @@ using reference =	Reference;
 <p><strong>Про бинарный поиск</strong> (далее итераторы ссылаются между элементами):</p>
 <p><code>lower_bound</code> и <code>upper_bound</code>, если элемент не существуют, возвращают, куда этот элемент можно вставить, не нарушив последовательности.
 Если же элемент находится, то <code>lower_bound</code> возвращает первую позицию, куда можно вставить, не нарушив порядок, а <code>upper_bound</code> - последнюю.</p>
-<p><strong>Удаление элементов по предикату</strong> работает за линейное время, используя два ~указателя~ итератора, не выделяя новой памяти, меняя элементы местами.</p>
+<p><strong>Удаление элементов по предикату</strong> работает за линейное время, используя два <del>указателя</del> итератора, не выделяя новой памяти, меняя элементы местами.</p>
 <p>Идиоматический способ удалять элементы по предикату:</p>
 <pre><code class="language-c++">std::vector&lt;int&gt; v;
 auto it = std::remove_if(v.begin(), v.end(), pred); // переупорядочивает и возвращает итератор на позицию, &quot;где заканчиваются хорошие элементы&quot;
@@ -2999,7 +2999,7 @@ T&amp;&amp; move(T&amp; obj) {
 <p>В C++11 <a href="https://blog.panicsoftware.com/value-categories-gl-l-x-r-prvalues/">категории значений</a> были расширены. Кроме lvalue и rvalue, появилось xvalue.</p>
 <p><img src="images/09.05_value_category.jpg" alt="img" /></p>
 <p><code>prvalue</code> - то, что раньше мы называли <code>rvalue</code></p>
-<p><code>xvalue</code> - то, что для перегрузок <code>rvalue</code>, а для copy elision `glvalue``</p>
+<p><code>xvalue</code> - то, что для перегрузок <code>rvalue</code>, а для copy elision <code>glvalue</code></p>
 <pre><code class="language-c++">struct mytype {};
 mytype lvalue;
 mytype&amp; lvalue();
@@ -3015,7 +3015,7 @@ mytype test2() {
 }
 </code></pre>
 <p>С одной стороны, <code>xvalue</code> возвращает rvalue, но мы не можем применить RVO. Поэтому функция <code>xvalue</code> для перегрузок работает как rvalue, а с точки зрения copy elision как lvalue.</p>
-<p>В C++03 время жизни объекта, который биндится к <code>const&amp;</code>, продлевалось для rvalue. В C++11 xvalue ведутся себя подобно lvalue: время жизни объекта продлить нельзя, так как мы его  никак не контролируем.</p>
+<p>В C++03 время жизни объекта, который биндится к <code>const&amp;</code>, продлевалось для rvalue. В C++11 xvalue ведут себя подобно lvalue: время жизни объекта продлить нельзя, так как мы его  никак не контролируем.</p>
 <pre><code class="language-c++">void foo() {
     mytype const&amp; a = prvalue(); // объект живёт столько, сколько эта ссылка
     mytype&amp;&amp; a = prvalue(); // аналогично продлевает время жизни
