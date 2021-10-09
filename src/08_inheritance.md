@@ -92,7 +92,7 @@ void f (vehicle& a) {
 	a.print_name();
 }
 int main() {
-	bus b;
+  bus b;
   b.print_name();
   f(b); // выведет bus, так как print_name виртуальная
 }
@@ -162,7 +162,7 @@ struct derived : base1, base2 {};
 int main () {
 	derived* d = new derived();
 	base2* b = d;
-  delete b; // UB, скорее всего получим ошибку о том, что b - невалидный указатель
+	delete b; // UB, скорее всего получим ошибку о том, что b - невалидный указатель
 }
 ```
 
@@ -308,8 +308,8 @@ struct b : virtual a {};
 struct c : virtual a {};
 struct d : b, c {};
 int main() {
-     d dd;
-     dd.f(); // не упадёт, как без virtual, так как a общий
+	d dd;
+	dd.f(); // не упадёт, как без virtual, так как a общий
 }
 ```
 
