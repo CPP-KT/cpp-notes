@@ -230,7 +230,7 @@ template <typename TT>
 void do_destroy_all(TT* data, size_t size, non_trivial) {
   for (size_t i = size; i != 0; --i){
       data[i - 1].~TT();
-    }
+  }
 }
 template <typename TT>
 void destroy_all(TT* data, size_t size) {
