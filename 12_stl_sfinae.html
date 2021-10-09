@@ -353,7 +353,7 @@ template &lt;typename TT&gt;
 void do_destroy_all(TT* data, size_t size, non_trivial) {
   for (size_t i = size; i != 0; --i){
       data[i - 1].~TT();
-    }
+  }
 }
 template &lt;typename TT&gt;
 void destroy_all(TT* data, size_t size) {
@@ -402,8 +402,8 @@ void bar(typename mytype&lt;T&gt;::type);
 </code></pre>
 <p>Сложность возникла из-за специализаций. Если приходит <code>char</code>, то из такого не понятно, откуда он пришёл (могло из <code>mytype&lt;int&gt;</code>, а могло из <code>mytype&lt;char&gt;</code>), поэтому <em>deduction</em> не пытается выводить.</p>
 <p>Вернёмся к первому примеру: для <code>foo(v, v.begin());</code>: для <strong>(1)</strong> по первому аргументу можно сказать, что <code>Container</code> это <code>std::vector&lt;int&gt;</code> и всё вывелось. Для <strong>(2)</strong> нельзя вывести, так как передаётся вектор, а ожидается ссылка на массив.</p>
-<p>После <em>deduction</em> делается подстановка и <em>overload resolution</em>. Если бы ошибка <em>deduction</em> приводила к ошибке компиляции, то в этом случае было бы невозможно вызвать первую функцию, поэтому этот второй кандидат выбрасывается для каднидатов для <em>overloading</em> и отрабатывает первый.</p>
-<p>Теперь как работает для <code>foo(w, w + 2)</code>: для <strong>(2)</strong> всё просто, <code>Element -&gt; int, N -&gt; 10</code>. Для <strong>(1)</strong> <code>Container -&gt; int[10]</code>, начинаем делать подстановку и получаем вторым аргументом что-то типа <code>int[10]::iterator</code> (концептуально), ошибка звучит как-то &quot;не могу найти в массиве итератор&quot;. Очевидно, что если бы это приводило к ошибеке компиляции, то не могли бы вызвать вторую функцию. </p>
+<p>После <em>deduction</em> делается подстановка и <em>overload resolution</em>. Если бы ошибка <em>deduction</em> приводила к ошибке компиляции, то в этом случае было бы невозможно вызвать первую функцию, поэтому этот второй кандидат выбрасывается для кандидатов для <em>overloading</em> и отрабатывает первый.</p>
+<p>Теперь как работает для <code>foo(w, w + 2)</code>: для <strong>(2)</strong> всё просто, <code>Element -&gt; int, N -&gt; 10</code>. Для <strong>(1)</strong> <code>Container -&gt; int[10]</code>, начинаем делать подстановку и получаем вторым аргументом что-то типа <code>int[10]::iterator</code> (концептуально), ошибка звучит как-то &quot;не могу найти в массиве итератор&quot;. Очевидно, что если бы это приводило к ошибке компиляции, то не могли бы вызвать вторую функцию. </p>
 <p>В этом и заключается принцип <strong>SFINAE</strong> - substitution failure is not an error.</p>
 <p>Если бы мы ссылались на <code>Container::iterator</code> внутри функции, то получили бы ошибку компиляции, а так просто выкидываем эту перегрузку.</p>
 <p>Этот механизм можно абьюзить в своих целях, хотим фейлить перегрузки:</p>

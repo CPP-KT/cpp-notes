@@ -246,7 +246,7 @@ void foo&lt;int&gt;(int*);
 <li>Выбирается перегрузка.</li>
 <li>Внутри перегрузки выбирается специализация.</li>
 </ol>
-<p>Подробнее про <strong>Template argument deduction</strong> на <a href="https://en.cppreference.com/w/cpp/language/template_argument_deduction">cpprefernce</a>.</p>
+<p>Подробнее про <strong>Template argument deduction</strong> на <a href="https://en.cppreference.com/w/cpp/language/template_argument_deduction">cppreference</a>.</p>
 <p>Поэтому когда мы подставляем <code>nullptr</code>, то из него нельзя понять, на какой тип он указывает, поэтому <strong>deduction</strong> фейлится и получаем ошибку. Если же есть <code>void foo(int*)</code>, то выбирается он, как единственный подходящий.</p>
 <p>Есть ещё одно правило: <em>если есть нешаблонная функция, которая идеально совпадает с шаблонной, то выбирается нешаблонная</em>, аналогично всегда выбирается <code>explicit</code> специализация.</p>
 <pre><code class="language-c++">template &lt;typename U, typename V&gt;
@@ -258,7 +258,7 @@ struct mytype&lt;U*, V&gt;{};
 template &lt;typename U, typename V&gt;
 struct mytype&lt;U, V*&gt;{};
 
-// В таком случае нельзя делать так, будет ошибка ambiguos template instantiation, так как есть два равноправных кандидата
+// В таком случае нельзя делать так, будет ошибка ambiguous template instantiation, так как есть два равноправных кандидата
 mytype&lt;long*, double*&gt; f;
 
 // если сделать такую специализацию, то выберется она
@@ -324,7 +324,7 @@ int main {
 	f&lt;bar&gt;(); // не компилируется
 }
 </code></pre>
-<p>Если хотим, чтобы это читалось как каст, то нужно писать <code>(typename T::a)-b</code>. Кстати, в старых компиляторов <em>Microsoft</em> это не было нужно, так как они откладывали токены и парсили только в момент, когда подставляют функцию.</p>
+<p>Если хотим, чтобы это читалось как каст, то нужно писать <code>(typename T::a)-b</code>. Кстати, в старых компиляторах <em>Microsoft</em> это не было нужно, так как они откладывали токены и парсили только в момент, когда подставляют функцию.</p>
 <p>Аналогично для шаблонов по умолчанию считается не шаблоном, иначе нужно писать так:</p>
 <pre><code class="language-c++">T::a &lt; b &amp;&amp; c &gt; d; // по умолчанию не шаблон
 typename T::template a &lt; b &amp;&amp; c &gt; d; // это шаблон

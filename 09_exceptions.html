@@ -224,10 +224,10 @@ struct derived : base {
 int main() {
 	try {
 		throw derived(); // без const&amp; в catch выведет base
-          throw new derived(); // вот так писать не надо, бросится указатель
+		throw new derived(); // вот так писать не надо, бросится указатель
 	} catch (base const&amp; e) {
 		std::cout &lt;&lt; e.msg();
-          throw e; // вот так тоже не очень, он пробрасывает со статическим типом (base)
+		throw e; // вот так тоже не очень, он пробрасывает со статическим типом (base)
 	}
 }
 </code></pre>

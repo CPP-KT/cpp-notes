@@ -180,7 +180,7 @@ c-&gt;im // то же самое, что (*c).im
 	}
 private:
 	double re;
-     double im;
+	double im;
 };
 </code></pre>
 <p>Чем отличается метод внутри класса от такой функции?</p>
@@ -232,7 +232,7 @@ void complex::conjugate(){
 	}
 private:
 	double re;
-  double im;
+	double im;
 };
 
 void f(complex);
@@ -314,7 +314,7 @@ int main(){
 </code></pre>
 <p>Если мы принимаем экземпляр класса и нам не нужно его менять, можно передавать его по константной ссылке, тогда мы избегаем лишних копирований (в отличие от передачи по значению):</p>
 <pre><code class="language-c++">std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, complex const&amp; a) {
-	os &lt;&lt; a.real &lt;&lt; &quot; + &quot; &lt;&lt; a.im &lt;&lt; &quot;i&quot;;
+	os &lt;&lt; a.re &lt;&lt; &quot; + &quot; &lt;&lt; a.im &lt;&lt; &quot;i&quot;;
 	return os;
 }
 </code></pre>
@@ -398,7 +398,7 @@ void f(int (&amp;c)[10]); // массив по ссылке
 </code></pre>
 <p>Если функция принимает массив: <code>void f(int a[10])</code>, то на самом деле она принимает <code>int *</code> и длина игнорируется. </p>
 <p>Но если функция принимает указатель на массив: <code>void g(int (*p)[10])</code>, то она принимает указатель на массив длины 10. Все размерности, кроме внешней, должны быть определены, так как являются частью типа элемента.</p>
-<p>Важно: <code> int *p[10]</code> - массив указателей, <code>int (*p)[10]</code> - указатель на массив длины 10.</p>
+<p>Важно: <code>int *p[10]</code> - массив указателей, <code>int (*p)[10]</code> - указатель на массив длины 10.</p>
 
                     </main>
 
