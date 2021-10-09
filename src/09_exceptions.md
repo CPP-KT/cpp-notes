@@ -66,10 +66,10 @@ struct derived : base {
 int main() {
 	try {
 		throw derived(); // без const& в catch выведет base
-          throw new derived(); // вот так писать не надо, бросится указатель
+		throw new derived(); // вот так писать не надо, бросится указатель
 	} catch (base const& e) {
 		std::cout << e.msg();
-          throw e; // вот так тоже не очень, он пробрасывает со статическим типом (base)
+		throw e; // вот так тоже не очень, он пробрасывает со статическим типом (base)
 	}
 }
 ```
