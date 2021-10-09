@@ -20,7 +20,7 @@
 
   ```c++
   my_string(my_string const& other) {
-  	size_ = other.size_;
+    size_ = other.size_;
     capacity_ = other.capacity_;
     data_ = (char*)malloc(size_ + 1);
     memcpy(data_, other.data_, size_ + 1);	
