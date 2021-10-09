@@ -103,12 +103,15 @@ itn main() {
 
 ### malloc, free
 ```c++
-void * p = malloc(42); // выделяем 42 байта
+void* p = malloc(42); // выделяем 42 байта
 free(p); // чистит память, выделенную по указателю p
 free(p); // так делать не нужно
 p = nullptr;
 free(p); // так можно, ничего не произойдет
 ```
+
+Двойной `free` вызывает UB или даже [уязвимость](https://awakened1712.github.io/hacking/hacking-whatsapp-gif-rce/)
+
 
 ### new, delete
 
