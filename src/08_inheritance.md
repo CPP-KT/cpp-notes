@@ -101,7 +101,7 @@ int main() {
 ```c++
 int main() {
 	bus b;
-	vehicle v = b; // что тут происходит? это аналоогично vehicle v = (vehicle&) b; и вызывается конструктор копирования у vehicle
+	vehicle v = b; // что тут происходит? это аналогично vehicle v = (vehicle&) b; и вызывается конструктор копирования у vehicle
 }
 ```
 
