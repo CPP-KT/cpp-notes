@@ -120,7 +120,7 @@ free(p); // так можно, ничего не произойдет
 
 ```c++
 person* p = new person("Ivan", "Sorokin");
-dlete p;
+delete p;
 
 person* p = new person[10]; // выделяет память на 10 объектов person и вызывает их дефолтные конструкторы
 delete[] p; // если new вызывался с [], то нужно delete[]
