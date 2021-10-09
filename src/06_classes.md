@@ -25,7 +25,7 @@ struct complex {
 	}
 private:
 	double re;
-     double im;
+	double im;
 };
 ```
 Чем отличается метод внутри класса от такой функции?
