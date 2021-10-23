@@ -10,7 +10,9 @@
 - **16-битные регистры** (8 штук): AX, CX, DX, BX, SP, BP, SI, DI 
 - **8-битные регистры** (тоже 8): AL, AH, BL, BH, CL, CH, DL, DH. AL + AH = AX, аналогично другие.
 - **32-битные регистры:** EAX, и другие обычные с приставкой E - extended
-  ![Memory Cell](./images/02.08_memory_cell.png)
+- **64-битные регистры:** RAX, и другие обычные с приставкой R - re-extended
+
+  ![Memory Cell](./images/02.08_extended_memory_cell.png)
 ### Команды read, write
 
 ```nasm
