@@ -12,8 +12,8 @@
 - Через `#define`:
 
 ```c++
-#define DECLASE_MYVECTOR(vector_name, type)                 \          
-struct vector_name {                                        \
+#define DECLASE_MYVECTOR(vector_name, type)                       \          
+struct vector_name {                                              \
 	void push_back(type);                                     \
 	type operator[](size_t index) const;                      \
 }
@@ -50,7 +50,7 @@ void swap(T& a, T& b) {
 
 ```c++
 template <>
-struct vector<booL> {
+struct vector<bool> {
 	// ...
 };
 ```
