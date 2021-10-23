@@ -85,8 +85,8 @@ struct vehicle {
 }
 struct bus : vehicle {
 	void print_name() {
-  	std::cout << "bus" << std::endl;
-  }
+  		std::cout << "bus" << std::endl;
+  	}
 }
 void f (vehicle& a) {
 	a.print_name();
