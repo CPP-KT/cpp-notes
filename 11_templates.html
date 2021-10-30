@@ -176,8 +176,8 @@
 <p>Через <code>#define</code>:</p>
 </li>
 </ul>
-<pre><code class="language-c++">#define DECLASE_MYVECTOR(vector_name, type)                 \          
-struct vector_name {                                        \
+<pre><code class="language-c++">#define DECLASE_MYVECTOR(vector_name, type)                       \          
+struct vector_name {                                              \
 	void push_back(type);                                     \
 	type operator[](size_t index) const;                      \
 }
@@ -202,7 +202,7 @@ void swap(T&amp; a, T&amp; b) {
 <h2><a class="header" href="#Специализации" id="Специализации">Специализации</a></h2>
 <p>Иногда для каких-то типов хочется сделать отдельную реализацию. Например, <code>vector&lt;bool&gt;</code>. Это называется специализацией и делается так:</p>
 <pre><code class="language-c++">template &lt;&gt;
-struct vector&lt;booL&gt; {
+struct vector&lt;bool&gt; {
 	// ...
 };
 </code></pre>

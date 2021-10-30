@@ -169,10 +169,19 @@
 <h2><a class="header" href="#Основные-регистры-и-команды" id="Основные-регистры-и-команды">Основные регистры и команды</a></h2>
 <p>Регистр <code>IP</code> (instruction pointer) содержит адрес команды.</p>
 <ul>
-<li><strong>16-битные регистры</strong> (8 штук): AX, CX, DX, BX, SP, BP, SI, DI </li>
-<li><strong>8-битные регистры</strong> (тоже 8): AL, AH, BL, BH, CL, CH, DL, DH. AL + AH = AX, аналогично другие.</li>
-<li><strong>32-битные регистры:</strong> EAX, и другие обычные с приставкой E - extended
-<img src="./images/02.08_memory_cell.png" alt="Memory Cell" /></li>
+<li>
+<p><strong>16-битные регистры</strong> (8 штук): <code>AX</code>, <code>CX</code>, <code>DX</code>, <code>BX</code>, <code>SP</code>, <code>BP</code>, <code>SI</code>, <code>DI</code> </p>
+</li>
+<li>
+<p><strong>8-битные регистры</strong> (тоже 8): <code>AL</code>, <code>AH</code>, <code>BL</code>, <code>BH</code>, <code>CL</code>, <code>CH</code>, <code>DL</code>, <code>DH</code>. <code>AL + AH = AX</code>, аналогично другие.</p>
+</li>
+<li>
+<p><strong>32-битные регистры:</strong> <code>EAX</code>, и другие обычные с приставкой E - extended</p>
+</li>
+<li>
+<p><strong>64-битные регистры:</strong> <code>RAX</code>, и другие обычные с приставкой R - re-extended</p>
+<p><img src="./images/02.08_extended_memory_cell.png" alt="Memory Cell" /></p>
+</li>
 </ul>
 <h3><a class="header" href="#Команды-read-write" id="Команды-read-write">Команды read, write</a></h3>
 <pre><code class="language-nasm">read (address)
@@ -366,8 +375,8 @@ void g()
         add             rsp, 120
         ret
 </code></pre>
-<p>Почему 136 изменилось на 120? Этот эффект называется выравниванием (alignment).
-В качестве основной единицы работы с памятью используется <strong>машинное слово</strong>, размер которого обычно составляет несколько байт. Так называемый &quot;unaligned access&quot; сложен в реализации на аппаратном уровне, поэтому обращения по произвольному адресу либо не поддерживаются (и вызывают исключение процессора), либо поддерживаются, но работают медленно. Обычно компилятор выравнивает данные по границам машинных слов, в нашем случае <code>8 + 16 * k</code>.</p>
+<p>Почему 136 изменилось на 120? Этот эффект называется выравниванием (alignment).</p>
+<p>В качестве основной единицы работы с памятью используется <strong>машинное слово</strong>, размер которого обычно составляет несколько байт. Так называемый <code>unaligned access</code> сложен в реализации на аппаратном уровне, поэтому обращения по произвольному адресу либо не поддерживаются (и вызывают исключение процессора), либо поддерживаются, но работают медленно. Обычно компилятор выравнивает данные по границам машинных слов, в нашем случае <code>8 + 16 * k</code>.</p>
 
                     </main>
 

@@ -293,6 +293,10 @@ using reference =	Reference;
 <p>Тогда итератору <code>rbegin()</code> соответствует <code>end()</code>, а <code>rend()</code> это <code>begin()</code>. Реверс-итераторы позволяют пройти контейнер в обратную сторону.
 <code>.base()</code> по итератору выдает соответствующий ему реверс-итератор. Важно понимать, что <code>.base()</code> ссылается не на тот же элемент, а на соседний.
 <code>rbegin().base == end()</code></p>
+<p align="center">
+<img src="./images/reverse_iterators.png" 
+     width="45%"></img>
+</p>
 <p><strong>Про бинарный поиск</strong> (далее итераторы ссылаются между элементами):</p>
 <p><code>lower_bound</code> и <code>upper_bound</code>, если элемент не существуют, возвращают, куда этот элемент можно вставить, не нарушив последовательности.
 Если же элемент находится, то <code>lower_bound</code> возвращает первую позицию, куда можно вставить, не нарушив порядок, а <code>upper_bound</code> - последнюю.</p>
