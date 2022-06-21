@@ -25,3 +25,8 @@
 - [Статическая и динамическая инициализация, constexpr](./22_constexpr.md)
 - [Многопоточность](./23_multithreading.md)
 - [Qt](./24_qt.md)
+- [Концепты](./25_concepts.md)
+- [Ranges](./26_ranges.md)
+- [Кодировки](./27_encoding.md)
+- [Корутины](./28_coroutines.md)
+- [Модули](./29_modules.md)
