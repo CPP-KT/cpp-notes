@@ -1,0 +1,326 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Кодировки - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="18_decltype_auto_nullptr.html"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="19_lambdas_type_erasure.html"><strong aria-hidden="true">20.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="20_signals_reetrancy_errors.html"><strong aria-hidden="true">21.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="21_optional_variant_tuple_stringview.html"><strong aria-hidden="true">22.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="22_constexpr.html"><strong aria-hidden="true">23.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="23_multithreading.html"><strong aria-hidden="true">24.</strong> Многопоточность</a></li><li class="chapter-item expanded "><a href="24_qt.html"><strong aria-hidden="true">25.</strong> Qt</a></li><li class="chapter-item expanded "><a href="25_concepts.html"><strong aria-hidden="true">26.</strong> Концепты</a></li><li class="chapter-item expanded "><a href="26_ranges.html"><strong aria-hidden="true">27.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="27_encoding.html" class="active"><strong aria-hidden="true">28.</strong> Кодировки</a></li><li class="chapter-item expanded "><a href="28_coroutines.html"><strong aria-hidden="true">29.</strong> Корутины</a></li><li class="chapter-item expanded "><a href="29_modules.html"><strong aria-hidden="true">30.</strong> Модули</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Кодировки" id="Кодировки">Кодировки</a></h1>
+<ul>
+<li><a href="https://youtu.be/L-abgEdCKEU">Запись лекции</a></li>
+</ul>
+<h2><a class="header" href="#Распространенные-заблуждения" id="Распространенные-заблуждения">Распространенные заблуждения</a></h2>
+<p>Может показаться, что обычного восьмибитного char может не хватить но зато
+<code>char16_t</code> решает эту проблему. Или что если программа работает с русским и
+английским языками, то с остальными не должно возникнуть проблем. Например,
+текстовый редактор может не учитывать что символ может кодироваться суррогатной
+парой (об этом чуть позже) и когда нажимается backspace, то он стирает только
+один code unit (и об этом тоже).</p>
+<h2><a class="header" href="#unicode" id="unicode">Unicode</a></h2>
+<p>Юникод разбивает текст на составные части и нумерует их. Например, числу 65
+соответствует заглавная латинская буква 'A'. Эти числа называют <em>code
+point</em>-ами. У code points диапазон 0...0x10FFFF (a.k.a. <code>17*2^16</code>). Уже видно,
+что <code>char16_t</code> не справляется. Можно было бы похранить в 32-битном числе но это
+как-то не очень. Поэтому придумывают разные способы кодировки каждого code
+point. Последовательность бит, в которую мы переводим code point в какой-то
+конкретной кодировке мы как-то записываем в виде последовательности нескольких
+одинаковых по размеру частей. Каждая такая часть называется <em>code unit</em>.</p>
+<h2><a class="header" href="#utf-16" id="utf-16">UTF-16</a></h2>
+<p>Сначала была ucs2 которая прямо мапила code point в 16-битный code unit. Потом,
+когда поняли что 16 бит не хватает, придумали UTF-16, где основную часть
+маппинга сохранили но какие-то маппинги признали невалидными (0xD800-0xDFFF). Та
+часть кодпойнтов которая выходит за пределы валидного диапазона кодируется уже
+двумя код юнитами которые называются суррогатной парой. Получается что-то такое:</p>
+<pre><code>0 &lt;= cp &lt;= 0xD7FF или 0xE000 &lt;= cp &lt;= 0xFFFF
+    Такие cp кодируются непосредственно в одном cu
+0x010000 &lt;= cp &lt;= 0x10FFFF
+    Такие cp занимают 20 бит и хранятся в двух cu которые называются суррогатной
+    парой. Эти 20 бит бьются на две части по 10 бит и распределяются между cu1 и
+    cu2:
+        DC00 &lt;= cu1 &lt;= DFFF (младшая часть)
+        D800 &lt;= cu2 &lt;= DBFF (старшая часть)
+        Чуть яснее на картинке:
+
+        1101110000000000 0xDCOO
+              ----cu1----
+        1101111111111111 0xDFFF
+     +&gt; ------
+     |  1101100000000000 0xD800
+     |        ----cu2----
+     |  1101101111111111 0xDBFF
+     +&gt; ------
+     |
+     +--- вот эти части, насколько я понял, это &quot;маркеры&quot; что cu находится в
+          суррогатной паре и является либо младшим (в случае 110111) либо
+          старшим (110110).
+0xD800 &lt;= cp &lt;= 0xDFFF
+    Юникод просто резервирует этот рендж для суррогатов в UTF-16.
+
+</code></pre>
+<h2><a class="header" href="#utf-8" id="utf-8">UTF-8</a></h2>
+<p>В Unix-е всегда использовались 8-битные чары и поэтому, чтобы не переписывать
+весь существующий код на использование 16-битных, придумали UTF-8 - тут code
+unit занимает восемь бит. Тут нет суррогатных пар, всё немного проще:</p>
+<pre><code>First cp 	Last cp  Byte 1   Byte 2   Byte 3   Byte 4
+U+0000 	    U+007F 	 0xxxxxxx
+U+0080 	    U+07FF 	 110xxxxx 10xxxxxx
+U+0800 	    U+FFFF 	 1110xxxx 10xxxxxx 10xxxxxx
+U+10000     U+10FFFF 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+</code></pre>
+<p>(табличка с википедии)</p>
+<p>Т.е. прямо мапим номер кодпоинта в последовательность бит, выбираем столько
+cu, чтобы хватило места и просто записываем по порядку в свободные биты.
+Зачем к каждому дополнительному code unit приписывать 10? Чтобы какой-нибудь
+алгоритм, оказавшись в середине строки, не перепутал дополнительный cu с
+отдельным символом. Т.е. нам не обязательно идти с самого начала строки для того
+чтобы валидно разбить текст на cp.</p>
+<p>У UTF-8 есть ещё одно полезное свойство. Если мы попробуем сравнить две строки
+лексикографически, то окажется что побайтовое сравнение будет равносильно
+лексикографическому (но это только в случае если мы используем big endian
+порядок байт (а можно по другому? я не понял как)).</p>
+<h2><a class="header" href="#utf-32" id="utf-32">UTF-32</a></h2>
+<p>Тут всё очевидно, но есть недостатки. Есть буквы которые состоят из нескольких
+кодпойнтов. Т.е. кодпойнты не имеют ничего общего с символами (в лекции приводят
+в пример диакритические знаки над буквами, корейское письмо). UTF-32 не панацея
+для работы над текстом.</p>
+<h2><a class="header" href="#Общие-проблемы" id="Общие-проблемы">Общие проблемы</a></h2>
+<p>Вообще очень сложно обобщить все системы письма в мире, поэтому не стоит думать
+о кодпойнтах как о реальных символах. Поэтому почти нет смысла в том чтобы
+считать длину строки, переводить всё в верхний регистр (которого вовсе может не
+быть) и в других подобных операциях.</p>
+<p>Например, некоторые буквы имеют одинаковые кодпойнты, но капитализируются
+по-разному в зависимости от языка. Ещё есть греческая буква сигма, которая в
+зависимости от положения в слове имеет разные кодпойнты. А ещё, есть немецкая
+буква <a href="https://en.wikipedia.org/wiki/%C3%9F"><em>эсцет</em></a>, которая при капиталазации
+превращается в <em>SS</em>.</p>
+<h2><a class="header" href="#Имена-файлов" id="Имена-файлов">Имена файлов</a></h2>
+<p>В линуксе именами файлов могут быть любые бинарные данные, главное чтобы не было
+слеша. Это значит, что для какого-нибудь страшного имени может не существовать
+валидной строки в любой кодировке. Т.е. с именами файлов в linux нельзя работать
+как со строками.</p>
+<p>В виндоус имена файлов case-insensitive. На стадии форматирования диска винда
+просто записывает мап из lower-case в upper-case и пользуется им для конверсии
+имен файлов. И тут как повезёт.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="26_ranges.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="28_coroutines.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="26_ranges.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="28_coroutines.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

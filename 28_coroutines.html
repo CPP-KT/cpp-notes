@@ -1,0 +1,506 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Корутины - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="18_decltype_auto_nullptr.html"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="19_lambdas_type_erasure.html"><strong aria-hidden="true">20.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="20_signals_reetrancy_errors.html"><strong aria-hidden="true">21.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="21_optional_variant_tuple_stringview.html"><strong aria-hidden="true">22.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="22_constexpr.html"><strong aria-hidden="true">23.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="23_multithreading.html"><strong aria-hidden="true">24.</strong> Многопоточность</a></li><li class="chapter-item expanded "><a href="24_qt.html"><strong aria-hidden="true">25.</strong> Qt</a></li><li class="chapter-item expanded "><a href="25_concepts.html"><strong aria-hidden="true">26.</strong> Концепты</a></li><li class="chapter-item expanded "><a href="26_ranges.html"><strong aria-hidden="true">27.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="27_encoding.html"><strong aria-hidden="true">28.</strong> Кодировки</a></li><li class="chapter-item expanded "><a href="28_coroutines.html" class="active"><strong aria-hidden="true">29.</strong> Корутины</a></li><li class="chapter-item expanded "><a href="29_modules.html"><strong aria-hidden="true">30.</strong> Модули</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Корутины" id="Корутины">Корутины</a></h1>
+<ul>
+<li><a href="https://youtu.be/IjI6lDLZ5w0">Запись лекции №1</a></li>
+<li><a href="https://youtu.be/5zszqIm4Cyk">Запись лекции №2 (до 46 минуты)</a></li>
+</ul>
+<h2><a class="header" href="#Пример" id="Пример">Пример</a></h2>
+<pre><code>socket
+    recv
+    send
+
+    on_recv_ready
+    on_send_ready
+</code></pre>
+<p>Хотим реализовать echo-сервер: нам приходит сообщение и мы посылаем его же
+обратно отправителю.</p>
+<pre><code class="language-c++">socket&amp; s;
+...
+// inside message loop
+s.on_recv_ready([&amp;] {
+    char buf[1000];
+    size_t transf = s.recv(buf);
+    s.send(buf, buf + transf);
+});
+</code></pre>
+<p>Проблемы решения: может не хватить места для сообщения, и ещё много всего (нужно
+дополнить).</p>
+<p>Сделаем вспомогательную функцию, которую мы вызываем если считаем что сокет
+можно читать (<code>do_recv</code>) и ещё одну такую же для записи (<code>do_send</code>):</p>
+<pre><code class="language-c++">void do_recv() {
+    assert(buf_data_start &lt; buf_data_end);
+    buf_data_end = recv(buf, BUF_SIZE);
+    buf_data_start = 0;
+    do_send();
+    on_recv_ready([] () {});
+    on_send_ready(do_send);
+}
+
+void do_send() {
+    buf_data_start += s.send(buf + buf_data_start, buf_data_end - buf_data_start);
+    if (buf_data_start == buf_data_end) {
+        on_send_ready([](){});
+        on_recv_ready(do_recv);
+    }
+}
+
+...
+
+socket&amp; s;
+char buf[BUF_SIZE];
+size_t buf_data_start, buf_data_end;
+while (true) {
+    on_recv_ready(do_recv);
+}
+</code></pre>
+<p>Примерно такое API есть в <a href="https://doc.qt.io/qt-5/qabstractsocket.html">QT</a> и
+других библиотеках.</p>
+<p>Ещё один способ реализовывать подобные API (как это сделано в
+boost.asio):</p>
+<pre><code class="language-c++">async_read_some(buffer, [](){
+    // здесь пишут, что нужно сделать после получения
+    ...
+});
+
+async_write_some(buffer, [](){
+    // то же самое
+    ...
+});
+</code></pre>
+<p>Этот паттерн называют <em>proactor</em>, а другой способ (как в QT) - <em>reactor</em>.</p>
+<p>Но писать всё это очень муторно, научимся делать подобные вещи более просто.</p>
+<h2><a class="header" href="#Корутины-1" id="Корутины-1">Корутины</a></h2>
+<p>&quot;A coroutine is a function that can suspend execution to be resumed later&quot; (c)
+cppref</p>
+<ul>
+<li><a href="https://github.com/CppCon/CppCon2015/tree/master/Presentations/C%2B%2B%20Coroutines">CppCon2015 C++ Coroutines</a></li>
+<li><a href="https://github.com/sorokin/coroutines">Пример ручной смены контекста в корутине</a></li>
+</ul>
+<p>В презентации приводится пример более простого сервера и его реализация без
+корутин/с корутинами - в последнем случае получается очень коротко.</p>
+<p>Как реализовать корутины без поддержки компилятора? Ну во-первых, где-то нужно
+хранить её локальные переменные. Можно завести дополнительный стек - такой
+подход называется <em>stackful</em>. Можно попушить все регистры и верхушку стека, в
+которых хранятся переменные, но тогда мы не сможем зайти больше чем на один
+уровень рекурсии в корутине - это <em>stackless</em> подход.</p>
+<p>Видно, что для стекфул корутин меньше ограничений и не нужно явно указывать
+<code>await</code> (т.к. тебя можно спокойно запаузить в любой момент - фрейм не
+повредится).</p>
+<p>В стандарте корутины не получили поддеркжу со стороны библиотеки, поэтому нужно
+либо использовать сторонние библиотеки либо самим реализовывать примитивы. Один
+пример библиотеки - <a href="https://github.com/lewissbaker/cppcoro">cppcoro</a>.</p>
+<h2><a class="header" href="#Стандартная-реализация" id="Стандартная-реализация">Стандартная реализация</a></h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=8C8NnE1Dg4A">C++ Coroutines under the covers</a></li>
+</ul>
+<p>Было два способа реализовать корутины: сделать структуру с методами для
+паузы/резьюма, либо применить type erasure (чтобы что? Надо дополнить) - выбрали
+последний (я не понял чем это отличается от структуры). В
+<a href="https://github.com/CppCon/CppCon2016/tree/master/Presentations/C%2B%2B%20Coroutines%20-%20Under%20The%20Covers">презентации</a>
+есть картинка, на которой изображена примерная схема сгенерированной структуры
+для фрейма корутины, что-то такое:</p>
+<pre><code class="language-c++">struct f.frame {
+    FnPtr ResumeFn;
+    FnPtr DestroyFn;
+    int suspend_index;
+    int i;
+};
+
+void f.destroy(f.frame* frame) {
+    free(frame);
+}
+
+void f.cleanup(f.frame* frame) {}
+
+void f.resume(f.frame* frame) {
+    ... // переходим к очередной инструкци корутины
+}
+
+void* f(int *n) {
+    ...
+}
+</code></pre>
+<p>(было бы хорошо переписать весь код со слайда)</p>
+<p>Ну и ещё одна фича стандартных корутин в том, что они выделяют свой фрейм на
+хипе (а если повезёт с оптимизациями, то на стеке, например через <code>alloca</code>)</p>
+<h2><a class="header" href="#Кастомные-корутины" id="Кастомные-корутины">Кастомные корутины</a></h2>
+<p>Если вдруг нам не подошла корутина из cppcoro, можем попробовать реализовать её
+сами. Характеристики корутин (что мы могли бы определить сами (каво)):</p>
+<ol>
+<li>Coroutine type (<code>task</code>, <code>generator</code>, <code>async_generator</code>, etc.)</li>
+<li>Awaitable - операции, которые могут работать подолгу (<code>read</code>, <code>sleep</code>, etc.)</li>
+<li>Coroutine frame - фрейм сгенерированный компилятором</li>
+<li>Promise type - дополнительные данные помимо фрейма (хранятся в структуре
+фрейма).</li>
+<li>Coroutine handle - держит указатель на type erase-нутый фрейм корутины в
+хипе; содержит в себе функцию <code>resume</code>.</li>
+</ol>
+<p>Какие из этих точек кастомизации предоставляют компиляторы?
+Посмотрим на <code>co_await x;</code> - нам нужно остановить корутину и сделать какую-то
+свою операцию для <code>x</code>. Для этого компиляторы генерируют подобный код</p>
+<pre><code class="language-c++">x.await_suspend(handle);  // передаёт указатель на фрейм
+---&lt;suspend&gt;----
+</code></pre>
+<p>Т.е. мы должны в <code>await_suspend</code> сделать что мы хотели а затем, в конце, вызвать
+<code>resume</code> от фрейма. Ещё, для awaitable-ов делается проверка на то, нужно ли их
+суспендить, т.е. сгенеренный код примерно такой:</p>
+<pre><code class="language-c++">if (!x.await_ready()) {
+    x.await_suspend(handle);  // передаёт указатель на фрейм
+    ---&lt;suspend&gt;----
+}
+</code></pre>
+<p>Иногда после ожидания мы хотим получить какой-то результат, как тут:</p>
+<pre><code class="language-c++">size_t transfered = co_await recv(buf, 1000);
+</code></pre>
+<p>Для этого компилятор генерит ещё кусочек кода:</p>
+<pre><code class="language-c++">if (!x.await_ready()) {
+    x.await_suspend(handle);  // передаёт указатель на фрейм
+    ---&lt;suspend&gt;----
+}
+// await_resume не обазательно делать после await_suspend, просто такое
+// название
+&lt;result of await&gt; = x.await_resume();
+</code></pre>
+<p>Можно заметить, что для того чтобы написать свой awaitable, нам ничего не нужно
+знать про тип корутины.</p>
+<h2><a class="header" href="#Свои-корутины" id="Свои-корутины">Свои корутины</a></h2>
+<p>Используя эти знания, можем написать два awaitable: <code>await_never</code> (никогда не
+делает suspend), <code>suspend_always</code> (никогда не ready, в suspend ничего не делает,
+в resume тоже ничего не делает).</p>
+<pre><code class="language-c++">#include &lt;coroutine&gt;
+#include &lt;iostream&gt;
+
+struct task {
+    struct promise_type {
+        // Четыре обязательные функции:
+        task get_return_object() noexcept {
+            return task{std::coroutine_handle&lt;promise_type&gt;::from_promise(*this);
+        }
+
+        std::suspend_always initial_suspend() noexcept{
+            return std::suspend_always{};
+        }
+
+        std::suspend_always final_suspend() noexcept {
+            return std::suspend_always{};
+        }
+
+        void unhandeled_exception() noexcept {}
+    };
+
+    std::coroutine_handle&lt;promise_type&gt; handle;
+};
+
+task foo() {
+    std::cout &lt;&lt; &quot;in foo 1\n&quot;;
+    co_await std::suspend_always{};
+    std::cout &lt;&lt; &quot;in foo 2\n&quot;;
+    co_await std::suspend_always{};
+    std::cout &lt;&lt; &quot;in foo 3\n&quot;;
+    co_await std::suspend_always{};
+    std::cout &lt;&lt; &quot;in foo 4\n&quot;;
+}
+
+int main() {
+    task t = foo();
+    std::cout &lt;&lt; &quot;in main 1\n&quot;;
+    t.handle.resume();
+    std::cout &lt;&lt; &quot;in main 2\n&quot;;
+    t.handle.resume();
+    std::cout &lt;&lt; &quot;in main 3\n&quot;;
+    t.handle.resume();
+    std::cout &lt;&lt; &quot;in main 4\n&quot;;
+    t.handle.resume();
+    return 0;
+}
+</code></pre>
+<p>Этот код не совсем корректен, потому что мы не деаллоцировали наш фрейм -
+произошла утечка.</p>
+<p>Более правильный вариант:</p>
+<pre><code class="language-c++">#include &lt;coroutine&gt;
+#include &lt;iostream&gt;
+
+struct task {
+    struct promise_type {
+        task get_return_object() noexcept {
+            return task{std::coroutine_handle&lt;promise_type&gt;::from_promise(*this);
+        }
+
+        std::suspend_always initial_suspend() noexcept{
+            return std::suspend_always{};
+        }
+
+        std::suspend_always final_suspend() noexcept {
+            return std::suspend_always{};
+        }
+
+        void unhandeled_exception() noexcept {}
+    };
+
+    task(std::coroutine_handle&lt;promise_type&gt; handle) : handle(handle) {}
+
+    task(task&amp;&amp; other) noexcept : handle(other.handle) {
+        other.handle = nullptr;
+    }
+
+    task&amp; operator=(task&amp;&amp; other) {
+        if (this == &amp;other)
+            return *this;
+
+        if (handle)
+            handle.destroy();
+
+        handle = other.handle;
+        other.handle = nullptr;
+        return *this;
+    }
+
+    ~task() {
+        handle.destroy();
+    }
+
+    std::coroutine_handle&lt;promise_type&gt; handle;
+};
+</code></pre>
+<p>Ещё прикол:
+<code>co_yield</code> эквивалентен вот такому коду:</p>
+<pre><code class="language-c++">co_await promise.yield_value(expr);
+</code></pre>
+<p>(взято с cppreference)</p>
+<h2><a class="header" href="#Почему-именно-так" id="Почему-именно-так">Почему именно так</a></h2>
+<p>Я не могу нормально объяснить, лучше посмотреть лекцию (28 минута и дальше).
+Вроде потому что компилятору так проще делать оптимизации.</p>
+<h2><a class="header" href="#stackful--stackless" id="stackful--stackless">Stackful &amp; stackless</a></h2>
+<p>Может показаться, что разница между стекфул и стеклес корутинами большая, но это
+не так. Например, есть segmented stack, который аллоцирует дополнительную память
+в стеке по мере необходимости - т.е. стекфул корутина с таким стеком будет мало
+чем отличаться от стандартной стеклес.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="27_encoding.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="29_modules.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="27_encoding.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="29_modules.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

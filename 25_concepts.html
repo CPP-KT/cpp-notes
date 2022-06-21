@@ -1,0 +1,390 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Концепты - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_classes_memory_preprocessor.html"><strong aria-hidden="true">8.</strong> Ещё про классы, выделение памяти, препроцессор</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">9.</strong> Наследование, виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">10.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">11.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации, статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="12_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE, пространства имён</a></li><li class="chapter-item expanded "><a href="13_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="14_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="15_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="16_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="17_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="18_decltype_auto_nullptr.html"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="19_lambdas_type_erasure.html"><strong aria-hidden="true">20.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="20_signals_reetrancy_errors.html"><strong aria-hidden="true">21.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="21_optional_variant_tuple_stringview.html"><strong aria-hidden="true">22.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="22_constexpr.html"><strong aria-hidden="true">23.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="23_multithreading.html"><strong aria-hidden="true">24.</strong> Многопоточность</a></li><li class="chapter-item expanded "><a href="24_qt.html"><strong aria-hidden="true">25.</strong> Qt</a></li><li class="chapter-item expanded "><a href="25_concepts.html" class="active"><strong aria-hidden="true">26.</strong> Концепты</a></li><li class="chapter-item expanded "><a href="26_ranges.html"><strong aria-hidden="true">27.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="27_encoding.html"><strong aria-hidden="true">28.</strong> Кодировки</a></li><li class="chapter-item expanded "><a href="28_coroutines.html"><strong aria-hidden="true">29.</strong> Корутины</a></li><li class="chapter-item expanded "><a href="29_modules.html"><strong aria-hidden="true">30.</strong> Модули</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Концепты" id="Концепты">Концепты</a></h1>
+<ul>
+<li><a href="https://youtu.be/KNF4j-lz_Do">Запись лекции №1</a></li>
+<li><a href="https://youtu.be/i6rR_kEBQGc">Запись лекции №2</a></li>
+</ul>
+<h2><a class="header" href="#Проблемы-обычных-шаблонов" id="Проблемы-обычных-шаблонов">Проблемы обычных шаблонов</a></h2>
+<p>Иногда нам хочется чтобы шаблон инстанцировался только от определённых типов (например <code>vector&lt;int&amp;&gt;</code> не имеет смысла).</p>
+<h2><a class="header" href="#Почему-концепты-могут-быть-полезны" id="Почему-концепты-могут-быть-полезны">Почему концепты могут быть полезны</a></h2>
+<p>Во-первых, упрощаются сообщения об ошибках при неправильном инстанцировании (пример - <code>std::vector&lt;int&amp;&gt;</code>). </p>
+<p>Во-вторых, концепты компилируются быстрее обычного SFINAE. Ещё есть не SFINAE-friendly типы, которые могут удовлетворить какому-нибудь <code>std::is_nothrow_copyable_v</code> но по факту бросать исключение. Ещё бывает, что типы параметры типов как-то связаны между собой но эта связь не выразима трейтами (<code>std::sort(begin, end)</code> ничего не скажет, если мы дадим итераторы двух разных типов).</p>
+<h2><a class="header" href="#Заметки-о-мотивации-за-концептами" id="Заметки-о-мотивации-за-концептами">Заметки о мотивации за концептами</a></h2>
+<h3><a class="header" href="#Пример" id="Пример">Пример</a></h3>
+<p>В <code>std::vector&lt;T&gt;</code> , метод assign имеет 2 перегрузки :</p>
+<ol>
+<li>
+<pre><code class="language-c++">template&lt;typename It&gt; 
+void assign(It begin, It end)
+</code></pre>
+</li>
+<li>
+<pre><code class="language-c++">void assign(size_t n, T elem)
+</code></pre>
+</li>
+</ol>
+<p>Рассмотрим ситуацию когда имеем <code>T = size_t </code></p>
+<p><code>vector.assign(10, 42)</code> -- T выведется в <code>int</code> и выберется первая перегрузка, но она упадет на попыткее разыменовать <code>int</code></p>
+<p>Когда человек писал такой код, понятно что он хотел вторую перегрузку </p>
+<p>В стандартной библиотеке эту перегрузку зарезают при помощи <code>enable_if </code> </p>
+<p>Тут, отсутствие требований к шаблонным параметрам приводит к таким проблемам </p>
+<p>В целом, <code>enable_if</code> это прием которым тяжело пользоваться и тяжело объяснять людям,  это непрямой способ наложить ограничения на тип
+С концептами это будет выглядеть так : <code>template &lt;requires is_iterator It&gt; </code> </p>
+<h3><a class="header" href="#Иногда-подход-с-enable_if-оказывается-дороже" id="Иногда-подход-с-enable_if-оказывается-дороже">Иногда подход с <code>enable_if</code> оказывается дороже</a></h3>
+<p>Более того, библиотека ranges-v3 которая в итоге вошла в C++20, имела переключатель использовать сфинае или использовать концепты, с последними она собиралась быстрее, поэтому иногда сфинае оказывается нам дороже </p>
+<h3><a class="header" href="#Как-будет-выглядеть-ошибка" id="Как-будет-выглядеть-ошибка">Как будет выглядеть ошибка</a></h3>
+<p>Помимо этого, представим как выглядит типичная ошибка с <code>enable_if</code> : большой стектрейс подстановки 
+С концептами это могло бы выглядеть лучше : можно сразу написать что неудовлетворено конкретное требование к типу</p>
+<h3><a class="header" href="#Сложный-предикат-на-типах" id="Сложный-предикат-на-типах">Сложный предикат на типах</a></h3>
+<p>Если мы хотим выразить сложный предикат для нескольких перегрузок функции :</p>
+<ol>
+<li><code>A&lt;T&gt; </code></li>
+<li><code> A&lt;T&gt; &amp;&amp; B&lt;T&gt;</code></li>
+<li><code>A&lt;T&gt; &amp;&amp; B&lt;T&gt; &amp;&amp; C&lt;T&gt;</code></li>
+</ol>
+<p>В <code>enable_if</code> это будет выглядеть вот так -- чтобы корректно выбиралась ровно одна перегрузка функции :</p>
+<ol>
+<li><code>A&lt;T&gt; &amp;&amp; !B&lt;T&gt;</code></li>
+<li><code>A&lt;T&gt; &amp;&amp; B&lt;T&gt; &amp;&amp; !C&lt;T&gt;</code></li>
+<li><code>A&lt;T&gt; &amp;&amp; B&lt;T&gt; &amp;&amp; C&lt;T&gt;</code></li>
+</ol>
+<p>Видно, что сюда тяжело добавлять требования, нужно менять логическое выражение в каждой перегрузке</p>
+<h3><a class="header" href="#Ещё-один-пример" id="Ещё-один-пример">Ещё один пример</a></h3>
+<pre><code class="language-c++">template&lt;typaneme It&gt;
+void advance(It it&amp;, ptrdiff_t diff) 
+</code></pre>
+<p>Эта функция делает <code>+= diff</code> для итераторов, но к ней нет требования работать за O(1). Ее можно было бы реализовать по наивному, делать в while сдвиг.</p>
+<p>Но по хорошему мы могли бы рассмотреть отдельно случаи для <code>RandomAccessIterator</code> -- просто делаем <code>+=</code>, иначе -- инкрементим по единичке.</p>
+<p>Могли бы сделать это через <code>enable_if</code> или <code>tag_dispatching</code>, В С++ 17 могли бы реализовать через <code> if constexpr</code> .</p>
+<p>Но с концертами могли бы сделать максимально прямолинейно, две перегрузки, одна для <code>RandomAccessIterator</code>, другая для остальных.</p>
+<p>В общем случае, если будем пользоваться SFINAE, то сначала выполнится подстановка, но внутри функция может не скомпилироваться -- это понятие называется SFINAE-friendly</p>
+<p>Если будем пытаться делать <code>if constexpr </code>, то эта функция будет нерасширяемая, не сможем сделать ещё одну специализацию не меняя исходную функцию</p>
+<h3><a class="header" href="#Итого-концепты-дают-нам" id="Итого-концепты-дают-нам">Итого концепты дают нам:</a></h3>
+<ol>
+<li>SFINAE-friendly</li>
+<li>Расширяемость условий</li>
+<li>Сложные предикаты на концептах будут выглядеть проще</li>
+<li>Упрощают случаи когда нужно выбирать реализацию в зависимости от свойств типа</li>
+</ol>
+<h2><a class="header" href="#explicit-vs-implicit-концепты" id="explicit-vs-implicit-концепты">Explicit vs implicit концепты</a></h2>
+<p>Достаточно ли написать деструктор, чтобы тип считался destructible? И не всегда можно по итератору определить, какого он вида. Тут не обойтись без explicit концептов.</p>
+<p>Еxplicit concepts:</p>
+<ul>
+<li>Плюсы:
+<ul>
+<li>Есть некоторые концепты, которые нельзя никак отличить по синтаксическим требованиям(например: <code>InputIterator</code> и <code>ForwardIterator</code>, набор операций над ними один и тот же, но <code>ForwardIterator</code> может несколько раз пройти по одному месту, а <code>InputIterator</code> - нет). Т.е в таких случаях без explicit concepts не обойтись, потому что хочется уметь различать эти два концепта.</li>
+<li>Консистентность с наследованием - при наследовании явно пишем от какой базы наследуемся, и в explicit concepts будем так же явно указывать концепт типа.</li>
+</ul>
+</li>
+<li>Минусы:
+<ul>
+<li>При попытке внедрения концептов в стандартную библиотеку explicit concepts казались все большим и большим бойлерплейтом.</li>
+</ul>
+</li>
+</ul>
+<p>Плюс Implicit концептов соответственно в том что они ликвидируют бойлерплейты.</p>
+<p>В Concept GCC пытались делать definition-checking. Это проверка того, какими свойствами должен обладать шаблонный тип (наличие оператора <code>&gt;</code> и т.п.). Помимо этой проверки еще проверялось что в определении функции мы работаем только с теми свойстами, которые потребовали.</p>
+<p>И это работало очень медленно.</p>
+<h2><a class="header" href="#concept_map" id="concept_map"><code>concept_map</code></a></h2>
+<p>Например, <code>vector</code> может реализовывать концепт <code>stack</code> и в соответствие операциям <code>push</code> и <code>pop</code> мы могли бы поставить <code>push_back</code> и <code>pop-back</code>. Или мы могли бы сделать <code>T*</code> итератором, объявив для него <code>value_type</code> равным <code>T</code> и т.п. Вот это и называется <code>concept_map</code>.</p>
+<h2><a class="header" href="#Проблемы-ранних-концептов" id="Проблемы-ранних-концептов">Проблемы ранних концептов</a></h2>
+<p>Изначально хотели сделать систему концептов с наследованием:</p>
+<pre><code class="language-c++">concept C1 : C2 {
+    ...
+};
+</code></pre>
+<p>Но вскоре поняли, что какой-то безобидный концепт мог потащить за собой кучу других и нам пришлось бы реализовывать всю ненужную функционалность. Ещё одна проблема - концептуализация стандартной библиотеки. Например, <code>std::sort</code> использует оператор <code>&lt;</code> и через него выражает все остальные пять. </p>
+<p>Это сделано для того, чтобы пользователь мог реализовать только необходимый минимум. В случае же какого-нибудь <code>comparable</code> концепта, пришлось бы писать все шесть операторов сравнения. Поэтому концепты стали дробить и их стало слишком много. В итоге концепты перестали дробить.</p>
+<h2><a class="header" href="#concepts-lite" id="concepts-lite">Concepts Lite</a></h2>
+<ul>
+<li><a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3701.pdf">Proposal</a>
+Концепты вошли в язык из пропозала выше, <code>concept_map</code> решили убрать.</li>
+</ul>
+<p>Синтаксис:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+concept destructible = std::is_nothrow_destructible_v&lt;T&gt;;
+</code></pre>
+<p>Полная форма:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+requires destructible&lt;T&gt;
+void f(T&amp;);
+</code></pre>
+<p>Короткая форма:</p>
+<pre><code class="language-c++">template &lt;destructible T&gt;
+void f(T&amp;);
+</code></pre>
+<p>Можно даже ещё короче:</p>
+<pre><code class="language-c++">void f(destructible auto&amp;);
+</code></pre>
+<p>В общем случае объявление выглядит так:</p>
+<pre><code class="language-c++">// Запись:
+template&lt;C X&gt;
+// Эквивалентна
+template&lt;typename X&gt;
+requires C&lt;X&gt;
+
+// А запись
+template&lt;C auto X&gt;
+// Эквивалентна
+template&lt;auto X&gt;
+requires C&lt;X&gt;
+</code></pre>
+<p>Выражение вида <code>requires expr</code> называется requieres clause.</p>
+<p>Как проверить, что тип поддерживает какую-то операцию? Для этого существует requieres expression:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+concept comparable = requires(T a)
+// compound requirement
+{
+ {a &lt; a} -&gt; std::convertible_to&lt;bool&gt;;
+};
+</code></pre>
+<p>Внутри requires expression можно проверить валидность и свойства какого-то выражения (как в примере выше - compound requirement), наличие функции (<code>begin(a)</code> - simple requirement) либо наличие типа (<code>typename T::value_type</code> - т.н. type requirement).</p>
+<h2><a class="header" href="#Специализации-или-как-это-здесь-называется" id="Специализации-или-как-это-здесь-называется">Специализации (или как это здесь называется)</a></h2>
+<p>Рассмотрим варианты функции <code>advance</code>:</p>
+<pre><code class="language-c++">void advance(input_iterator auto&amp;, ptrdiff_t);
+void advance(random_access_iterator auto&amp;, ptrdiff_t);
+</code></pre>
+<p>Как компилятор понимает, какая специализация &quot;уже&quot;? Для этого в стандарте определяется специальный <a href="https://en.cppreference.com/w/cpp/language/constraints">алгоритм</a> (см. partial ordering of constraints).</p>
+<h2><a class="header" href="#Применение" id="Применение">Применение</a></h2>
+<p>С 34 минуты второй лекции начинается godbolt (ничего не видно, но можно послушать): примеры с <code>comparable</code>, свой <code>same_as</code>.
+Потом обсуждается <a href="https://youtu.be/vYzjV0xSqJE">презентация</a> Андрея Давыдова по концептам (пример с дефолтным конструктором pair).
+Проблема <code>enable_if</code> в конструкторах - выключать их не просто. Например, мы решали эту проблему в <code>optional</code> наследованием + <code>conditional</code> и т.д. Зато с помощью концептов эта проблема решается тривиально:</p>
+<pre><code class="language-c++">template&lt;typename T&gt; class optional {
+    ...
+    optional(optional const&amp;) requires(!CopyConstructible&lt;T&gt;) = delete;
+    optional(optional const&amp;) requires(TriviallyCopyConstructible&lt;T&gt;) = default;
+    optional(optional const&amp;) noexcept(NothrowCopyConstructible&lt;T&gt;) { ... }
+    ...
+}
+</code></pre>
+<h2><a class="header" href="#Поддержка-у-компиляторов" id="Поддержка-у-компиляторов">Поддержка у компиляторов</a></h2>
+<p>gcc-10, clang-10, msvc (2019.09-2021.03)</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="24_qt.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="26_ranges.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="24_qt.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="26_ranges.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
