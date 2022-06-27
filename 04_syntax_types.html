@@ -165,189 +165,325 @@
 <li><a href="https://www.youtube.com/watch?v=kf2zVHBEfy8">Запись лекции №2</a></li>
 </ul>
 <hr />
-<h2><a class="header" href="#Типы-данных" id="Типы-данных">Типы данных</a></h2>
-<h3><a class="header" href="#Целочисленные" id="Целочисленные">Целочисленные:</a></h3>
-<pre><code class="language-c++">signed int // по умолчанию тип знаковый, то же самое, что и int
-// типы и их беззнаковые варианты:
-short		unsigned short
-int		unsigned
-long		unsigned long
-long long	unsigned long long
-</code></pre>
-<p>Стандарт не приписывает конкретных размеров типа, гарантирует только, что не меньше. Размеры типов прописаны в ABI архитектуры.</p>
-<table><thead><tr><th>типы</th><th>32 bit</th><th>win64</th><th>linux64</th></tr></thead><tbody>
-<tr><td>short</td><td>8</td><td>8</td><td>8</td></tr>
-<tr><td>short</td><td>16</td><td>16</td><td>16</td></tr>
-<tr><td>int</td><td>32</td><td>32</td><td>32</td></tr>
-<tr><td>long</td><td>32</td><td>32</td><td>64</td></tr>
-<tr><td>long long</td><td>64</td><td>64</td><td>64</td></tr>
+<p>Мы, наконец-то начинаем говорить про C++. Начать, разумеется, надо с базовых вещей, которые появились в ещё C. И вообще текущая тема может быть по праву названа как введением в C, так и введением в C++.</p>
+<p>Однако <strong>C и C++ — это разные языки</strong>:</p>
+<ol>
+<li>Во-первых, их разрабатывают разные люди с разными целями.</li>
+<li>Во-вторых, они имеют разные компиляторы, несмотря на то, что обычно компании, имеющие компиляторы C++ также имеют компилятор C. Эти компиляторы имеют общий код, но они всё же не
+одинаковы — этот самый общий код также используется и для Go, и для D, и для Ada... Исключением из этого правила является Clang, где просто <code>if</code>'ами различаются C и C++. Правда, там ещё и Objective-C и нечто ещё...</li>
+<li>В-третьих, стили программирования на C и C++ кардинально отличаются, если вы пишете на них одинаково, вы дурачок.</li>
+<li>В-четвёртых, C не является подмножеством C++, случайная программа на C вообще не факт что будет корректна в C++. Правда, обычно придётся менять её не очень сильно. Примером такого отличия является код вида <code>a ? b : c = 42</code>. В C — это
+<code>(a ? b : c) = 42</code>, а в C++ — <code>a ? b : (c = 42)</code>.</li>
+</ol>
+<p>Так вот, у нас всё будет обсуждаться в терминах C++: в местах отличий мы не будем обсуждать оба языка.</p>
+<p>Поправка по курсу. Считается, что мы знаем, что такое переменная, как вообще всё живётся, а обсуждать будет то, о чём либо редко говорят, либо о том, что специфично для C/C++.</p>
+<h2><a class="header" href="#Типы-данных" id="Типы-данных">Типы данных.</a></h2>
+<h3><a class="header" href="#Целочисленные" id="Целочисленные">Целочисленные.</a></h3>
+<p>Целочисленных типов в языке C++ девять:</p>
+<ul>
+<li><code>char</code>.</li>
+<li><code>unsigned char</code>.</li>
+<li><code>signed char</code>.</li>
+<li><code>[signed] short [int]</code>.</li>
+<li><code>unsigned short [int]</code>.</li>
+<li><code>[signed] int</code> или просто <code>signed</code>.</li>
+<li><code>unsigned [int]</code>.</li>
+<li><code>[signed] long [int]</code>.</li>
+<li><code>unsigned long [int]</code>.</li>
+<li><code>[signed] long long [int]</code>.</li>
+<li><code>unsigned long long [int]</code>.</li>
+</ul>
+<p>Квадратными скобками помечены слова, которые можно просто опустить в объявлении типа.</p>
+<p><strong>Стандарт не приписывает конкретных размеров типа</strong>, гарантирует только, что не меньше некоторого размера. Размеры типов прописаны в ABI архитектуры.</p>
+<table><thead><tr><th align="center">Размер</th><th align="center">Стандарт</th><th align="center">32 bit</th><th align="center">win64</th><th align="center">linux64</th></tr></thead><tbody>
+<tr><td align="center"><code>char</code></td><td align="center">$1$ байт</td><td align="center">8</td><td align="center">8</td><td align="center">8</td></tr>
+<tr><td align="center"><code>short</code></td><td align="center">$\leqslant16$ бит</td><td align="center">16</td><td align="center">16</td><td align="center">16</td></tr>
+<tr><td align="center"><code>int</code></td><td align="center">$\leqslant16$ бит</td><td align="center">32</td><td align="center">32</td><td align="center">32</td></tr>
+<tr><td align="center"><code>long</code></td><td align="center">$\leqslant32$ бит</td><td align="center">32</td><td align="center">32</td><td align="center">64</td></tr>
+<tr><td align="center"><code>long long</code></td><td align="center">$\leqslant64$ бит</td><td align="center">64</td><td align="center">64</td><td align="center">64</td></tr>
 </tbody></table>
-<p><strong>8-битные типы</strong></p>
-<pre><code class="language-c++">// это 3 разных типа, в отличие от int и signed int
-char    // может быть как знаковый, так и нет
-unsigned char			
-signed char
+<p>Надо понимать, что C++ поддерживает системы, в которых байт не равен 8 битам. В частности, на <a href="https://en.cppreference.com/w/cpp/language/types#Character_types">cppreference</a> можно найти такую строку: «<em>Note: this allows the extreme case in which bytes are sized 64 bits, all types (including <code>char</code>) are 64 bits wide, and <code>sizeof</code> returns <code>1</code> for every type.</em>»</p>
+<h4><a class="header" href="#Символьные-типы" id="Символьные-типы">Символьные типы.</a></h4>
+<p>Как следует из списка выше, <strong><code>char</code>, <code>unsigned char</code> и <code>signed char</code> — это три разных типа</strong>.</p>
+<p>Как проверить, одинаковые ли типы? Например, перегрузить функцию:</p>
+<pre><code class="language-c++">void foo(int) {}
+void foo(signed int) {} // Не скомпилируется, так как две функции с одинаковой сигнатурой.
 </code></pre>
-<p>Как проверить, одинаковые ли типы? Перегрузить функцию.</p>
-<pre><code class="language-c++">void foo(int){}
-void foo(signed int){} // не скомпилируется, так как две функции с одинаковой сигнатурой
+<pre><code class="language-c++">void foo(char) {}
+void foo(signed char) {}
+void foo(unsigned char) {} // Скомпилируется.
 </code></pre>
-<pre><code class="language-c++">void foo(char){}
-void foo(signed char){} // скомпилируется
-</code></pre>
-<p><strong>Существуют типы с фиксированным размером:</strong>
-Следует использовать их, если хотим тип гарантированного размера:</p>
+<h4><a class="header" href="#Типы-с-фиксированным-размером" id="Типы-с-фиксированным-размером">Типы с фиксированным размером.</a></h4>
+<p>Несмотря на то, что стандарт не гарантирует ничего про размеры типов данных, <strong>существуют типы с фиксированным размером:</strong></p>
 <pre><code class="language-c++">#inlcude &lt;cstdint&gt;
 int8_t			uint8_t
 int16_t			uint16_t
 int32_t			uint32_t
 int64_t			uint64_t
 </code></pre>
-<pre><code class="language-c++">arr[i]; // какого типа нужно брать i?
-#inlcude &lt;cstddef&gt; // в ней лежат нужные типы
+<p>Следует использовать их, если хотим тип гарантированного размера. Эти типы существуют в том и только в том случае, если реализация имеет тип соответствующего размера. В частности, а патологическом случае указанном выше (где байт имеет 64 бита), из типов фиксированного размера существуют только <code>int64_t</code> и <code>uint64_t</code>.</p>
+<h4><a class="header" href="#Прочие-полезные-typedefы" id="Прочие-полезные-typedefы">Прочие полезные <code>typedef</code>'ы.</a></h4>
+<p>Нужно вам перебрать все значения в массиве:</p>
+<pre><code class="language-c++">for (/*???*/ i = 0; i &lt; N; i++)
+	arr[i] = 42;
 </code></pre>
-<p><strong><code>size_t</code></strong> - тип, размера которого хватит, чтобы хранить максимальный размер;<br />
-он <code>unsigned</code> (размер на 32bit - 32, на 64bit - 64), у <strong><code>sizeof(...)</code></strong> тип <strong><code>size_t</code></strong>.</p>
-<p><strong><code>ptrdiff_t</code></strong> - тип для разности двух указателей (<code>signed</code>)</p>
-<p>Как выбирать целочисленный тип:</p>
+<p>Какого типа должно быть <code>i</code>?</p>
+<p><code>size_t</code> - тип, размер которого необходим и достаточен, для хранения размера массива. <strong>Очень рекомендуется для индексов и размеров структур в памяти использовать <code>size_t</code>.</strong> Если вы будете брать тип фиксированной длины больше, чем <code>size_t</code> — будет немного медленнее, а если меньше — то может не хватить для адресного пространства. К тому же компилятор может немного хуже оптимизировать код, если вы используете размер меньше <code>size_t</code>. <code>size_t</code> беззнаковый, а его размер обычно равен разрядности вашей системы. Также <strong>возвращаемое значение <code>sizeof(...)</code> — это <code>size_t</code></strong>.</p>
+<p>У <code>size_t</code> есть знаковый друг — <code>ptrdiff_t</code> — результат разности двух указателей.</p>
+<h4><a class="header" href="#Как-выбирать-целочисленный-тип" id="Как-выбирать-целочисленный-тип"><strong>Как выбирать целочисленный тип</strong>.</a></h4>
 <ul>
-<li>если данные приходят из существующей функции или уходят в неё, то используем тот же тип, что там.</li>
-<li>если  используется как размер или индекс в контейнере - <code>size_t</code> и <code>ptrdiff_t</code>.</li>
-<li>если знаем, оцениваем размер.</li>
+<li>Если данные приходят из существующей функции или уходят в неё, то используем тот же тип, что там.</li>
+<li>Если  используется как размер/индекс или сдвиг в контейнере — <code>size_t</code> и <code>ptrdiff_t</code>.</li>
+<li>Если знаем, оцениваем размер, используем тип фиксированного размера.</li>
 </ul>
-<h3><a class="header" href="#Типы-с-плавающей-точкой" id="Типы-с-плавающей-точкой">Типы с плавающей точкой:</a></h3>
-<table><thead><tr><th>тип</th><th>размер (обычно)</th></tr></thead><tbody>
-<tr><td>float</td><td>32</td></tr>
-<tr><td>double</td><td>64</td></tr>
-<tr><td>long double</td><td>64/80</td></tr>
+<h3><a class="header" href="#Типы-с-плавающей-точкой" id="Типы-с-плавающей-точкой">Типы с плавающей точкой.</a></h3>
+<table><thead><tr><th align="center">Тип</th><th align="center">Размер (обычно)</th></tr></thead><tbody>
+<tr><td align="center"><code>float</code></td><td align="center">32</td></tr>
+<tr><td align="center"><code>double</code></td><td align="center">64</td></tr>
+<tr><td align="center"><code>long double</code></td><td align="center">64/80/128</td></tr>
 </tbody></table>
 <p>Разделение на мантиссу и экспоненту фиксировано в стандарте <a href="https://standards.ieee.org/standard/754-2019.html">IEEE-754</a></p>
-<p><a href="https://neerc.ifmo.ru/wiki/index.php?title=%D0%9F%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B5%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%87%D0%B8%D1%81%D0%B5%D0%BB">Подробнее на викиконспектах</a> - про денормализованные числа, <code>nan</code>, <code>inf</code> и всё такое.</p>
-<p>Стоит заметить, что из-за особенностей чисел с плавающей точкой (из-за <code>nan</code> и <code>inf</code>) всякие <code>0 * a</code> и <code>a - a</code> не заменяются при компиляции на <code>0</code>. Но можно прописать <a href="http://gcc.gnu.org/wiki/FloatingPointMath">флаги компилятора игнрирующие nan и inf</a> и тогда арифметические действия будут похожи на обычные.</p>
-<p>А ещё сравнения с <code>nan</code> это всегда <code>false</code>, поэтому нужно быть аккуратнее.</p>
+<p>Подробнее о них (про денормализованные числа, NaN, $\pm\infty$, отрицательный 0 и подобное) можно почитать на <a href="https://neerc.ifmo.ru/wiki/index.php?title=%D0%9F%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B5%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%87%D0%B8%D1%81%D0%B5%D0%BB">викиконспектах</a> или узнать в <a href="https://www.overleaf.com/read/hcmjjqmhwqzx">курсе архитектуры ЭВМ</a>.</p>
+<p>Стоит заметить, что особенностей чисел с плавающей точкой (обычно из-за NaN'ов, бесконечностей и нулей разного знака) операции вида <code>0 * a</code> и <code>a - a</code> не могут быть заменены заменяются при компиляции на <code>0</code> (о части из них также можно почитать <a href="https://www.overleaf.com/read/hcmjjqmhwqzx">в приложенной ссылке на конспект по АрхЭВМ</a>). Но можно прописать <a href="http://gcc.gnu.org/wiki/FloatingPointMath">флаги компилятора, игнорирующие NaN и $\infty$</a> и тогда арифметические действия будут быстрее (но не будут соответствовать стандарту IEEE-754). Одним из примеров невозможности оптимизации является <code>if (a == a)</code>, что вернёт <code>false</code>, если <code>a</code> является NaN'ом:</p>
 <blockquote>
 <p><a href="https://www.itu.dk/%7Esestoft/bachelor/IEEE754_article.pdf">David Golberg, What Every Computer Scientist Should Know About Floating-Point Arithmetic</a></p>
 <p><a href="http://notabs.org/fpuaccuracy/">Intel overstates FPU accuracy</a></p>
 </blockquote>
-<h2><a class="header" href="#Структуры-и-указатели" id="Структуры-и-указатели">Структуры и указатели:</a></h2>
-<ol>
-<li><strong>Структура</strong></li>
-</ol>
+<h3><a class="header" href="#Перечисляемый-тип" id="Перечисляемый-тип">Перечисляемый тип.</a></h3>
+<p>Самым простым составным типом является перечисляемый тип. <strong>В C++ рекомендуется использовать только строгий их вариант — <code>enum class</code></strong>. Это кто? Это перечисление набора вариантов. Это лучше, чем набор констант, потому что <code>enum class</code>:</p>
+<ul>
+<li>Безопаснее (в него сложно присвоить то, чего в нём нет).</li>
+<li>Понятнее (если в функцию передаётся три разных <code>int</code>'а, то вы легко их перепутаете, а перепутать три разных перечисляемых типа вам не дадут).</li>
+<li>Сразу видно, какие константы связаны друг с другом.</li>
+</ul>
+<p>Изнутри <code>enum class</code> — это просто целое число, причём вы можете ещё и явно указать, какое конкретно при помощи такой конструкции:</p>
+<pre><code class="language-c++">enum class color : uint16_t
+{
+	RED,
+	GREEN,
+	BLUE
+};
+</code></pre>
+<p>Но <strong>арифметика со строгими перечисляемыми типами не работает</strong>.</p>
+<h3><a class="header" href="#Структуры-и-указатели" id="Структуры-и-указатели">Структуры и указатели:</a></h3>
+<p><strong>Структура</strong></p>
 <pre><code class="language-c++">struct point {
 	float x;
 	float y;
 	float z;
 };
 
-// обращение к полям:
+// Обращение к полям:
 void f (point p) {
 	p.x = 5;
 }
 </code></pre>
-<p>Данные структуры хранятся подряд (с точностью до выравнивания).</p>
-<p><a href="https://stackoverflow.com/questions/119123/why-isnt-sizeof-for-a-struct-equal-to-the-sum-of-sizeof-of-each-member">Интересное про sizeof от структуры</a></p>
-<p>А ещё <code>sizeof</code> возвращает столько, сколько структура занимает, когда она лежит в массиве.</p>
-<ol start="2">
-<li><strong>Указатель</strong> - &quot;номер ячейки памяти&quot; (важно указывать, какой тип, но эта информация используется на уровне компилятора). Все указатели имеют одинаковый размер - битность системы.</li>
-</ol>
-<pre><code class="language-c++">int a;
-int *a;
-long *a;
-int *p = &amp;a;	// &amp; - взятие адреса
-*p = 42;	// * - разыменования указателя
-// обращение к полям структуры по указателю:
-void f (point* p) {
-    (*p).x = 5;
-    p-&gt;x = 5;		// эквивалентно
-}
+<p>Структура — это способ сгруппировать набор данных в одну сущность. <strong>Структурами очень рекомендуется пользоваться: не надо таскать в разные места несгруппированные данные.</strong> Иначе ваш код раздуется до невероятных размеров и вообще обретёт форму спагетти. А ещё вы получите больший шанс ошибиться.</p>
+<p><strong>Данные структуры хранятся подряд (с точностью до выравнивания)</strong>. Какое такое выравнивание? Сразу виден человек, не читавший <a href="./01_asm.html">конспект по ассемблеру</a>. Процессоры либо не умеют, либо плохо читают $N$ байт, адрес начала которых не делится на $N$ (это называется <em>невыравненное обращение к памяти</em>/<em>unaligned access</em>). Поэтому <strong>компиляторы стараются располагать структуры так, чтобы данные в них были выравнены</strong>. Подробнее о невыравненном обращении можно почитать <a href="https://stackoverflow.com/questions/119123/why-isnt-sizeof-for-a-struct-equal-to-the-sum-of-sizeof-of-each-member">здесь</a>.</p>
+<p><u>Пример</u>:</p>
+<pre><code class="language-c++">struct mytype1
+{
+	char a;
+	int b;
+};
+
+struct mytype2
+{
+	int b;
+	char a;
+};
 </code></pre>
-<ol start="3">
-<li><strong>Массивы</strong> </li>
-</ol>
-<pre><code class="language-c++">int* a[10]; // массив указателей
-char buf[4096];
-char* p = buf; // неявное приведение массива к указателю на первый элемент
+<p>Как несложно догадаться, первая структура занимает 8 байт, а не 5, потому что после <code>a</code> добавляются 3 байта. Более интересно, что вторая структура тоже занимает 8 байт, потому что когда вы положите такую структуру в массив, придётся после неё вставлять 3 байта. Чтобы узнать, сколько места м структура, (когда она лежит в массиве), есть <em>оператор <code>sizeof</code></em>.</p>
+<h3><a class="header" href="#Объединение" id="Объединение">Объединение.</a></h3>
+<p>У нас есть тип, которых хранит первое, <strong>И</strong> второе, <strong>И</strong> третье. А что, если мы хотим хранить строго одно из нескольких значений? Специально для этого есть <code>union</code>, который этим и занимается. Пока <code>struct</code> хранит следующее поле по смещению относительно предыдущего, у <code>union</code>'а всё хранится по одному смещению.</p>
+<p>Важно: <strong>никакой информации о том, что хранится в данный момент, <code>union</code> не знает</strong>. Если вас это устраивает, вас это устраивает, а иначе вам нужно связать <code>union</code> с <code>enum class</code> в одну структуру (обращение не в ту альтернативу <code>union</code>'а — undefined behaviour). И называется эта структура <code>std::variant</code>:)</p>
+<h3><a class="header" href="#Указатели-и-массивы" id="Указатели-и-массивы">Указатели и массивы.</a></h3>
+<h4><a class="header" href="#Указатели" id="Указатели">Указатели.</a></h4>
+<p><em>Указатель</em> — «номер ячейки памяти» (важно указывать, какой тип в это ячейке, эта информация используется на уровне компилятора). Все указатели имеют одинаковый размер - битность системы. </p>
+<pre><code class="language-c++">mytype *p1; // Объявление указателя на тип `mytype`.
+
+int a;
+int *p2 = &amp;a; // `&amp;` — взятие адреса переменной.
+*p2 = 42;     // `*` — разыменования указателя (взять значение того, что в этой ячейке).
+
+point *p;
+// Вместо:
+(*p).x = 5;
+// Можно написать:
+p-&gt;x = 5;
+// Второе — просто сокращение для первого.
 </code></pre>
-<p>Функции, принимающие массив фиксированного размера лучше не писать, компилятор все равно изменит на применяющую указатель.</p>
+<h4><a class="header" href="#c-style-массивы" id="c-style-массивы">C++-style массивы.</a></h4>
+<pre><code class="language-c++">#include &lt;array&gt;
+
+std::array&lt;int, 20&gt; arr; // Массив из 20 целых чисел.
+arr[2] = 123;            // Обращение к элементу массива (0-based).
+int *p = arr.data();     // Указатель на первый элемент массива (может быть использовано для арифметики указателей).
+</code></pre>
+<h4><a class="header" href="#c-style-массивы-1" id="c-style-массивы-1">C-style массивы.</a></h4>
+<pre><code class="language-c++">int a[10]; // Массив из 10 целых чисел.
+a[1] = 42; // Всё такое же 0-based обращение к элементу.
+</code></pre>
+<p>У массивов из C (далее <em>встроенные массивы</em>) по сравнению с <code>std::array</code> есть существенные недостатки:</p>
+<ul>
+<li>Встроенные массивы неявно конвертируются в указатели (что вызывает путаницу с тем, являются ли указатели и массивы одним и тем же или нет).</li>
+<li>Встроенные массивы нельзя копировать (поэтому нельзя их в функцию передавать, например).</li>
+<li>А если вы напишете встроенный массив в параметре функции, то он тоже неявно конвертируется в указатель:</li>
+</ul>
 <pre><code class="language-c++">void f(int a[10]){}
 // компилируется в 
 void f(int* a){}
 </code></pre>
-<h3><a class="header" href="#Арифметика-указателей" id="Арифметика-указателей">Арифметика указателей</a></h3>
-<pre><code class="language-c++">int *p;
-int *q;
-int n;
-p += n; // добавить к указателю
-p -= n; // вычесть из указателя
-ptrdiff_t ans = p - q // разность указателей - количество элементов между ними (знаковое)
-</code></pre>
-<pre><code class="language-c++">for (int* p = a; p != a + 10; ++p)
-int* b[10];   // массив указателей
-int (*b)[10]; // указатель на массив, приоритет показываем скобками
-</code></pre>
-<p>Суффиксные модификаторы имеют больший приоритет.</p>
-<h3><a class="header" href="#Указатели-на-функции" id="Указатели-на-функции">Указатели на функции:</a></h3>
-<pre><code class="language-c++">int* f () {}        //  функция возвращает указатель
-int f(int);
-int (*g)(int) = &amp;f; // указатель на функцию f, сработает и без &amp;
-g(5);               // можно вызывать указатель на функцию, как функцию. 
-// пример использования: передавать компаратор в sort
-</code></pre>
-<p><strong>Разное про указатели:</strong></p>
-<pre><code class="language-c++">int a[50];
-int* p = a;
-p[20] = 5; // *(p+20) = 5
-20[p] = 5; // *(20+p) = 5, так тоже можно, но не нужно	
+<h4><a class="header" href="#Арифметика-указателей" id="Арифметика-указателей">Арифметика указателей.</a></h4>
+<pre><code class="language-c++">long long *p;
+int n; // Любой целочисленный тип.
 
-// Указатель на void может хранить 
-// любой другой указатель(другого типа)
+long long *q = +p;      // `+p` — то же, что `p`. По полезности как писать `a = +1` вместо `a = 1`.
+p++;                    // Перейти к следующему объекту в памяти.
+p--;                    // Перейти к предыдущему.
+p += n;                 // Добавить к указателю `n`.
+p -= n;                 // Вычесть из указателя `n`.
+ptrdiff_t diff = p - q; // Разность указателей на одинаковый тип — количество элементов между ними.
+
+p[10] = -5; // `p[10]` равносильно `*(p + 10)`.
+10[p] = -5; // Равносильно `*(10 + p)`. Так можно, но Безымянного Бога ради не делайте так.
 </code></pre>
-<h3><a class="header" href="#Мем-про-switch" id="Мем-про-switch">Мем про switch:</a></h3>
+<h4><a class="header" href="#void" id="void"><code>void*</code>.</a></h4>
+<p>Есть особый указатель, пришедший из C — <code>void*</code>. Любой указатель неявно приводится в <code>void*</code>, а <code>void*</code> можно <strong>явно</strong> (в C — неявно) привести куда угодно. И это только ваша ответственность следить за тем, чтобы это приведение было корректно.</p>
+<p>Используется <code>void*</code> во всяких интерфейсах из C, где неизвестен тип объекта (как то <code>malloc</code> или <code>qsort</code>). В C++ он обычно не нужен.</p>
+<h4><a class="header" href="#Сочетание-указателей-и-массивов" id="Сочетание-указателей-и-массивов">Сочетание указателей и массивов.</a></h4>
+<p>Ещё с массивами из C есть вопрос: <code>int* a[10]</code> — это кто такой: массив указателей или указатель на массив? Первое. Второе — это <code>int (*a)[10]</code>. В общем случае <strong>суффиксные деклараторы имеют больший приоритет, чем префиксные</strong> (т.е. это в первую очередь массив чего-то, а во вторую «<em>что-то</em> — это указатели»). Ровно также работает использование: если вы пишете выражение <code>x = *a[1]</code>, то у вас сначала будет обращение к первому элементу, а потом его разыменовывание.</p>
+<p>Но вообще люди обычно не пишут все эти скобки, а пишут что-то такое:</p>
+<pre><code class="language-c++">typedef int type[10];
+type* a; // int (*a)[10];
+</code></pre>
+<p>Вопрос на засыпку: как хотим завести себе <code>typedef</code>, который будет являться типом переменной</p>
+<pre><code class="language-c++">int ***(***a[10][20][30])[40][50][60];
+</code></pre>
+<p>Да элементарно:</p>
+<pre><code class="language-c++">typedef int ***(***type[10][20][30])[40][50][60];
+</code></pre>
+<p>То есть никакой разницы, переменную вы объявляете или <code>typedef</code> делаете.</p>
+<h4><a class="header" href="#Указатели-на-функции" id="Указатели-на-функции">Указатели на функции.</a></h4>
+<p>В ассемблере вы могли сделать что-то такое:</p>
+<pre><code class="language-nasm">mov RBX, func
+; ...
+call RBX
+</code></pre>
+<p>В C и C++, разумеется, так тоже можно:</p>
+<pre><code class="language-c++">void func(int) {}
+void main()
+{
+	void (*a)(int) = &amp;func;
+	(*p)(42);
+}
+</code></pre>
+<p>Это можно использовать для полиморфного поведения. Ещё сто́ит сказать, что <strong>указатель на функцию можно вызвать</strong>. И более того, <strong>функции неявно преобразуются в указатели на себя</strong>. Поэтому точно такой же код можно написать так:</p>
+<pre><code class="language-c++">void func(int) {}
+void main()
+{
+	void (*a)(int) = func;
+	p(42);
+}
+</code></pre>
+<p>Указатели на функции подчиняются тем же правилам приоритета, что массивы и обычные указатели. При <strong>декларатор указателя на функцию считается суффиксным</strong>.</p>
+<p>Следующий ужас, который мы можем увидеть — функция, возвращающая указатель на функцию.
+Это выглядит так:</p>
+<pre><code class="language-c++">void (*get_function())(int)
+</code></pre>
+<p>То есть это как объявление указателя на функцию, но с круглыми скобками после имени (это же не сам указатель, а функция, возвращающая его). То есть <strong>возвращаемое значение пишется не слева от функции, а вокруг</strong>. Хотя на практике с таким не встречаются, а делают <code>typedef</code>.</p>
+<h2><a class="header" href="#Мем-про-switch" id="Мем-про-switch">Мем про switch.</a></h2>
 <pre><code class="language-c++">void f(int a) {
-	switch(a) {
+	switch (a) {
 	case 1:
-		printf(&quot;1&quot;);
+		printf(&quot;1\n&quot;);
 		if (false)
 	case 2:
-		printf(&quot;2&quot;);
+		printf(&quot;2\n&quot;);
 		if (false)
 	case 3:
-		printf(&quot;3&quot;);
+		printf(&quot;3\n&quot;);
+		if (false)
+	default:
+		printf(&quot;x\n&quot;);
 	}
 }
 </code></pre>
-<p>Код работает корректно, но писать так не надо. </p>
-<h3><a class="header" href="#lvalue-rvalue" id="lvalue-rvalue">lvalue, rvalue</a></h3>
-<pre><code class="language-c++">int a;
-(a + 1) = 42; // почему не скомпилится?
+<p>Код выводит <code>1</code>, <code>2</code> и <code>3</code> для соответствующих значений и <code>x</code> иначе. И непонятно, почему. А потому что <code>case</code> — это метки. И <code>switch</code> делает <code>goto</code> по ним. И если не опускать фигурные скобки в данной записи, то получится что-то такое:</p>
+<pre><code class="language-c++">void f(int a) {
+	switch (a) {
+	case 1:
+		printf(&quot;1\n&quot;);
+		if (false) {
+		case 2:
+			printf(&quot;2\n&quot;);
+		}
+		if (false) {
+		case 3:
+			printf(&quot;3\n&quot;);
+		}
+		if (false) {
+		default:
+			printf(&quot;x\n&quot;);
+		}
+	}
+}
 </code></pre>
-<p><strong>lvalue</strong> - то, что может стоять слева от оператора присваивания.</p>
-<p><strong>rvalue</strong> - &quot;временные объекты&quot;, им нельзя что-то присваивать.</p>
-<p>Например, <code>a</code> - lvalue, <code>(a+1)</code> - rvalue.</p>
-<pre><code class="language-c++">&amp;a;          // валидно
-&amp;5;          // невалидно, так как 5 - rvalue
-&amp;&amp;a;         // нельзя, так как &amp;a - rvalue
-++a;         // увеличивает и возвращает по ссылке
-a++;         // возвращает копию, а потом увеличивает исходное
-a++++;       // так нельзя, так как a++ - rvalue
-++++a;       // в C++ так можно, так как ++a - lvalue, в C так нельзя
-++a++;       // суффиксный оператор имеет приоритет, поэтому не компилируется (как ++(a++))
-+++a;        // первые ++ отдельно парсятся и это не компилится
-(a = 5) = 6; // так можно, так как оператор = возвращает lvalue
-a = b = c;   // равносильно a = (b = c)
+<p>И теперь в целом понятно, что происходит, мы прыгаем внутрь <code>if (false)</code>. Так писать ни в коем случае не надо, но с точки зрения языка возможно.</p>
+<h2><a class="header" href="#lvalue-rvalue-a-hrefhttpsencppreferencecomwcpplanguagevalue_categoryhistoryuntil-c11a" id="lvalue-rvalue-a-hrefhttpsencppreferencecomwcpplanguagevalue_categoryhistoryuntil-c11a">lvalue, rvalue <a href="https://en.cppreference.com/w/cpp/language/value_category#History">(until C++11)</a>.</a></h2>
+<p>Понятно, что мы не можем написать что-то типа <code>2 + 2 = 7</code>, хотя и слева, и справа — <code>int</code>. Но всё же, почему конкретно, как это в языке работает? А так что в языке есть две категории значений:</p>
+<ul>
+<li><em>lvalue</em> — то, что может стоять слева от оператора присваивания.</li>
+<li><em>rvalue</em> — то, что не может. Обычно временные объекты.</li>
+</ul>
+<p>Ещё обычно у lvalue можно взять адрес, а у rvalue — нельзя.</p>
+<pre><code class="language-c++">&amp;a;          // ok.
+&amp;5;          // `5` — rvalue.
+&amp;&amp;a;         // `&amp;a` — rvalue.
+
+++a;         // Увеличивает и **возвращает по ссылке**.
+a++;         // **Возвращает копию**, а потом увеличивает.
+a++++;       // `a++` - rvalue.
+++++a;       // В C++ ok, в C — нет.
+++a++;       // `a++` — rvalue (суффиксный оператор имеет приоритет).
++++a;        // `+a` — rvalue (лексер работает жадно, воспринимая это как `++(+a)`).
+
+a = 4;       // Присваивание возвращает **левый аргумент по ссылке**.
+(a = 5) = 6; // ok.
+a = b = c;   // ok, `a = (b = c)`.
 </code></pre>
-<h3><a class="header" href="#Приведение-типов" id="Приведение-типов">Приведение типов:</a></h3>
-<p>Приведение происходит к более &quot;общему типу&quot;:</p>
-<pre><code class="language-c++">5;         // int
-5L;        // long
-5LL;       // long long
-'5';       // char
-'5' + 1;   // int
-'5' + '6'; // int
-1+2L;      // long
-1 + 1u;    // unsigned
-</code></pre>
-<p><img src="https://www.cdn.geeksforgeeks.org/wp-content/uploads/Implicit-Type-Conversion-in-c.png" alt="Image result for c++ types conversion explicit" /></p>
+<h2><a class="header" href="#Детали-работы-с-числами" id="Детали-работы-с-числами">Детали работы с числами.</a></h2>
+<h3><a class="header" href="#Суффиксы-констант" id="Суффиксы-констант">Суффиксы констант.</a></h3>
+<p>Какой тип имеет <code>42</code>? <code>int</code>. А если мы хотим другой?</p>
+<table><thead><tr><th>Тип</th><th align="right">Пример</th></tr></thead><tbody>
+<tr><td><code>int</code></td><td align="right"><code>42</code></td></tr>
+<tr><td><code>unsigned</code></td><td align="right"><code>42U</code></td></tr>
+<tr><td><code>long</code></td><td align="right"><code>42L</code></td></tr>
+<tr><td><code>unsigned long</code></td><td align="right"><code>42UL</code></td></tr>
+<tr><td><code>long long</code></td><td align="right"><code>42LL</code></td></tr>
+<tr><td><code>unsigned long long</code></td><td align="right"><code>42ULL</code></td></tr>
+<tr><td><code>float</code></td><td align="right"><code>42.0f</code></td></tr>
+<tr><td><code>double</code></td><td align="right"><code>42.0</code></td></tr>
+<tr><td><code>long double</code></td><td align="right"><code>42.0L</code></td></tr>
+</tbody></table>
+<p>Все суффиксы не зависят от регистра, но маленькую букву <code>l</code> можно легко перепутать с единицей, поэтому советуют писать большую.</p>
+<h3><a class="header" href="#Приведение-типов" id="Приведение-типов">Приведение типов.</a></h3>
+<p>Что будет, если складывать числа разного типа? А вот что. Упорядочим числа в такой ряд</p>
+<ol>
+<li><code>int</code>.</li>
+<li><code>unsigned</code>.</li>
+<li><code>long</code>.</li>
+<li><code>unsigned long</code>.</li>
+<li><code>long long</code>.</li>
+<li><code>unsigned long long</code>.</li>
+</ol>
+<p>Тогда из двух типов <strong>выбирается тот, кто позже в этом списке, оба аргумента приводятся к нему</strong> и результат будет
+того же типа.</p>
+<p>Нюансы проявляются в том, что будет, если складывать два <code>char</code>'а, например. Будет <code>int</code>. Потому что <strong>все арифметические операции с числами меньше <code>int</code>'а выполняются в типе <code>int</code></strong>. Более того, вам даже операции делать не надо, при вызове функции это преобразование также
+происходит.</p>
+<p>Поэтому, кстати, если вы хотите принимать в функцию все типы (чтобы они сохраняли численное значение), то вам хватит <code>int</code> и больше. Реализовать только <code>long long</code> и <code>unsigned long long</code> вы не можете, потому что <code>long</code>, например, не будет знать, куда ему конвертиться. А почему <code>char</code> и <code>short</code> будут? А потому что в языке есть 3 типа конверсий (<em>exact match</em>, <em>promotion</em> и <em>convertion</em>), каждый следующий хуже всех предыдущих, и если у вас есть два одинаково хороших варианта, то ошибка компиляции. Так вот конверсия из <code>short</code>'а в <code>int</code> — promotion, а <code>long</code> в <code>long long</code> или <code>unsigned long long</code> convertion'ы. Про всё это подробно можно почитать <a href="https://eel.is/c++draft/over.best.ics">тут</a>.</p>
+<p>На дробных числах promotion также есть (из <code>float</code> в <code>double</code>), но все операции с <code>float</code>'ами во <code>float</code>'ах и осуществляются. Если вы совершаете <strong>операцию, один аргумент которой — целое число, а другой — числа с плавающей точкой, то целый приводится ко вещественному</strong>.</p>
+<!--![Image result for c++ types conversion explicit](https://www.cdn.geeksforgeeks.org/wp-content/uploads/Implicit-Type-Conversion-in-c.png) На мой взгляд, эта картинка скорее сбивает с толку, нежели помогает. -->
 
                     </main>
 
