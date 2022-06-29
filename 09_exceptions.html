@@ -165,76 +165,124 @@
 <li><a href="https://www.youtube.com/watch?v=8PpW8qS2tEg">Запись лекции №2</a></li>
 </ul>
 <hr />
-<pre><code class="language-c++">bool do_something() {
+<p>Как можно возвращать ошибку? Можно это делать с помощью error-кодов (так делали в C):</p>
+<pre><code class="language-c++">// int — код ошибки.
+int do_something() {
 	FILE* file = fopen(&quot;1.txt&quot;);
 	if (!file)
-		return false;
-	size_t bytes_read = fread(..., file);
-	if (bytes_read &lt; 0)
-		return false;
-	bytes_read = fread(..., file);
-	if (bytes_read &lt; 0)
-		return false;
-	bytes_read = fread(..., file);
-	if (bytes_read &lt; 0)
-		return false;
-	fclose(file);
-	return true;
+		return FILE_NOT_FOUND_CODE; // Какая-то константа.
+	int err = file_interact(file);  // Некоторая функция, которая может завершиться с ошибкой.
+	if (err)
+		return err;
+	// Ещё 100 функций, после каждой из которых проверяем наличие ошибки и возвращаем её, если есть.
+	return 0;
 }
 </code></pre>
-<p>Как можно возвращать ошибку? Можно это делать с помощью error-кодов (так делали в Си), но это не очень удобно. Для этого используют механизм исключений.</p>
-<pre><code class="language-c++">void f() {
-	if (...)
-		throw runtime_error const&amp; e(&quot;...&quot;);
-}
-</code></pre>
-<p>Что происходит при бросании исключения: </p>
-<ul>
-<li>
-<p>Создаётся копия объекта, переданного в <code>throw</code>. Копия будет существовать, пока исключение не будет обработано. Если тип объекта имеет конструктор копирования, то будет использован он.</p>
-</li>
-<li>
-<p>Прерывается исполнение программы.</p>
-</li>
-<li>
-<p>Выполняется раскрутка стека, пока исключение не будет обработано (поймано), вызываются деструкторы в правильном порядке.</p>
-</li>
-</ul>
-<p>Чтобы ловить исключения, есть конструкция <code>try</code>-<code>catch</code>:</p>
+<p>Но это не очень удобно и не очень читаемо. А если у нас есть что-то более сложное, чем последовательное выполнение, то было бы ещё более некрасиво и совсем непонятно. Чтобы такого не было, используют механизм исключений. Вообще больше мотивации по исключениям можно посмотреть в лекциях по введению в программирование.</p>
+<p>Исключения в C++ пишутся так:</p>
 <pre><code class="language-c++">try {
-	...
-	f();
-	...
-} catch (runtime_error const&amp; e) {
-	...
+	// Делаем что-то, что может завершиться с ошибкой.
+	// ...
+	// ...
+	// Завершиться с ошибкой --- это вот так:
+	throw something;
+	// ...
+	// ...
+} catch (error_type const&amp; e) { // Что делать, если ошибка.
+	// Обрабатываем ошибку.
+} catch (another_error_type const&amp; e) {
+	// Обрабатываем другую ошибку.
 }
 </code></pre>
-<p>Выполняется сначала блок <code>try</code> если в нем ничего не произошло, код продолжает выполняться. Если ловится какой-то exception, то он переходит в соответствующий <code>catch</code> блок. Если такового нет, то исключение вылетает за пределы <code>try-catch</code>. Ловить в <code>catch</code> можно и любые исключения <code>catch(...)</code></p>
-<h2><a class="header" href="#Пример" id="Пример">Пример:</a></h2>
+<p>Что происходит при бросании исключения:</p>
+<ul>
+<li>Создаётся копия объекта, переданного в <code>throw</code>. Копия будет существовать, пока исключение не будет обработано.</li>
+<li>У всех проинициализированных локальных переменных вызываются деструкторы (если эти деструкторы тоже кидают исключение — происходит <a href="#noexcept-stdterminate"><code>std::terminate</code></a>).</li>
+<li>Прерывается исполнение программы.</li>
+<li>Выполняется раскрутка стека, пока исключение не будет обработано (поймано), вызываются деструкторы в правильном порядке. Каким конкретно образом — смотри <a href="#%D1%86%D0%B5%D0%BD%D0%B0-%D0%B8%D1%81%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B8%D0%B9">далее</a>.</li>
+</ul>
+<p><em>Обработано</em> — это когда исключение происходит в блоке <code>try</code>, и тогда, в зависимости от типа исключения, происходит переход в соответствующий блок <code>catch</code>. Если такового нет, то <code>try</code>-<code>catch</code> блок игнорируется, и исключение летит дальше вверх по стеку. Ещё есть особый блок <code>catch</code>, который выглядит как <a href="#catch--%D0%B8-throw"><code>catch (...)</code></a>.</p>
+<h2><a class="header" href="#Исключения-и-наследование" id="Исключения-и-наследование">Исключения и наследование.</a></h2>
+<p>Тут, кстати, как в Java есть наследование исключений, и если вы кидаете исключение наследуемого типа, вы можете поймать его как базового. Причём это работает даже если в них нет в RTTI.</p>
 <pre><code class="language-c++">struct base {
 	virtual std::string msg() const {
 		return &quot;base&quot;;
 	}
 }
 struct derived : base {
-	std::string msg() const {
+	std::string msg() const override {
 		return &quot;derived&quot;;
 	}
 }
 int main() {
 	try {
-		throw derived(); // без const&amp; в catch выведет base
-		throw new derived(); // вот так писать не надо, бросится указатель
+		throw derived();
 	} catch (base const&amp; e) {
-		std::cout &lt;&lt; e.msg();
-		throw e; // вот так тоже не очень, он пробрасывает со статическим типом (base)
+		std::cout &lt;&lt; e.msg() &lt;&lt; std::endl;
 	}
 }
 </code></pre>
-<h2><a class="header" href="#Ошибки-и-аллокация-памяти" id="Ошибки-и-аллокация-памяти">Ошибки и аллокация памяти</a></h2>
-<p><code>operator new</code> и <code>operator delete</code> - работают как <code>malloc</code> и <code>free</code> (выделяют сырую память), но бросают исключения, а не возвращают <code>nullptr</code></p>
-<p>Посмотрим на такой пример:</p>
-<pre><code class="language-c++">my_string&amp; my_string::operator =(char const* rhs) {
+<p>Вообще <strong>кидать вы можете всё что угодно — любой копируемый тип</strong>. Но <strong>обычно кидают <code>std::exception</code> или его наследников</strong>.</p>
+<h3><a class="header" href="#Исключения-и-виртуальное-наследование" id="Исключения-и-виртуальное-наследование">Исключения и виртуальное наследование.</a></h3>
+<p><strong><code>catch</code> работает тогда, когда можно однозначно определить подобъект</strong>. В частности такой код:</p>
+<pre><code class="language-c++">struct A {};
+struct B : A {};
+struct C : A {};
+struct D : B, C {};
+
+int main() {
+	try {
+		throw D();
+	} catch (A const&amp;) {
+		std::cout &lt;&lt; &quot;Caught A.\n&quot;.
+	}
+}
+</code></pre>
+<p>не поймает исключение, пока <code>B</code> и <code>C</code> отнаследованы не виртуально.</p>
+<h2><a class="header" href="#catch--и-throw" id="catch--и-throw"><code>catch (...)</code> и <code>throw;</code>.</a></h2>
+<p>Ещё есть специальный тип <code>catch</code>'а — <code>catch (...)</code>, который ловит вообще всё что угодно. Но, как в известном анекдоте, есть один нюанс: <code>catch (...)</code> ловит не обязательно исключения C++. В Windows, например, исключения C++ — это частный случай исключений, встроенных в Windows. И эти встроенные исключения также ловятся при помощи <code>catch (...)</code>, что вы хотите явно не всегда. Системные исключения вообще не надо ловить, если взять POSIX'ивое исключение <code>abi::__forced_unwind</code> и проглотить его, то <a href="https://udrepper.livejournal.com/21541.html">может быть всё очень плохо</a>. Ещё более интересный момент есть в GCC. Там исключения поддерживаются не только плюсовые, а и другие разные, которые работают не так. Куча языков реализуют исключения так, что <code>catch</code> может либо прервать, либо продолжить работу. В C++ такого нет, но ABI такое поддерживает. И такое уж точно вы не хотите ловить.</p>
+<p>Но <strong>вообще <code>catch (...)</code> имеет идиоматическое использование</strong>:</p>
+<pre><code class="language-c++">catch (...) {
+	// Что-то почистим.
+	throw;
+}
+</code></pre>
+<p><strong><code>throw;</code> просто берёт то, что поймал и кидает его же. Без копирования.</strong> Поэтому подобный синтаксис даже в обычных <code>catch</code> бывает полезен, он лучше, чем</p>
+<pre><code class="language-c++">catch (const type&amp; e) {
+	throw e;
+}
+</code></pre>
+<p>потому что во втором варианте есть лишнее копирование или даже <a href="./08_inheritance.html#slicing">slicing</a>.</p>
+<h2><a class="header" href="#best-practices-и-worst-practices" id="best-practices-и-worst-practices">Best practices и worst practices.</a></h2>
+<p>Совет — всегда ловите исключение по константной ссылке. Если Вы, конечно, не хотите исключение менять, тогда просто по ссылке.</p>
+<p>Ещё не кидайте указатель на исключение (то есть не пишите <code>throw new error_type(...);</code>). Если вы так сделаете, ловить вам надо будет <code>catch (error_type*)</code>, и тогда надо не забыть сделать <code>delete</code>. И понятно, что нельзя делать <code>catch (...)</code>, потому что тут вы никак не сделаете <code>delete</code>.</p>
+<p>Также не надо ловить копию. Потому что когда вы вместо <code>catch (const error_type&amp; e)</code> вы пишете <code>catch (error_type e)</code>, тоже происходит копирование/<a href="./08_inheritance.html#slicing">slicing</a>.</p>
+<h2><a class="header" href="#Цена-исключений" id="Цена-исключений">Цена исключений.</a></h2>
+<p>Если открыть что-то в интернете, вам скажут, что исключения — это бесконечно дорого. Чтобы говорить об этом серьёзно, то сначала надо понять, какую операцию мы измеряем по времени.</p>
+<p>Например, как работает <code>try</code>? Есть две стратегии реализации.</p>
+<ol>
+<li>Поддерживать связный список на стеке, по которому в случае чего мы и идём.<br />
+Проблема тут в том, что каждый вход в <code>try</code> (даже если исключения не происходит) жрёт время и память. А исключения у вас должны происходить редко. Поэтому сейчас эту реализацию не
+используют.</li>
+<li><em>Zero-cost</em> исключения. Компилятор для каждой инструкции записывает, куда идти в случае исключения.<br />
+Тогда вход в блок <code>try</code> не генерирует абсолютно никакой код. И тут у нас при <code>throw</code> никакого оверхеда от исключений почти нет. Почему «почти»? Потому что в общем случае код может быть не совсем одним и тем же. Если мы делаем какие-то операции с памятью, например, мы должны видеть все эффекты до <code>throw</code> и не видеть ни одного после. Поэтому компилятор может
+меньше переупорядочивать код в таком случае.</li>
+</ol>
+<p>В любом случае, если написать бенчмарк для тестировки исключений, результат будет в том, что замедление небольшое.</p>
+<p>Ещё есть заморочки с конкретными реализациями (в Itanium ABI, как уже обсуждалось, есть мем с продолжением выполнения после <code>throw</code>). Поэтому Itanium ABI раскручивает стек два раза — чтоб проверить, надо ли прерываться и чтобы потом вызвать деструкторы.</p>
+<h2><a class="header" href="#noexcept-stdterminate" id="noexcept-stdterminate"><code>noexcept</code>. <code>std::terminate</code>.</a></h2>
+<p>Что будет, если кинуть исключение из деструктора при обработке исключения? То есть мы получили исключение, вызываем деструкторы, и получаем исключение там.</p>
+<p>По стандарту, это ошибка в программе: <strong>считается, что в ситуации, когда вы получили 2 исключения, происходит что-то невообразимо ужасное, и в программе вызывается <code>std::terminate</code> — экстренное завершение программы</strong>. Более простой способ получить <code>std::terminate</code> — выкинуть исключение в <code>main</code>.</p>
+<p>Кстати, поскольку деструкторы не должны бросать исключение, такие функции как <code>free</code> явно в языке помечены как неспособные бросать исключения. Чтобы пометить так функцию, есть модификатор <code>noexcept</code> <strong>Бросание исключений из <code>noexcept</code> таких функций также приводит к <code>std::terminate</code></strong>. Ещё помимо <code>noexcept</code> можно указать <code>noexcept(/* булевое выражение */</code>). Это нужно, если вы <a href="./11_templates.html">шаблонный код</a> пишете, и у вас функция может в зависимости от шаблона либо быть <code>noexcept</code>, либо нет.</p>
+<p>И вот что важно знать — <strong>деструкторы по умолчанию <code>noexcept</code></strong>. Если вам нужно это исправить — <code>noexcept(false)</code>. Тогда при обычном бросании исключения в деструкторе всё будет хорошо, а при двойном исключении — всё ещё <code>std::terminate</code>.</p>
+<h2><a class="header" href="#Ошибки-и-аллокация-памяти" id="Ошибки-и-аллокация-памяти">Ошибки и аллокация памяти.</a></h2>
+<p><code>operator new</code> и <code>operator delete</code> - работают как <code>malloc</code> и <code>free</code> (выделяют сырую память), но бросают исключения (<code>std::bad_alloc</code>), а не возвращают <code>nullptr</code>.</p>
+<p>Несмотря на то, что <code>operator new</code> отличается от <code>malloc</code> только тем, что исключение кидает, вам всё равно <strong>не позволяют выделять память при помощи <code>operator new</code>, а освобождать при помощи <code>free</code></strong> (или наоборот).</p>
+<!--
+Посмотрим на такой пример:
+
+```c++
+my_string& my_string::operator=(char const* rhs) {
      char* old_data = data_;
      size_ = strlen(rhs);
      capacity_ = size_;
@@ -243,74 +291,182 @@ int main() {
      operator delete(old_data);
      return *this;
 }
+```
+
+Если `operator new` выкинет исключение, то получим проблему, что мы уже изменили `size_` и `capacity_`, но ничего не скопировали.
+
+Это какие-то гарантии исключений. Причём тут это вообще?
+-->
+<h2><a class="header" href="#raii" id="raii">RAII.</a></h2>
+<p>Давайте зададим себе такой вопрос: вот есть у нас C-шный код, где мы открываем несколько файлов. Как он выглядит? Ну, вот так:</p>
+<pre><code class="language-c++">	res = 0;
+	FILE* f1 = fopen(&quot;1.txt&quot;, &quot;r&quot;);
+	if (f1 == NULL)
+		return -1;
+	FILE* f2 = fopen(&quot;2.txt&quot;, &quot;r&quot;);
+	if (f2 == NULL) {
+		res = -1;
+		goto close_f1;
+	}
+	FILE* f3 = fopen(&quot;3.txt&quot;, &quot;r&quot;);
+	if (f3 == NULL) {
+		res = -1;
+		goto close_f2_and_f1;
+	}
+
+	// ...
+	if (error_while_reading) {
+		res = -1;
+		goto close_all;
+	}
+	// ...
+
+close_all:
+	fclose(f3);
+close_f2_and_f1:
+	fclose(f2);
+close_f1:
+	fclose(f1);
+	return res;
 </code></pre>
-<p>Если <code>operator new</code> выкинет исключение, то получим проблему, что мы уже изменили <code>size_</code> и <code>capacity_</code>, но ничего не скопировали.</p>
-<h2><a class="header" href="#Про-работу-с-ресурсами-и-raii" id="Про-работу-с-ресурсами-и-raii">Про работу с ресурсами и RAII</a></h2>
-<p>Посмотрим на такой код:</p>
-<pre><code class="language-c++">int main() {
-     FILE* a = my_fopen(&quot;a.txt&quot;, &quot;r&quot;);
-     ...
-     fclose(a);
-}
+<p>Как мы уже обсудили, в C++ с помощью исключений это можно написать существенно проще, просто кидая исключения при ошибках, а файлы сами закроются. Но возникает вопрос, как сделать то же самое с, например, памятью:</p>
+<pre><code class="language-c++">	int* p = new int(1);
+	int* q = new int(2);
+	// ...
+	delete p;
+	delete q;
 </code></pre>
-<p>Чем это плохо? Нам нужно не забывать закрывать ресурс. Особенно возникают проблемы, если в процессе кидаем исключения, а ресурсов несколько.</p>
-<p>Здесь придерживаются идиомы <code>RAII</code> - resource allocation is initialization</p>
-<pre><code class="language-c++">struct file {	
-     file(char const* filename, char const* mode) : f(my_fopen(filename, mode)){}
-     file(file const&amp;) = delete;
-     file&amp; operator=(file const&amp;) = delete;
-     ~file() {
-          fclose(f);
-     }
-     FILE* f;
+<p>Тут есть фундаментальная проблема, что в случае, если <code>new int(2)</code> кинет исключение, мы не освободим <code>p</code>. Хм-м-м, ну, у нас же была та же проблема с файлами в C, а <code>std::istream</code> её решил. Каким образом? Наличием деструктора, где освобождается ресурс. Значит надо сделать класс, который будет работать как указатель, но иметь деструктор, освобождающий память.</p>
+<p>Когда класс <strong>при создании выделяет какой-то ресурс, а при удалении — освобождает, говорят, что он удовлетворяет идиоме <em>RAII</em></strong> (<em>resource acquisition is initialization</em>).  И в стандартной библиотеке всё по этой идиоме и работает.</p>
+<p>Хотя вообще данная идиома не очень хорошо названа, потому что выделять-то мы не обязаны в конструкторе, мы можем вызвать <code>std::istream::open</code>, чтобы не при конструкторе файл открыть, а потом. Но в деструкторе мы всё равно закроем файл, если открывали.</p>
+<h3><a class="header" href="#stdunique_ptr" id="stdunique_ptr"><code>std::unique_ptr</code>.</a></h3>
+<p>Выше мы анонсировали класс, который похож на указатель, но работает по RAII. И в стандартной библиотеке есть несколько таких, в зависимости от того, что нужно делать при копировании.</p>
+<p>Его мы почти полностью можем и сами написать, так что давайте это сделаем:</p>
+<pre><code class="language-c++">template &lt;class T&gt; // Сюда смотреть пока рано.
+class unique_ptr {
+private:
+	T* ptr;
+
+public:
+	unique_ptr() : ptr(nullptr) {}
+	unique_ptr(T* ptr) : ptr(ptr) {}
+	unique_ptr(const unique_ptr&amp;) = delete;
+	unique_ptr&amp; operator=(const unique_ptr&amp;) &amp; = delete;
+
+	~unique_ptr() {
+		delete ptr;
+	}
+
+	T&amp; operator*() {
+		return *ptr;
+	}
+	T* operator-&gt;() {
+		return ptr;
+	}
+	T&amp; get() {
+		return *ptr;
+	}
+
+	void reset(T* new_ptr = nullptr) {
+		delete ptr;
+		ptr = new_ptr;
+	}
+	T* release() {
+		T* result = ptr;
+		ptr = nullptr;
+		return result
+	}
 };
 </code></pre>
-<p>Тогда ресурсы проще создавать и не будет проблем с закрытием при исключениях:</p>
-<pre><code class="language-c++">int main() {
-     file a(&quot;a.txt&quot;, &quot;r&quot;);
-}
+<p>Ещё должна быть внешняя функция <code>make_unique</code>, которая выделяет новый <code>unique_ptr</code>, но её мы как раз реализовать не можем, нам variadic-шаблонов не хватает.</p>
+<p>Вообще функции типа <code>release</code> использовать опасно, потому что они превращают RAII'шную обёртку над указателем в сырой указатель, и в таком случае вы должны сами следить, чтобы в момент исключения он не оказался сырым.</p>
+<h3><a class="header" href="#raii-вокруг-объекта-кидающего-исключение-при-закрытии" id="raii-вокруг-объекта-кидающего-исключение-при-закрытии">RAII вокруг объекта, кидающего исключение при закрытии.</a></h3>
+<p>Давайте теперь рассмотрим POSIX, в котором мы файлы открываем.</p>
+<pre><code class="language-c++">struct file_descriptor {
+public:
+	file_descriptor(const char* filename)
+		: fd(open(filename, O_RDONLY)) {}
+
+	~file_descriptor() {
+		close(fd);
+	}
+
+private:
+	int fd;
+};
 </code></pre>
-<p>В стандартной библиотеке есть похожий класс - <strong>unique_ptr</strong>. Он представляет из себя уникальный указатель на объект, который нельзя копировать. При уничтожении указателя автоматически вызывается деструктор объекта, на который он указывает. </p>
-<p>Обычно его создают через <code>make_unique</code>:</p>
-<pre><code class="language-c++">std::unique_ptr&lt;file&gt; a = std::make_unique&lt;file&gt;(&quot;a.txt&quot;, &quot;r&quot;);
+<p>В чём тут проблема? В том, что на <em>man</em> написано, что <code>close</code> имеет возвращаемое значение, в нём может произойти ошибка. Это связано с тем, что <code>close</code> выполняет две операции — дозаписывает данные до конца, чтобы закрыть файл и возвращает файловый дескриптор операционной системе. Поэтому в идеальном мире мы бы разбили его на две — какой-нибудь <code>flush</code>, который дозаписывает данные и именно что <code>close</code>. И примерно такого поведения мы и хотим, а кидать исключение в случае провала <code>close</code> не хотим, потому что двойное исключение.</p>
+<p>Поэтому давайте напишем всё вот так:</p>
+<pre><code class="language-c++">struct file_descriptor {
+public:
+	file_descriptor(const char* filename)
+		: fd(open(filename, O_RDONLY)) {}
+
+	void flush() {
+		int result = close(fd);
+		if (result != 0)
+			throw std::runtime_exception(&quot;File closing failed.&quot;);
+		fd = -1;
+	}
+
+	~file_descriptor() {
+		if (fd != -1)
+			close(fd);
+	}
+
+private:
+	int fd;
+};
 </code></pre>
-<p>Через <code>.get()</code> можно получить указатель из <code>unique_ptr</code>:</p>
-<pre><code class="language-c++">file* ptr = a.get();
+<p>Теперь из деструктора мы ничего не бросаем. Но теперь мы <strong>обязаны явно извне вызывать <code>flush</code>, если заинтересованы в получении ошибок при закрытии</strong>.</p>
+<h2><a class="header" href="#Гарантии-исключений" id="Гарантии-исключений">Гарантии исключений.</a></h2>
+<p>Уважаемые знатоки, внимание, вопрос. Через одну минуту найдите ошибку в в следующем операторе присваивания для строк:</p>
+<pre><code class="language-c++">struct string {
+	// ...
+	string&amp; operator=(const string&amp;) &amp; {
+		if (this == &amp;other)
+			return;
+
+		operator delete(data);
+
+		size = other.size;
+		capacity = other.capacity;
+		data = (char*)operator new(size + 1);
+
+		memcpy(data, other.data, size + 1);
+
+		return *this;
+	}
+};
 </code></pre>
-<h2><a class="header" href="#Гарантии-исключений" id="Гарантии-исключений">Гарантии исключений</a></h2>
+<p>Итак, правильный ответ:<br />
+Если в <code>operator new</code> произойдёт исключение, строка останется в некорректном состоянии. Причём настолько некорректном, что на ней даже деструктор вызвать нельзя: будет double-free.</p>
+<p>Поэтому когда вы пишете код с исключениями, нельзя писать его наивно. Необходимо думать, что произойдёт с вашими объектами, если из публичного метода вылетит исключение. Разделяют 4 ситуации:</p>
 <ol>
-<li>
-<p><code>nothrow</code> - гарантируется, что исключение не будет выброшено наружу</p>
-</li>
-<li>
-<p><code>strong</code> - допускается проброс исключений, однако гарантируется сохранение всего исходного состояния в случае исключения</p>
-</li>
-<li>
-<p><code>basic</code> - допускается изменение состояния, однако сохраняется ивариант, утечки ресурсов не допускаются</p>
-</li>
-<li>
-<p><code>no guarantee</code></p>
-</li>
+<li><em>Nothrow</em> — гарантируется, что исключение из данного метода выброшено быть не может.</li>
+<li><em>Strong</em> — в случае исключения состояние объекта будет сброшено на то, которое было до вызова метода, откуда было брошено исключение.</li>
+<li><em>Basic</em> — в случае исключения объект останется в корректном состоянии (т.е. все инварианты останутся верными и не произойдёт утечка ресурсов), но ничего более конкретного состояние, не гарантируется.</li>
+<li><em>No guarantee</em> — не <em>exception-safe</em>, ошибка в проектировании программы.</li>
 </ol>
-<p>В деструкторах лучше не делать исключения, это может вызывать проблемы, если мы бросили исключение, вызвался другой деструктор, который тоже бросил исключение. </p>
-<h3><a class="header" href="#swap-trick" id="swap-trick">Swap trick</a></h3>
-<p>Хорошая идея - писать операторы присваивания и копирования через <code>swap</code>. Это даёт нам <code>strong</code> гарантии:</p>
-<pre><code class="language-c++">my_string&amp; my_string::operator=(my_string rhs) {
-     swap(rhs); 
+<p>Давайте немного пофантазируем на тему <code>std::vector</code>. Какие его методы каким гарантиям удовлетворяют? Понятно, какие-нибудь <code>size</code>, <code>capacity</code>, <code>empty</code> или <code>begin</code> и <code>end</code> не бросают исключений, с чего бы им. А вот что можно сказать про <code>pop_back</code>? Ну, вроде как кидать там нечего, но ведь деструктор элемента может теоретически и бросать... А вот нет — <strong>все стандартные контейнеры накладывают некоторые условия на принимаемые ими типы. И абсолютно каждый требует nothrow-деструктора</strong>. Хорошо, то есть <code>pop_back</code> — это nothrow. А что будет, если мы удалим элемент из пустого вектора? А undefined behaviour. То есть мы можем спокойно вернуть <code>*nullptr</code> и ничего не бросать в таком случае. Поэтому если нам хочется, мы вполне можем написать <code>vector</code>, который имеет <code>noexcept</code>-<code>pop_back</code>.</p>
+<p>Про <code>push_back</code>, например, ясно, что она может спокойно давать строгие гарантии. А какие функции дают базовые? <code>insert</code> и <code>erase</code>. Вообще их можно сделать так, чтобы гарантии были строгими, но они базовые, чтобы можно было их выполнять через <code>swap</code>'ы. Обычно <code>swap</code>'ы не бросают исключение, но вообще могут делать это. Поэтому тут мы по сути получаем, что гарантия методов контейнера зависит от того, какой тип ему дали: есть <code>swap</code> не бросает, то гарантии у нас строгие, а иначе — базовые.</p>
+<h3><a class="header" href="#swap-trick" id="swap-trick">Swap-trick.</a></h3>
+<p><strong>Хорошая идея — писать оператор присваивания через <code>swap</code></strong>. Это даёт нам строгие гарантии, и не заставляет думать:</p>
+<pre><code class="language-c++">my_string&amp; my_string::operator=(my_string copy) {
+//        Внимание!            ^^ копия ^^
+     std::swap(*this, copy);
      return *this;
 }
 </code></pre>
-<p>Здесь при передаче вызовется оператор копирования строки, а потом мы сделаем swap.</p>
-<p>Ещё пример:</p>
-<pre><code class="language-c++">void erase_middle_basic(std::vector&lt;std::string&gt;&amp; v) {
-     v.erase(v.begin() + v.size() / 2);
-}
-void erase_middle_strong(std::vector&lt;std::string&gt;&amp; v) {
-     std::vector&lt;std::string&gt; copy = v;
-     erase_middle_basic(copy);
-     std::swap(v, copy);
+<p>Здесь при передаче вызовется конструктор копирования строки, а потом мы сделаем swap.</p>
+<p>Но это не единственное, чему можно легко дать строгие гарантии, если у нас не бросающий <code>swap</code>. Пусть у нас есть <code>std::vector</code>, у которого есть <code>erase</code>, дающий базовую гарантию. Но следите за руками:</p>
+<pre><code class="language-c++">void erase_strong(vector&amp; v, iterator where) {
+	vector copy = v;
+	copy.erase(where);
+	copy.swap(v);
 }
 </code></pre>
+<p>И лёгким движением руки базовая гарантия превращается в строгую.</p>
 
                     </main>
 
