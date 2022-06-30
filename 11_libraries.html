@@ -1,0 +1,386 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Статические и динамические библиотеки - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="08_inheritance.html"><strong aria-hidden="true">8.</strong> Наследование (в т.ч. виртуальное), виртуальные функции</a></li><li class="chapter-item expanded "><a href="09_exceptions.html"><strong aria-hidden="true">9.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="10_memory_allocation.html"><strong aria-hidden="true">10.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации</a></li><li class="chapter-item expanded "><a href="11_libraries.html" class="active"><strong aria-hidden="true">11.</strong> Статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="12_templates.html"><strong aria-hidden="true">12.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="13_stl_sfinae.html"><strong aria-hidden="true">13.</strong> Обзор STL, tag-dispatching, SFINAE</a></li><li class="chapter-item expanded "><a href="14_namespaces_using_adl.html"><strong aria-hidden="true">14.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="15_move_rvalue.html"><strong aria-hidden="true">15.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="16_intrusive_containers.html"><strong aria-hidden="true">16.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="17_smart_pointers.html"><strong aria-hidden="true">17.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="18_perfect_forwarding.html"><strong aria-hidden="true">18.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="19_decltype_auto_nullptr.html"><strong aria-hidden="true">19.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="20_lambdas_type_erasure.html"><strong aria-hidden="true">20.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="21_signals_reetrancy_errors.html"><strong aria-hidden="true">21.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="22_optional_variant_tuple_stringview.html"><strong aria-hidden="true">22.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="23_constexpr.html"><strong aria-hidden="true">23.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="24_multithreading.html"><strong aria-hidden="true">24.</strong> Многопоточность</a></li><li class="chapter-item expanded "><a href="25_qt.html"><strong aria-hidden="true">25.</strong> Qt</a></li><li class="chapter-item expanded "><a href="26_concepts.html"><strong aria-hidden="true">26.</strong> Концепты</a></li><li class="chapter-item expanded "><a href="27_ranges.html"><strong aria-hidden="true">27.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="28_encoding.html"><strong aria-hidden="true">28.</strong> Кодировки</a></li><li class="chapter-item expanded "><a href="29_coroutines.html"><strong aria-hidden="true">29.</strong> Корутины</a></li><li class="chapter-item expanded "><a href="30_modules.html"><strong aria-hidden="true">30.</strong> Модули</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Динамические-и-статические-библиотеки" id="Динамические-и-статические-библиотеки">Динамические и статические библиотеки.</a></h1>
+<ul>
+<li><a href="https://youtu.be/i8uYAe0E4PU?t=3884">Запись лекции</a></li>
+</ul>
+<hr />
+<p>Начнём с повторения того, что мы уже знаем. Каждый исходный файл транслируется в объектный файл, после чего все объектные файлы линкуются в программу. Но иногда бывает кусок кода, который хочется переиспользовать. Мы могли бы оттранслировать объектные файлы этого куска один раз, после чего сразу с ними компилировать. Но так оказалось, что уже существует механизм сгруппировать объектные файлы вместе, после чего отдать их линковщику. Называется этот механизм...</p>
+<h2><a class="header" href="#Статические-библиотеки" id="Статические-библиотеки">Статические библиотеки.</a></h2>
+<pre><code class="language-c++">// sum.cpp
+int sum(int a, int b){
+  return a + b;
+}
+</code></pre>
+<pre><code class="language-c++">// four.cpp
+#include &lt;iostream&gt;
+
+int sum(int a, int b);
+
+int main(){
+  std::cout &lt;&lt; sum(2, 2) &lt;&lt; std::endl;
+}
+</code></pre>
+<pre><code class="language-c++">#include &lt;iostream&gt;
+
+int sum(int a, int b);
+
+int main(){
+  std::cout &lt;&lt; sum(2, 3) &lt;&lt; std::endl;
+}
+</code></pre>
+<p>И мы зачем-то пытаемся вычленить <em>sum.cpp</em> как библиотеку. Тогда сделать надо вот что:
+Компилируем:</p>
+<pre><code class="language-shell">g++ -c sum.cpp -o sum.o
+
+ar rcs libsum.a sum.o
+</code></pre>
+<p>Что тут происходит?</p>
+<ul>
+<li><em>ar</em> — сокращение от «archive».</li>
+<li><em>rcs</em> — это некоторая магия (читайте <em>man</em>).</li>
+<li><em>libsum.a</em> — название библиотеки.</li>
+</ul>
+<p>Чтобы скомпилировать каждый из файлов выше с этот библиотекой, делаем так:</p>
+<pre><code class="language-shell">g++ four.cpp -lsum -L. -o four
+g++ five.cpp -lsum -L. -o five
+</code></pre>
+<p>А что происходит тут?</p>
+<ul>
+<li><em>-L</em> говорит, в каком каталоге искать библиотеку (в нашем случае в каталоге <em>.</em> — в текущем).</li>
+<li><em>-lsum</em> говорит, что нам нужна библиотека, которая называется <em>libsum.a</em> (т.е. к тому, что идёт после <em>-l</em> спереди приписывается <em>lib</em>», а сзади — «<em>.a</em>»).</li>
+</ul>
+<p>Тут больше совершенно ничего интересного, потому что статическая библиотека — набор объектных файлов, а про объектные файлы мы всё знаем. То ли дело...</p>
+<h2><a class="header" href="#Динамические-библиотеки" id="Динамические-библиотеки">Динамические библиотеки.</a></h2>
+<p>Пусть у вас есть библиотека, которая используется везде вообще. Например, libc. Если она статическая, то код библиотеки есть в каждой из программ. А значит в каждой программе они занимают место и на диске, и в памяти. Чтобы этого избежать, применяют динамические библиотеки.<br />
+Идея динамических библиотек в том, что мы ссылаемся как-то на внешнюю библиотечку, а потом <strong>на этапе исполнения грузим по надобности её части</strong>. Тогда она на диске лежит всего одна, и в память мы можем загрузить её один раз.</p>
+<p>Давайте в примере выше сделаем статическую библиотеку динамической:</p>
+<pre><code class="language-shell">g++ -fpic -c sum.cpp -o sum.o
+g++ -shared sum.o -o libsum.so
+
+g++ four.cpp -lsum -L. -o four
+g++ five.cpp -lsum -L. -o five
+</code></pre>
+<p>Что значат все консольные опции тут, уже пояснить намного сложнее, и мы поясним их в <a href="#%D0%BF%D1%80%D0%B8%D1%87%D0%B8%D0%BD%D1%8B-%D0%BD%D0%B5%D1%81%D1%82%D0%B0%D0%BD%D0%B4%D0%B0%D1%80%D1%82%D0%BD%D0%BE%D0%B9-%D0%BA%D0%BE%D0%BC%D0%BF%D0%B8%D0%BB%D1%8F%D1%86%D0%B8%D0%B8-%D0%B4%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85-%D0%B1%D0%B8%D0%B1%D0%BB%D0%B8%D0%BE%D1%82%D0%B5%D0%BA">следующем параграфе</a>.<br />
+А пока обратим внимание на то, что когда мы запустим <em>four</em> или <em>five</em>, нам <strong>на этапе исполнения</strong> скажут, что библиотека <em>libsum.so</em> не найдена. Хотя, казалось бы, вот она рядом лежит. Дело в том, что по умолчанию <strong>Linux ищет библиотеки только по системным путям</strong>. (Windows ищет и в текущей директории.) Чтобы проверить, от каких библиотек зависит ваша программа, запустите <em>ldd ./four</em>, и вам скажут, что нужна <em>libsum.so</em>, но её нет.</p>
+<p>Есть два способа поправить сию оказию:</p>
+<p>Первый — явно при запуске прописывать путь до библиотек.<br />
+Для этого существует переменная окружения <code>LD_LIBRARY_PATH</code>, если присвоить ей точку, всё сработает</p>
+<pre><code class="language-shell">LD_LIBRARY_PATH=. ./four
+</code></pre>
+<p><strong>Если вам нужно несколько путей, разделяйте их двоеточиями.</strong></p>
+<p>Второй — записать в саму программу, где искать библиотеки.<br />
+Это можно посмотреть при помощи <em>objdump</em> в секции <code>Dynamic Section</code>, где есть <code>RUNPATH</code>. Чтобы записать туда что надо, делается вот что:</p>
+<pre><code class="language-shell">g++ four.cpp -lsum -L. -Wl,-rpath=&lt;путь_до_библиотеки&gt; -o four
+</code></pre>
+<p><em>-Wl</em> говорит, что опцию после него (т.е. <em>-rpath</em>) надо передать линковщику. Линковщику эта опция говорит, что в тот самый <code>RUNPATH</code> надо записать тот путь, который вы попросили.<br />
+А какой надо просить? Не «<em>.</em>» ведь, потому что это путь, из которого вы запускаете программу, а не то место, где сама программа.<br />
+И тут вам на помощи приходит псевдо-путь <code>$ORIGIN</code>, который и ссылается на место программы. Используя его Вы можете свободно написать что-нибудь по типу <em>-rpath='$ORIGIN/../lib/'</em>.</p>
+<p>Впрочем, есть ещё и третий путь — использовать CMake, который будет делать всю грязную работу за вас, если написать ему команду <code>add_library</code>.</p>
+<p>Полезная статья про динамические библиотеки — <a href="https://software.intel.com/sites/default/files/m/a/1/e/dsohowto.pdf">How to write shared libraries, Ulrich Drepper</a>.</p>
+<p>Кстати, в Windows это работает иначе. В-нулевых, динамическая библиотека там называется не <em>shared object</em>, а <em>dynamic load library</em>. Во-первых, <strong>DLL-ки сразу же ищутся в текущем каталоге</strong>. Во-вторых, чтобы понять, что вы ссылаетесь на динамическую библиотеку, в Linux вы пишете <em>-L. -lsum</em>, а в Windows компиляция DLL создаёт вам специальный <em>.lib</em>-файл, который называется <em>import-библиотекой</em>, и с которым вы компилируете вашу программу, чтобы она сама поняла, откуда какие функции брать.</p>
+<h3><a class="header" href="#Причины-нестандартной-компиляции-динамических-библиотек" id="Причины-нестандартной-компиляции-динамических-библиотек">Причины нестандартной компиляции динамических библиотек.</a></h3>
+<p>Итак, в коде</p>
+<pre><code class="language-shell">g++ -fpic -c sum.cpp -o sum.o
+g++ -shared sum.o -o libsum.so
+</code></pre>
+<p>Нас интересуют магические слова <em>-fpic</em> и <em>-shared</em>. Зачем на как-то особенно компилировать динамические библиотеки?</p>
+<p>А дело вот в чём — при запуске программы, она первая загружается в адресное пространство, и она сама может выбрать, куда ей хочется. Динамические библиотеки такого же по понятным причинам позволить себе не могут. Возникает вопрос — и что теперь? А то, что <strong>при наличии глобальных переменных, мы не можем впаять им фиксированные адреса</strong>.</p>
+<p>Есть путь, которым пошли разработчики архитектуры PowerPC: адреса динамической библиотеки считаются относительно некоторого регистра. И тут жить можно, разве что вам нужно правильно задавать этот регистр, когда обращаетесь к разным библиотекам, и не менять его, если обращаетесь к библиотечной функции из другой функции той же библиотеки. Сложно, но жить можно.</p>
+<p>Самый простой способ жить с динамическими библиотеками был у Microsoft на 32-битной Windows. У каждой библиотеки был <em>base-address</em> — то куда библиотеке хочется загрузиться. Если там свободно — туда она и загружается, а если нет, то библиотеку загружают туда, где есть место, а в специальной отдельной секции (<em>.reloc</em>) хранится список адресов, которые надо исправить. Разумеется, в случае релокаций умирает переиспользование библиотеки, но Windows вам же полностью предоставляют, там можно расположить системные библиотеки
+так, как хочется, поэтому в проприетарных системах всё будет хорошо.</p>
+<p>В Linux же это реализовано следующим образом. Смотрите как можем:</p>
+<pre><code class="language-nasm">    call    next
+next:
+    pop     ABX
+    lea     EAX, [EBX + (myvar - next)]
+</code></pre>
+<p>Тут идея в том, что мы записываем адрес текущей команды на стек, потом берём его со стека, а дальше <strong>вместо того, чтобы писать абсолютный адрес переменной <code>myvar</code>, пишем относительный</strong>.<br />
+Относительный адрес позволяет нам обращаться к ней, если мы не знаем, в какое место памяти будет загружена
+библиотека, что нам и надо.</p>
+<p>Вообще мы не очень хорошо написали (<strong>процессор не любит непарные <code>call</code> и <code>pop</code></strong>), поэтому обычно это выглядит так:</p>
+<pre><code class="language-nasm">get_pc:
+    mov     EBX, [ESP]
+    ret
+
+get_variable:
+    call    get_pc
+next:
+    lea     EAX, [EBX + (myvar - next)]
+</code></pre>
+<p>Этот код называется <em>position-independent code</em>, и ключ <em>-fpic</em> именно генерацией такого кода и занимается. Вопрос — почему для этого не сделали специальную инструкцию? А вот сделали, но в 64-битном режиме. Всё что с квадратными скобками стало уметь обращаться в память начиная со смещения текущей инструкции. И называется это <em>RIP-relative positioning</em>.</p>
+<h3><a class="header" href="#gotiat-plt" id="gotiat-plt">GOT/IAT. PLT.</a></h3>
+<p>В итоге мы имеем кусок данных, который можно загрузить и исполнять. Но на самом деле библиотека — это же не сферический код в вакууме, она хочет вызывать какие-то функции.</p>
+<p>Например, библиотека для работы с JSON хочет делать <code>fopen</code>. То есть нужно подружить библиотеки друг с другом. Самый простой вариант — когда мы делаем <code>call</code>, в файл мы кладём нулевой адрес, а в секцию релокаций записываем, что вместо него нужно положить <code>fopen</code>, после чего при запуске динамический загрузчик всё разложит по местам. То есть то же самое, что с линковщиком. Почему так не делают? Потому что мы от'<code>mmap</code>'или нашу библиотеку, а в ней дырки. И во все места дырок нужно что-то подставить. И опять вы не можете записать библиотеку в память один раз, что вам
+очень хочется.</p>
+<p>Поэтому вместо этого просто <strong>заводят табличку со смещениями, и теперь все <code>call</code>'ы обращаются туда</strong>, и туда же динамический загрузчик подставляет истинные адреса функций. Эта таблица в Linux называется <em>global offset table</em>, а в Windows — <em>import address table</em>.</p>
+<p>Но на самом деле есть ещё проблема. Давайте посмотрим, что происходит, когда мы делаем</p>
+<pre><code class="language-c++">void foo();
+
+void bar() {
+    foo();
+}
+</code></pre>
+<p>Как мы обсуждали, тут будет <code>call</code> и пустой адрес (до линковки пустой). А что будет, если <code>foo</code> — это внешняя функция из какой-то библиотеки? Тогда надо бы вместо простого <code>call</code>'а сделать <code>call qword [got_foo]</code>. Но есть проблема — мы узнаём, откуда эта функция, только на этапе линковки, а компилировать надо раньше. Поэтому <strong>компилятор <code>call foo</code>, а потом, если это было неправильно, просто создаёт свою функцию <code>foo</code>, которая является прослойкой для <code>jmp qword [got_foo]</code></strong>. Такие заглушки, которые просто совершают безусловный переход по глобальной таблице смещений имеют название. В Linux их называют <em>PLT</em> (<em>procedure linkage table</em>), а в Windows как-то по-другому.</p>
+<p>Но в Linux PLT используется ещё для одной цели. Рассмотрим, скажем, LibreOffice, в котором сотни динамических библиотек с тысячами функций в каждой. Поэтому заполнение GOT — это долго. И нам не хочется смотреть, где лежит каждая функция, после чего записывать её в таблицу. Поэтому эту операцию сделали ленивой:<br />
+<strong>GOT заполняется специальными заглушками, которые динамически ищут в хэш-таблице настоящий адрес функции, после чего записывают его в GOT вместо себя</strong>, и вызывают эту функцию, чтобы она отработала. В Microsoft по-умолчанию отложенная загрузка не используется, но его можно включить (<em>delayed DLL loading</em> или как-то так называется). Это фича загрузчика, а не самой Windows, и делает эта фича примерно то же самое. Однако есть разница. <strong>В Linux отсутствие библиотеки не позволяет запустить программу. В Windows же библиотека подгружается при первом вызове функции оттуда</strong>, что, по их словам, сделано чтобы вы могли за'<code>if</code>'ать ситуацию, когда библиотеки нет.</p>
+<h3><a class="header" href="#Офф-топ-на-тему-Как-страшно-жить" id="Офф-топ-на-тему-Как-страшно-жить">Офф-топ на тему «Как страшно жить».</a></h3>
+<p>Поговорим про изменение <em>so</em>-файлов. Давайте возьмём и во время работы программы поменяем библиотечку на диске, втупую вписав туда другой текст. Результат поразителен — работа программы также изменится. Почему? Мы же, вроде как, исполняем библиотеку из оперативки, а не с диска. А дело в том, как работает copy-on-write в операционных системах. Когда вы пишете в некоторую страницу, вам копируют её. Но <strong>когда кто-то извне пишет в страницу, вам не дают копию старых данных</strong>. С исполняемым файлом такое не прокатывает, кстати. Это потому, что вашу программу загружает ядро, и оно может запретить изменять бинарники, а библиотеку загружает ваша программа, которая такого механизма не имеет.</p>
+<p>Кстати, <strong>изменение и перекомпиляция — разные вещи</strong>. И если вы во время работы программы перекомпилируете библиотеку, она не обновится. Связано это с тем, что перекомпилированная библиотека — это новый файл, а не старый. По сути вы удалили старую библиотеку и создали новую, вместо того, чтобы библиотеку изменить. А в Linux пока кто-то имеет доступ к файлу, файл не удаляется до конца. И поэтому в вашей программе всё ещё есть та самая библиотека, которую вы загружали (а не новая).</p>
+<h3><a class="header" href="#Детали-работы-с-динамическими-библиотеками-в-windows" id="Детали-работы-с-динамическими-библиотеками-в-windows">Детали работы с динамическими библиотеками в Windows.</a></h3>
+<p>Никто не удивиться, что набор</p>
+<pre><code class="language-nsam">    call    foo@PLT
+
+foo@PLT:
+    jmp     qword [got_foo]
+</code></pre>
+<p>не очень эффективен (три обращения в память вместо одного). Поэтому в Windows есть спецификатор <code>__declspec(dllimport)</code>, который сразу вместо <code>call 000000</code> и замены нулей на <code>foo@plt</code> вставляет <code>call qword [got_foo]</code>.</p>
+<p>Ещё в Windows есть такая штука как <em>.def</em>-файл — линковщик экспортирует из вашей DLL-ки только то, что нужно, и в <em>.def</em>-файле указывается, что именно. Это хорошо работает в C, где имена символов и имена функций совпадают, но не очень хорошо в C++, где вам придётся писать сложные декорируемые имена. Поэтому есть второй вариант — написать на самой функции <code>__declspec(dllexport)</code>.</p>
+<p>И вроде бы всё хорошо, мы метите функции, которые экспортируете как <code>__declspec(dllexport)</code>, которые импортируете — как <code>__declspec(dllimport)</code> и всё классно работает. Но есть проблема: вы и в библиотеке, и в коде, который её использует подключаете один заголовочный файл, где объявлена функция. И непонятно, что там писать: <code>__declspec(dllexport)</code> или <code>__declspec(dllimport)</code>. Для этого <strong>заводится специальный макрос под каждую библиотеку, которым отличают, саму DLL вы компилируете или кого-то с её использованием</strong>.</p>
+<p>Есть ещё одна проблема. Непонятно, что делать с глобальными переменными. Там проблема ещё более страшная: вы сначала читаете адрес переменной из GOT (извините, IAT), а потом по полученному адресу обращаетесь. Тут уже никакую функцию-прослойку не написать, увы. Поэтому <strong>если вы не пометите глобальную переменную как <code>__declspec(dllimport)</code>, тот тут вы уже точно совсем проиграете</strong>, у вас линковка не получится.</p>
+<p>А ещё <strong>реализация DLL в Windows нарушает правила языка</strong>: если вы напишете <code>inline</code>-функцию в заголовочном файле. Она просто откопируется в каждую библиотеку, где вы этот заголовок подключился. С этим вы ничего не сделаете, тут вы просто проиграли.</p>
+<h3><a class="header" href="#Детали-работы-с-динамическими-библиотеками-в-linux" id="Детали-работы-с-динамическими-библиотеками-в-linux">Детали работы с динамическими библиотеками в Linux.</a></h3>
+<p>Если вы думаете, что в Windows проблемы с динамическими библиотеками, потому что Windows — какашка, то сильно заблуждаетесь, потому что в Linux нюансов тоже выше крыши.</p>
+<p>Итак, мем первый и основной — interposition. Есть такая переменная окружения, как <code>LD_PRELOAD</code>. Она завставляет динамический загрузчик сначала обшарить в поисках динамических библиотек то, что вы в <code>LD_PRELOAD</code> написали, а уже потом смотреть какие-нибудь <code>RUNPATH</code>'ы и всё остальное. В частности, так можно подменить аллокатор (и мы так и делали, когда <a href="./10_allocations_optimizations.html#%D1%80%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-malloc-%D0%B8-free">экспериментировали с <code>mmap</code>'ом и <code>munmap</code>'ом</a>). Такая подмена и называется <em>interposition</em>. Теперь что же у него, собственно, за нюансы есть.</p>
+<pre><code class="language-c++">int sum(int a, int b) {
+    return a + b;
+}
+int test(int x, int y) {
+    return sum(x, y) - x;
+}
+</code></pre>
+<p>Тут при обычной компиляции вторая функция просто вернёт свой второй аргумент. А при компиляции с <em>-fpic</em>, вы cможете подменить <code>sum</code>, а значит оптимизации не будет. Чтобы это пофиксить, можно пометить <code>sum</code> как <code>static</code> (тогда эта функция будет у вас только внутри файла, а значит его не поменять извне) или как <code>inline</code> (потому что <code>inline</code> полагается на ODR, а значит функция должна быть везде одинаковой). Но есть ещё способ.<br />
+Linux по-умолчанию считает, что все функции торчат наружу (т.е. как <code>__declspec(dllexport)</code> в Windows). А можно их пометить, как не торчащие наружу, а нужные только для текущей компилируемой программы/библиотеки: <code>__attribute__((visibility(&quot;hidden&quot;)))</code>.</p>
+<p>На самом деле атрибут <code>visibility</code> может принимать несколько различных значений (<code>&quot;default&quot;</code>, <code>&quot;hidden&quot;</code>, <code>&quot;internal&quot;</code>, <code>&quot;protected&quot;</code>), где пользоваться сто́ит только вторым, потому что первый и так по-умолчанию, третий заставляет ехать все адреса, а четвёртый добавляет дополнительные аллокации.<br />
+При этом также есть различные ключи компиляции (типа <em>-B symbolic</em>), которые тем или иным образом немного меняют поведение, и пояснить разницу между ними всеми вам могут только избранные. И каждый из них может поменять вам поведение так, что вы легко выстрелите себе в ногу. То есть <strong>глобально в Linux поведение по умолчанию делаем вам хорошо, но, возможно, немного неоптимизированно, а когда вы начинаете использовать опции, вы погружаетесь в такую бездну, что ускорение заставляет вас очень много думать</strong>. Причём замедление от динамических библиотек может быть достаточно сильным: если взять компилятор clang-LLVM и компилировать при помощи его ядро Linux’а, то в зависимости от того, сложен ли clang-LLVM в один большой файл или разбит по библиотечкам, время компиляции отличается на треть. Поэтому <strong>ключи использовать придётся</strong>.<br />
+Один из самых безопасных из них — <em>-fno-semantic-interposition</em>. Это не то же самое, что и <em>-fno-interposition</em> потому, что бинарнику всё равно можно дать <code>LD_PRELOAD</code>, однако в нашем случае функция <code>test</code> будет оптимизирована.<br />
+Ещё один полезный ключ — <em>-fno-plt</em>. Он по сути вешает оптимизацию такую же, как <code>__declspec(dllimport)</code>, но на весь файл, поэтому функции, написанные в нём же, замедляются. Чтобы не замедлялись — <code>visibility(&quot;hidden&quot;)</code>. Вообще всё это детально и подробно рассказано не будет, если вам интересно,  гуглите и читайте/смотрите по теме.<br />
+Впрочем, всякие <em>-fno-plt</em> и прочие штуки нужны нам тогда и только тогда, когда мы не включили linking-time оптимизации. В GCC все наборы ключей нафиг не нужны, если включить <em>-flto</em>. Так что <strong>в перспективе <em>-flto</em> и <em>-fno-semantic-interposition</em> — это единственное, что вам может быть нужно. Но только в перспективе.</strong></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="10_memory_allocation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="12_templates.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="10_memory_allocation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="12_templates.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
