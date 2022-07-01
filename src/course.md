@@ -8,11 +8,7 @@
 
 Конспекты содержат баги, поэтому [не стесняйтесь вносить правки.](https://github.com/lejabque/cpp-notes/blob/master/CONTRIBUTING.md)
 
-Помимо лекций, конспекты включают в себя дополнения из конспектов [@sorokin](https://github.com/sorokin/cpp-notes) и [@hazzus](https://github.com/hazzus/cpp-conspects)
-
-#### Дополнительные лекции
-- [Лекция про инструменты разработки](https://www.youtube.com/watch?v=Cu6QYb_j_2Y)
-- [Лекция про UB, strict aliasing и оптимизации компилятора](https://www.youtube.com/watch?v=nGsD8guQ_dQ)
+Помимо лекций, конспекты включают в себя дополнения из конспектов [@sorokin](https://github.com/sorokin/cpp-notes), [@hazzus](https://github.com/hazzus/cpp-conspects) и [@purevessel](https://www.overleaf.com/read/hcmjjqmhwqzx).
 
 #### Полезные ссылки:
 
