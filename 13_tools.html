@@ -1,0 +1,343 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Полезные инструменты, которые пригодятся вам в жизни - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_inheritance.html"><strong aria-hidden="true">8.</strong> Наследование (в т.ч. виртуальное), виртуальные функции</a></li><li class="chapter-item expanded "><a href="08_exceptions.html"><strong aria-hidden="true">9.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="09_memory_allocation.html"><strong aria-hidden="true">10.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации</a></li><li class="chapter-item expanded "><a href="10_libraries.html"><strong aria-hidden="true">11.</strong> Статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_undefined_behaviour.html"><strong aria-hidden="true">12.</strong> Undefined behaviour: примеры и способы его понимать</a></li><li class="chapter-item expanded "><a href="12_validation.html"><strong aria-hidden="true">13.</strong> Способы валидации программы</a></li><li class="chapter-item expanded "><a href="13_tools.html" class="active"><strong aria-hidden="true">14.</strong> Полезные инструменты, которые пригодятся вам в жизни</a></li><li class="chapter-item expanded "><a href="14_templates.html"><strong aria-hidden="true">15.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="15_stl_sfinae.html"><strong aria-hidden="true">16.</strong> Обзор STL, tag-dispatching, SFINAE</a></li><li class="chapter-item expanded "><a href="16_namespaces_using_adl.html"><strong aria-hidden="true">17.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="17_move_rvalue.html"><strong aria-hidden="true">18.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="18_intrusive_containers.html"><strong aria-hidden="true">19.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="19_smart_pointers.html"><strong aria-hidden="true">20.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="20_perfect_forwarding.html"><strong aria-hidden="true">21.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="21_decltype_auto_nullptr.html"><strong aria-hidden="true">22.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="22_lambdas_type_erasure.html"><strong aria-hidden="true">23.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="23_signals_reetrancy_errors.html"><strong aria-hidden="true">24.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="24_optional_variant_tuple_stringview.html"><strong aria-hidden="true">25.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="25_constexpr.html"><strong aria-hidden="true">26.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="26_multithreading.html"><strong aria-hidden="true">27.</strong> Многопоточность</a></li><li class="chapter-item expanded "><a href="27_qt.html"><strong aria-hidden="true">28.</strong> Qt</a></li><li class="chapter-item expanded "><a href="28_concepts.html"><strong aria-hidden="true">29.</strong> Концепты</a></li><li class="chapter-item expanded "><a href="29_ranges.html"><strong aria-hidden="true">30.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="30_encoding.html"><strong aria-hidden="true">31.</strong> Кодировки</a></li><li class="chapter-item expanded "><a href="31_coroutines.html"><strong aria-hidden="true">32.</strong> Корутины</a></li><li class="chapter-item expanded "><a href="32_modules.html"><strong aria-hidden="true">33.</strong> Модули</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Инструменты-которые-могут-помочь-жить" id="Инструменты-которые-могут-помочь-жить">Инструменты, которые могут помочь жить.</a></h1>
+<p>Мы поговорим о каких-то мелких вещах, которые помогут вам в некоторых ситуациях, если в о них знаете.</p>
+<h2><a class="header" href="#Отладчики" id="Отладчики">Отладчики.</a></h2>
+<p>Первое: <em>-g</em>. Иначе вы проиграли.<br />
+Второе — <em>-O0</em>. <strong>Если дебажить код с оптимизациями, то вам могут убрать переменные, переупорядочить инструкции и подобное.</strong> Ещё в GCC есть ключ <em>-Og</em>, который включает некоторые слабые оптимизации, которые не должны сильно влиять на отладку. Но на самом деле это не очень правда, и если вы не разрабатываете игры и не имеете таймаутов, то лучше использовать <em>-O0</em>.<br />
+Вообще в GCC есть много ключей, которые тем или иным образом включают/выключают оптимизацию, от которой зависит отладка, но тут ищите их сами.</p>
+<p>Ещё: не обязательно запускать программу под отладчиком, <strong>можно присоединиться отладчиком к уже работающей программе</strong>. С Windows вообще проблем нет, в Linux по-умолчанию так делать нельзя (по соображениям безопасности), сами погуглите, как отключить эту опцию.</p>
+<p>Ещё полезная опция — когда ваша программа аварийно завершается, <strong>все Linux'ы умеют сбрасывать на диск память</strong>. Куда конкретно — смотрите (или изменяйте) файл <em>/proc/sys/kernel/core_pattern</em>. И потом эту штуку можно в отладчике открыть и посмотреть. Если файл у вас не создаётся — проблемы с <em>ulimit -c</em>. Есть ограничения на максимальный размер core dump'а, вот вам надо поставить на <em>unlimited</em>.</p>
+<p>Теперь поговорим про сервер дебажных символов. Как мы знаем, дебажные символы заливают в один файл, который отправляют на сервер. И с не так давних времён, любой дистрибутив этот сервер имеет. И вы можете скачать оттуда дебажные символы и исходники (да ещё и нужной версии), чтобы поотлаживать что-то в дистибутиве.</p>
+<h3><a class="header" href="#Продвинутые-breakpointы" id="Продвинутые-breakpointы">Продвинутые breakpoint'ы.</a></h3>
+<p>Представим, что у вас есть программа, которая работает, а потом падает. И вы знаете условие, когда падает (например, когда переменная достигла определённого значения). И <strong>отладчики дают вам возможность поставить на условние breakpoint</strong>: <em>conditional breakpoint</em> называется. Останавливается в каком-то конкретном случае. В GDB это пишется как <code>if i == 41</code> после указания breakpoint'а, например.</p>
+<p>Ещё <strong>если вы хотите отлаживать <code>printf</code>'ами, вам не обязательно их явно писать и перекомпилировать программу</strong>. Вы можете написать breakpoint, который не останавливается, а что-то выводит. В GDB это <code>commands printf &quot;abacaba&quot; end</code>.</p>
+<p>Ещё есть такая штука как <em>watch point</em>'ы. Вы можете поставить слежение за определённой переменной/полем/выражением. Для этого вы (в gdb) так и пишете: <code>watch &lt;expression&gt;</code>. Ещё watch point можно на адрес поставить при помощи <em>-l</em>.<br />
+За счёт чего это работает? А watch point'ы в процессоре есть. Но вообще это и программно можно эмулировать (помечаем память как то, куда нельзя писать, процессор при записи делает прерывание, которое и передаётся отладчику).</p>
+<h3><a class="header" href="#Визуализаторы-структур-данных" id="Визуализаторы-структур-данных">Визуализаторы структур данных.</a></h3>
+<p>Что отладчик из Visual Studio, что GDB, что LLDB поддерживают возможность красиво напечатать встроенные структуры данных. Чаще всего вы не хотите видеть дерево, когда смотрите на <code>std::set</code> или хэш-таблицу в <code>std::unordered_set</code>, а хотите видеть лишь элементы внутри. И вам дают такую возможность. При этом <strong>три отладчика позволяют написать свои способы красиво что-то напечатать</strong>. В отладчике из VS — это XML-ки, в GDB и LLDB — Python'овские скрипты. Причём в VS визуализатор можно в проект добавить, и VS его подхватит.</p>
+<h3><a class="header" href="#reversible-отладчики" id="reversible-отладчики">Reversible-отладчики.</a></h3>
+<p>Reversible-отладчики — отладчики, которые позволяют ходить не только вперёд, но и назад. Если вы под Linux, то вам нужен UndoDB, имеющий тот же интерфейс, что и GDB. Проблема — он проприетарный и платный (притом недешёвый). Но это в целом круто, работает как магия, но всё ещё дорого.<br />
+Поэтому у нас есть только инструмент для бедных, созданный людьми из Firefox'а. Но он имеет немного другую специализацию. У них была такая проблема: были тесты, которые спонтанно ломались. И хочется куда-то записать всё что было. Для этого есть <em>rr</em> (record-replay). Вы можете куда-то записать, как программа работает (<em>rr record</em>), она запишет вам всё, что было, а по <em>rr replay</em> вы можете ходить по этой записи. Нужные вам команды — <em>reverse-finish</em> (reverse-«выйти из функции»), <em>reverse-next</em> (reverse-«следующая строка кода») и всё остальное, что начинается с <em>reverse-</em>.</p>
+<h4><a class="header" href="#Как-работает-эта-чёрная-магия" id="Как-работает-эта-чёрная-магия">Как работает эта чёрная магия.</a></h4>
+<p>Вариант «запоминать всё вообще» не подходит (слишком много памяти). Кстати, такое есть и в GDB (он тоже поддерживает обратный ход, но жрёт бесконечность памяти). А какой вариант подходит?<br />
+Давайте <strong>запомним начало программы и будем эмулировать получение данных из внешнего мира</strong>. А чтобы не работало бесконечно долго (чтобы при шаге назад не запускалась вся программа полностью с начала), <strong>сделаем несколько snapshot'ов в разных местах программы, и будем запускаться от них</strong>.</p>
+<p>А как остановиться в определённом месте? Ну, у нас есть счётчики в процессоре (см. <a href="#%D0%B1%D0%B0%D0%B7%D0%BE%D0%B2%D1%8B%D0%B5-%D0%B2%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D0%B8-perf">ниже в разделе про профилировщики</a>), только тут мы не профилируем что-то, а задаём счётчик и говорим «исполни N инструкций». Есть проблема с этим, кстати. Поскольку процессор работает спекулятивно, посчитать N инструкций процессора — это не совсем то, что вы хотите. Для сэмплирования разницы никакой, а тут <em>rr</em> долгое время с трудом работал на AMD, потому что там не могли найти детерминированный счётчик.</p>
+<p>Ещё проблема — недетерминированные инструкции. Скажем «сколько времени прошло с некоторого момента» или генерация случайных чисел. Но вообще на процессорах есть возможность и на этих инструкциях тоже прерваться.</p>
+<p>Ещё проблема есть с shared-памятью. Если вы отлаживаете программу, а кто-то извне пишет в её память, вы проиграли. Чтобы с этим справится, UndoDB делает нечто похожее на механизмы <em>valgrind</em>.</p>
+<h2><a class="header" href="#Профилировщики" id="Профилировщики">Профилировщики.</a></h2>
+<p>Программы, которые помогают вам ответить на вопрос, где больше всего времени проводит программа. Понятно, что вам нужны дебажные символы (<em>-g</em>), иначе вам максимум машинные инструкции покажут, а не строки программы.</p>
+<ul>
+<li>Из самых известных — <em>perf</em>, встроенный в ядро Linux.</li>
+<li>В Visual Studio есть профилировщик, использующий встроенные в Windows механизмы.</li>
+<li>Самый навороченный и крутой — Intel VTune Amplifier. Долгое время он был платный (причём достаточно дорогой), сейчас, кажется, есть какие-то варианты, но это всё сами включите VPN и посмотрите.</li>
+</ul>
+<p>При этом <strong>всё, что мы расскажем, в основном относится с CPU-профилированию</strong>, но вообще <em>perf</em>, например, может и записи на диск профилировать, работу с сетью да и вообще кучу разных событий, которую можно сэмплировать.</p>
+<h3><a class="header" href="#Базовые-возможности-perf" id="Базовые-возможности-perf">Базовые возможности <em>perf</em>.</a></h3>
+<p>В профилировщике Visual Studio разберётесь сами, а мы проговорим о том, что умеет <em>perf</em>. Он запускается командой <em>perf</em> и дальше имеет кучу опций.</p>
+<ul>
+<li>Самая простая — <em>perf stat</em>, с этой опцией показывается не только время, но и всякая другая фигня (branch-miss'ы, cpu-миграции, разные другие штуки). Что-то из этого поставляется ОС, что-то — процессором.</li>
+<li>Если вы хотите посмотреть список доступных событий — <em>perf list</em>. Чем дальше вниз прокручивать этот список — тем более редко используемые параметры там будут.</li>
+<li>Окей, это всё хорошо, но хочется понять, на какую функцию грешить, если долго работает. Это делается при помощи <em>perf record</em>+<em>perf report</em>.</li>
+</ul>
+<p>Первый собирает статистику о функциях, второй — показывает её вам. Причём статистика — не обязательно время. Можно написать <em>perf record -e cache-misses &lt;программа&gt;</em>, и тогда вам будут давать статистику по промахам в кэше. Чтобы самому узнать какие-то опции инструкций — <em>perf help &lt;инструкция&gt;</em>.</p>
+<p>Каким образом работает <em>perf</em>? Зависит от процессора, на самом деле. <strong>Процессор предоставляет возможность, скажем, каждый тысячный заход в команду давать прерывание</strong> (по которому <em>perf</em> будет что-то считать). Кстати, есть проблема: процессор имеет ограниченное количество счётчиков, и в таком случае <em>perf</em> будет сначала сэмплировать один набор, потом другой, затем третий, чтобы собрать статистику.</p>
+<h3><a class="header" href="#general-exploration" id="general-exploration">General exploration.</a></h3>
+<p>Хорошо, вот нашли вы долго работающее место, но совершенно не знаете, в чём там проблема. Тут уже <em>perf</em> вам не поможет, но может помочь VTune. У него есть режим «<em>general exploration</em>». Он базируется на упрощённой модели, что <strong>инструкция сначала передаётся в какую-то front-end-часть процессора, а потом — в back-end</strong>. И потом в зависимости от того, поступают ли инструкции из front'а в back и простаивают ли front и back, вам говорят, где проблема (собственно, во front'е ли, в back'е ли, восстанавливаетесь ли вы от branch miss'а или что). И вот в VTune эту идею довели до ума, в связи с чем вам говорят не только тормозите ли вы на front'е или back'е, но и упираетесь ли вы в память, а если да, то в L1, L2, L3 или RAM. Так что <strong>VTune сразу говорит вам, в каких функциях какие проблемы</strong>. В <em>perf</em>'е это только в зачаточном состоянии есть.</p>
+<h3><a class="header" href="#Сбор-стека-вызовов" id="Сбор-стека-вызовов">Сбор стека вызовов.</a></h3>
+<p>Следующая возможность <em>perf</em>'а. Вот выяснили вы, что долго работает. А кто вызывает то, что долго работает? <em>perf record -g --call-graph dwarf</em>. Тогда вам будут показывать стеки вызовов, что довольно полезно. Опция <em>-g</em> их сборкой и занимается, а опция <em>--call-graph</em> задаёт то, каком образом они собираются.<br />
+Чтобы не сильно замедляться при сборке стека, <em>perf</em> работает в ядре. Но <strong>чтобы ядро очень долго не работало, собираются верхушки стеков</strong>, а <em>perf report</em> пытается их раскрутить. Это и есть режим <em>--call-graph dwarf</em>. Ещё есть режим <em>--call-graph fp</em>, который собирает стек вызовов по frame-pointer'ам, что делается быстро и честно, но тогда совершенно всю программу надо собрать с ключом <em>-fno-omit-frame-pointer</em>, а стандартная библиотека с ним не собрана.<br />
+Ещё <strong><em>perf</em> можно натравливать на уже работающие программы при помощи <em>perf -p <pid></em></strong>. Более того, <em>perf</em> может профилировать больше одной программы. Хоть вообще все (<em>sudo perf record -a</em>).</p>
+<h3><a class="header" href="#Альтернативные-методы-профилирования" id="Альтернативные-методы-профилирования">Альтернативные методы профилирования.</a></h3>
+<p>Сто́ит сказать, что профилировщики (<em>perf</em>, VS profiler, VTune) полагаются на процессор. А ещё есть <strong>tracing-профилировщики, работающие на базе компиляторов. Они вставляют инструкции на моменте входа и выхода из функции</strong>. Примером таковых является <em>gprof</em>. Они имеют преимущества и недостатки. Преимущество — <strong>могут показать число вызовов функции (честно</strong>, а не по количество сэмплов), что бывает полезно, чтобы увидеть, что вы могли посадить где-то квадратичную сложность. Недостаток — <strong>tracing-профилировщики врут, увеличивая время работы маленьких функций</strong>. В связи с этим они используются очень редко.</p>
+<p>Что ещё сто́ит упомянуть — <em>valgrind</em> имеет встроенный профилировщик. Он в целом адекватный, но у него просмотрщик не очень. Так вот, <em>valgrind</em> — это набор инструментов. Если вы не пишете ничего, запускается инструмент <em>memcheck</em>. А когда вы используете инструмент <em>cachegrind</em>, то <strong><em>valgrind</em> эмулирует работу процессора (сколько времени он бы исполнял заданную инструкцию)</strong>. С виду вообще бред какой-то (все системные вызовы, например, занимают 0 времени, что это вообще), но и тут есть свои ништяки.<br />
+Есть история про библиотеку SQLite для работы с базами данных. В один момент её решили оптимизировать и микрооптимизациями ускорили её на $61%$. В качестве профилировщика они использовали <em>cachegrind</em>, который даёт вам воспроизводимые данные без шума. И <strong>если вы сделали микрооптимизацию, в <em>cachegrind</em> вы увидите ускорение на $0.1%$, и его не съест шум</strong>.</p>
+<h2><a class="header" href="#Проверка-покрытия" id="Проверка-покрытия">Проверка покрытия.</a></h2>
+<p>Если тесты не заходят в некоторую функцию или на определённую строку надо, значит на тех местах может быть написан полный бред. Поэтому <strong>следует проверить, что тесты проходят в вашей программе вообще везде</strong>. Это называется <em>coverage</em>, и запускать его так. Сначала надо компилировать программу с ключом <em>--coverage</em>. Тогда при запуске создадутся файлы расширения <em>.gcda</em> и <em>.gcno</em>. Чтобы их посмотреть, вам нужна программа <em>gcov</em> с ключиками, это сами разберётесь.</p>
+<h2><a class="header" href="#Полезные-ключи-компиляции" id="Полезные-ключи-компиляции">Полезные ключи компиляции.</a></h2>
+<h3><a class="header" href="#lto" id="lto">LTO.</a></h3>
+<p><em>Linking-time optimizations</em> — <em>-flto</em> (ключ передаётся компилятору и линковщику). Это мы уже обсуждали. Не обсуждали, как работает. А работает так: <strong>компилятор откладывает генерацию кода до этапа линковки, а в файл записывает что-то промежуточное. Это промежуточное представление даже глазами читать можно</strong>, это просто какой-то императивный код. В Clang'е это представление —
+LLVM-IR, в GCC — gimple. Второй вообще похож на C.</p>
+<p>Какие плюсы и минусы у LTO? С одной стороны, бенчмарки говорят, что ускорение на несколько процентов. С другой, на бенчмарках и так всё сильно оптимизировано, даже то, что LTO мог бы ускорить. Ещё <strong>LTO сильно уменьшает размер программы</strong>. Там, параметры в функцию передаются всегда одинаковые, или <code>if</code> всегда в одну сторону. Это позволяет компилятору (если он видит программу целиком), уменьшить размер. Ещё <strong>LTO хорошо с шаблонами взаимодействует</strong>. Поскольку шаблоны подставляются в каждой единице трансляции, если вы сгенерировали что-то здоровенное, то без LTO оптимизироваться это будет везде, а с LTO — только один раз. И самое интересное — <strong>LTO может показать вам ODR</strong>, что в C++ очень круто. Недостатки — <strong>LTO убивает возможность пересобрать один файл, самое долгое время занимает линковка, вне зависимости от того, один файл вы изменили или все</strong>.</p>
+<h3><a class="header" href="#pgo" id="pgo">PGO.</a></h3>
+<p><em>Profile-guided optimizations</em>. Идея в следующем. Иногда изменение компилятора даёт эффект только в некотором случае. Если у нас есть цикл, мы можем за'<code>if</code>'ать случай aliasing'а, использовать SIMD, сделать кучу ещё разных интересных вещей. Но есть всё это мы будем делать с каждым циклом, мы проиграем, потому что нужно это отнюдь не всегда, а <strong>если мы всё применим, увеличится размер программы, а значит будет хуже работать программный кэш, что может даже к замедлению привести</strong>.<br />
+Или с <code>if</code>'ами процессору хочется знать, какая ветка более вероятна.</p>
+<p>Так вот, вы можете запустить компиляцию с ключом <code>--profile-generate</code>, запустить программу, после чего заново скомпилировать с <code>--profile-use</code>. Это также даёт ускорение, а из минусов — <strong>вам нужно иметь репрезентативный набор тестов</strong>. Впрочем, иметь набор тестов и так очень полезно, о каком ускорении можно говорить, если тестов нет.</p>
+<p>Кстати, в случае с GCC то, <strong>что не попало в профиль, считается «холодным кодом» и оптимизируется на размер</strong>, а не на скорость. Поэтому в GCC, если у вас не репрезентативный профиль, вы можете проиграть. В Clang такого нет.</p>
+<h4><a class="header" href="#bolt" id="bolt">BOLT.</a></h4>
+<p><em>BOLT</em> — это не ключ компилятора, это инструмент, которому вы даёте уже скомпилированный бинарник и профиль, после чего оптимизирует. Есть статистика, согласно которой, BOLT работает лучше чем PGO на $15%$. Дело в том, что он группирует горячие данные вместе, тем самым эффективно используя кэш для инструкций. Почему это не используется в PGO — непонятно. LLVM пытались создать свой аналог (названный <em>LLVM-propeller</em>), но он, <em>барабанная дробь, не взлетел</em>. Поэтому теперь <strong>сам BOLT есть внутри LLVM четырнадцатой версии</strong>.</p>
+<h2><a class="header" href="#Статические-анализаторы" id="Статические-анализаторы">Статические анализаторы.</a></h2>
+<p>Это компьютерный сеньор, который стоит рядом и пользуется методом пристального взгляда.</p>
+<pre><code class="language-c++">    char* s = static_cast&lt;char*&gt;(malloc(N));
+    // ...
+    delete[] s;
+</code></pre>
+<p>Статический анализатор от Microsoft скажет вам, что вы дурак. Почему так не делают все компиляторы? Потому что <strong>чисто по математическим причинам нельзя в Тьюринг-полном языке проверить, достижима ли строка или нет, а значит тем более нельзя гарантированно найти все ошибки (не имея ложных срабатываний)</strong>. Впрочем, иногда ошибки статического анализатора переезжали в предупреждения компилятора. Например, код</p>
+<pre><code class="language-c++">    printf(&quot;%p\n&quot;, 42);
+</code></pre>
+<p>В VS2017 давал ошибку статического анализатора, VS2019 — предупреждение.</p>
+<h3><a class="header" href="#gcc-pr18501" id="gcc-pr18501">GCC PR18501.</a></h3>
+<pre><code class="language-c++">void f() {
+    bool first;
+
+    for (; !finish;) {
+        if (!first)
+        something();
+        first = false;
+    }
+}
+
+void g() {
+    int value;
+    if (flag)
+        value = 42;
+
+    something();
+
+    if (flag)
+        consume(value);
+}
+</code></pre>
+<p>Пользователям хочется, чтобы первый пример был некорректным, второй — корректным. Но есть проблема. Статический анализатор можно запускать сразу, а можно после некоторых оптимизаций. Если мы статически анализируем в самом начале, мы не можем во втором примере узнать, что <code>if (flag)</code> два раза — это одно и то же, нужно узнать, что <code>something</code> его не меняет. Если оптимизировать, то после оптимизации мы не увидим ошибки во втором случае, но не увидим и в первом, так как утратим информацию о том, что <code>first</code> не был проинициализирован.</p>
+<p>Поэтому <strong>GCC пытается минимизировать ложные срабатывания, а Clang максимизировать истинные</strong>. А чтобы сделать всё хорошо, нужно иметь другую логику, нежели имеют компиляторы.</p>
+<h3><a class="header" href="#sal-аннотации" id="sal-аннотации">SAL-аннотации.</a></h3>
+<p>Хорошо, статические анализаторы GCC и Clang междпроцедурные и даже могут смотреть сквозь единицы трансляции. В Visual Studio, увы, не так, поэтому вот такой код:</p>
+<pre><code class="language-c++">void f(int* val) {
+    printf(&quot;%d&quot;, *val);
+}
+</code></pre>
+<p>Непонятно, корректный ли. <strong>Хочется знать, какой у функции контракт.</strong> Можно ли передавать туда указатель на неинициализированную память, можно ли <code>NULL</code> и т.д. Поэтому есть <em>SAL-аннотации</em>.</p>
+<p>Например — <code>_Out_</code> говорит, что вы передаёте туда выделенную, но не обязательно проинициализированную память. Или <code>_Out_writes_bytes_(size * sizeof(int))</code> говорит, что вы передали указатель, в котором можно записать <code>size * sizeof(int)</code> байт.</p>
+<p>У Clang есть то же самое, например,</p>
+<pre><code class="language-c++">    int a __attribute__((guarded_by(m)));
+</code></pre>
+<p>В этом примере при попытке записать в переменную не заблокировав мьютекс <code>m</code>, вам дадут предупреждение.</p>
+<p>Несмотря на свою привлекательность, статические анализаторы не очень популярны из-за того, что баланс между ложными срабатываниями и ложными не-срабатываниями не такой, как люди хотят видеть.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="12_validation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="14_templates.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="12_validation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="14_templates.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

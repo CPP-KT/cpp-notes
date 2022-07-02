@@ -1,0 +1,286 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Способы валидации программы - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_inheritance.html"><strong aria-hidden="true">8.</strong> Наследование (в т.ч. виртуальное), виртуальные функции</a></li><li class="chapter-item expanded "><a href="08_exceptions.html"><strong aria-hidden="true">9.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="09_memory_allocation.html"><strong aria-hidden="true">10.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации</a></li><li class="chapter-item expanded "><a href="10_libraries.html"><strong aria-hidden="true">11.</strong> Статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_undefined_behaviour.html"><strong aria-hidden="true">12.</strong> Undefined behaviour: примеры и способы его понимать</a></li><li class="chapter-item expanded "><a href="12_validation.html" class="active"><strong aria-hidden="true">13.</strong> Способы валидации программы</a></li><li class="chapter-item expanded "><a href="13_tools.html"><strong aria-hidden="true">14.</strong> Полезные инструменты, которые пригодятся вам в жизни</a></li><li class="chapter-item expanded "><a href="14_templates.html"><strong aria-hidden="true">15.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="15_stl_sfinae.html"><strong aria-hidden="true">16.</strong> Обзор STL, tag-dispatching, SFINAE</a></li><li class="chapter-item expanded "><a href="16_namespaces_using_adl.html"><strong aria-hidden="true">17.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="17_move_rvalue.html"><strong aria-hidden="true">18.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="18_intrusive_containers.html"><strong aria-hidden="true">19.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="19_smart_pointers.html"><strong aria-hidden="true">20.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="20_perfect_forwarding.html"><strong aria-hidden="true">21.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="21_decltype_auto_nullptr.html"><strong aria-hidden="true">22.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="22_lambdas_type_erasure.html"><strong aria-hidden="true">23.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="23_signals_reetrancy_errors.html"><strong aria-hidden="true">24.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="24_optional_variant_tuple_stringview.html"><strong aria-hidden="true">25.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="25_constexpr.html"><strong aria-hidden="true">26.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="26_multithreading.html"><strong aria-hidden="true">27.</strong> Многопоточность</a></li><li class="chapter-item expanded "><a href="27_qt.html"><strong aria-hidden="true">28.</strong> Qt</a></li><li class="chapter-item expanded "><a href="28_concepts.html"><strong aria-hidden="true">29.</strong> Концепты</a></li><li class="chapter-item expanded "><a href="29_ranges.html"><strong aria-hidden="true">30.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="30_encoding.html"><strong aria-hidden="true">31.</strong> Кодировки</a></li><li class="chapter-item expanded "><a href="31_coroutines.html"><strong aria-hidden="true">32.</strong> Корутины</a></li><li class="chapter-item expanded "><a href="32_modules.html"><strong aria-hidden="true">33.</strong> Модули</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Валидация-программы" id="Валидация-программы">Валидация программы.</a></h1>
+<p>Отчасти источником проблем с UB является стандарт, который написан на бумаге, в связи с чем программист не знает, то что он вообще пишет, это UB или нет. Впрочем, на текущий момент с этой ситуацией живётся намного проще.</p>
+<h2><a class="header" href="#Ключ-компиляции--fsanitize" id="Ключ-компиляции--fsanitize">Ключ компиляции <em>-fsanitize</em>.</a></h2>
+<p>У компиляторов есть ключи, которые вставляют дополнительные
+проверки. Например, <em>-fsanitize=undefined</em>. Если его поставить, то при запуске на этапе вызова последней строки</p>
+<pre><code class="language-c++">bool test(int a) {
+    return a + 1 &lt; a;
+}
+int main() {
+    test(std::numeric_limits&lt;int&gt;::max());
+}
+</code></pre>
+<p>вам в <code>stderr</code> напишут, что у вас integer overflow. Почему это происходит на этапе исполнения? Потому что <strong>все предупреждения стоят определённую цену из времени компиляции</strong>. Скорее всего, у GCC есть ключ, который включает статический анализатор, но тогда программа будет компилироваться бесконечно долго.</p>
+<p>Другой хороший пример:</p>
+<pre><code class="language-c++">    int* p = new int(42);
+    delete p;
+    *p = 43;
+</code></pre>
+<p>Если вы скомпилируете это с <em>-fsanitize=address</em>, то при исполнении вам выдадут, что в третьей строке вы пишете туда, куда писать нельзя. А именно, что во второй строке вы это освобождали, а в первой — выделяли. Т.е. компилятор вставил в программу необходимые проверки, чтобы это ловить.</p>
+<p>Работает ключ <em>-fsanitize=address</em> следующим образом: создаётся табличка, в которой указано, какие байты где выделены, когда освобождены и т.п. При этом, когда вы обращаетесь к памяти, в эту табличку смотрят и проверяют, легально ли вы сделали. Это табличка называется <em>shadow-байтами</em>. Более того, когда вы что-то освободили, в после этого снова выделяете, обычно аллокатор даёт вам то, что вы только что освободили (пока оно в кэше). А при <em>-fsanitize=address</em> эта память находится в карантине и только потом переиспользуется, чтобы отлавливать ситуации вида</p>
+<pre><code class="language-c++">    int* p = new int(42);
+    delete p;
+    int* q = new int(43); // Стандартный аллокатор положит `*q` туда, где было `*p`.
+    *p = 44;
+</code></pre>
+<p>Вдобавок вокруг аллоцированных блоков памяти вставляется красная зона, чтобы если вы чуть-чуть промахнулись по адресу, вы не попали куда-то, где могут быть корректные данные, а попали чётко туда, куда нельзя.<br />
+Ещё <em>-fsanitize=address</em> включает в себя проверку на утечки памяти — когда вы что-то выделяете и не освобождаете.</p>
+<p><em>-fsanitize=address</em> и <em>-fsanitize=undefined</em> можно использовать совершенно свободно. Ещё есть memory- и thread-sanitizer'ы. Первый находит неинициализированную память, второй — состояние гонки. Их использовать гораздо труднее. Почему? <strong>В случае address-sanitizer'ов можно скомпилировать часть программы с ним, а часть — без. В случае с memory же, у вас могут быть ложные срабатывания, ведь в shadow-памяти не будет записей из той части программы, которая скомпилирована без sanitizer'а</strong>. А этой частью может быть, ну, например, стандартная библиотека. И аналогично с thread-sanitizer'ами — они также тречат записи и чтения.</p>
+<h2><a class="header" href="#valgrind" id="valgrind"><em>valgrind</em>.</a></h2>
+<p>Ещё можно использовать утилиту <em>valgrind</em>, который проверяет программы пост-фактум. Она умеет находить почти те же самые ошибки (address, memory), и при этом не требует компилировать программу со специальными ключами. За счёт чего она работает?<br />
+А она содержит JIT-декомпилятор x86. Понятно, что работает это капец медленно (20 раз против 2 для ключей), но зато нет никаких проблем с memory-sanitizer'ом. Только <strong>не забудьте компилировать вашу программу с ключом <em>-g</em></strong>, чтобы вы видели, на каких строках кода ошибки. При этом <strong>если вы не хотите давать пользователю дебажные символы, просто отправьте их в отдельный файл. И на сервер залейте</strong>. Подробнее об этом — <a href="./13_tools.html#%D0%BE%D1%82%D0%BB%D0%B0%D0%B4%D1%87%D0%B8%D0%BA%D0%B8">ниже</a>.<br />
+<strong><em>valgrind</em>, к сожалению, немного меньше ошибок видит</strong> просто потому, что, например, не может добавить песочка между выделенными данными. И поэтому же <em>valgrind</em> не может проверять undefined и thread. В случае undefined он, например, не знает, из какого языка взялась инструкция <code>add</code>, и обладает ли она неопределённым поведением в нём, а в случае thread — не знает, многопоточная ли та инструкция <code>mov</code>, которую он видит, или нет.</p>
+<h2><a class="header" href="#Проверка-предусловий-стандартной-библиотеки" id="Проверка-предусловий-стандартной-библиотеки">Проверка предусловий стандартной библиотеки.</a></h2>
+<p><em>valgrind</em> и sanitizer'ы — это не единственное, что вы можете. И, что более важно, они не всегда вам помогут.<br />
+Рассмотрим вот что:</p>
+<pre><code class="language-c++">    std::list&lt;int&gt; lst;
+    lst.push_back(1);
+    auto it = lst.end();
+    it++;
+    std::cout &lt;&lt; *it &lt;&lt; std::endl;
+</code></pre>
+<p>На большинстве реализаций стандартной библиотеки тут вы получите <code>1</code>, потому что в большинстве реализаций <code>std::list</code> — кольцевой список. При этом с указателями всё хорошо, вы обращаетесь к корректной памяти, а значит sanitizer'ы не найдут ошибок. Но видно же, что программа некорректна. Чтобы такое тоже проверять, есть флаг <em>-D_GLIBCXX_DEBUG</em>, который как раз проверяет инвалидацию итераторов, разыменование и инкремент past-to-end и все остальные нарушения контрактов.<br />
+Понятно, что это даже асимптотически очень медленно — например, бинарный поиск работает за линейное время (потому что проверяет, является ли переданный ему массив отсортированным) — однако очень полезно.</p>
+<h2><a class="header" href="#assert" id="assert"><code>assert</code>.</a></h2>
+<p>Мы уже можем проверять корректность на двух уровнях — уровне указателей и уровне контрактов. А есть уровень ещё выше. Например, мы пишем свой целочисленный квадратный корень. И мы хотим, чтобы пользователь не полагался на какое-то конкретное поведение, если передать отрицательное значение. Поэтому есть <code>assert</code>. Это такой макрос из заголовка <code>&lt;cassert&gt;</code>, который в зависимости от настроек может делать ничего или писать вам ошибку в программе в случае невыполнения какого-то условия. Очень советуется её писать <strong>везде, где вы полагаетесь на какие-то условия у себя в голове</strong>. Если вы полагаетесь на то, что <code>next-&gt;prev == this</code>, напишите на это <code>assert</code>. Если вы полагаетесь на <code>m &gt;= n</code>, напишите <code>assert</code>. Понятно, особого фанатизма не требуется, но тем не менее делайте это, иначе вы где-то можете <strong>получить мусор из-за бага, передать этот мусор в функцию, получить мусор там, в результате чего потратить на отладку 3 дня вместо нескольких минут</strong>.</p>
+<h3><a class="header" href="#Неправильные-практики-использования-assert" id="Неправильные-практики-использования-assert">Неправильные практики использования <code>assert</code>.</a></h3>
+<pre><code class="language-c++">    FILE* f = fopen(&quot;1.txt&quot;, &quot;r&quot;);
+    assert(f != NULL);
+</code></pre>
+<p>Это вполне штатная ситуация, если файл не открылся, <strong>не надо проверять при помощи <code>assert</code> что-то штатное</strong>.</p>
+<p>Второе:</p>
+<pre><code class="language-c++">    assert(fclose(f) == 0);
+</code></pre>
+<p>Тут ещё хуже — когда вы отключите <code>assert</code>'ы, они отключатся полностью, и <code>fclose</code> не выполнится.</p>
+<p>То, <strong>во что раскрывается <code>assert</code>, зависит от макроса <code>NDEBUG</code></strong>. Если он задан, то <code>assert</code>'ы исчезают. Поэтому, <strong>если вам нужно написать проверку чего-то сложного (скажем, вы хотите проверить, что значение, посчитанное разными способами, одинаковое), то напишите <code>#ifndef NDEBUG</code> и ехайте проверять всё, что вашей душе угодно</strong>.</p>
+<p>Cто́ит ли давать программу с <code>assert</code>'ами пользователю? Если вы задались этим вопросом, скорее всего у вас недостаточно  <code>assert</code>'ов в программе, ведь когда их достаточно, программа замедляется раза в 2.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="11_undefined_behaviour.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="13_tools.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="11_undefined_behaviour.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="13_tools.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

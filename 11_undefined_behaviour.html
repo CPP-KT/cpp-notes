@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Undefined behaviour: примеры и способы его понимать - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_inheritance.html"><strong aria-hidden="true">8.</strong> Наследование (в т.ч. виртуальное), виртуальные функции</a></li><li class="chapter-item expanded "><a href="08_exceptions.html"><strong aria-hidden="true">9.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="09_memory_allocation.html"><strong aria-hidden="true">10.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации</a></li><li class="chapter-item expanded "><a href="10_libraries.html"><strong aria-hidden="true">11.</strong> Статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_undefined_behaviour.html" class="active"><strong aria-hidden="true">12.</strong> Undefined behaviour: примеры и способы его понимать</a></li><li class="chapter-item expanded "><a href="12_validation.html"><strong aria-hidden="true">13.</strong> Способы валидации программы</a></li><li class="chapter-item expanded "><a href="13_tools.html"><strong aria-hidden="true">14.</strong> Полезные инструменты, которые пригодятся вам в жизни</a></li><li class="chapter-item expanded "><a href="14_templates.html"><strong aria-hidden="true">15.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="15_stl_sfinae.html"><strong aria-hidden="true">16.</strong> Обзор STL, tag-dispatching, SFINAE</a></li><li class="chapter-item expanded "><a href="16_namespaces_using_adl.html"><strong aria-hidden="true">17.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="17_move_rvalue.html"><strong aria-hidden="true">18.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="18_intrusive_containers.html"><strong aria-hidden="true">19.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="19_smart_pointers.html"><strong aria-hidden="true">20.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="20_perfect_forwarding.html"><strong aria-hidden="true">21.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="21_decltype_auto_nullptr.html"><strong aria-hidden="true">22.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="22_lambdas_type_erasure.html"><strong aria-hidden="true">23.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="23_signals_reetrancy_errors.html"><strong aria-hidden="true">24.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="24_optional_variant_tuple_stringview.html"><strong aria-hidden="true">25.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="25_constexpr.html"><strong aria-hidden="true">26.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="26_multithreading.html"><strong aria-hidden="true">27.</strong> Многопоточность</a></li><li class="chapter-item expanded "><a href="27_qt.html"><strong aria-hidden="true">28.</strong> Qt</a></li><li class="chapter-item expanded "><a href="28_concepts.html"><strong aria-hidden="true">29.</strong> Концепты</a></li><li class="chapter-item expanded "><a href="29_ranges.html"><strong aria-hidden="true">30.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="30_encoding.html"><strong aria-hidden="true">31.</strong> Кодировки</a></li><li class="chapter-item expanded "><a href="31_coroutines.html"><strong aria-hidden="true">32.</strong> Корутины</a></li><li class="chapter-item expanded "><a href="32_modules.html"><strong aria-hidden="true">33.</strong> Модули</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/lejabque/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#undefined-behaviour" id="undefined-behaviour">Undefined behaviour.</a></h1>
+<p>Если просто дать определение этой штуки, возникнет вопрос, на кой она нужна. Поэтому начнём мы с истории из жизни компиляторов.</p>
+<h2><a class="header" href="#aliasing-restrict" id="aliasing-restrict">Aliasing. <code>restrict</code>.</a></h2>
+<p>Напишем вот что:</p>
+<pre><code class="language-c++">void sum(float* res, float const* in, size_t n) {
+    for (size_t i = 0; i &lt; n; i++)
+        *res += in[i];
+}
+</code></pre>
+<p>Компилятор же умеет оптимизировать код, почему бы ему не завести регистр, где он будет накапливать чиселки, после чего запишет их в <code>*res</code>. И он действительно заведёт регистр <code>XMM0</code>. Но почему-то он будет записывать результат в <code>*res</code> на каждой итерации цикла, а не после него. Почему? Потому что может так оказаться, что указатели <code>in</code> и <code>res</code> ссылаются в одно и то же место. И тогда нам бы надо прибавить корректное значение. У компилятора нигде не написано, что такого быть не может, хотя ни один адекватный человек так делать не будет.</p>
+<p>Научным языком ситуация с двумя ссылками на одно место называется <em>aliasing</em>.<br />
+Ещё один пример на ту же тему:</p>
+<pre><code class="language-c++">void memcopy(char* dst, char const* src, size_t count) {
+    for (size_t i = 0; i &lt; n; i++)
+        dst[i] = src[i];
+}
+</code></pre>
+<p>Тут проблема та же самая — это должно быть копирование, но если его вызвать от пересекающихся массивов, будет не оно. Так что для компилятора <strong>наличие aliasing'а — это причина, почему он не может применять многие оптимизации</strong>. Поэтому разработчики компиляторов пытались найти какие-нибудь правила, которым помогли бы им в оптимизации. И нашли они вот что.</p>
+<p>Мы говорили о том, что <strong>нельзя в общем случае предполагать размеры <code>int</code>'а и <code>short</code>'а</strong>. Поэтому разработчики компиляторов нагло этим воспользовались:</p>
+<pre><code class="language-c++">int foo(int* a, int* b) {
+    *a = 1;
+    *b = 2;
+    return *a;
+}
+</code></pre>
+<p>Тут нельзя оптимизировать <code>return *a</code> в <code>return 1</code>. Зато тут:</p>
+<pre><code class="language-c++">int foo(int* a, short* b) {
+    *a = 1;
+    *b = 2;
+    return *a;
+}
+</code></pre>
+<p>Вполне можно, ведь некорректно одним указателем ссылаться на <code>int</code> и <code>short</code>. Это <strong><em>strict aliasing rule</em> — вы не можете ссылаться на одни и те же данные разными типами</strong>. У него есть два исключения.</p>
+<ul>
+<li><code>int</code> и <code>unsigned</code> (или любые другие типы, отличающиеся только знаковостью).</li>
+<li><code>char</code>, <code>unsigned char</code> и <code>std::byte</code>, могут alias'ить всё что угодно. В C <code>signed char</code> тоже может.</li>
+</ul>
+<p>Это может привести к интересным эффектам. Если мы попытаемся заполнить <code>std::vector&lt;char&gt;</code> нулями, то компилятор будет перечитывать <code>data</code> и <code>size</code>, а то вдруг данные вашего вектора alias'ятся с его полями. Такую же проблему, но в меньших масштабах, имеем с <code>std::vector&lt;size_t&gt;</code>, поскольку у нас <code>size</code> — это <code>size_t</code>.</p>
+<p>Такая проблема приводила к тому, что всякие численные методы не писались на C, а писались на Fortran'е, в силу специфики которого компилятор имеет право предполагать, что его аргументы на alias'ятся. Чтобы как-то жить с alias'ингом в C в стандарте C99 даже добавили ключевое слово <em><code>restrict</code></em>, которое показывает, что данный указатель не alias'ится ни с одним другим. В C++ его нет, но многими компиляторами поддерживается как расширение и пишется как <code>__restrict</code>. И если написать</p>
+<pre><code class="language-c++">void sum(float* __restrict res, float const* in, size_t n) {
+    for (size_t i = 0; i &lt; n; i++)
+        *res += in[i];
+}
+</code></pre>
+<p>То компилятор не только вытащит запись в <code>*res</code> вне цикла, но начнёт ещё и векторизацию использовать, что ускорит код в 4 раза.</p>
+<p>Хорошо, мы написали функцию, на которую мы повесили <code>__restrict</code>. Вопрос — что произойдёт, если мы-таки передадим туда что-то, что alias'ится? Да никто не знает, честно говоря. В зависимости от компилятора код может быть оптимизирован, а может быть не. Вы не можете заставить компилятор оптимизировать код по стандарту, а значит не можете заставить сделать что-то конкретное — произойдёт то, что произойдёт. Тут вы по сути <strong>вступаете в контракт с компилятором — Вы не передаёте какую-то фигню, а компилятор включает оптимизации. Если вы нарушите свои условия, ваш код может сделать всё что угодно</strong>. Только тут пример показателен, потому что вы сами кровью подписали контракт, написав <code>__restrict</code>.</p>
+<h2><a class="header" href="#Сдвиги" id="Сдвиги">Сдвиги.</a></h2>
+<p>А вот если вы сделаете</p>
+<pre><code class="language-c++">int shift(int a, int b) {
+    return a &lt;&lt; b;
+}
+</code></pre>
+<p>То непонятно, что произойдёт, если вы передадите <code>b</code> или отрицательное, или большее 32. <strong>На разных платформах сдвиги работают по разному.</strong> На x86 вот, вообще 32- и 64-битные числа сдвигаются по модулю битности, а 16-битные — не по модулю 16 бит, а тоже 32. Поэтому конкретно прописать, что произойдёт, нельзя, <strong>на каких-то платформах нужно будет <code>if</code>'ать. Поэтому это тоже UB</strong>. Но в данном примере ничего кровью не подписывали. Впрочем, данный пример имеет ещё одну особенность — можно определить, что под каждую конкретную платформу имеем конкретное поведение. А есть случай, когда мы и так делать не можем.</p>
+<h2><a class="header" href="#Разыменование-нулевого-указателя-и-обращение-вне-массива" id="Разыменование-нулевого-указателя-и-обращение-вне-массива">Разыменование нулевого указателя и обращение вне массива.</a></h2>
+<p>Почему нельзя его разыменовывать, ведь согласно страничной адресации какое-то значение мы получим.</p>
+<ul>
+<li>Во-первых, страничная адресация есть не везде, увы, вы проиграли.</li>
+<li>Во-вторых, даже если у вас страничная адресация, то разные ОС сообщают о обращении к <code>nullptr</code> по-разному, и это сложно стандартизировать.</li>
+<li>Хотя на самом деле есть более важный аргумент. Ладно, пусть у вас есть какой-то обработчик обращения к <code>nullptr</code>. Тогда компилятор не может удалить обращение к неиспользуемой переменной (вдруг там <code>nullptr</code>, это же надо обработать), не может переупорядочивать обращения к памяти (в обработчике надо видеть все обращения, произошедшие до, но не видеть все после).</li>
+</ul>
+<p>В ту же степь идут обращения за край массива: если это проверять и обрабатывать, нельзя будет переупорядочить обращения к памяти.</p>
+<h2><a class="header" href="#Переполнение-типов" id="Переполнение-типов">Переполнение типов.</a></h2>
+<pre><code class="language-c++">bool is_maximal_int(int a) {
+    return a + 1 &lt; a;
+}
+</code></pre>
+<p>Тут понятно, почему UB (потому же, почему и сдвиги). Но у него тоже есть нечто показательное: вы можете предсказать, что будет на большинстве компиляторов. И мы можем даже посмотреть на это и объяснить.<br />
+Этот код будет оптимизирован компилятором в <code>return false</code>. Почему? Ну, смотрите, если <code>a</code> — это не максимальный <code>int</code>, то возвращаем <code>false</code>, иначе по стандарту UB, значит можно вернуть что угодно, например, тоже <code>false</code>. По стандарту <strong>в знаковых числах (и только в них) если результат операции <code>+</code>, <code>-</code> или <code>*</code> не представим в вашем типе, то это UB</strong>.</p>
+<h2><a class="header" href="#const" id="const"><code>const</code>.</a></h2>
+<p>Ещё весёлая ситуация есть с <code>const</code>'ами:</p>
+<pre><code class="language-c++">int const PI = 3;
+
+int length(int r) {
+return 2 * PI * r;
+}
+</code></pre>
+<p>Так вот, это оптимизируется в умножение на <code>6</code>. Несмотря на то, что технически никто не мешает вам снять <code>const</code> при помощи <code>const_cast</code> и записать что-то другое в <code>PI</code>. Потому <strong>что когда вы снимаете <code>const</code>, а потом что-то записываете — UB</strong>.</p>
+<h2><a class="header" href="#Преднамеренное-неопределённое-поведение" id="Преднамеренное-неопределённое-поведение">Преднамеренное неопределённое поведение.</a></h2>
+<p>В GCC есть прекрасная функция, которая называется <code>__builtin_unreachable</code>. Всё что она делает — делает UB. Возникает вопрос: а зачем? Чтобы компилятор мог как ему вздумается оптимизировать то, что вы и ваши коллеги считаете недостижимым. Например, если у вас есть <code>switch</code>, где вы перебрали все случаи (вы знаете, что перебрали все случаи, а компилятор — нет), то в <code>default:</code> можно написать эту функцию, и тогда компилятор не будет проверять, что вы попадёте в один из <code>case</code>'ов.</p>
+<h2><a class="header" href="#best-practices" id="best-practices">Best practices.</a></h2>
+<p>Хорошо, а как делать надо?</p>
+<ul>
+<li>Снимать <code>const</code> с неизменяемого объекта всегда плохо, просто так не делайте.</li>
+<li>Если вам нужна операция с переполнением, в GCC есть <code>__builtin_add_overflow</code>, который точно и без UB делает то, что вам нужно.</li>
+<li>Если вы хотите кастить указатели друг в друга, то вам нужен <code>memcpy</code>. Причём <code>memcpy</code> компилятор нормально оптимизирует, получается как каст, только по стандарту. В случае <code>memcpy</code> вы получите всё так, как на текущей архитектуре работает (т.е. LE либо BE), а если вы хотите конкретный порядок байт вне зависимости от системы, напишите что-то вида <code>ptr[3] | ptr[2] &lt;&lt; 8 | ptr[1] &lt;&lt; 16 | ptr[0] &lt;&lt; 24</code>. Это даже медленно не будет, потому что компилятор просекает такие паттерны и оптимизирует их.</li>
+</ul>
+<h2><a class="header" href="#Способы-неправильно-воспринимать-ub" id="Способы-неправильно-воспринимать-ub">Способы неправильно воспринимать UB.</a></h2>
+<p>Люди иногда считают, что компилятор может портить при оптимизации программы, содержащие UB. На самом деле это некорректно, потому что <strong>компилятор портит не программу целиком, а только на тех входных данных, которые к UB приводят.</strong> Пока вы подаёте программе те данные, на которых нет UB, она обязана работать корректно, даже
+если в каком-то месте, в каком-то другом случае может быть UB.<br />
+Например,</p>
+<pre><code class="language-c++">struct tun_struct *tun = ...;
+struct sock *sk = tun-&gt;sk;
+if (!tun)
+    return POLLER;
+</code></pre>
+<p>Традиционно это код из ядра Linux, содержащий UB. Но <code>sk</code> не использовалось, поэтому к ошибкам не приводило. А когда GCC начал всё оптимизировать сильнее, он нафиг убрал переменную <code>sk</code>. Но поскольку вы обращаетесь к <code>tun</code>, можно нафиг убрать и проверку его на <code>NULL</code>. Тем не менее, ваша
+программа останется корректной при любом не'<code>NULL</code>'овом значении <code>tun</code>.</p>
+<p>Другое неправильное понимание UB — вот:</p>
+<pre><code class="language-c++">bool test(int a) {
+    return a + 1 &lt; a;
+}
+</code></pre>
+<p>И вопрос в том, почему это переводится в <code>return false</code>. Но человек смотрит на то, что в процессоре это совершенно чётко работают, и не понимает, почему в C++ не работает. А дело в том, что <strong>опасно при изучении того, как работает код, смотреть на инструкции процессора</strong>. Нельзя так, сложение в процессоре и сложение в языке могут различаться. Похожая очень грустная ситуация с многопоточностью, где инструкции есть у процессора, есть команды в C++, и они совсем разные.</p>
+<p>А ещё <strong>неправильно обращаться к разработчикам компиляторов, которые в новой версии якобы сломали ваш код</strong>. Раньше компиляторы оптимизировали всё очень слабо, и исполняли всё так, как написано (соответственно, UB не портилось). А потом новые оптимизации, которые всё сильнее и сильнее ломают ваш код, содержащий UB.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="10_libraries.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="12_validation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="10_libraries.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="12_validation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
