@@ -1,20 +1,19 @@
-# Обзор STL, tag-dispatching, SFINAE.
-- [Запись лекции №1](https://www.youtube.com/watch?v=RidP1GbfFEA)
-- [Запись лекции №2](https://www.youtube.com/watch?v=HQdf43h3B2o)
+# Обзор STL.
+- [Запись лекции](https://www.youtube.com/watch?v=RidP1GbfFEA)
+
 ---
-## STL
 Стандартные sequence containers:
-- array
-- vector
-- deque
-- forward_list (односвязный)
-- list (двусвязный)
+- `array`
+- `vector`
+- `deque`
+- `forward_list` (односвязный)
+- `list` (двусвязный)
 
 Ассоциативные контейнеры:
-- map
-- set
-- unordered_map
-- unordered_set
+- `map`
+- `set`
+- `unordered_map`
+- `unordered_set`
 
 Обычно к типам, которые можно хранить в контейнерах, есть какие-то требования. Например, контейнер может допускать только копируемые или присваиваемые типы.
 
@@ -24,24 +23,26 @@
 
 ```c++
 struct mytype{};
+
 bool operator<(mytype, mytype) {
-  return true;
+	return true;
 }
 
 std::set<mytype> v;
 ```
 Set не сможет работать с таким типом, так как `a < b` и `b < a` верно одновременно.
-При этом если поменять в примере `true` на `false`, такое сравнение будет корректным, так как оно все элементы "складывает" в один класс эквивалентности.
+При этом если поменять в примере `true` на `false`, такое сравнение будет корректным (согласно ему, все элементы равны).
 Требования к сравнению написаны в [стандарте](https://en.cppreference.com/w/cpp/named_req/Compare).
 
 Ещё пример:
 ```c++
 struct mypair {
-  int x;
-  int y;
+	int x;
+	int y;
 };
+
 bool operator<(mypair a, mypair b) {
-  return a.x < b.x && a.y < b.y;
+	return a.x < b.x && a.y < b.y;
 }
 ```
 Правильное сравнение требует, чтобы классы эквивалентности можно было задать как `!cmp(a, b) && !cmp(b, a)`, поэтому такое сравнение критерию не удовлетворяет.
@@ -51,16 +52,17 @@ bool operator<(mypair a, mypair b) {
 Можно передавать компаратор:
 ```c++
 struct comparer {
-  bool operator()(int* a, int* b) const {
-    return *a < *b;
-  }
+	bool operator()(int* a, int* b) const {
+		return *a < *b;
+	}
 };
+
 int main() {
-  std::set<int*, comparer> s;
-  int xval = 4;
-  int yval = 5;
-  s.insert(&xval);
-  s.insert(&yval);
+	std::set<int*, comparer> s;
+	int xval = 4;
+	int yval = 5;
+	s.insert(&xval);
+	s.insert(&yval);
 }
 ```
 ---
@@ -74,14 +76,14 @@ void f(void (*g)()) {
 ```c++
 template <typename G>
 void f(G g) {
-  g();
+	g();
 }
 struct my_g {
-  void operator()() const;
+	void operator()() const;
 };
 void hello() {
-  my_g g;
-  f(g);
+	my_g g;
+	f(g);
 }
 ```
 `f` - шаблонная, поэтому инстанцируется для каждого `G` и компилятору понятно, какая функция вызывается и её можно инлайнить.
@@ -99,7 +101,7 @@ void hello() {
 Для векторов можно думать, что он хранит указатель на элемент, для списков, например, указатели на ноды.
 
 Обычно итератор это шаблонный класс с параметрами `Category, T, Distance, Pointer, Reference`, в котором есть следующие мемберы:
-```
+```c++
 using iterator_category	= Category;
 using value_type = T;
 using difference_type	= Distance;
@@ -144,7 +146,7 @@ using reference =	Reference;
 Размер за константу тяжело поддерживать, если хотим `splice` делать константным (позволяет разрезать лист и переместить подпоследовательность).
 В итоге пришли к тому, что `splice` работает за линейное время, а `size` за константу.
 
-**Про то, как можно смотреть на итераторы*:
+**Про то, как можно смотреть на итераторы**:
 Алгоритмы из STL чаще всего принимают пару итераторов (обычно начало и конец). Такие операции работают на `[first, last)`.
 То есть если передать `begin()` и `end()`, то алгоритм будет работать со всем контейнером целиком.
 
@@ -153,11 +155,9 @@ using reference =	Reference;
 
 Тогда итератору `rbegin()` соответствует `end()`, а `rend()` это `begin()`. Реверс-итераторы позволяют пройти контейнер в обратную сторону.
 `.base()` по итератору выдает соответствующий ему реверс-итератор. Важно понимать, что `.base()` ссылается не на тот же элемент, а на соседний.
-`rbegin().base == end()`
-<p align="center">
-<img src="./images/reverse_iterators.png" 
-     width="45%"></img>
-</p>
+`rbegin().base == end()`.
+
+![reverse iterators](./images/reverse_iterators.png)
 
 **Про бинарный поиск** (далее итераторы ссылаются между элементами):
 
@@ -168,193 +168,32 @@ using reference =	Reference;
 
 Идиоматический способ удалять элементы по предикату:
 ```c++
-std::vector<int> v;
-auto it = std::remove_if(v.begin(), v.end(), pred); // переупорядочивает и возвращает итератор на позицию, "где заканчиваются хорошие элементы"
-v.erase(it, v.end()); // чистим хвост, так как физический размер вектора остался тем же (подробнее на cppreference)
+	std::vector<int> v;
+	auto it = std::remove_if(v.begin(), v.end(), pred); // переупорядочивает и возвращает итератор на позицию, "где заканчиваются хорошие элементы"
+	v.erase(it, v.end()); // чистим хвост, так как физический размер вектора остался тем же (подробнее на cppreference)
 ```
 
-В *C++20* появился `operator<=>` (freeway comparison) сразу говорит, "меньше, равно или больше" и в возвращаемом значении говорит, какой *order* даёт (partial, weak, strong).
-Так же в *C++20* появились range и какие-то алгоритмы в STL могут поменяться.
+В *C++20* появился `operator<=>` (three-way comparison) сразу говорит, "меньше, равно или больше" и в возвращаемом значении говорит, какой *order* даёт (`partial`, `weak`, `strong`).
+Так же в *C++20* появились `range`, и какие-то алгоритмы в STL могут поменяться.
 
 ```c++
 // std::distance
 template <typename InputIterator>
 ptrdiff_t distance(InputIterator first, InputIterator last) {
-  size_t n = 0;
-  while (first != last) {
-    ++first; 
-    ++n;
-  }
-  return n;
+	size_t n = 0;
+	while (first != last) {
+		++first; 
+		++n;
+	}
+	return n;
 }
 
-template<typename RandomAccessIterator>
-ptrdiff_t distance(RandomAccessIterator first, RandomAccessIterator last){
-  return last - first;
+template <typename RandomAccessIterator>
+ptrdiff_t distance(RandomAccessIterator first, RandomAccessIterator last) {
+	return last - first;
 }
 ```
 Как проверить в первой реализации, что `last > first` и что они вообще из ондого контейнера? ~А никак~
 Обычно можно включить макрос, который включает проверки в контейнерах (например, ключ компиляции `-D_GLIBCXX_DEBUG`, здесь `-D` означает задефайнить макрос).
 
 
-## type_traits, tag-dispatching
-Вспомним задание с практики про вектор. В нём у нас было много мест, которые не нужны, например, для любых чисел (явный вызов деструктора, копирование без memcpy, а с вызовом конструктора копирования). Хотим как-то проверять, что тип в своём деструкторе или конструкторе ничего не делает. Почему недостаточно просто специализаций в шаблонах? Потому что хотим делать это не только для стандартных типов, а для любых пользовательских.
-
-Такое проверяется только компилятором. Называется это `type_traits`:
-```c++
-#include <type_traits>
-template <typename T>
-void f() {
-  std::is_trivially_destructible<T>::value;
-}
-```
-Почему это класс с переменной? Раньше шаблонными были только функции и классы, в `C++17` появилась возможность делать шаблонные переменные:
-`std::is_trivially_destructible_v<T>`.
-
-```c++
-template <typename TT>
-void destroy_all(TT* data, size_t size) {
-  if (!std::is_trivially_destructible_v<TT>){
-    for (size_t i = size; i != 0; --i){
-      data[i - 1].~TT();
-    }
-  }
-}
-```
-Конструкция выше будет работать, компилятор соптимизирует и `if` выкинет. Но если писать конструкцию как-то по-другому, например, сделать две ветки `if`,
-то компилятор будет типизировать обе ветки, но в одной из них может быть обращение к операции, которой вообще у типа нет, компилятор будет показывать ошибки в обеих ветках.
-
-Как это фиксить:
-```c++
-struct trivial{};
-struct non_trivial{};
-template <typename TT>
-void do_destroy_all(TT* data, size_t size, trivial) {}
-template <typename TT>
-void do_destroy_all(TT* data, size_t size, non_trivial) {
-  for (size_t i = size; i != 0; --i){
-      data[i - 1].~TT();
-  }
-}
-template <typename TT>
-void destroy_all(TT* data, size_t size) {
-  do_destroy_all(data, size,
-                  std::conditional_t<std::is_trivially_destructible_v<TT>, trivial, non_trivial>);
-}
-```
-Такая техника называется *tag-dispatching*. Обычно так в стандартной библиотеке разбирают ситуации, например, для `std::distance`.
-
-## SFINAE
-Есть другой способ сделать похожее, основанный на поведении компилятора при *deduction*.
-```c++
-template <typename Container>
-void foo(Container&, typename Container::iterator); // (1)
-template <typename Element, size_t N>
-void foo(Element (&)[N], Element*); // (2) 
-int main() {
-  std::vector<int> v;
-  foo(v, v.begin());
-  
-  int w[10];
-  foo(w, w + 2);
-}
-```
-Как работает компилятор на таком коде? Первым делом по аргументам компилятор сопоставляет их с параметрами и пытается понять, какие шаблонные параметры имели в виду (это называется *deduction*). В коде выше он видет, что `v` - это `vector&`, а параметр - `Container&`, поэтому `Container` это `vector`. Он как бы декомпозирует типы и запускается от частей, а когда доходит до шаблонных параметров, понимает, какой тип здесь имелся в виду.
-
-*deduction* может выдать ошибку, например:
-```c++
-template <typename T>
-void bar();
-
-template <typename T>
-void foo(T a, T b);
-int main() {
-  bar(); // ошибка "couldn't infer template argument 'T'", так как нет информации из аргумента, какой типа T
-  bar(1, 2.); // ошибка "deduced conflicting types for parameter 'T'", первый параметр int, второй double, не понятно, какой T выводить
-}
-```
-Из depended имён выводить не можем:
-```c++
-template <typename T>
-struct mytype {
-  typedef T type;
-};
-template <>
-struct mytype<int> {
-  typedef char type;
-};
-template <typename T>
-void bar(typename mytype<T>::type);
-```
-Сложность возникла из-за специализаций. Если приходит `char`, то из такого не понятно, откуда он пришёл (могло из `mytype<int>`, а могло из `mytype<char>`), поэтому *deduction* не пытается выводить.
-
-Вернёмся к первому примеру: для `foo(v, v.begin());`: для **(1)** по первому аргументу можно сказать, что `Container` это `std::vector<int>` и всё вывелось. Для **(2)** нельзя вывести, так как передаётся вектор, а ожидается ссылка на массив.
-
-После *deduction* делается подстановка и *overload resolution*. Если бы ошибка *deduction* приводила к ошибке компиляции, то в этом случае было бы невозможно вызвать первую функцию, поэтому этот второй кандидат выбрасывается для кандидатов для *overloading* и отрабатывает первый.
-
-Теперь как работает для `foo(w, w + 2)`: для **(2)** всё просто, `Element -> int, N -> 10`. Для **(1)** `Container -> int[10]`, начинаем делать подстановку и получаем вторым аргументом что-то типа `int[10]::iterator` (концептуально), ошибка звучит как-то "не могу найти в массиве итератор". Очевидно, что если бы это приводило к ошибке компиляции, то не могли бы вызвать вторую функцию. 
-
-В этом и заключается принцип **SFINAE** - substitution failure is not an error.
-
-Если бы мы ссылались на `Container::iterator` внутри функции, то получили бы ошибку компиляции, а так просто выкидываем эту перегрузку.
-
-Этот механизм можно абьюзить в своих целях, хотим фейлить перегрузки:
-```c++
-template <bool Condition>
-struct enable_if;
-
-template<>
-struct enable_if<true> {
-  typedef void type;
-};
-
-template <typename TT>
-typename enable_if<std::is_trivially_destructible_v<TT>>::type do_destroy_all(TT* data, size_t size){}
-template<typename TT>
-typename enable_if<!std::is_trivially_destructible_v<TT>>::type do_destroy_all(TT* data, size_t size){
-  for (size_t i = size; i != 0; --i){
-    data[i - 1].~TT();
-  }
-}
-int main() {
-  int a[10];
-  destroy_all(a, 10); // выберется первая, так как у второй будет enable_if<false>::type, что вызовет ошибку подстановки
-  
-  std::string b[10];
-  destroy_all(b, 10); // выберется вторая
-}
-```
-SFINAE - распространённая техника при реализации библиотек, если нужно проверить свойства типов.
-
-Для этого есть [std::enable_if](https://en.cppreference.com/w/cpp/types/enable_if)
-
-Аналогично можно делать и для структур:
-```c++
-template <typename T, typename Fake = void>
-struct number;
-
-template <typename T>
-struct number<T, typename std::enable_if<std::is_unsigned_v<T>>::type> {
-  void f(){}
-};
-
-template <typename T>
-struct number<T, typename std::enable_if<std::is_signed_v<T>>::type> {
-  void g(){}
-};
-
-
-```
-
-У `std::enable_if` второй параметр это `type`, по умолчанию там `void`. Если передаётся `true`, то там есть публичный `typedef type void`, иначе нет.
-
-В `C++20` ввели механизм концептов для таких целей:
-```c++
-#include <concepts>
-template <typename T>
-requires std::is_unsigned_v<T>
-void f(T, a);
-template <typename T>
-requires std::is_signed_v<T>
-void f(T a);
-```
