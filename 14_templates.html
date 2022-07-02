@@ -159,178 +159,301 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#Шаблоны" id="Шаблоны">Шаблоны</a></h1>
+                        <h1><a class="header" href="#Шаблоны" id="Шаблоны">Шаблоны.</a></h1>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=AXl4_eZ1eis">Запись лекции №1</a></li>
 <li><a href="https://www.youtube.com/watch?v=DwDbH7pxzRA">Запись лекции №2</a></li>
 <li><a href="https://www.youtube.com/watch?v=CY7vxMSBork">Практика</a></li>
+<li><a href="https://www.youtube.com/watch?v=HQdf43h3B2o">Запись ещё одной лекции</a></li>
 </ul>
 <hr />
+<h2><a class="header" href="#Мотивация" id="Мотивация">Мотивация.</a></h2>
 <p>Часто очень хочется делать типизированный класс - например, какую-то структуру данных для разных типов. Здесь и применяются шаблоны.</p>
-<p>В Си их не было и было два способа реализовать такое:</p>
+<h2><a class="header" href="#Способы-жить-без-шаблонов" id="Способы-жить-без-шаблонов">Способы жить без шаблонов.</a></h2>
+<p>В C шаблонов не было и было два способа жить без них</p>
+<h3><a class="header" href="#void" id="void"><code>void*</code>.</a></h3>
+<p>В C есть <code>void*</code> — тип указателя, который (в C, не C++) неявно преобразуется куда угодно и откуда угодно. И тогда всё выглядело бы так:</p>
+<pre><code class="language-c++">struct vector {
+	void push_back(void*);
+	void*&amp; operator[](size_t index);
+	const void*&amp; operator[](size_t index) const;
+};
+
+int main() {
+	point* p;
+	vector v;
+	v.push_back(p);
+	static_cast&lt;point*&gt;(v[0]);
+}
+</code></pre>
+<p>У этого есть следующие проблемы:</p>
 <ul>
-<li>
-<p>Хранить внутри данные &quot;любого типа&quot; как <code>void*</code>, но это неудобно, потому что нельзя хранить ничего, что занимает больше памяти, чем <code>void*</code>.  Можно хранить указатели, но это не очень эффективно из-за кэш-промахов.</p>
-</li>
-<li>
-<p>Через <code>#define</code>:</p>
-</li>
+<li>Это не типобезопасно. Мы можем достать из вектора не то, что туда положили. И компилятор ничего не скажет. А если мы можем выявить ошибку на этапе компиляции, сто́ит это делать.</li>
+<li>Количество аллокаций. Если мы хотим хранить целые числа, а не указатели, в <code>std::vector&lt;int&gt;</code> мы тупо выделяем большой блок памяти, а в нашем <code>vector</code>'е мы сначала выделяем большой блок под указатели, а потом выделяем память под каждый. К тому же подобную штуку не получится prefetch'ить, потому что память под каждый объект выделена в разных местах, а значит лишний indirection.</li>
+<li>Следующий код не exception-safe.</li>
 </ul>
-<pre><code class="language-c++">#define DECLASE_MYVECTOR(vector_name, type)                       \          
+<pre><code class="language-c++">	vector u;
+	u.push_back(new point());
+</code></pre>
+<h3><a class="header" href="#Макросы" id="Макросы">Макросы.</a></h3>
+<pre><code class="language-c++">#define DEFINE_VECTOR(vector_name, type)                       \          
 struct vector_name {                                              \
-	void push_back(type);                                     \
-	type operator[](size_t index) const;                      \
+	void push_back(type) { /*...*/ }                          \
+	type operator[](size_t index) const{ /*...*/ }            \
+};
+</code></pre>
+<p>Тут уже явно лучше, можно написать это типобезопасно, без проблем с памятью, но тоже имеются проблемы. Например, вот:</p>
+<pre><code class="language-c++">
+DEFINE_VECTOR(vector_int, int);
+DEFINE_VECTOR(vector_int32_t, int32_t);
+int main() {
+	vector_int v;
+	vector_int32_t u;
 }
 </code></pre>
-<p>У дефайнов несколько проблем: если ссылаться на один тип по-разному через <code>typedef</code>, то будут генериться два разных класса, которые по сути одно и то же. А ещё нельзя создавать с длинными типами типа <code>unsigned short</code>. А ещё может возникнуть дублирование.</p>
-<p>Как это делают <del>нормальные люди</del> в C++:</p>
+<p>И теперь мы имеем две одинаковые структуры, а хотелось бы иметь одну там, где <code>int</code> 32-битный.</p>
+<p>Второе — когда мы имеем <code>DEFINE_VECTOR(int)</code> в двух разных местах. Потому что вам и какому-то человеку из Австралии понадобилось одно и то же. А потом кто-то подключает и то, и другое, и он проиграл.</p>
+<h2><a class="header" href="#Базовый-синтаксис" id="Базовый-синтаксис">Базовый синтаксис.</a></h2>
 <pre><code class="language-c++">template &lt;typename T&gt;
-// template&lt;class T&gt; это то же самое
+// template &lt;class T&gt; это то же самое
 struct vector {
-     void push_back(T const &amp;);
-     T const&amp; operator[](size_t index) const;
-}
+	void push_back(T const &amp;) { /*...*/ }
+	T const&amp; operator[](size_t index) const { /*...*/ }
+};
 </code></pre>
-<p>Функции тоже можно типизировать:</p>
-<pre><code class="language-c++">template&lt;typename T&gt;
+<p>После этого пишем <code>vector&lt;int&gt;</code>, и не получаем ни одну из проблем двух способов выше. Шаблоны можно навесить не только на класс, но и <a href="https://en.cppreference.com/w/cpp/language/variable_template">на переменную</a> (since C++14) или функцию:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
 void swap(T&amp; a, T&amp; b) {
-     T tmp = a;
-     a = b;
-     b = tmp;
+	T tmp = a;
+	a = b;
+	b = tmp;
 }
 </code></pre>
-<h2><a class="header" href="#Специализации" id="Специализации">Специализации</a></h2>
-<p>Иногда для каких-то типов хочется сделать отдельную реализацию. Например, <code>vector&lt;bool&gt;</code>. Это называется специализацией и делается так:</p>
+<p>При этом для функций вы не обязаны писать <code>swap&lt;int&gt;(a, b)</code>, а можете написать просто <code>swap(a, b)</code>, если переменные <code>a</code> и <code>b</code> уже имеют тип <code>int</code>. При этом если вы подставите в эту функцию <code>long long</code> и <code>int</code>, вам явно напишут, что нельзя так. Более того:</p>
+<pre><code class="language-c++">template &lt;typename Dst, typename Src&gt;
+Dst my_cast(Src s) {
+	return static_cast&lt;Dst&gt;(s);
+}
+int main() {
+	int x = 42;
+	my_cast(x);        // Непонятно, чему равно `Dst`, ошибка.
+	my_cast&lt;float&gt;(x); // `Dst` указан явно, `Src` можно вывести, зная тип `x`.
+}
+</code></pre>
+<h2><a class="header" href="#Специализации" id="Специализации">Специализации.</a></h2>
+<p>Иногда для каких-то типов хочется сделать отдельную реализацию. Например, <code>vector&lt;bool&gt;</code>. Это называется <em>специализацией</em> и делается так:</p>
 <pre><code class="language-c++">template &lt;&gt;
 struct vector&lt;bool&gt; {
 	// ...
 };
 </code></pre>
-<p>С точки зрения языка шаблонным параметром может быть любой тип, но, например, вектор из стандартной библиотеке может принимать не любые типы, а, например, только копируемые и присваиваемые. Поэтому, например, <code>vector&lt;const bool&gt;</code> сделать нельзя, так как он не является присваиваемым.</p>
-<p>Чтобы &quot;заифать типы&quot; есть <code>std::conditional</code>, концептуально он работает как-то так:</p>
-<pre><code class="language-c++">template &lt;bool Cond, typename IfTrue, typename IfFalse&gt;
-struct conditional;
-
-template &lt;typename IfTrue1, typename IfFalse1&gt;
-struct conditional&lt;false, IfTrue1, IfFalse1&gt; {
-	typedef IfFalse1 type;
-};
-template &lt;typename IfTrue1, typename IfFalse1&gt;
-struct conditional&lt;true, IfTrue1, IfFalse1&gt; {
-	typedef IfTrue1 type;
-};
-</code></pre>
-<p>Можно делать partial специализацию, например для указателей:</p>
-<pre><code class="language-c++">template &lt;typename V&gt;
-struct vector&lt;V*&gt; {
+<p>И у вас для всех типов, кроме <code>bool</code> будет то, что вы написали изначально, а для <code>bool</code> — специализация. При этом <strong>когда вы пишете специализацию, вы пишете целиком новый класс</strong>.</p>
+<p><code>vector&lt;T&gt;</code> называется <em>primary template</em>, <code>vector&lt;bool&gt;</code> — <em>explicit (или full) specialization</em>. А ещё есть
+<em>partial specialization</em> — специализировать не обязательно все параметры. И ещё можно особым образом специализировать. Например, мы решили, что мы можем каким-то особым образом хранить указатели:</p>
+<pre><code class="language-c++">template &lt;typename U&gt;
+struct vector&lt;U*&gt; {
 	// ...
-}
-vector&lt;foo*&gt; c; // выберется эта специализация
+};
 </code></pre>
-<p>Есть ли у функций специализации? Да, но нельзя делать partial и вообще чаще всего достаточно перегрузок.</p>
-<pre><code class="language-c++">template&lt;typename T&gt;
-void foo(T*);
+<p>(То что тут параметр называется <code>U</code>, а не тоже <code>T</code>, ничего не значит.)</p>
+<p>То есть <strong><em>partial specialization</em> — это специализация, сама являющаяся шаблоном</strong>. Теперь, когда вы напишете <code>vector&lt;int*&gt;</code>, вам дадут специализацию <code>vector&lt;U*&gt;</code>.</p>
+<p>Примечание: <strong>в шаблоны вы можете передавать всё что угодно</strong> (хоть <code>void</code>, хоть <code>int(int, int)</code> (функцию, даже не указатель на неё), хоть <code>char[]</code>). <strong>Но не любой класс обязан корректно работать с любым классом.</strong> Так <code>std::vector</code> не компилируется, если дать ему не перемещаемый тип, и не работает вполне корректно, если дать ему, ну, например, тип, который кидает исключение в деструкторе.</p>
+<p>Впрочем, у вас есть возможность явно указать, какие типы вы принимать не хотите. Двумя способами: <a href="#sfinae">SFINAE</a> и <a href="./28_concepts.html">концепты</a>.</p>
+<h3><a class="header" href="#Выбор-специализации" id="Выбор-специализации">Выбор специализации.</a></h3>
+<pre><code class="language-c++">template &lt;typename A, template B&gt;
+struct my_type {};         // 1
+template &lt;typename A&gt;
+struct my_type&lt;A, int&gt; {}; // 2
+template &lt;typename B&gt;
+struct my_type&lt;int, B&gt; {}; // 3
 
-template&lt;&gt;
-void foo&lt;int&gt;(int*);
+int main() {
+	my_type&lt;float, double&gt; fd; // Выбирается 1.
+	my_type&lt;float, int&gt;    fi; // Выбирается 2.
+	my_type&lt;int,   double&gt; id; // Выбирается 3.
+	my_type&lt;int,   int&gt;    ii; // Компилятор не может выбрать между 2 и 3. Не компилируется.
+}
+</code></pre>
+<p>Хм-м-м-м, тут возникает резонный вопрос: видимо, компилятор как-то выбирает «самую хорошую» специализацию, но непонятно, как определяет, какая лучше. А давайте вот на такой пример посмотрим:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct bar {}; // Произвольный тип.
 
-// void foo(int*); 
+template &lt;typename U&gt;
+struct bar&lt;U*&gt; {}; // Указатель на что-то.
+
+template &lt;typename R, typename A, typename B&gt;
+struct my_type&lt;R (*)(A, B)&gt; {}; // Указатель на функцию.
+</code></pre>
+<p>Здесь есть «указатель на что-то» и «указатель на функцию». Кажется, что второе более специализированно. Но как бы это формализовать? Да легко! Является ли произвольный указатель на функцию указателем? Да. А является ли произвольный указатель указателем на функцию? Нет. То есть <strong>если мы всегда можем корректно подставить одну специализацию в другую, но не наоборот, то первая более специализированна</strong>.</p>
+<p>Вопрос: что делать, если шаблон от нескольких параметров зависит? Тут <strong>первая специализация более специализированна, чем вторая, если хотя бы по одному параметру она строго более специализированна, а по остальным — не менее</strong>.</p>
+<h3><a class="header" href="#Специализация-функций" id="Специализация-функций">Специализация функций.</a></h3>
+<p>Во-первых, <strong>у функций нет partial-специализаций</strong>. Во-вторых, есть перегрузки, и непонятно, как они со специализациями взаимодействуют.</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+void baz(T*) {}
+
+#if ENABLE_TEMPLATE
+template &lt;&gt;
+void baz&lt;int&gt;(int*) {}
+#else
+void baz(int*) {}
+#endif
 </code></pre>
 <p>Чем отличаются две последних функции? Например, на таком коде:</p>
 <pre><code class="language-c++">int main() {
-	foo(nullptr); // не работает со специализацией
+	foo(nullptr);
 }
 </code></pre>
-<p>Для функций алгоритм выбора такой: </p>
+<p>Давайте подумаем, работает ли это, если мы включим <code>ENABLE_TEMPLATE</code>. А вот не работает, потому что непонятно, чему равно <code>T</code>. А вот с перегрузкой всё работает (выбирается перегрузка). Почему это так работает, хочется спросить?</p>
+<p>Есть перегрузки функции. Мы их проходили, и одну видим тут: <code>void baz(int*)</code>. Так вот, <strong>шаблон (весь целиком) считается ещё одной перегрузкой</strong>. При этом, когда вы вызываете функцию, происходит вот что:</p>
 <ol>
 <li>Выбирается перегрузка.</li>
-<li>Внутри перегрузки выбирается специализация.</li>
+<li>Если выбрана шаблонная перегрузка, выбирается специализация.</li>
 </ol>
-<p>Подробнее про <strong>Template argument deduction</strong> на <a href="https://en.cppreference.com/w/cpp/language/template_argument_deduction">cppreference</a>.</p>
-<p>Поэтому когда мы подставляем <code>nullptr</code>, то из него нельзя понять, на какой тип он указывает, поэтому <strong>deduction</strong> фейлится и получаем ошибку. Если же есть <code>void foo(int*)</code>, то выбирается он, как единственный подходящий.</p>
-<p>Есть ещё одно правило: <em>если есть нешаблонная функция, которая идеально совпадает с шаблонной, то выбирается нешаблонная</em>, аналогично всегда выбирается <code>explicit</code> специализация.</p>
-<pre><code class="language-c++">template &lt;typename U, typename V&gt;
-struct mytype{};
-
-template &lt;typename U, typename V&gt;
-struct mytype&lt;U*, V&gt;{};
-
-template &lt;typename U, typename V&gt;
-struct mytype&lt;U, V*&gt;{};
-
-// В таком случае нельзя делать так, будет ошибка ambiguous template instantiation, так как есть два равноправных кандидата
-mytype&lt;long*, double*&gt; f;
-
-// если сделать такую специализацию, то выберется она
-// template &lt;typename U, typename V&gt;
-// struct mytype&lt;U*, V*&gt;{}; 
-</code></pre>
-<p>Можно делать <em>non-type</em> шаблонные параметры (числа или <code>enum</code>):</p>
+<p>Подробнее про <em>Template argument deduction</em> на <a href="https://en.cppreference.com/w/cpp/language/template_argument_deduction">cppreference</a>.</p>
+<p>Поэтому когда мы подставляем <code>nullptr</code>, то из него нельзя понять, на какой тип он указывает, поэтому <em>deduction</em> провалится, и мы получаем ошибку. Если же есть <code>void foo(int*)</code>, то выбирается он, как единственный подходящий.</p>
+<p>Кстати, можно немного изменить работу с перегрузками. Можно вызывать функции не как <code>foo(...)</code>, а как <code>foo&lt;&gt;(...)</code>. В таком случае вы явно отбросите всё, что не является шаблоном, а значит выбирать будете только из специализаций.</p>
+<h2><a class="header" href="#non-type-template-parameter" id="non-type-template-parameter">Non-type template parameter.</a></h2>
+<p>Помимо типов в параметры шаблона можно пихать чиселки. Или любой другой примитивный тип либо <code>enum</code>. Простым примером является <code>std::array</code> — обёртка над C-шным массивом, который принимает два шаблонных параметра: тип, что хранить, и количество, сколько хранить:</p>
 <pre><code class="language-c++">template &lt;typename T, size_t N&gt;
 struct array {
-     T data[N];
-}
-// можно делать специализацию:
-template &lt;typename T&gt;
-struct array&lt;T, 0&gt; {};
+private:
+	T data[N];
+public:
+	// ...
+};
+</code></pre>
+<p>Всё также можно писать специализации:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct array&lt;T, 0&gt; { /*...*/ };
 
 array&lt;int, 10&gt; a;
 array&lt;int, 0&gt; a;
 </code></pre>
-<p>А ещё есть такое:</p>
-<pre><code class="language-c++">template &lt;template &lt;typename T&gt; class C&gt;
-struct array {
-};
-
-template &lt;typename T&gt; 
-struct cc {
-     
-};
-
-array&lt;cc&gt; a;
+<p>То же самое можно написать и для функций:</p>
+<pre><code class="language-c++">template &lt;typename T, size_t N&gt;
+size_t size(T (&amp;arr)[N]) {
+	return N;
+}
 </code></pre>
+<p>Важный момент в non-type параметрах шаблона: <strong>всё, что вы подставляете в шаблон, должно быть известно на этапе компиляции</strong>. Потому что только на этапе компиляции существуют типы, в частности, шаблонные типы.</p>
+<h2><a class="header" href="#template-template-parameter" id="template-template-parameter">Template template parameter.</a></h2>
+<p>Хочется обёртку над контейнером. Зачем-то.</p>
+<pre><code class="language-c++">template &lt;/* container */ V&gt;
+struct container_wrapper {
+	V&lt;int&gt; container;
+};
+
+container_wrapper&lt;vector&gt; wrapper;
+</code></pre>
+<p>Это пишется вот так:</p>
+<pre><code class="language-c++">template &lt;template &lt;typename&gt; class V&gt;
+struct container_wrapper {
+	V&lt;int&gt; container;
+};
+</code></pre>
+<p>Используется эта штука очень редко. Правила работы с ней те же самые, что и обычно.</p>
+<h3><a class="header" href="#Параметры-по-умолчанию" id="Параметры-по-умолчанию">Параметры по умолчанию.</a></h3>
 <p>Шаблонные параметры могут иметь дефолтные значения, они работают как и у функций:</p>
-<pre><code class="language-c++">struct default_comparer {};
-templte&lt;typename T, typename C = default_comparer&gt;
-struct set {};
+<pre><code class="language-c++">struct default_comparer { /*...*/ }; // Вообще он называется `std::less`.
+template &lt;typename T, typename C = default_comparer&gt;
+struct set { /*...*/ };
 
-set&lt;int&gt; a; // юзает дефолтный C
+set&lt;int&gt; a; // `C` = `default_comparer`.
 </code></pre>
-<h2><a class="header" href="#Немного-про-парсер-c" id="Немного-про-парсер-c">Немного про парсер C++</a></h2>
-<pre><code class="language-c++">struct foo {
-	static float a;
-};
-(foo::a)-b; // может быть бинарное вычитание или каст -b к типу а, чтобы это различать, компилятору нужно резолвить foo
-int a(b); // может быть конструктор или определение функции
-a &lt; b &amp;&amp; c &gt; d; // может быть шаблон a&lt;b&amp;&amp;c&gt; d, а может быть буловое выражение
+<h2><a class="header" href="#Зависимые-имена" id="Зависимые-имена">Зависимые имена.</a></h2>
+<p>Начнём немного издалека: если вы видели шаблонный код, то вам может показаться, что в случайных местах по нему раскиданы слова <code>typename</code> и <code>template</code>. Например, вот в таких
+примерах:</p>
+<pre><code class="language-c++">	typename std::vector&lt;T&gt;::iterator it;
+	// Вместо std::vector&lt;T&gt;::iterator it;
+	typename foo&lt;T&gt;::template bar&lt;int&gt; y;
+	// Вместо foo&lt;T&gt;::bar&lt;int&gt; y;
 </code></pre>
-<p>Как компилятор различает, например, в случае <code>(foo::a)-b</code>? Особенно если это всё не в одной функции. Здесь работает такое правило: <em>по умолчанию считаем, что в скобках не тип</em>.</p>
-<p>Пример:</p>
-<pre><code class="language-c++">struct foo {
-	static float a;
-};
-struct bar {
-	typedef float a;
-};
-
-template&lt;typename T&gt;
-void f() {
-	int b;
-	(T::a)-b; // если хотим тип, то нужно писать (typename T::a)
+<p>Зачем это? А давайте рассмотрим некоторые строки в вакууме:</p>
+<ul>
+<li><code>(a)-b</code>.</li>
+<li><code>int b(a)</code>.</li>
+<li><code>a &lt; b &amp;&amp; c &gt; d</code>.</li>
+</ul>
+<p>Что в них написано? А вот непонятно. В зависимости от того, что такое <code>a</code>, есть варианты:</p>
+<ul>
+<li><code>(a)-b</code>.
+<ul>
+<li>Вычитание <code>b</code> из <code>(a)</code>.</li>
+<li>Приведение <code>-b</code> к типу <code>a</code>.</li>
+</ul>
+</li>
+<li><code>int b(a)</code>.
+<ul>
+<li>Определение переменный <code>b</code> типа <code>int</code> с конструктором от <code>a</code>.</li>
+<li>Объявление функции <code>b</code>, которая принимает тип <code>a</code> и возвращает <code>int</code>.</li>
+</ul>
+</li>
+<li><code>a &lt; b &amp;&amp; c &gt; d</code>.
+<ul>
+<li>Логическое выражение <code>(a &lt; b) &amp;&amp; (c &gt; d)</code>.</li>
+<li>Определение переменной <code>d</code> типа <code>a&lt;b &amp;&amp; c&gt;</code> (шаблон с non-type параметром типа <code>bool</code>).</li>
+</ul>
+</li>
+</ul>
+<p>Если <code>a</code> — это тип, то одно, если не тип — то другое. И обычно компилятор это знает. Проблема в том, что в шаблонах мы можем сделать что-то такое:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+void foo(int x) {
+	(T::nested) - x;
 }
-
-int main {
-	f&lt;foo&gt;();
-	f&lt;bar&gt;(); // не компилируется
+</code></pre>
+<p>Вы не узнаете, что такое <code>T::nested</code> до подстановки. А очень хотите это знать, чтобы отлавливать ошибки раньше, чем подстановка (например, написав <code>(T::nested) - y</code>, вы не получили бы ошибку о том, что не существует <code>y</code>, сразу). Поэтому вы должны явно указать, что происходит:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+void foo(int x) {
+	(T::nested) - x;        // Вычитание.
+	(typename T::nested)-x; // Каст.
 }
 </code></pre>
-<p>Если хотим, чтобы это читалось как каст, то нужно писать <code>(typename T::a)-b</code>. Кстати, в старых компиляторах <em>Microsoft</em> это не было нужно, так как они откладывали токены и парсили только в момент, когда подставляют функцию.</p>
-<p>Аналогично для шаблонов по умолчанию считается не шаблоном, иначе нужно писать так:</p>
-<pre><code class="language-c++">T::a &lt; b &amp;&amp; c &gt; d; // по умолчанию не шаблон
-typename T::template a &lt; b &amp;&amp; c &gt; d; // это шаблон
+<p>Аналогично с двумя другими примерами:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+void foo(int x) {
+	int b(T::nested);          // Конструктор переменной.
+	int b(typename T::nested); // Объявление функции.
+}
+</code></pre>
+<pre><code class="language-c++">template &lt;typename T&gt;
+void foo(int x) {
+	T::nested &lt; b &amp;&amp; c &gt; d;       // Логическое выражение.
+	T::template nested&lt;b &amp;&amp; c&gt; d; // Переменная шаблонного типа.
+}
+</code></pre>
+<p>При этом <strong>когда у вас есть что-то, что не зависит от шаблона (и имеет в себе <code>nested</code>), компилятор сам определит, тип ли это</strong>, писать <code>template</code> и <code>typename</code> не обязательно. То что зависит от шаблона, называется <em>dependent</em>. И вот <strong>в dependent-штуках обязательно писать <code>typename</code>'ы и <code>template</code>'ы, а independent — нет</strong>.</p>
+<p>MSVC, кстати, долгое время делал не так (а полностью разбирал шаблонную функцию при подстановке), за что его загнобили, и больше он так не делает, а делает как все: разбирает dependent выражения при подстановке, а independent — сразу. Это называется «<a href="http://blog.llvm.org/2009/12/dreaded-two-phase-name-lookup.html"><em>two-phase name lookup</em></a>».</p>
+<h3><a class="header" href="#Зависимые-имена-в-базовых-классах" id="Зависимые-имена-в-базовых-классах">Зависимые имена в базовых классах.</a></h3>
+<pre><code class="language-c++">struct arg1 {
+    struct type {}; // Нельзя складывать.
+};
+
+template &lt;typename T&gt;
+struct base {};
+
+template &lt;typename T&gt;
+struct derived : base&lt;T&gt; {
+    void f() {
+        typename T::type() + 1; // Ошибка компиляции про подстановке (dependent).
+        arg1::type() + 1;       // Ошибка компиляции при разборе (independent).
+
+        x = 5;                  // Непонятно.
+    }
+};
+</code></pre>
+<p>Почему непонятно? Потому что мы можем создать специализацию <code>base</code>, у которой будет <code>x</code>, и будет корректно. А ещё этот <code>x</code> может быть глобальной переменной. Поэтому тут происходит что-то непонятное.., хотелось бы сказать, но нет.</p>
+<p>По стандарту <strong>компилятор ищет имя, игнорируя базовые классы</strong> (иначе он не мог бы откидывать любые неизвестные имена). Если хотим ссылаться на <code>x</code> из базового класса, нужно писать явно <code>base&lt;T&gt;::x</code> или <code>this-&gt;x</code>. Тогда он, очевидно, будет depended в обоих случаях.</p>
+<p><strong>В dependant-именах компилятор откладывает разбор на момент инстанцирования, даже если раньше очевидно, что есть ошибка</strong>:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct derived : base&lt;T&gt; {
+	void* x;
+	void f() {
+		this-&gt;x = 5;
+	}
+};
 </code></pre>
 <h2><a class="header" href="#Как-это-устроено-внутри" id="Как-это-устроено-внутри">Как это устроено внутри?</a></h2>
-<p><em>На лекции очень много <a href="godbolt.org">godbolt.org</a>, поэтому посмотрите <a href="https://www.youtube.com/watch?v=DwDbH7pxzRA">запись</a> или сами покомпилируйте.</em></p>
+<p>На лекции очень много <a href="godbolt.org">godbolt</a>, поэтому посмотрите <a href="https://youtube.com/watch?v=DwDbH7pxzRA">запись</a> или сами покомпилируйте.</p>
 <p>Начнём с шаблонных функций:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 void swap(T&amp; a, T&amp; b) {
@@ -342,89 +465,95 @@ auto p = &amp;swap&lt;int&gt;;
 auto q = &amp;swap&lt;char&gt;; 
 </code></pre>
 <p>Для каждого типа код функции генерируется отдельно. При этом, например, чтобы сделать <code>sizeof(swap(a, b))</code>, компилятору не обязательно подставлять тело функции.</p>
-<h3><a class="header" href="#Немного-про-разные-единицы-трансляции" id="Немного-про-разные-единицы-трансляции">Немного про разные единицы трансляции:</a></h3>
-<pre><code class="language-c++">// swap.h:
+<h3><a class="header" href="#Немного-про-разные-единицы-трансляции" id="Немного-про-разные-единицы-трансляции">Немного про разные единицы трансляции.</a></h3>
+<pre><code class="language-c++">// swap.h.
 template&lt;typename T&gt;
 int swap(T&amp; a, T&amp; b);
-
-// swap.cpp:
+</code></pre>
+<pre><code class="language-c++">// swap.cpp.
 template &lt;typename T&gt;
 void swap(T&amp; a, T&amp; b) {
 	T tmp = a;
 	a = b;
 	b = tmp;
 }
-
-// main.cpp:
+</code></pre>
+<pre><code class="language-c++">// main.cpp.
 #include &quot;swap.h&quot;
 int main(){
 	int a, b;
 	swap(a, b);
 }
 </code></pre>
-<p>Такое не скомпилируется. Почему? Каждая единица трансляции транслируется отдельно, а потом всё линкуется. Инстанцирование шаблонов (подстановка) происходит до линковки. По этой причине в <code>swap.cpp</code> мы не можем сгенерить <code>swap&lt;int&gt;</code>, потому что не знаем, что он будет использоваться, а в <code>main.cpp</code> не может сгенерить, потому что нет её тела.</p>
-<p>Можно определить тело шаблонной функции прямо в <code>swap.h</code> и инклудить в разные файлы. Казалось бы, получим ошибку из-за нескольких определений, но нет. Шаблонные функции помечаются компилятором как <code>inline</code> и не выдаёт ошибку, считая, что они все одинаковые.</p>
-<p>Так же нельзя использовать incomplete типы как параметр. А указатели на них можно.</p>
-<p>В стандарте прописано, что инстанцирование происходит только когда необходимо. При этом компилятор может делать это в конце единицы трансляции.</p>
+<p>Такое не скомпилируется. Почему? Каждая единица трансляции транслируется отдельно, а потом всё линкуется.</p>
+<p><strong>Инстанцирование шаблонов (подстановка) происходит до линковки</strong>. По этой причине в <code>swap.cpp</code> мы не можем сгенерить <code>swap&lt;int&gt;</code>, потому что не знаем, что он будет использоваться, а в <code>main.cpp</code> не может сгенерить, потому что нет её тела.</p>
+<p>Можно определить тело шаблонной функции прямо в <code>swap.h</code> и инклудить в разные файлы. Казалось бы, получим ошибку из-за нескольких определений, но нет. <strong>Шаблонные функции помечаются компилятором как <code>inline</code></strong> и не выдаёт ошибку, считая, что они все одинаковые.</p>
+<p>В стандарте прописано, что инстанцирование происходит только когда необходимо. При этом компилятор может делать это в конце единицы трансляции:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 struct foo {
-	T* a;
-	void f();
-	void g(){
-		T a;
+	T* bar;
+	void baz(){
+		T qux;
 	}
 };
 int main() {
-	foo&lt;void&gt; a; // так скомпилируется
-	a.g(); // а так нет, ошибка из-за void a
+	foo&lt;void&gt; a; // Так скомпилируется.
+	a.baz();     // Так нет, ошибка из-за `void qux;`.
 }
 </code></pre>
-<p>В примере выше видно, что если в коде нет вызова функции g, то всё компилируется, так как она не инстанцируется.</p>
-<p>С классами работает аналогично: полное тело класса не подставляется, если не требуется.</p>
-<p>Например:</p>
+<p>В примере выше видно, что если в коде нет вызова функции <code>baz</code>, то всё компилируется, так как она не инстанцируется.</p>
+<p>С классами работает аналогично: <strong>полное тело класса не подставляется, если не требуется</strong>:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 struct foo {
-	T a;
+	T bar;
 };
 int main() {
-	foo&lt;void&gt;* a; // так скомпилируется
-	a-&gt;a; // а так нет, опять ошибка из-за void a
+	foo&lt;void&gt;* a; // Так скомпилируется.
+	a-&gt;bar;       // Так нет, опять ошибка из-за `void bar;`.
 }
 </code></pre>
-<p>Почему это важно понимать? Ну например, мы не можем использовать <code>std::unique_ptr</code> на incomplete типе. Ну как не можем. Можем, но получим ошибку, если в коде есть вызов деструктора или другие обращение к объекту.</p>
+<h4><a class="header" href="#incomplete-type" id="incomplete-type">Incomplete type.</a></h4>
+<p>Помните <em>incomplete type</em>? Его упоминали в конце <a href="./05_compilation.html#forward-%D0%B4%D0%B5%D0%BA%D0%BB%D0%B0%D1%80%D0%B0%D1%86%D0%B8%D0%B8">раздела про forward-декларации</a>. Так вот, почему важно понимать то, что написано выше? Ну, например, мы не можем использовать <code>std::unique_ptr</code> на incomplete типе. Точнее, можем, но получим ошибку, если в коде есть вызов деструктора или другие обращение к объекту.</p>
 <pre><code class="language-c++">// mytype.h
 #include &lt;memory&gt;
+
 struct object;
+
 struct mytype {
 	std::unique_ptr&lt;object&gt; obj;
 };
-// mytype.cpp
+</code></pre>
+<pre><code class="language-c++">// mytype.cpp
+#include &quot;mytype.h&quot;
+
 struct object {
-	object(int, int, int){};
+	object(int, int, int) {};
 };
-mytype::mytype() : obj(new object(1, 2, 3)){}
-// main.cpp
+mytype::mytype() : obj(new object(1, 2, 3)) {}
+</code></pre>
+<pre><code class="language-c++">// main.cpp
 #include &quot;mytype.h&quot;
 int main(){
 	mytype a;
 	return 0;
 }
 </code></pre>
-<p>Без <code>main.cpp</code> компилируется, так как у <code>a</code> не вызывался деструктор, поэтому он не инстанцировался. С <code>main.cpp</code> компилятор генерирует деструктор, который вызывает деструкторы всех членов класса, а там <code>unigue_ptr&lt;object&gt;</code>, у которого при компиляции будет инстанцироваться деструктор, а <code>object</code> там <code>incomplete type</code>, поэтому получим ошибку компиляции, так как в <code>unique_ptr</code> есть специальная проверка, что если удаляется <code>incomplete type</code>, то это ошибка. </p>
-<p>Как решить проблему? Сделать явное определение деструктора <code>mytype</code> в <code>mytype.cpp</code>, где у нас определён <code>object</code>.</p>
+<p>Без <em>main.cpp</em> компилируется, так как у <code>a</code> не вызывался деструктор, поэтому он не инстанцировался. С <em>main.cpp</em> компилятор генерирует деструктор, который вызывает деструкторы всех членов класса, а там <code>unigue_ptr&lt;object&gt;</code>, у которого при компиляции будет инстанцироваться деструктор. В <code>unique_ptr</code> есть специальная проверка, что если удаляется incomplete type (а у нас <code>object</code> именно таковой), то это ошибка.<br />
+Как решить проблему? Сделать объявление деструктора в <em>mytype.h</em>, а определить его там, где <code>object</code> — complete тип (то есть в <em>mytype.cpp</em>).</p>
 <p>Ещё пример:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 struct base {
 	typename T::mytype a;
 };
+
 template &lt;typename T&gt;
 struct derived : base&lt;derived&lt;T&gt;&gt; {
-	derived* a; // внутри класса можно ссылаться без шаблонного параметра, будет использоваться текущее инстанцирование
 	typedef T mytype;
 };
-derived&lt;int&gt; a; // не скомпилируется
+
+derived&lt;int&gt; a;
 </code></pre>
-<p>Почему это не скомпилируется? Посмотрим на пример попроще.</p>
+<p>Почему это не скомпилируется? Посмотрим на пример попроще:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 struct base {
 	typename T::mytype a;
@@ -435,59 +564,303 @@ struct derived : base&lt;derived&gt; {
 </code></pre>
 <p>Тоже не скомпилируется с ошибкой про incomplete type <code>derived</code>. Почему? Ну потому что <code>derived</code> является incomplete типом, когда инстанцируется <code>base&lt;derived&gt;</code>.</p>
 <p>В предыдущем примере тот же самый эффект: так как <code>derived</code> шаблонный, то он не инстанцируется сразу, но когда мы инстанцируем <code>derived</code>, то он создаётся как incomplete (complete он станет после подстановки базовых классов), происходит подстановка base и получаем ошибку.</p>
-<p><em>Может быть интересно прочитать про идиому <a href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">CRTP</a></em></p>
-<h2><a class="header" href="#Явное-инстанцирование-шаблонов" id="Явное-инстанцирование-шаблонов">Явное инстанцирование шаблонов</a></h2>
-<p>Мы не хотим, чтобы одни и те же лишние инстанцирования были в разных единицах трансляции. Чтобы этого избежать, можно делать так:</p>
-<pre><code class="language-c++">template &lt;typename T&gt;
-void foo(T) {
-}
-template void foo&lt;int&gt;(int); // генерирует тело функции в этом месте
-template void foo&lt;float&gt;(float);
-template void foo&lt;double&gt;(double);
+<p>В конексте обсуждённого выше может быть интересно прочитать про идиому <a href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">CRTP</a>.</p>
+<h3><a class="header" href="#Явное-инстанцирование-шаблонов" id="Явное-инстанцирование-шаблонов">Явное инстанцирование шаблонов.</a></h3>
+<p>Есть у нас стандартный нерабочий пример:</p>
+<pre><code class="language-c++">// string.h
+template &lt;class CharT&gt;
+struct basic_string {
+	// ...
+	const CharT* c_str();
+	// ...
+};
 </code></pre>
-<h2><a class="header" href="#Подавление-инстанцирования" id="Подавление-инстанцирования">Подавление инстанцирования</a></h2>
+<pre><code class="language-c++">// string.cpp
+#include &quot;string.h&quot;
+
+// ...
+template &lt;class CharT&gt;
+const CharT* basic_string&lt;T&gt;::c_str() { /*...*/ }
+// ...
+</code></pre>
+<pre><code class="language-c++">// main.cpp
+#include &quot;string.h&quot;
+
+int main() {
+	basic_string&lt;char&gt; str(&quot;abacaba&quot;);
+	const char* c_str = str.c_str();
+}
+</code></pre>
+<p>Мы уже знаем, что этот пример не скомпилируется, и знаем, почему. Но не знаем пока, как его можно поправить. А поправить его можно так:</p>
+<pre><code class="language-c++">// string.cpp
+#include &quot;string.h&quot;
+
+template const char* basic_string&lt;char&gt;::c_str();
+
+// ...
+template &lt;class CharT&gt;
+const CharT* basic_string&lt;T&gt;::c_str() { /*...*/ }
+// ...
+</code></pre>
+<p>Это <em>явное инстанцирование шаблона</em>, и является оно командой «прямо тут мне инстанцируйте то, что я попросил».</p>
+<h4><a class="header" href="#Подавление-инстанцирования-since-c11" id="Подавление-инстанцирования-since-c11">Подавление инстанцирования (since C++11).</a></h4>
 <p>Подавление явного инстанцирования, если знаем, что функции уже где-то инстанцированы и мы не хотим лишних:</p>
 <pre><code class="language-c++">extern template void foo&lt;int&gt;(int); 
 extern template void foo&lt;float&gt;(float);
 </code></pre>
 <p>&quot;Выдаём тело наружу и говорим, что уже проинстанцировано, <code>main</code> не будет пытаться инстанцировать функцию, так как увидит <code>extern</code> и будет работать соответствующе.&quot;</p>
-<p>Последний пример:</p>
-<pre><code class="language-c++">struct arg {
-	struct type {};
-};
-template &lt;typename T&gt;
-struct base {
-	int a;
-	int b;
-};
-template &lt;typename T&gt; 
-struct derived : base&lt;T&gt; {
-	void f() {
-		typename T::type a; // depended имя - зависит от шаблонного параметра
-		a + 1; // не будет ошибки компиляции, так как откладывается до инстанциации
-		arg::type b; // не depended
-		b + 1; // сразу ошибка компиляции
-		x = 5; // является ли depended?
+<h1><a class="header" href="#type-based-dispatch" id="type-based-dispatch">Type-based dispatch.</a></h1>
+<p>В языке существует и иногда необходимо узнавать какое-то свойство у типа. Если мы пишем обобщённое возведение в степень, нужно спрашивать, что считается единицей. Или есть мы пишем операции с числами, хочется взять максимум данного типа. Очень много из такого делает стандартная библиотека: например, есть <code>std::advance</code> — функция, которая делает итератору <code>+=</code>, даже если он так не умеет, а умеет только <code>++</code>. И тут мы либо делаем <code>+=</code>, либо <code>++</code> много раз, в зависимости от типа. Надо спросить, умеет ли итератор в <code>+=</code>.</p>
+<h2><a class="header" href="#numeric_limits" id="numeric_limits"><code>&lt;numeric_limits&gt;</code></a></h2>
+<p>Самые простые свойства типов — <code>std::numeric_limits</code>. Это шаблонный класс, в который вы даёте численный тип, а он содержит миллион статических полей, который для данного типа дают информацию о минимуме, максимуме или чём-то ещё.</p>
+<h2><a class="header" href="#type_traits" id="type_traits"><code>&lt;type_traits&gt;</code>.</a></h2>
+<p>Более сложные запросы к типу можно найти в заголовочном файле <code>&lt;type_traits&gt;</code>, где есть бесконечное количество шаблонных констант <code>is_trivially_destructible_v</code>, <code>is_empty_v</code>, и прочих других. Какие-то из встроены в компилятор, какие-то вы можете реализовать сами (<code>is_signed_v</code>, например, можете запросто). </p>
+<p>Как работают штуки из <code>type_traits</code>? И почему оканчиваются на <code>_v</code>? Дело в том, что до C++14 у вас не было шаблонных переменных (а по сути <code>is_empty_v</code> — шаблонная переменная и есть). Поэтому создали шаблонный класс <code>is_empty</code> со статическим полем <code>value</code>, в котором то, что вам нужно. А когда в С++14 такое появилось, вы смогли писать <code>is_empty_v</code>, и это уже реальная <code>bool</code>'евая константа, которую можно использовать.</p>
+<h2><a class="header" href="#Наивный-способ-делать-type-based-dispatch-if-constexpr" id="Наивный-способ-делать-type-based-dispatch-if-constexpr">Наивный способ делать type-based dispatch. <code>if constexpr</code>.</a></h2>
+<p>Пример использования <code>&lt;type_traits&gt;</code>: хотим мы вызвать деструкторы всех элементов на отрезке:</p>
+<pre><code class="language-c++">#include &lt;type_traits&gt;
+
+template &lt;class T&gt;
+void destroy(T* first, T* last) {
+	if (!std::is_trivially_destructible_v&lt;T&gt;)
+		for (T* p = first, p != last; p++)
+			p-&gt;~T();
+}
+</code></pre>
+<p>Работает! Компилятор поймёт, что <code>if</code> можно на этапе компиляции посчитать, и посчитает. Но такое, увы, работает не всегда. Напишем свой <code>std::advance</code>:</p>
+<pre><code class="language-c++">#include &lt;type_traits&gt;
+#include &lt;iterator_traits&gt;
+
+template &lt;class It&gt;
+void advance(It&amp; it, ptrdiff_t n) {
+	using category = typename std::iterator_traits&lt;It&gt;::iterator_category;
+
+	// Если итератор — RandomAccess, сделаем ему +=.
+	if (std::is_base_of_v&lt;std::random_access_iterator_tag, category&gt;) {
+		it += n;
+	} else {
+	// Если не RandomAccess, сделаем ++ или -- несколько раз.
+		while (n &gt; 0) {
+			--n;
+			++it;
+		}
+		while (n &lt; 0) {
+			++n;
+			--it;
+		}
+	}
+}
+</code></pre>
+<p>Проблема тут очевидная — компилируются всё равно обе ветки, и первая не компилируется для <code>std::list&lt;T&gt;::iterator</code>, потому что он не умеет в <code>+=</code>. В C++17 есть простое решение этой проблемы: <strong><code>if constexpr</code> — работает как <code>if</code>, но только с compile-time константами, и при этом компилируется только нужная ветка</strong>. Но так сделать у вас есть возможность не всегда.</p>
+<h2><a class="header" href="#iterator-dispatch" id="iterator-dispatch">Iterator dispatch.</a></h2>
+<p>А давайте вот как схитрим:</p>
+<pre><code class="language-c++">#include &lt;iterator_traits&gt;
+
+template &lt;class It&gt;
+void advance_impl(It&amp; it, ptrdiff_t n, std::random_access_iterator_tag) {
+	it += n;
+}
+
+template &lt;class It&gt;
+void advance_impl(It&amp; it, ptrdiff_t n, std::input_iterator_tag) {
+	while (n &gt; 0) {
+		--n;
+		++it;
+	}
+	while (n &lt; 0) {
+		++n;
+		--it;
 	}
 }
 
-int main() {
-	// derived&lt;arg&gt; d;
-	// d.f(); // из-за этого происходят ошибки компиляции, если в derived что-то не так, так как происходит инстанцирование 
-	return 0;
+template &lt;class It&gt;
+void advance(It&amp; it, ptrdiff_t n) {
+	using category = typename std::iterator_traits&lt;It&gt;::iterator_category;
+	advance_impl(it, n, category());
 }
 </code></pre>
-<p>Depended имена компилятор откладывает до инстанцирования.</p>
-<p>Является ли <code>x</code> в <code>derived</code> depended? С одной стороны, здесь не участвуют шаблонные параметры, но с другой стороны у нас может быть такая специализация <code>base</code>,  в которой нет его? А ещё этот <code>x</code> может быть глобальной переменной. Тут вопрос, на что мы компилятор должен ссылаться?</p>
-<p>По стандарту определяется следующим образом. Компилятор ищет <code>x</code>, игнорируя базовые классы, так как иначе компилятор не мог бы откидывать любые неизвестные переменные. Если хотим ссылаться на <code>x</code> из базы, то нужно писать явно <code>base&lt;T&gt;::x</code> или <code>this-&gt;x</code>. Тогда он будет depended: если писать <code>base&lt;T&gt;::x</code>, то очевидно, почему, если <code>this-&gt;x</code>, то понятно, что <code>this</code> зависит от шаблонного параметра. При этом компилятор всё равно откладывает это до инстанцирования, даже на таком не выдает ошибку:</p>
-<pre><code class="language-c++">// внутри derived
-		void* x;
-		void f() {
-			this-&gt;x = 5;
-		}
+<p>То есть мы передаём лишний параметр — одну их двух пустых структур, в зависимости от которой выбирается правильная перегрузка. Это называется <em>iterator dispatch</em>, и работает также хорошо, как и <code>if constexpr</code>, несмотря на передачу
+лишнего параметра (поскольку параметр — пустая структура, его в реальной жизни никто никуда не передаёт).</p>
+<h3><a class="header" href="#tag-dispatch" id="tag-dispatch">Tag dispatch.</a></h3>
+<p>Хорошо, что у итераторов есть теги. А что делать, если тегов нет (например, в массовом деструкторе)? Тогда их можно разве что самим создать:</p>
+<pre><code class="language-c++">struct trivially_destructible_tag {};
+struct not_trivially_destructible_tag {};
+
+template &lt;class T&gt;
+void destroy_impl(T* first, T* last, trivially_destructible_tag) {}
+template &lt;class T&gt;
+void destroy_impl(T* first, T* last, not_trivially_destructible_tag) {
+	if (!std::is_trivially_destructible_v&lt;T&gt;)
+		for (T* p = first; p != last; p++)
+			p-&gt;~T();
+}
+
+template &lt;class T&gt;
+void destroy(T* first, T* last) {
+	// Хочется как-то выбрать одну структуру-тег из двух на этапе компиляции.
+}
 </code></pre>
-<p>Компилятор имеет право выдавать ошибку, если при подстановке любого типа будет ошибка инстанцирования.</p>
-<p>На эту тему можно почитать про <a href="http://blog.llvm.org/2009/12/dreaded-two-phase-name-lookup.html">two-phase name lookup</a>.</p>
+<p>Как выбрать одну структуру из двух на этапе компиляции? Да тривиально вообще:</p>
+<pre><code class="language-c++">template &lt;bool Cond, typename IfTrue, typename IfFalse&gt;
+struct conditional {
+	using type = IfFalse;
+};
+template &lt;typename IfTrue, typename IfFalse&gt;
+struct conditional&lt;true, IfTrue, IfFalse&gt; {
+	using type = IfTrue;
+};
+
+template &lt;class T&gt;
+void destroy(T* first, T* last) {
+	using tag = typename conditional&lt;is_trivially_destructible_v&lt;T&gt;,
+		                            trivially_destructible_tag,
+		                            not_trivially_destructible_tag&gt;::type;
+
+	destroy_impl(first, last, tag());
+}
+</code></pre>
+<p>такое уже есть, и называется <code>std::conditional</code>. А <code>typename std::conditional&lt;/*...*/&gt;::type</code> также сокращается до <code>std::conditional_t</code>. . Итого наш пример выглядит так:</p>
+<pre><code class="language-c++">#include &lt;type_traits&gt;
+
+struct trivially_destructible_tag {};
+struct not_trivially_destructible_tag {};
+
+template &lt;class T&gt;
+void destroy_impl(T* first, T* last, trivially_destructible_tag) {}
+template &lt;class T&gt;
+void destroy_impl(T* first, T* last, not_trivially_destructible_tag) {
+	if (!std::is_trivially_destructible_v&lt;T&gt;)
+		for (T* p = first; p != last; p++)
+			p-&gt;~T();
+}
+
+template &lt;class T&gt;
+void destroy(T* first, T* last) {
+	using tag = std::conditional_t&lt;is_trivially_destructible_v&lt;T&gt;,
+	                               trivially_destructible_tag,
+	                               not_trivially_destructible_tag&gt;;
+
+	destroy_impl(first, last, tag());
+}
+</code></pre>
+<p>Такая техника называется <em>tag-dispatching</em>, и она, несомненно, работает. Но есть у неё крупная проблема: когда у нас функции были как перегрузки, мы могли свободно добавлять в список перегрузок новые классы с новыми свойствами. А когда мы делаем это <code>if</code>'ами (хоть <code>if constexpr</code>, хоть <code>std::conditional_t</code>), новые классы с новыми свойствами не добавить.</p>
+<h2><a class="header" href="#sfinae" id="sfinae">SFINAE.</a></h2>
+<p>Есть другой способ сделать похожее, основанный на поведении компилятора при выведении шаблона?</p>
+<pre><code class="language-c++">template &lt;typename C&gt;
+void foo(C&amp;, typename C::iterator); // 1.
+
+template &lt;typename T, size_t N&gt;
+void foo(T (&amp;)[N], T*);             // 2.
+
+int main() {
+  std::vector&lt;int&gt; v;
+  foo(v, v.begin());
+  
+  int w[10];
+  foo(w, w + 2);
+}
+</code></pre>
+<p>С виду всё хорошо, но давайте разберём, как работает компилятор на таком коде. Сначала производится вывод параметра, а потом — подстановка. В коде выше он видит, что <code>v</code> - это <code>vector&amp;</code>, а параметр - <code>C&amp;</code>, поэтому <code>C</code> — это <code>vector</code>. Он как бы декомпозирует типы и запускается от частей, а когда доходит до шаблонных параметров, понимает, какой тип здесь имелся в виду.</p>
+<p>Из depended имён выводить не можем:</p>
+<pre><code class="language-c++">template &lt;typename T&gt;
+struct mytype {
+  typedef T type;
+};
+template &lt;&gt;
+struct mytype&lt;int&gt; {
+  typedef char type;
+};
+template &lt;typename T&gt;
+void bar(typename mytype&lt;T&gt;::type);
+</code></pre>
+<p>Сложность возникла из-за специализаций. Если приходит <code>char</code>, то из такого не понятно, откуда он пришёл (могло из <code>mytype&lt;int&gt;</code>, а могло из <code>mytype&lt;char&gt;</code>), поэтому <em>deduction</em> не пытается выводить.</p>
+<p>Вернёмся к первому примеру. У нас есть два вызова: от <code>std::vector</code> и от C-шного массива. Рассмотрим, что с ними делает компилятор.</p>
+<ol>
+<li>Когда мы подставляем <code>vector</code>, первый шаблон не имеет проблем, а во втором даже параметры шаблона вывести не получается.</li>
+<li>Когда мы подставляем <code>int[10]</code>, в первом шаблоне вывести <code>C</code> получается (<code>C</code> равно <code>int[10]</code>), но возникает ошибка при подстановке — нельзя сделать <code>int[10]::iterator</code>.</li>
+</ol>
+<p>Но в обоих случаях мы не получаем ошибку компиляции, и дело тут в принципе <em>SFINAE</em> — <em>substitution failure is not an error</em>: <strong>если в процессе вывода или подстановки шаблона произошла ошибка, это не ошибка компиляции, просто данный шаблон не подходит</strong>.</p>
+<h3><a class="header" href="#stdenable_if" id="stdenable_if"><code>std::enable_if</code>.</a></h3>
+<p>Теперь, вооружившись SFINAE, сделаем так, чтобы наш <code>destroy</code> работал без <code>if</code>'ов:</p>
+<pre><code class="language-c++">template &lt;bool&gt;
+struct enable_if {};
+template &lt;&gt;
+struct enable_if&lt;true&gt; {
+	using type = void;
+};
+
+template &lt;class T&gt;
+typename enable_if&lt;std::is_trivially_destructible_v&lt;T&gt;&gt;::type // Это возвращаемое значение.
+destroy(T* first, T* last) {}
+template &lt;class T&gt;
+typename enable_if&lt;!std::is_trivially_destructible_v&lt;T&gt;&gt;::type
+destroy(T* first, T* last) {
+	if (!std::is_trivially_destructible_v&lt;T&gt;)
+		for (T* p = first, p != last; p++)
+			p-&gt;~T();
+}
+</code></pre>
+<p>Опять же, подобная штука в стандартной библиотеке есть, и называется <code>std::enable_if</code>. Для <code>typename enable_if&lt;/*...*/&gt;::type</code> также создана короткая версия: <code>std::enable_if_t</code>.</p>
+<p>На практике SFINAE применимо где-нибудь в таком месте:</p>
+<pre><code class="language-c++">template &lt;class T&gt;
+struct vector {
+	void assign(size_t count, T const&amp; value);
+
+	template &lt;class InputIt&gt;
+	void assign(InputIt first, InputIt last);
+};
+
+int main() {
+	vector&lt;size_t&gt; v;
+	v.assign(10, 0); // Выбирается шаблонная перегрузка.
+}
+</code></pre>
+<p>Исправляется вот так:</p>
+<pre><code class="language-c++">#include &lt;iterator_traits&gt;
+#include &lt;type_traits&gt;
+
+template &lt;class T&gt;
+struct vector {
+	void assign(size_t count, T const&amp; value);
+
+	template &lt;class InputIt&gt;
+	std::enable_if_t&lt;
+		std::is_base_of_v&lt;
+			std::input_iterator_tag,
+			std::iterator_traits&lt;InputIt&gt;::category
+		&gt;
+	&gt; assign(InputIt first, InputIt last);
+};
+
+int main() {
+	vector&lt;size_t&gt; v;
+	v.assign(10, 0);
+}
+</code></pre>
+<h2><a class="header" href="#Пара-слов-о-концептах" id="Пара-слов-о-концептах">Пара слов о концептах.</a></h2>
+<p>SFINAE — это длинно и неудобно, как можно было заметить. И есть вам очень не нравится, в C++20 есть <a href="./28_concepts.html">концепты</a>. Пример выше с их использованием вообще пишется на ура:</p>
+<pre><code class="language-c++">#include &lt;iterator&gt;
+template &lt;class T&gt;
+struct vector {
+	void assign(size_t count, T const&amp; value);
+
+	template &lt;std::input_iterator InputIt&gt;
+	void assign(InputIt first, InputIt last);
+
+	/* Также можно вот так:
+	template &lt;class InputIt&gt;
+		requires std::input_iterator&lt;InputIt&gt;
+	void assign(InputIt first, InputIt last);
+
+	После requires можно и что-то более сложное писать. */
+};
+
+int main() {
+	vector&lt;size_t&gt; v;
+	v.assign(10, 0);
+}
+</code></pre>
+<p>У концептов есть ещё одно преимущество, помимо размера. Когда мы пользуемся SFINAE, нам необходимо перебрать все случаи перегрузок. Если вы в <code>destroy</code> написали перегрузку под <code>std::trivially_destructible</code>, напишите под <code>!std::trivially_destructible</code>. А если вы хотите расширять, будьте добры изменить предикаты. А <strong>концепты умеют понимать, что один концепт расширяет другой</strong>, как с шаблонами. И выбирать наиболее специализированный вариант.</p>
 
                     </main>
 
