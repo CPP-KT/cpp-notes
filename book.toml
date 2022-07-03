@@ -7,4 +7,4 @@ title = "C++ course notes"
 
 [output.html]
 default-theme = "ayu"
-git-repository-url = "https://github.com/lejabque/cpp-notes"
+git-repository-url = "https://github.com/cpp-kt/cpp-notes"
