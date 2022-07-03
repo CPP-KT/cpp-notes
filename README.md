@@ -6,7 +6,7 @@
 
 Конспекты содержат баги, поэтому [не стесняйтесь вносить правки](CONTRIBUTING.md).
 
-Помимо лекций, конспекты включают в себя дополнения из конспектов [@sorokin](https://github.com/sorokin/cpp-notes), [@hazzus](https://github.com/hazzus/cpp-conspects) и [@purevessel](https://www.overleaf.com/read/hcmjjqmhwqzx).
+Помимо лекций, конспекты включают в себя дополнения из конспектов [@sorokin](https://github.com/sorokin/cpp-notes), [@hazzus](https://github.com/hazzus/cpp-conspects) и [334905](https://www.overleaf.com/read/hcmjjqmhwqzx).
 
 <!--
 #### Дополнительные лекции
