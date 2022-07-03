@@ -18,7 +18,7 @@ git push origin master
 
 1. Сначала нужно добавить основной репозиторий в remote (этот шаг нужно делать один раз)
 ```bash
-git remote add source https://github.com/lejabque/cpp-notes
+git remote add source https://github.com/cpp-kt/cpp-notes
 git remote -v # должен отобразиться в списке
 ```
 2. Получить изменения из основного репозитория
