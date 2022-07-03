@@ -166,7 +166,7 @@
 <p>Лектор - <strong>Иван Сорокин</strong></p>
 <p><a href="https://lejabque.github.io/cpp-notes/">Сайт с конспектом.</a></p>
 <p>Конспекты содержат баги, поэтому <a href="https://github.com/lejabque/cpp-notes/blob/master/CONTRIBUTING.md">не стесняйтесь вносить правки.</a></p>
-<p>Помимо лекций, конспекты включают в себя дополнения из конспектов <a href="https://github.com/sorokin/cpp-notes">@sorokin</a>, <a href="https://github.com/hazzus/cpp-conspects">@hazzus</a> и <a href="https://www.overleaf.com/read/hcmjjqmhwqzx">@purevessel</a>.</p>
+<p>Помимо лекций, конспекты включают в себя дополнения из конспектов <a href="https://github.com/sorokin/cpp-notes">@sorokin</a>, <a href="https://github.com/hazzus/cpp-conspects">@hazzus</a> и <a href="https://www.overleaf.com/read/hcmjjqmhwqzx">334905</a>.</p>
 <h4><a class="header" href="#Полезные-ссылки" id="Полезные-ссылки">Полезные ссылки:</a></h4>
 <ul>
 <li><a href="https://cpp-kt.github.io/course/">Сайт курса</a></li>
@@ -4194,241 +4194,366 @@ int main() {
 <li><a href="https://www.youtube.com/watch?v=fgD5itE5pCQ">Запись лекции №1</a></li>
 </ul>
 <hr />
-<h2><a class="header" href="#Пространства-имён" id="Пространства-имён">Пространства имён</a></h2>
-<p>В Си в библиотеках у функций обычно есть префикс названия библиотеки, например, <code>mpz_add</code> в GMP. Это нужно, чтобы не было двух разных функций с одинаковым именем.</p>
-<p>В C++ для такого используется механизм <code>namespace</code>.</p>
-<pre><code class="language-c++">namespace somelib {
-  struct foo {};
-  void bar();
+<h2><a class="header" href="#Пространства-имён" id="Пространства-имён">Пространства имён.</a></h2>
+<p>В Си в библиотеках у функций обычно есть префикс названия библиотеки, префикс раздела и ещё бесконечное количество префиксов. Например, библиотека cairo для работы с векторной графикой имеет имена по типу <code>cairo_mesh_pattern_move_to</code>. Эту функцию нельзя назвать просто <code>move_to</code>, потому что в другой библиотеке тоже может быть <code>move_to</code>, имеющий отношение к совершенно другим вещам, а коллизии имён вы не хотите.</p>
+<p>В C++ для предотвращения такого используются пространства имён:</p>
+<pre><code class="language-c++">namespace cairo {
+	namespace mesh {
+		namespace pattern {
+			void move_to();
+		}
+	}
 }
-namespace somelib { // можно несколько раз открывать
-  void baz(foo*);
+namespace cairo { // Одно пространство имён можно открывать несколько раз. Они сольются в одно.
+	namespace mesh {
+		namespace pattern {
+			void curve_to();
+		}
+	}
 }
-</code></pre>
-<p>Внутри неймспейса можно ссылаться на что угодно из него. Синтаксис обращения снаружи: <code>somelib::foo</code>, где <code>somelib::</code> - квалификатор. Такие имена называются квалифицированными. </p>
-<p>Неймспейсы могут быть вложенными:</p>
-<pre><code class="language-c++">namespace somelib {
-  namespace nested {
-    struct foo {};
-  }
-  void bar (nested::foo const&amp;);
-}
-</code></pre>
-<p>Тогда ссылаться надо так: <code>somelib::nested::foo</code>.</p>
-<p>Как такие ищутся без квалификаторов? Поднимаемся по фигурным скобкам (неймспейсам) вплоть до глобального.</p>
-<p>Если функции на разных уровнях неймспейсов называются по-разному, то выберется первая найденная. Чтобы обратиться к имени из глобального неймспейса, нужно использовать пустой квалификатор <code>::foo</code>. Но это всё про одну единицу трансляции, а что если их несколько?</p>
-<p>Как мы помним, имя, которое передаётся линковщику кодируется и содержит в себе параметры, принимаемые функцией. Если функция в неймспейсе, то в её имени кодируется название неймспейса. Линковщик дальше работает уже с этими декорированными именами, поэтому объявление и определение работают так же, как и без неймспейсов.</p>
-<p>Для неймспейсов можно создавать alias'ы: <code>namespace fs = std::filesystem</code>. Редко используется по причинам аналогичным неиспользованию тайпдефов.
-Можно использовать, например, когда поменяли имя неймспейса, но не хотим ломать код, который уже ссылается на старое.</p>
-<h2><a class="header" href="#using-декларация" id="using-декларация">Using-декларация</a></h2>
-<pre><code class="language-c++">namespace ns {
-  void foo(int);
-}
-using ns:foo; // на классы тоже можно
-</code></pre>
-<p>Using-декларация берёт сущность, на которую ссылаемся и как бы объявляет её ещё раз в неймспейсе, в котором она написана.</p>
-<p>При этом правило ODR (one defenition) сохраняется:</p>
-<pre><code class="language-c++">struct bar{};
-using ns::bar; // так нельзя
-</code></pre>
-<p>Для перегрузок функций всё работает как надо.</p>
-<pre><code class="language-c++">namespace ns {
-  void foo(int);
-}
-namespace ns2 {
-  void foo(float);
-}
+
 int main() {
-  using ns::foo;
-  using ns2::foo;
-  foo(42.5f); 
-  return 0;
+	cairo::mesh::pattern::move_to();
+	cairo::mesh::pattern::curve_to();
 }
 </code></pre>
-<p>Using можно применять не только для неймспейсов, но и для классов.</p>
+<p>А что мы выигрываем от такого? Теперь вместо одного символа (<code>_</code>) у нас два (<code>::</code>). А выигрываем мы то, что находясь внутри пространства имён, мы можем вызывать свои функции без этих длинных префиксов:</p>
+<pre><code class="language-c++">namespace cairo {
+	namespace mesh {
+		namespace pattern {
+			void curve_to();
+
+			void test() {
+				curve_to();
+			}
+		}
+
+		void test() {
+			pattern::curve_to();
+		}
+	}
+
+	void test() {
+		mesh::pattern::curve_to();
+	}
+}
+
+void test() {
+	cairo::mesh::pattern::curve_to();
+}
+</code></pre>
+<p>Кстати, если вам интересно, чем отличаются функции <code>test</code> с точки зрения линковщика, то <strong>в имена декорированных символов просто вписываются особым образом эти самые пространства имён</strong>.</p>
+<p>Всё что мы пишем вне любых пространств имён, считается лежащим в «<em>глобальном пространстве имён</em>». Чтобы обратиться явно к чему-то в нём, напишите перед именем двойное двоеточие.</p>
+<h2><a class="header" href="#Способы-не-писать-длинные-названия-извне" id="Способы-не-писать-длинные-названия-извне">Способы не писать длинные названия извне.</a></h2>
+<p>Первый — <em>namespace alias</em>. Есть в стандартной библиотеке пространство имён <code>std::filesystem</code>. Если мы не хотим писать долгое имя класса <code>std::filesystem::path</code>, мы пишем <code>namespace fs = std::filesystem</code>, и теперь можем писать <code>fs::path</code>.
+Второй:</p>
+<h3><a class="header" href="#using-декларация" id="using-декларация">Using-декларация.</a></h3>
+<pre><code class="language-c++">namespace ns {
+	void foo(int);
+}
+
+int main() {
+	using ns:foo; // Можно делать декларацию всего, кроме других пространств имён.
+
+	foo();
+}
+</code></pre>
+<p>Using-декларация берёт сущность, на которую ссылаемся и как бы объявляет её ещё раз там, где вы находитесь. В частности, если вы напишете её в другом пространстве имён, она останется там:</p>
+<pre><code class="language-c++">#include &lt;filesystem&gt;
+namespace f {
+	using std::filesystem::path;
+
+	path p; // Корректно.
+}
+path p;     // Некорректно.
+f::path p;  // Корректно.
+</code></pre>
+<p>При этом делать объявление двух сущностей с одним именем всё ещё нельзя:</p>
+<pre><code class="language-c++">namespace n {
+	struct bar {};
+}
+
+struct bar {};
+using n::bar; // Ошибка компиляции, два объекта с именем `bar`.
+</code></pre>
+<p>Для перегрузок функций всё работает как надо:</p>
+<pre><code class="language-c++">namespace n {
+	void foo(int);
+}
+namespace m {
+	void foo(float);
+}
+
+void foo(char);
+
+int main() {
+	using n::foo;
+	using m::foo;
+	foo(42.0f); // m::foo.
+	foo(42);    // n::foo.
+	foo('*');   //  ::foo.
+}
+</code></pre>
+<p>Using-декларацию можно применять не только для пространств имён, но и для классов.</p>
 <pre><code class="language-c++">struct base1 {
-  void foo(int);
+	void foo(int);
 };
 struct base2 {
-  void foo(float);
+	void foo(float);
 };
 struct derived : base1, base2 {
-  using base1::foo;
-  using base2::foo;
+	using base1::foo;
+	using base2::foo;
 };
 int main() {
-  derived d;
-  d.foo(42); // без using не делается overload resolution и будет ошибка, так как два кандидата из разных баз
-  return 0;
+	derived d;
+	d.foo(42); // Без `using` не делается overload resolution и будет ошибка, так как два кандидата из разных баз.
 }
 </code></pre>
 <p>Ещё можно применить так:</p>
 <pre><code class="language-c++">struct base {
-  void foo(int);
+	void foo(int);
 };
 struct derived : private base {
-  using base::foo;
+	using base::foo; // Без `using` не работает, потому что `private`.
 };
 int main() {
-  derived d;
-  d.foo(42);
-  return 0;
+	derived d;
+	d.foo(42);
 }
 </code></pre>
 <p>Аналогично можно и с конструкторами:</p>
 <pre><code class="language-c++">struct my_error : std::runtime_error {
-  using runtime_error::runtime_error;
+	using runtime_error::runtime_error;
 };
 </code></pre>
-<p>Можно подключать полностью весь неймспейс: <code>using namespace somelib;</code>. То, что было до этого, называлось <em>using-декларациями</em>, это называется <em>using-директива</em>. По сути, оно говорит при поиске в неймспейсе, где она написана, искать в неймспейсе <code>somelib</code>. Они немного отличаются:</p>
-<pre><code class="language-c++">namespace somelib {
-  struct foo {};
-  void  bar();
+<h3><a class="header" href="#using-директива" id="using-директива">Using-директива.</a></h3>
+<p>Можно подключать полностью всё пространство имён: <code>using namespace somelib;</code>. По сути, оно говорит при поиске в неймспейсе, где она написана, искать в неймспейсе <code>somelib</code>. Они немного отличаются:</p>
+<pre><code class="language-c++">namespace n1 {
+	class mytype {};
+	void foo();
 }
-struct foo {};
-// using somelib::foo; такой using приведет к ошибке
-// using somelib::bar; 
-using namespace somelib; // к ошибке компиляции не приводит
+namespace n2 {
+	class mytype {};
+	void bar();
+}
+
+using n1::mytype;
+using n2::mytype;   // Ошибка.
+
+using namespace n1;
+using namespace n2; // Нет ошибки.
+mytype a;           // Ошибка: &quot;mytype is ambiguous&quot;.
+</code></pre>
+<p><strong>using-директива не декларирует ничего, а просто помечает, что в текущем пространстве имён используется другое</strong>. И компилятор просто берёт, и всегда когда ищет что-то в одном пространстве имён, также ищем это и во втором. Это даёт такого рода эффекты:</p>
+<pre><code class="language-c++">namespace n {}
+
+using namespace n;
+
+namespace n {
+	class mytype {};
+}
+
+mytype a;
+</code></pre>
+<p>Такая штука вполне компилируется и делает то, что вы предполагаете. Понятно, что на той же строке вместо <code>using namespace n</code> написать <code>using n::mytype</code> нельзя.</p>
+<h2><a class="header" href="#a-hrefhttpsencppreferencecomwcpplanguageunqualified_lookupunqualified-name-lookupa" id="a-hrefhttpsencppreferencecomwcpplanguageunqualified_lookupunqualified-name-lookupa"><a href="https://en.cppreference.com/w/cpp/language/unqualified_lookup">Unqualified name lookup</a>.</a></h2>
+<p><em>Unqualified name lookup</em> — это когда вы ищете просто имя или то, что слева от <code>::</code>. То есть когда вы ищете <code>foo::bar</code>, <code>foo</code> ищется при помощи unqualified name lookup, а <code>bar</code> — <a href="https://en.cppreference.com/w/cpp/language/qualified_lookup">qualified name lookup</a>.<br />
+Unqualified name lookup по вызову функций и операторов имеет особые правила (<a href="16_namespaces_using_adl.html#ADL">argument-dependent lookup</a>).</p>
+<p>Глобально мы тупо идём вверх по пространствам, и когда нашли имя, останавливаемся. Если нашли два, то ambiguous. <code>using</code>'и с этим взаимодействуют так:</p>
+<ul>
+<li>using-декларация находится там, где написана.</li>
+<li>using-директива считается объявленной в ближайшем пространстве имён, которое окаймляет текущее и то, которое подключаем.</li>
+</ul>
+<pre><code class="language-c++">namespace n1 {
+	int const foo = 1;
+}
+namespace n2 {
+	int const foo = 2;
+
+	namespace n2_nested {
+		using n1::foo;
+
+		int test() {
+			// Ищем в n2::n2_nested::test.
+			// Не находим, идём выше.
+
+			return foo; // n1::foo
+		}
+
+		// Ищем в n2::n2_nested.
+		// Находим, останавливаемся.
+	}
+}
+</code></pre>
+<pre><code class="language-c++">namespace n1 {
+	int const foo = 1;
+}
+
+// Считается, что n1::foo для using-директивы объявлено тут.
+
+namespace n2 {
+	int const foo = 2;
+
+	namespace n2_nested {
+		using namespace n1;
+
+		int test() {
+			return foo; // n2::foo.
+		}
+	}
+}
+</code></pre>
+<p>Отсюда вот такой пример не компилируется:</p>
+<pre><code class="language-c++">namespace n1 {
+	int const foo = 1;
+}
+
+int const foo = 100;
+
+namespace n2 {
+	namespace n2_nested {
+		using namespace n1;
+
+		int test() {
+			return foo; // n1::foo и ::foo видны на одном уровне, ambiguous.
+		}
+	}
+}
+</code></pre>
+<p><strong>using-директивы транзитивны</strong>, то есть когда вы делаете using-директиву пространства имён с другой using-директивой, то подключили вы два, а не одно пространство имён.</p>
+<pre><code class="language-c++">namespace n2 {};
+
+namespace n1 {
+	struct foo {};
+	using namespace n2;
+}
+namespace n2 {
+	struct foo {};
+	using namespace n1;
+}
+
+using namespace n1;
+// У нас транзитивно появляется using namespace n2;
+
 int main() {
-  bar(); // так работает
-  foo(); // а так ошибка компиляции из-за неоднозначности
+	foo a; // В глобальном пространстве имён видно n1::foo и n2::foo, ambiguous.
+	n1::foo a; // Qualified lookup ищет сначала в самом пространстве, потом в inline-namespace'ах, и уже в конце идёт по using-директивам.
+	           // Впрочем, про QNL лучше почитайте cppreference по ссылке выше, а мы тут UNL обсуждаем.
 }
 </code></pre>
-<p>Если бы namespace, который мы подключили через директиву, подключал в себе ещё какой-то namespace, то мы бы искали в их замыкании.</p>
-<blockquote>
-<p>Понятно, что то, что я привожу, это примеры не жизненные, так лучше не писать.</p>
-</blockquote>
-<pre><code class="language-c++">namespace ns2 {};
-namespace ns1 {
-  struct foo {};
-  using namespace ns2; // юзингает весь неймспейс, то есть в него можно дописать что-то ниже, по смыслу это просто &quot;ссылка&quot; на неймспейс
+<p>Когда пишем using и alias в хедерах, то они работают везде, куда include'ят этот хедер, что мы редко хотим, поэтому есть такое правило: <strong>в заголовочных файлах using-директивы и -декларации не писать</strong>, так как почти никогда не хотим использовать их для пользователя.</p>
+<h3><a class="header" href="#adl" id="adl">ADL.</a></h3>
+<p>Как было сказано выше, для функций unqualified name lookup имеет особые правила. Вот они:</p>
+<pre><code class="language-c++">namespace my_lib {
+	struct big_integer {};
+	big_integer operator+(big_integer const&amp;, big_integer const&amp;);
+	void swap(big_integer&amp;, big_integer&amp;);
 }
-namespace ns2 {
-  struct foo {};
-  using namespace ns1;
-}
-using namespace ns1;
+
 int main() {
-  foo a; // ошибка, так как поднялись в глобал, зашли в ns1, там using namespace ns2, в их замыкании находим два foo
-  ns1::foo a; // это работает, объяснение ниже
+	my_lib::big_integer a;
+	a + a;
+	swap(a, a);
 }
 </code></pre>
-<p>Из примеров выше видно, что квалифированные имена работают немного иначе, оно ищет не в замыкании, а сначала ищет в самом неймспейсе, если же в нём нет, то переходит по using namespace. Обычно мы это не заметим, так как неймспейсы используются не так активно и так вообще вряд ли нужно будет писать.</p>
-<p>Когда пишем using и alias в хедерах, то они работают везде, куда инклудят этот хедер, что мы редко хотим, поэтому есть такое правило - в хедерах юзинг-директивы и декларации не писать, так как почти никогда не хотим использовать их для пользователя.</p>
-<p>Сложный пример:</p>
-<pre><code class="language-c++">namespace ns1 {
-  uint32_t const a = 1;
-  uint32_t const b = 1;
-}
-namespace ns2 {
-  uint32_t const a = 2;
-  uint32_t const b = 2;
-  namespace nested {
-    using ns1::a;
-    using ns2::b;
-    void foo() {
-      std::cout &lt;&lt; a &lt;&lt; ' ' &lt;&lt; b &lt;&lt; '\n'; // 1 2
-    }
-  }
+<p>Казалось бы, оператор <code>+</code> не должен находиться, как и <code>swap</code>. Если бы это работало так, то пришлось бы везде писать <code>my_lib::operator+</code> или делать <code>using</code>.</p>
+<p>Поэтому есть правило, которое называется <a href="https://en.cppreference.com/w/cpp/language/adl"><em>argument-depended lookup</em></a>. Когда мы вызываем функцию, он ищется не как описано выше, а учитывает типы параметров. Точнее, смотрит в то пространство имён, где написаны аргументы оператора. <strong>Для каждого аргумента производится поиск в его пространстве имён (и пространствах имён всех его баз)</strong>. Причём только в пространстве имён, не выше.</p>
+<p>Немного best practices о том, как надо делать <code>swap</code>:</p>
+<pre><code class="language-c++">template &lt;class T&gt;
+void foo(T a, T b) {
+	// ...
+	using std::swap;
+	swap(a, b);
+	// ...
 }
 </code></pre>
-<p>А если подключать не декларациями, а <code>using namespace ns1;</code>, то выведет &quot;2 2&quot;. Почему так? Они ищутся не сразу, когда видят директиву, а только когда дойдём до наименьшего общего предка между тем неймспейсом, из которого ищем и тем, которого поюзингали.</p>
-<h2><a class="header" href="#adl" id="adl">ADL</a></h2>
-<pre><code class="language-c++">namespace somelib {
-  struct big_integer {};
-  big_integer operator+(big_integer const&amp;, big_integer const&amp;);
-  void swap(big_intger&amp;, big_integer&amp;);
-}
-int main() {
-  somelib::big_integer a;
-  a + a;
-  swap(a, a);
-}
-</code></pre>
-<p>Казалось бы, оператор <code>+</code> не должен находиться, как и <code>swap</code>. Если бы это работало так, то пришлось бы везде писать <code>somelib::operator+</code> или делать using.</p>
-<p>Кроме поиска имён, который мы обсудили ранее, есть Argument Depended Lookup. Здесь применяется он тоже: он смотрит на типы аргументов и ищет по неймспейсу, из которого эти типы. Такой поиск запускается только для имён, у которых неквалифицированное имя. У поиска ADL и обычного нет приоритетов, они запускаются оба и кандидаты из обоих уходят в overload resolution. Обычно они либо оба найдут одно и то же, либо обычный не найдет ничего и возьмется из ADL (логично?).</p>
-<p>При этом ADL ищет по неймспейсу, в котором класс <code>big_integer</code> был определен. Если мы спрячем определение в неймспейс, а функции сделаем в другом месте, то он их не найдёт.</p>
-<p>Стандартная практика применения: когда есть перегруженные операции или функции типа <code>swap</code>. </p>
-<pre><code class="language-c++">template &lt;typename U, typename V&gt;
-struct my_pair {
-  void swap(my_pair&amp; other) { 
-    using std::swap;
-    swap(u, other.u);
-    swap(v, other.v);
-  }
-}
-</code></pre>
-<p>В таком случае будет запускаться ADL для пользовательских классов и будет находиться их <code>swap</code>. А для встроенных типов будет <code>std::swap</code> добавлять кандидатом.</p>
-<h2><a class="header" href="#Анонимные-неймспейсы" id="Анонимные-неймспейсы">Анонимные неймспейсы</a></h2>
-<p>На лекции про компиляцию мы обсуждали модификатор <code>static</code> для функций.</p>
+<p>Теперь у нас получается шаблонный <code>std::swap</code> и, возможно, есть не-шаблонный ADL.</p>
+<ul>
+<li>Если есть ADL, выбирается он, потому что из шаблонного и не-шаблонного выбирается второй.</li>
+<li>Если нет ADL, то есть только <code>std::swap</code>, и он вызывается.</li>
+</ul>
+<p>Если не сделать <code>using std::swap</code>, то функция не будет работать для, скажем, <code>int</code>'ов.<br />
+В контексте шаблонов надо сказать, что <strong>ADL работает на этапе подстановки шаблона, в то время как поиск имени по дереву вверх — на этапе парсинга</strong>.</p>
+<h2><a class="header" href="#Безымянные-пространства-имён" id="Безымянные-пространства-имён">Безымянные пространства имён.</a></h2>
+<p>На лекции про компиляцию мы обсуждали модификатор <code>static</code> для функций и переменных.</p>
 <pre><code class="language-c++">static void foo() {}
 </code></pre>
-<p>Такой <code>static</code> делал функции локальными для единицы трансляции. А что с классами?</p>
-<p>Если мы хотим две разных структуры с одинаковым именем, которые не вытаскиваются из своих хедеров, то просто так может что-то сломаться, так как у них будут, например, генерироваться конструктор, деструктор с одинаковыми именами. А ещё их special member функции генерируются с модификатором inline и тут какие-то из них линковщик просто выкинет.</p>
-<p>А ещё для них будут инстанцироваться шаблоны с одинаковыми декорированными именами, но структуры то разные. Поэтому по стандарту разных объявлений классов с одинаковыми именами быть не должно. </p>
-<p>Чтобы такого не происходило, существуют анонимные неймспейсы, которые работают следующим образом.</p>
-<pre><code class="language-c++">namespace {
-  struct my_local_type {
-    double b;
-  };
-  void foo() {}
-  const int a = 42;
-}
+<p>Такой <code>static</code> делал функции локальными для единицы трансляции. Но есть проблема с классами. Они же не генерируют код в C. Но в C++ они (из-за наличия специальных функций-членов класса) его генерируют. Если у нас есть два нетривиально-разрушаемых типа <code>mytype</code> в разных единицах трансляции, будет конфликт деструкторов.Более того, тут есть
+ещё более интересный пример:</p>
+<pre><code class="language-c++">// a.cpp
+struct my_type {
+	int a;
+};
 void foo() {
-  std::vector&lt;my_local_type&gt; v;
-  v.push_back(my_local_type());
+	std::vector&lt;mytype&gt; v;
+	v.push_back(/*...*/);
 }
 </code></pre>
-<p>Такой код эквивалентен:</p>
-<pre><code class="language-c++">namespace XXX {
-  struct my_local_type {
-    double b;
-  };
-  void foo() {}
-  const int a = 42;
-}
-using namespace XXX;
-void foo() {
-  std::vector&lt;my_local_type&gt; v;
-  v.push_back(my_local_type());
+<pre><code class="language-c++">// b.cpp
+struct my_type {
+	int a, b;
+};
+void bar() {
+	std::vector&lt;mytype&gt; v;
+	v.push_back(/*...*/);
 }
 </code></pre>
-<p>К чему это приводит: имя таких классов декорируется именем неймспейса, поэтому не будет конфликтов при линковке. Аналогично, как видно, можно делать для функций и для переменных. В общем, это нужно, чтобы делать сущности локальными.</p>
-<p>Почему это имеет смысл для функций и переменных:</p>
+<p>Тут сами классы тривиально делают вообще всё (создаются, копируются и разрушаются), значит с ними нет нарушения. Но есть нарушение ODR в <code>std::vector&lt;mytype&gt;::push_back</code>, он делает разные вещи для разных <code>mytype</code>.<br />
+Поэтому по стандарту разных объявлений классов с одинаковыми именами быть не должно. </p>
+<p>Чтобы такого не происходило, существуют безымянные пространства имён;</p>
 <pre><code class="language-c++">namespace {
-  int a;
-  int b;
-  int c;
+	struct my_type {
+		int a;
+	};
 }
-mytype&lt;&amp;a&gt; va; // здесь это не как шаблон от целочисленного числа, оно сохраняет именно на какую переменную ссылается параметр
-mytype&lt;&amp;b&gt; vb;
-mytype&lt;&amp;c&gt; vc;
 </code></pre>
-<p>В этом примере не будет проблемы, если где-то есть ещё такие объявления, как у <code>va, vb, vc</code>, потому что в этом случае после инстанцирования шаблонов в именах функций закодирован namespace.</p>
-<h2><a class="header" href="#static" id="static">static</a></h2>
-<pre><code class="language-c++">static void foo(); // локальный для единицы трансляции, обсуждали
+<p>По определению это равносильно</p>
+<pre><code class="language-c++">namespace some_unique_identifier {
+	struct my_type {
+		int a;
+	};
+}
+
+using namespace some_unique_identifier;
+</code></pre>
+<p>Несложно заметить, что тут происходит именно то, что мы хотим. Аналогично, как видно, можно делать для функций и для переменных, а вообще не делать <code>static</code>. В общем, это нужно, чтобы делать сущности локальными.</p>
+<p>Анонимные пространства имён даже лучше:</p>
+<pre><code class="language-c++">template &lt;int*&gt;
+struct foo {};
+
+static int x, y;
+
+int main() {
+	foo&lt;&amp;x&gt; a;
+	foo&lt;&amp;y&gt; b;
+}
+</code></pre>
+<p>В C++03 это не работает, потому что <code>x</code> — не уникальное имя. А это проблема, поскольку <code>foo&lt;&amp;x&gt;</code> — это декорированное имя <code>foo</code>, в который встроили адрес переменной <code>x</code>. А когда мы имеем <code>static</code>, из-за не уникальности сочетания токенов <code>&amp;x</code> в разных единицах трансляции, уникально задекорировать <code>foo&lt;&amp;x&gt;</code> не получится.</p>
+<p>Итак, <code>static</code> сделали deprecated в C++03, но в C++11 сказали, что если человек пишет «<code>static</code>», он имеет ввиду безымянное пространство имён.</p>
+<h2><a class="header" href="#Ещё-немного-про-static" id="Ещё-немного-про-static">Ещё немного про <code>static</code>.</a></h2>
+<pre><code class="language-c++">static void foo();     // Локальный для единицы трансляции, обсуждали.
 struct foo {
-  // могут быть private
-  static void bar(); // нет параметра *this, можно вызывать foo:bar()
-  static int a; // как глобальная переменная, но с именем foo:a, хранится не в каждом экземпляре типа
+	static void bar(); // Нет параметра `*this`, можно вызывать `foo:bar()`.
+	static int a;      // Как глобальная переменная, но с именем `foo:a`, хранится не в каждом экземпляре типа.
 };
 int foo() {
-  static int x = 42; // создаётся при первом заходе в функцию, живёт до конца программы и значения будут 43, 44, ...
-  ++x;
-  return x;
+	static int x = 0; // Создаётся при первом заходе в функцию, живёт до конца программы
+	return ++x;
 }
+// По сути `foo` считает, сколько раз её вызвали.
 </code></pre>
 <p>Можно словить рекурсивную инициализацию, это UB, какие-то компиляторы выдают исключение, какие-то зацикливаются, какие-то выдают 0:</p>
 <pre><code class="language-c++">int&amp; f();
 int g() {
-  return f()
+	return f()
 }
 int&amp; f() {
-  static int x = g();
-  return x;
+	static int x = g();
+	return x;
 }
 int main() {
-  f();
+	f();
 }
 </code></pre>
 <h1><a class="header" href="#move-семантика-rvalue-ссылки" id="move-семантика-rvalue-ссылки">Move-семантика, rvalue-ссылки</a></h1>
