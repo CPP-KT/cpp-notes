@@ -1,5 +1,5 @@
 [book]
-authors = ["Denis Vorkozhokov"]
+authors = ["Denis Vorkozhokov", "Timofey Ivanov"]
 language = "en"
 multilingual = false
 src = "src"
