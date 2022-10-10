@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js ayu">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации - C++ course notes</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "ayu";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('ayu')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_inheritance.html"><strong aria-hidden="true">8.</strong> Наследование (в т.ч. виртуальное), виртуальные функции</a></li><li class="chapter-item expanded "><a href="08_exceptions.html"><strong aria-hidden="true">9.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="09_allocations_optimizations.html" class="active"><strong aria-hidden="true">10.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации</a></li><li class="chapter-item expanded "><a href="10_libraries.html"><strong aria-hidden="true">11.</strong> Статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_undefined_behaviour.html"><strong aria-hidden="true">12.</strong> Undefined behaviour: примеры и способы его понимать</a></li><li class="chapter-item expanded "><a href="12_validation.html"><strong aria-hidden="true">13.</strong> Способы валидации программы</a></li><li class="chapter-item expanded "><a href="13_tools.html"><strong aria-hidden="true">14.</strong> Полезные инструменты, которые пригодятся вам в жизни</a></li><li class="chapter-item expanded "><a href="14_templates.html"><strong aria-hidden="true">15.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="15_stl.html"><strong aria-hidden="true">16.</strong> Обзор STL, tag-dispatching, SFINAE</a></li><li class="chapter-item expanded "><a href="16_namespaces_using_adl.html"><strong aria-hidden="true">17.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="17_move_rvalue.html"><strong aria-hidden="true">18.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="18_intrusive_containers.html"><strong aria-hidden="true">19.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="19_smart_pointers.html"><strong aria-hidden="true">20.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="20_perfect_forwarding.html"><strong aria-hidden="true">21.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="21_decltype_auto_nullptr.html"><strong aria-hidden="true">22.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="22_lambdas_type_erasure.html"><strong aria-hidden="true">23.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="23_signals_reetrancy_errors.html"><strong aria-hidden="true">24.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="24_optional_variant_tuple_stringview.html"><strong aria-hidden="true">25.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="25_constexpr.html"><strong aria-hidden="true">26.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="26_multithreading.html"><strong aria-hidden="true">27.</strong> Многопоточность</a></li><li class="chapter-item expanded "><a href="27_qt.html"><strong aria-hidden="true">28.</strong> Qt</a></li><li class="chapter-item expanded "><a href="28_concepts.html"><strong aria-hidden="true">29.</strong> Концепты</a></li><li class="chapter-item expanded "><a href="29_ranges.html"><strong aria-hidden="true">30.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="30_encoding.html"><strong aria-hidden="true">31.</strong> Кодировки</a></li><li class="chapter-item expanded "><a href="31_coroutines.html"><strong aria-hidden="true">32.</strong> Корутины</a></li><li class="chapter-item expanded "><a href="32_modules.html"><strong aria-hidden="true">33.</strong> Модули</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu (default)</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title">C++ course notes</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        <a href="https://github.com/cpp-kt/cpp-notes" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#Механизмы-ОС-для-аллокации-памяти-аллокаторы-памяти-small-object-и-copy-on-write-оптимизации" id="Механизмы-ОС-для-аллокации-памяти-аллокаторы-памяти-small-object-и-copy-on-write-оптимизации">Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации.</a></h1>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=oDPaXS9tKlw">Запись лекции №1</a></li>
+<li><a href="https://www.youtube.com/watch?v=i8uYAe0E4PU">Запись лекции №2</a></li>
+</ul>
+<hr />
+<p>— <em>Первую часть лекции лучше смотреть запись, так как там много профилирования и я не хочу вставлять это в конспект</em><br />
+— Я хочу. И вставлю в отдельный файл.</p>
+<h2><a class="header" href="#Аллокация-памяти-на-linux" id="Аллокация-памяти-на-linux">Аллокация памяти на Linux.</a></h2>
+<p>На Linux страницы памяти выделяются через <a href="http://man7.org/linux/man-pages/man2/mmap.2.html"><code>mmap</code></a>, а освобождают через <code>munmap</code>. Можно заметить интересный эффект: если мы просто делаем выделение памяти кучу раз, это будет относительно быстро, а когда мы начнём к выделенной памяти обращаться, ты мы зависнем надолго. Почему так? Точнее на вопрос «почему» ответ простой — потому что <strong>ОС даёт нам память только тогда, когда мы её используем</strong>, а вот «зачем» — интересный вопрос. Дело в том, что обычно у нас нет свободной оперативной памяти, она вся либо отдана другим программам, либо используется как дисковый кэш. Поэтому когда кто-то просит память, вам придётся сбрасывать дисковый кэш, либо выгружать кого-то в swap-файлы. А если вдруг ваша программа будет использовать выделенную память как-то потом (или не будет вообще), то давать ей память сразу невыгодно, поэтому ОС даёт её при обращении и маленькими кусочками (ведь используете вы маленькими кусочками, а <code>mmap</code> выделяет сразу кучу памяти). Кстати, <strong>в <code>mmap</code> есть специальный флаг (<code>MAP_POPULATE</code>), который заставляет выделять память сразу</strong>.</p>
+<p>При этом, если сделать так, то работать это будет быстрее, чем если выделить память обычным образом, а потом к ней пообращаться, потому что с флагом не будет происходить множество переходов между userspace'ос и ОС при каждом обращении. Хорошо, а знаете ли вы, что <strong>в <code>mmap</code> больше всего времени занимает обнуление выделенной страницы</strong>. Зачем? А вдруг там кто-то криптографию оставил. Кто-то, кого вы только что убили, например. Но вообще под это тоже есть специальный флажок <code>MAP_UNINITIALIZED</code> (но только для анонимных страниц), который был создан специально для миниатюрных устройств. <strong>Работает <code>MAP_UNINITIALIZED</code>, правда, только в том случае, если ОС была собрана специальным образом</strong>. Если, кстати, делать <code>mmap</code> без флага <code>MAP_POPULATE</code>, то ещё больше времени, чем на зануление, будет тратиться на передачу обращения между ОС и userspace'ом.</p>
+<p>Как подобное ленивое выделение работает с точки зрения страничной адресации? Вот так: при запросе выделения памяти через <code>mmap</code> ОС не сразу обращается к процессору, а помечает у себя страницы как &quot;<em>заказанные</em>&quot;. Затем, когда происходит обращение к памяти, получаем ошибку <em>page fault</em>, ОС проверяет, если страница выделена, что она мапит её в физическую память, иначе это ошибка.</p>
+<p>Как этим можно пользоваться? Типовое использование — это не выделение одной страницы, а сразу порции памяти, которая разбивается на мелкие куски и выдается <code>malloc</code>'ом. Когда они выдаются в программе, они мапаются в физическую память. Ещё мапить сразу в физическую память не очень полезно, так как память, не принадлежащая программой, используется ОС, например, как дисковый кэш.</p>
+<p>Зачем нам это знать? Это полезно, если мы что-то бенчмаркаем и выделяем большой массив, первый прогон какого-нибудь алгоритма может быть дольше остальных из-за 
+того, что он сначала не помаплен в память.</p>
+<h2><a class="header" href="#Реализация-malloc-и-free" id="Реализация-malloc-и-free">Реализация <code>malloc</code> и <code>free</code>.</a></h2>
+<p>Давайте вот над чем подумаем. Нам же никто не мешает самим написать обёртку над <code>mmap</code> и <code>munmap</code>, чтобы у нас были свои <code>malloc</code> и <code>free</code>? Возьмём наивнейшую реализацию — <code>malloc</code> просто вызывает <code>mmap</code> (с некоторыми проверками).<br />
+Если провести эксперимент, можно увидеть, что такая реализация будет капец медленной. Более того, она и памяти будет есть в 15 раз больше, чем стандартные <code>malloc</code> и <code>free</code>. Если протестировать стандартный <code>malloc</code>, то получим, что за одну секунду мы можем сделать 45000000 <code>malloc</code>'ов и <code>free</code>, но 200000 <code>mmap</code>'ов и <code>munmap</code>'ов.</p>
+<p>Следовательно стандартные аллокаторы делают что-то умное. Если посмотреть на то, что именно, то выяснится, что у них <strong>разные правила для больших и маленьких объектов</strong>. Причём <strong>с маленькими объектами все взаимодействуют одинаково</strong>, а с большими — по-разному. Почему? Потому что $99%$ аллокаций — аллокации маленьких кусочков памяти. И для таких ситуаций уже придумали, как оптимально жить. Большинство аллокаторов сейчас используют дизайн, заимствованный у аллокатора <a href="http://hoard.org/">Hoard</a>. Рассмотрим один из частых способов работы с маленькими объектами:</p>
+<p>Современные аллокаторы умеют выделять их за $\mathrm O(1)$. Добиваются этого следующим образом: для каждого из частых размеров ($16$, $24$, $32$, ...) создают отдельные аллокаторы. Как делать аллокатор для маленьких объектов одного размера эффективно? У нас есть большой кусок данных и нам надо где-то хранить, какие его части заняты, а какие — свободны. И уметь быстро доставать случайный свободный и быстро освобождать. Простейшая структура, которая позволяет это делать — <strong>односвязный список: список хранит незанятые данные, причём именно в этих данных и хранится указатель на следующий свободный кусок</strong>.<br />
+И это в целом рабочая идея. Именно что идея, потому что нужно уметь возвращать данные операционной системе, а со списком это сложно.</p>
+<h2><a class="header" href="#so-и-cow-оптимизации" id="so-и-cow-оптимизации">SO и CoW оптимизации.</a></h2>
+<h3><a class="header" href="#copy-on-write" id="copy-on-write">Copy-on-write.</a></h3>
+<p>Вспомним класс <code>my_string</code> из прошлых лекций. У строки был какой-то буфер <code>data</code>, которым может заниматься достаточно много. Хотим при копировании сэкономить в случае, если после копирования не нужно изменять данные. Идея такая: когда делаем копию, копируем не данные, а просто указатель на них. При попытке модифицировать их, если буфер расшарен между несколькими <code>my_string</code>-ми, делаем копию данных.</p>
+<p>Обычно это реализуется так: вместе с <code>data</code> храним счётчик объектов (<code>ref_counter</code>), у которых этот буфер общий. Если при попытке модификации <code>ref_counter &gt; 1</code>, то нужно сделать копию.</p>
+<pre><code class="language-c++">struct buffer {
+	size_t ref_counter;
+	char chars[];
+}
+
+static buffer* allocate_buffer(size_t capacity) {
+	return reinterpret_cast&lt;buffer*&gt;(
+		operator new(
+			sizeof(buffer) + (capacity + 1) * sizeof(char)
+		)
+	);
+}
+</code></pre>
+<p>Тут можно заметить такую штуку как <code>char chars[]</code>. Это нестандартное расширение <a href="https://youtube.com/watch?v=IAdLwUXRUvg&amp;t=898s">flexible array member</a>. Вместо него при большом желании можно просто указатель использовать, но FAM экономит нам одну индирекцию.</p>
+<p>Во всех методах класса нужно обработать счетчик ссылок (опустим этот момент) и функцию <code>unshare</code>:</p>
+<pre><code class="language-c++">void my_string::unshare() {
+	buffer* new_data = allocate_buffer(size_ + 1);
+	memcpy(new_data-&gt;chars, data_-&gt;chars, size);
+  
+	--data_-&gt;ref_counter;
+	assert(data-&gt;ref_counter != 0);
+}
+</code></pre>
+<p>Можно заметить, что <code>capacity</code> и <code>size</code> строки можно перенести тоже в буфер.</p>
+<p>После GCC5 отказались от использования CoW в строчках. Первая причина - заморочки с многопоточностью, вторая - оптимизация помогает на длинных строчках, но на небольших скопировать явно может быть даже дешевле. Для маленьких строк используют:</p>
+<h3><a class="header" href="#small-object" id="small-object">Small-object.</a></h3>
+<p>Заметим, что мы хранили в буфере указатель на <code>size</code>, <code>capacity</code> и <code>data</code>, получаются накладные расходы в размере строки в $\approx20$ символов. Что сделали в GCC: добили строчку до 32 байт, а затем <code>data</code> и <code>size</code> остаются собой, а в остальном храним либо сами данные (<code>data</code> указывает туда, где лежало <code>capacity</code>), либо <code>capacity</code> и пустой хвост. Тогда в большом количестве случаев не делаем аллокаций, а копирование стоит недорого, так как в отличие от CoW просто копируем на 15 байт больше.</p>
+<p>Как это хранить?</p>
+<pre><code class="language-c++">struct dynamic_buffer {
+  char* chars;
+  size_t capacity;
+};
+
+struct string {
+  // ...
+private:
+  size_t size;
+  union {
+    dynamic_buffer dynamic_data;
+    char static_buffer[sizeof(dynamic_buffer)];
+  };
+};
+</code></pre>
+<p>В <code>union</code> все поля размещаются на одном месте, поверх друг друга. Соответственно, во всех функциях нужно проверять, какой из буферов используем: если у нас <code>size &lt;= sizeof(dynamic_buffer)</code>, то мы использует <code>static_storage</code>, а иначе <code>dynamic_storage</code>.</p>
+<p>Бонусом получаем, что со small-object оптимизацией нам нужно меньше аллокаций для маленьких строк, а ещё для них меньше кэш-мисов, так как до этого мы сначала брали указатель, а затем шли в память по нему. </p>
+<p>Конкретно в нашей реализации small-object работает не очень хорошо, но можно оптимизировать, например, так, <a href="https://youtube.com/watch?v=kPR8h4-qZdk">как делают в facebook</a>:</p>
+<p><img src="./images/09-allocations-optimizations/fbstring.svg" alt="fbstring" /></p>
+<p>Идейно вот как работает: давайте отводить старший бит последнего байта структуры под флаг, короткая строка или длинная.<br />
+При этом сам последний байт (для короткого объекта) хранит количество оставшихся символов. При записывании нового символа в конец мы уменьшаем это число, и когда память в маленьком объекте кончается совсем, там получается <code>0</code>, а <code>0</code> — это то же самое что <code>'\0'</code>.</p>
+<p>Теперь вопрос, в каком порядке применять copy-on-write и small-object? Ну, объективно вовне надо пихать small-object, а внутрь — copy-on-write. Почему? Ну, посмотрим что будет, если наоборот. У нас будет указатель, по которому <code>ref_count</code> и наш <code>union</code>. То есть для маленьких строк мы всё равно будем хранить <code>ref_counter</code> (который нам не сдался) и всё равно будет indirection. Это <strong>строго хуже</strong>
+даже глупой реализации.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="08_exceptions.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="10_libraries.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="08_exceptions.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="10_libraries.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
