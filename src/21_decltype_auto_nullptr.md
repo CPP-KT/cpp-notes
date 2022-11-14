@@ -1,16 +1,18 @@
- # Decltype, declval, auto, nullptr
+ # Perfect backwarding.
 - [Запись лекции №1](https://www.youtube.com/watch?v=ydQD7-XSSt4)
----
-## decltype
 
-Иногда возвращаемый тип не хочется писать руками.
+---
+
+Помните [perfect forwarding](./20_perfect_forwarding.md)? Там мы учились передавать в функцию аргументы. Теперь ситуация страшнее: perfect backwarding — надо ещё значение вернуть:
 
 ```c++
-int f();
-??? g() {
-    return f()
+template <typename... Args>
+??? g(Args&&... args) {
+    return f(std::forward<Args>(args)...);
 }
 ```
+
+## `decltype`.
 
 В C++11 появилась конструкция, которая позволяет по выражению узнать его тип:
 
@@ -18,74 +20,65 @@ int f();
 int main() {
     decltype(2 + 2) a = 42; // int a = 42;
 }
-
-decltype(f()) g() {
-    return f();
-}
 ```
 
-`decltype `сделан так, чтобы его было удобно использовать для возврата значений:
+При этом `decltype` сохраняет все ссылки и все `const`'ы:
 
 ```c++
 int foo();
 int& bar();
 int&& baz();
-// decltype(foo()) int
-// decltype(bar()) int&
-// decltype(baz()) int&&
-
-// decltype(expr)
-// type для (prvalue)
-// type& для (lvalue)
-// type&& для (xvalue)
-```
-
-О `decltype` можно думать как о двух языковых конструкциях в одном синтаксисе
-
-```c++
-// decltype (expr) - работает, как написано выше
-// decltype (var_name) - возвращает тип этой переменной
-```
-
-`decltype` определён таким образом, что он работает и для членов класса:
-
-```c++
-struct x {
-    int a;
-};
 
 int main() {
-    x::a; // COMPILE ERROR
-    decltype(x::a);
-    
-    int a;
-    decltype(a) b = 42; // int b = 42
-    decltype((a)) c = a; // int& c = a
+    decltype(foo()) x; // prvalue   int x;
+    decltype(bar()) x; // lvalue    int& x;
+    decltype(baz()) x; // xvalue    int&& x;
 }
 ```
 
-Последнее работает так, потому что `(a)` это выражение и оно имеет тип `int&`, а `a` - это имя переменной.
+На самом деле существует по сути два `decltype`: для выражений и для имён. То есть мы можем сделать что-то такое:
+```c++
+struct mytype {
+    int nested;
+};
+decltype(mytype::nested) a;
+```
 
-## declval
-
-Иногда хочется узнать тип чего-то, что зависит от шаблонных аргументов функции, но просто сделать это с помощью `decltype` не получится, так как тогда компилятор встречает обращение к параметру функции, когда ещё не дошёл до его объявления.  
-
-Для этого есть синтаксическая конструкция `declval`:
+`mytype::nested` — некорректное выражение, но брать от него `decltype` можно.\
+Или вот, более показательный пример:
 
 ```c++
-int foo(int);
-float foo(float);
+int a;
+decltype(a) b;   // int b, так как от переменной.
+decltype((a)) c; // int& c, так как от выражения, а оно lvalue.
+```
 
-template <typename Arg0>
-decltype(foo(arg0)) qux(Arg0&& arg0) { // COMPILE ERROR
-    return foo(std::forward<Arg0>(arg0));
-}
+И отсюда уже понятнее, как писать perfect backwarding:
 
-template <typename Arg0>
-decltype(foo(declval<Arg0>())) qux(Arg0&& arg0) {
-    return foo(std::forward<Arg0>(arg0));
+```c++
+template <typename... Args>
+decltype(f(std::forward<Args>(args)...)) g(Args&&... args) {
+    return f(std::forward<Args>(args)...);
 }
 ```
+
+Блин, это не компилируется(\
+Потому что компилятор видит `args` позже, чем возвращаемое значение. Что же делать?..
+
+## `std::declval`.
+
+Нам надо породить значение из ничего. Это вообще конструктор по умолчанию называется, но закладываться на то, что у каждого типа из `Args` есть таковой.
+
+Поэтому чтобы породить значение из ниоткуда честно, в стандартной библиотеке есть функция `std::declval`.
+
+```c++
+template <typename... Args>
+decltype(f(std::forward<Args>(std::declval<Args>())...)) g(Args&&... args) {
+    return f(std::forward<Args>(args)...);
+}
+```
+
+При этом сама функция `std::declval` обычно не имеет тела, чтобы никакой дурак не вздумал её вызвать. Вы можете её использовать только там, где не происходит вычисление. Это называется *unevaluated context* (другими его примерами, помимо `decltype`, являются `sizeof` или `alignof`).
 
 Сигнатура у `declval` могла бы выглядеть как-то так:
 
@@ -94,46 +87,79 @@ template <typename T>
 T declval();
 ```
 
-Для `declval` не нужно тело функции, так как `decltype` не генерирует машинный код и считается на этапе компиляции.
-
-В языке есть несколько мест с похожей логикой - например, `sizeof`. Такие места называются *unevaluated contexts*.
-
-При использовании сигнатуры, как выше, могут возникать проблемы с неполными типами (просто не скомпилируется). Это происходит из-за того, что если функция возвращает структуру, то в точке, где вызывается эта функция, эта структура должна быть complete типом. Чтобы обойти это, делают возвращаемый тип rvalue-ссылкой:
+Но при использовании такой сигнатуры, могут возникать проблемы с неполными типами (просто не скомпилируется). Это происходит из-за того, что если функция возвращает структуру, то в точке, где вызывается эта функция, эта структура должна быть complete типом. Чтобы обойти это, делают возвращаемый тип rvalue-ссылкой:
 
 ```c++
 template <typename T>
 T&& declval();
 ```
 
-## Trailing return types
+## Trailing return type.
 
 Чтобы не писать `declval`, сделали возможной следующую конструкцию:
 
 ```c++
-template <typename Args>
-auto qux(Args&& ...args) -> decltype(foo(std::forward<Args>(args)...)) {
-    return foo(std::forward<Args>(args)...);
+template <typename... Args>
+auto g(Args&&... args)
+        -> decltype(f(std::forward<Args>(args)...)) {
+    return f(std::forward<Args>(args)...);
 }
 ```
 
-## auto
+Trailing return type применяется также вот в таком ключе:
 
-Можно заметить, что в `return` и `decltype` повторяется одно и то же выражение. Для этого добавили возможность писать `decltype(auto)`:
+```c++
+struct foobar {
+    using type = int;
+
+    type f();
+    void g(type);
+};
+```
+
+Пусть мы хотим реализовать функции вне класса. Можем ли мы написать так:
+
+```c++
+void foobar::f(type) { /* ... */ }
+```
+
+Можем. А так?
+
+```c++
+type foobar::g() { /* ... */ }
+```
+
+А так не можем, потому что `type` мы видим раньше, нежели `foobar::`. Поэтому можно сделать trailing return type:
+
+```c++
+auto foobar::f() -> type { /* ... */ }
+```
+
+Желающие могут почитать про [unqualified name lookup](https://en.cppreference.com/w/cpp/language/unqualified_lookup), где подробно написано, почему в этом примере `type` найдётся, а в предыдущем — нет.
+
+## `decltype(auto)`.
+
+Очень громоздко получается, когда мы пишем в `decltype` то же, что и в `return`. Давайте не надо:
 
 ```c++
 int main() {
-    decltype(auto) b = 2 + 2; // int b = 2 + 2
+    decltype(auto) b = 2 + 2;
+    // Эквивалентно
+    decltype(2 + 2) b = 2 + 2;
 }
 
-template <typename Args>
-decltype(auto) qux(Args&& ...args) {
-    return foo(std::forward<Args>(args)...);
+template <typename... Args>
+decltype(auto) g(Args&& ...args) {
+    return f(std::forward<Args>(args)...);
 }
+// Эквивалентно тому, что мы уже писали с trailing return type.
 ```
 
-Возникает вопрос, а зачем там вообще `decltype`, можно ли его заменить на просто `auto`? Для этого стоит сказать о том, как работает `auto`.
+## `auto`.
 
-Правило вывода типов у `auto` почти полностью совпадают с тем, как выводятся шаблонные параметры. Поэтому `auto` отбрасывает ссылки и `cv`.
+Ещё есть такая штука как просто `auto`. Это тоже способ вывести тип переменной/возвращаемого значения автоматически, но другой.
+
+Правило вывода типов у `auto` почти полностью совпадают с тем, как выводятся шаблонные параметры. Поэтому `auto` отбрасывает ссылки, `const` и `volatile`.
 
 ```c++
 int& bar();
@@ -144,7 +170,7 @@ int main() {
 }
 ```
 
-Поэтому обычный `auto` в возвращаемом типе отбрасывает ссылки с `cv`, поэтому чаще всего нам нужно `decltype(auto)`.
+Мораль: `auto` бывает нужен довольно редко, чаще `decltype(auto)`.
 
 И ещё стоит сказать, что если у функции несколько `return`'ов, которые выводятся в разные типы, то использовать `decltype` и `auto` нельзя:
 
@@ -158,18 +184,18 @@ auto f(bool flag) { // COMPILE ERROR
 }
 ```
 
-## nullptr
+## `nullptr`.
 
-До C++11 для нулевого указателя использовалось либо 0, либо макрос `NULL`. Правило было такое - числовая константа, которая вычисляется в 0, может приводиться неявно в нулевой указатель.
+До C++11 для нулевого указателя использовалось либо `0`, либо макрос `NULL` (который в C++ просто равен `0`). Правило было такое: числовая константа, которая **на этапе компиляции** вычисляется в `0`, может приводиться неявно в нулевой указатель.
 
-Это привело бы к проблеме при использовании форвардинга, так как тип бы выводился в `int`.
+Это привело бы к проблеме при использовании forwarding'а: `std::forward<int>(0)` — ни в каком месте не compile-time константа, равная нулю.
 
 В C++11 появился отдельный тип `nullptr_t`, который может приводиться к любому указателю. Определено это примерно так:
 
 ```c++
 struct nullptr_t {
     template <typename T>
-    opeartor T*() const {
+    operator T*() const {
         return 0;
     }
 }
