@@ -18,7 +18,7 @@
 
 - [Презентация про ассемблер (введение)](slides/lecture-1j.pdf)
 - [Презентация про ассемблер (работа со стеком)](slides/lecture-2d.pdf)
-- [Презентация про процессор и оптимизации](slides/lecture-2.pdf)
+- [Презентация про процессор и оптимизации](slides/modern-15.pdf)
 - [Презентация про интрузивный список](slides/intrusive.pdf)
 - [Презентация про shared_ptr](slides/shared_ptr.pdf)
 - [Справочник по инструкциям x86](https://www.felixcloutier.com/x86/), [nasm документация](https://www.nasm.us/doc/)
