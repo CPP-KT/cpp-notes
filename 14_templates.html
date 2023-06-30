@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Шаблоны (templates) - C++ course notes</title>
+        <title>Шаблоны (templates), tag-dispatching, SFINAE - C++ course notes</title>
         
         
 
@@ -89,7 +89,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_inheritance.html"><strong aria-hidden="true">8.</strong> Наследование (в т.ч. виртуальное), виртуальные функции</a></li><li class="chapter-item expanded "><a href="08_exceptions.html"><strong aria-hidden="true">9.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="09_allocations_optimizations.html"><strong aria-hidden="true">10.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации</a></li><li class="chapter-item expanded "><a href="10_libraries.html"><strong aria-hidden="true">11.</strong> Статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_undefined_behaviour.html"><strong aria-hidden="true">12.</strong> Undefined behaviour: примеры и способы его понимать</a></li><li class="chapter-item expanded "><a href="12_validation.html"><strong aria-hidden="true">13.</strong> Способы валидации программы</a></li><li class="chapter-item expanded "><a href="13_tools.html"><strong aria-hidden="true">14.</strong> Полезные инструменты, которые пригодятся вам в жизни</a></li><li class="chapter-item expanded "><a href="14_templates.html" class="active"><strong aria-hidden="true">15.</strong> Шаблоны (templates)</a></li><li class="chapter-item expanded "><a href="15_stl.html"><strong aria-hidden="true">16.</strong> Обзор STL, tag-dispatching, SFINAE</a></li><li class="chapter-item expanded "><a href="16_namespaces_using_adl.html"><strong aria-hidden="true">17.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="17_move_rvalue.html"><strong aria-hidden="true">18.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="18_intrusive_containers.html"><strong aria-hidden="true">19.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="19_smart_pointers.html"><strong aria-hidden="true">20.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="20_perfect_forwarding.html"><strong aria-hidden="true">21.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="21_decltype_auto_nullptr.html"><strong aria-hidden="true">22.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="22_lambdas_type_erasure.html"><strong aria-hidden="true">23.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="23_signals_reetrancy_errors.html"><strong aria-hidden="true">24.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="24_optional_variant_tuple_stringview.html"><strong aria-hidden="true">25.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="25_constexpr.html"><strong aria-hidden="true">26.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="26_multithreading.html"><strong aria-hidden="true">27.</strong> Многопоточность</a></li><li class="chapter-item expanded "><a href="27_qt.html"><strong aria-hidden="true">28.</strong> Qt</a></li><li class="chapter-item expanded "><a href="28_concepts.html"><strong aria-hidden="true">29.</strong> Концепты</a></li><li class="chapter-item expanded "><a href="29_ranges.html"><strong aria-hidden="true">30.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="30_encoding.html"><strong aria-hidden="true">31.</strong> Кодировки</a></li><li class="chapter-item expanded "><a href="31_coroutines.html"><strong aria-hidden="true">32.</strong> Корутины</a></li><li class="chapter-item expanded "><a href="32_modules.html"><strong aria-hidden="true">33.</strong> Модули</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="course.html"><strong aria-hidden="true">1.</strong> About &amp; Links</a></li><li class="chapter-item expanded "><a href="01_asm.html"><strong aria-hidden="true">2.</strong> Введение в ассемблер</a></li><li class="chapter-item expanded "><a href="02_os_cpu.html"><strong aria-hidden="true">3.</strong> Прерывания, страничная адресация и т.д.</a></li><li class="chapter-item expanded "><a href="03_cache_pipelines.html"><strong aria-hidden="true">4.</strong> Кэши, конвейер</a></li><li class="chapter-item expanded "><a href="04_syntax_types.html"><strong aria-hidden="true">5.</strong> Пересечение синтаксиса C/C++, типы данных</a></li><li class="chapter-item expanded "><a href="05_compilation.html"><strong aria-hidden="true">6.</strong> Этапы компиляции</a></li><li class="chapter-item expanded "><a href="06_classes.html"><strong aria-hidden="true">7.</strong> Классы, абстракция данных</a></li><li class="chapter-item expanded "><a href="07_inheritance.html"><strong aria-hidden="true">8.</strong> Наследование (в т.ч. виртуальное), виртуальные функции</a></li><li class="chapter-item expanded "><a href="08_exceptions.html"><strong aria-hidden="true">9.</strong> Исключения, гарантии безопасности исключений, RAII</a></li><li class="chapter-item expanded "><a href="09_allocations_optimizations.html"><strong aria-hidden="true">10.</strong> Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации</a></li><li class="chapter-item expanded "><a href="10_libraries.html"><strong aria-hidden="true">11.</strong> Статические и динамические библиотеки</a></li><li class="chapter-item expanded "><a href="11_undefined_behaviour.html"><strong aria-hidden="true">12.</strong> Undefined behaviour: примеры и способы его понимать</a></li><li class="chapter-item expanded "><a href="12_validation.html"><strong aria-hidden="true">13.</strong> Способы валидации программы</a></li><li class="chapter-item expanded "><a href="13_tools.html"><strong aria-hidden="true">14.</strong> Полезные инструменты, которые пригодятся вам в жизни</a></li><li class="chapter-item expanded "><a href="14_templates.html" class="active"><strong aria-hidden="true">15.</strong> Шаблоны (templates), tag-dispatching, SFINAE</a></li><li class="chapter-item expanded "><a href="15_stl.html"><strong aria-hidden="true">16.</strong> Обзор STL</a></li><li class="chapter-item expanded "><a href="16_namespaces_using_adl.html"><strong aria-hidden="true">17.</strong> Пространства имён, using-декларации, using-директивы, ADL</a></li><li class="chapter-item expanded "><a href="17_move_rvalue.html"><strong aria-hidden="true">18.</strong> Move-семантика, rvalue-ссылки</a></li><li class="chapter-item expanded "><a href="18_intrusive_containers.html"><strong aria-hidden="true">19.</strong> Интрузивные контейнеры</a></li><li class="chapter-item expanded "><a href="19_smart_pointers.html"><strong aria-hidden="true">20.</strong> Smart pointers: unique_ptr, shared_ptr, weak_ptr</a></li><li class="chapter-item expanded "><a href="20_perfect_forwarding.html"><strong aria-hidden="true">21.</strong> Perfect forwarding, variadic templates</a></li><li class="chapter-item expanded "><a href="21_decltype_auto_nullptr.html"><strong aria-hidden="true">22.</strong> Decltype, declval, auto, nullptr</a></li><li class="chapter-item expanded "><a href="22_lambdas_type_erasure.html"><strong aria-hidden="true">23.</strong> Анонимные функции, type erasure, std::function</a></li><li class="chapter-item expanded "><a href="23_signals_reetrancy_errors.html"><strong aria-hidden="true">24.</strong> Сигналы, reetrancy, обработки ошибок</a></li><li class="chapter-item expanded "><a href="24_optional_variant_tuple_stringview.html"><strong aria-hidden="true">25.</strong> Optional, variant, tuple, string_view</a></li><li class="chapter-item expanded "><a href="25_constexpr.html"><strong aria-hidden="true">26.</strong> Статическая и динамическая инициализация, constexpr</a></li><li class="chapter-item expanded "><a href="26_multithreading.html"><strong aria-hidden="true">27.</strong> Многопоточность</a></li><li class="chapter-item expanded "><a href="27_qt.html"><strong aria-hidden="true">28.</strong> Qt</a></li><li class="chapter-item expanded "><a href="28_concepts.html"><strong aria-hidden="true">29.</strong> Концепты</a></li><li class="chapter-item expanded "><a href="29_ranges.html"><strong aria-hidden="true">30.</strong> Ranges</a></li><li class="chapter-item expanded "><a href="30_encoding.html"><strong aria-hidden="true">31.</strong> Кодировки</a></li><li class="chapter-item expanded "><a href="31_coroutines.html"><strong aria-hidden="true">32.</strong> Корутины</a></li><li class="chapter-item expanded "><a href="32_modules.html"><strong aria-hidden="true">33.</strong> Модули</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -215,7 +215,7 @@ int main() {
 <p>Второе — когда мы имеем <code>DEFINE_VECTOR(int)</code> в двух разных местах. Потому что вам и какому-то человеку из Австралии понадобилось одно и то же. А потом кто-то подключает и то, и другое, и он проиграл.</p>
 <h2><a class="header" href="#Базовый-синтаксис" id="Базовый-синтаксис">Базовый синтаксис.</a></h2>
 <pre><code class="language-c++">template &lt;typename T&gt;
-// template &lt;class T&gt; это то же самое
+// template &lt;class T&gt; — это то же самое
 struct vector {
 	void push_back(T const &amp;) { /*...*/ }
 	T const&amp; operator[](size_t index) const { /*...*/ }
@@ -401,7 +401,7 @@ void foo(int x) {
 	(T::nested) - x;
 }
 </code></pre>
-<p>Вы не узнаете, что такое <code>T::nested</code> до подстановки. А очень хотите это знать, чтобы отлавливать ошибки раньше, чем подстановка (например, написав <code>(T::nested) - y</code>, вы не получили бы ошибку о том, что не существует <code>y</code>, сразу). Поэтому вы должны явно указать, что происходит:</p>
+<p>Вы не узнаете, что такое <code>T::nested</code> до подстановки. А очень хотите это знать, чтобы отлавливать ошибки раньше, чем подстановка (например, написав <code>(T::nested) - y</code>, вы получили бы ошибку о том, что не существует <code>y</code>, сразу). Поэтому вы должны явно указать, что происходит:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 void foo(int x) {
 	(T::nested) - x;        // Вычитание.
@@ -421,8 +421,8 @@ void foo(int x) {
 	T::template nested&lt;b &amp;&amp; c&gt; d; // Переменная шаблонного типа.
 }
 </code></pre>
-<p>При этом <strong>когда у вас есть что-то, что не зависит от шаблона (и имеет в себе <code>nested</code>), компилятор сам определит, тип ли это</strong>, писать <code>template</code> и <code>typename</code> не обязательно. То что зависит от шаблона, называется <em>dependent</em>. И вот <strong>в dependent-штуках обязательно писать <code>typename</code>'ы и <code>template</code>'ы, а independent — нет</strong>.</p>
-<p>MSVC, кстати, долгое время делал не так (а полностью разбирал шаблонную функцию при подстановке), за что его загнобили, и больше он так не делает, а делает как все: разбирает dependent выражения при подстановке, а independent — сразу. Это называется «<a href="http://blog.llvm.org/2009/12/dreaded-two-phase-name-lookup.html"><em>two-phase name lookup</em></a>».</p>
+<p>При этом <strong>когда у вас есть что-то, что не зависит от шаблона (и имеет в себе <code>nested</code>), компилятор сам определит, тип ли это</strong>, писать <code>template</code> и <code>typename</code> не обязательно. То, что зависит от шаблона, называется <em>dependent</em>. И вот <strong>в dependent-штуках обязательно писать <code>typename</code>'ы и <code>template</code>'ы, а non-dependent — нет</strong>.</p>
+<p>MSVC, кстати, долгое время делал не так (а полностью разбирал шаблонную функцию при подстановке), за что его загнобили, и больше он так не делает, а делает как все: разбирает dependent выражения при подстановке, а non-dependent — сразу. Это называется «<a href="http://blog.llvm.org/2009/12/dreaded-two-phase-name-lookup.html"><em>two-phase name lookup</em></a>».</p>
 <h3><a class="header" href="#Зависимые-имена-в-базовых-классах" id="Зависимые-имена-в-базовых-классах">Зависимые имена в базовых классах.</a></h3>
 <pre><code class="language-c++">struct arg1 {
     struct type {}; // Нельзя складывать.
@@ -435,15 +435,15 @@ template &lt;typename T&gt;
 struct derived : base&lt;T&gt; {
     void f() {
         typename T::type() + 1; // Ошибка компиляции про подстановке (dependent).
-        arg1::type() + 1;       // Ошибка компиляции при разборе (independent).
+        arg1::type() + 1;       // Ошибка компиляции при разборе (non-dependent).
 
         x = 5;                  // Непонятно.
     }
 };
 </code></pre>
 <p>Почему непонятно? Потому что мы можем создать специализацию <code>base</code>, у которой будет <code>x</code>, и будет корректно. А ещё этот <code>x</code> может быть глобальной переменной. Поэтому тут происходит что-то непонятное.., хотелось бы сказать, но нет.</p>
-<p>По стандарту <strong>компилятор ищет имя, игнорируя базовые классы</strong> (иначе он не мог бы откидывать любые неизвестные имена). Если хотим ссылаться на <code>x</code> из базового класса, нужно писать явно <code>base&lt;T&gt;::x</code> или <code>this-&gt;x</code>. Тогда он, очевидно, будет depended в обоих случаях.</p>
-<p><strong>В dependant-именах компилятор откладывает разбор на момент инстанцирования, даже если раньше очевидно, что есть ошибка</strong>:</p>
+<p>По стандарту <strong>компилятор ищет имя, игнорируя базовые классы</strong> (иначе он не мог бы откидывать любые неизвестные имена). Если хотим ссылаться на <code>x</code> из базового класса, нужно писать явно <code>base&lt;T&gt;::x</code> или <code>this-&gt;x</code>. Тогда он, очевидно, будет dependent в обоих случаях.</p>
+<p><strong>В dependent-именах компилятор откладывает разбор на момент инстанцирования, даже если раньше очевидно, что есть ошибка</strong>:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 struct derived : base&lt;T&gt; {
 	void* x;
@@ -453,7 +453,7 @@ struct derived : base&lt;T&gt; {
 };
 </code></pre>
 <h2><a class="header" href="#Как-это-устроено-внутри" id="Как-это-устроено-внутри">Как это устроено внутри?</a></h2>
-<p>На лекции очень много <a href="godbolt.org">godbolt</a>, поэтому посмотрите <a href="https://youtube.com/watch?v=DwDbH7pxzRA">запись</a> или сами покомпилируйте.</p>
+<p>На лекции очень много <a href="https://godbolt.org">godbolt</a>, поэтому посмотрите <a href="https://youtube.com/watch?v=DwDbH7pxzRA">запись</a> или сами покомпилируйте.</p>
 <p>Начнём с шаблонных функций:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 void swap(T&amp; a, T&amp; b) {
@@ -610,11 +610,11 @@ extern template void foo&lt;float&gt;(float);
 </code></pre>
 <p>&quot;Выдаём тело наружу и говорим, что уже проинстанцировано, <code>main</code> не будет пытаться инстанцировать функцию, так как увидит <code>extern</code> и будет работать соответствующе.&quot;</p>
 <h1><a class="header" href="#type-based-dispatch" id="type-based-dispatch">Type-based dispatch.</a></h1>
-<p>В языке существует и иногда необходимо узнавать какое-то свойство у типа. Если мы пишем обобщённое возведение в степень, нужно спрашивать, что считается единицей. Или есть мы пишем операции с числами, хочется взять максимум данного типа. Очень много из такого делает стандартная библиотека: например, есть <code>std::advance</code> — функция, которая делает итератору <code>+=</code>, даже если он так не умеет, а умеет только <code>++</code>. И тут мы либо делаем <code>+=</code>, либо <code>++</code> много раз, в зависимости от типа. Надо спросить, умеет ли итератор в <code>+=</code>.</p>
+<p>Иногда необходимо узнавать какое-то свойство у типа. Если мы пишем обобщённое возведение в степень, нужно спрашивать, что считается единицей. Или если мы пишем операции с числами, хочется взять максимум данного типа. Очень много из такого делает стандартная библиотека: например, есть <code>std::advance</code> — функция, которая делает итератору <code>+=</code>, даже если он так не умеет, а умеет только <code>++</code>. И тут мы либо делаем <code>+=</code>, либо <code>++</code> много раз, в зависимости от типа. Надо спросить, умеет ли итератор в <code>+=</code>.</p>
 <h2><a class="header" href="#numeric_limits" id="numeric_limits"><code>&lt;numeric_limits&gt;</code></a></h2>
-<p>Самые простые свойства типов — <code>std::numeric_limits</code>. Это шаблонный класс, в который вы даёте численный тип, а он содержит миллион статических полей, который для данного типа дают информацию о минимуме, максимуме или чём-то ещё.</p>
+<p>Самые простые свойства типов — <code>std::numeric_limits</code>. Это шаблонный класс, в который вы даёте численный тип, а он содержит миллион статических полей, которые для данного типа дают информацию о минимуме, максимуме или чём-то ещё.</p>
 <h2><a class="header" href="#type_traits" id="type_traits"><code>&lt;type_traits&gt;</code>.</a></h2>
-<p>Более сложные запросы к типу можно найти в заголовочном файле <code>&lt;type_traits&gt;</code>, где есть бесконечное количество шаблонных констант <code>is_trivially_destructible_v</code>, <code>is_empty_v</code>, и прочих других. Какие-то из встроены в компилятор, какие-то вы можете реализовать сами (<code>is_signed_v</code>, например, можете запросто). </p>
+<p>Более сложные запросы к типу можно найти в заголовочном файле <code>&lt;type_traits&gt;</code>, где есть бесконечное количество шаблонных констант: <code>is_trivially_destructible_v</code>, <code>is_empty_v</code>, и прочих других. Какие-то из встроены в компилятор, какие-то вы можете реализовать сами (<code>is_signed_v</code>, например, можете запросто). </p>
 <p>Как работают штуки из <code>type_traits</code>? И почему оканчиваются на <code>_v</code>? Дело в том, что до C++14 у вас не было шаблонных переменных (а по сути <code>is_empty_v</code> — шаблонная переменная и есть). Поэтому создали шаблонный класс <code>is_empty</code> со статическим полем <code>value</code>, в котором то, что вам нужно. А когда в С++14 такое появилось, вы смогли писать <code>is_empty_v</code>, и это уже реальная <code>bool</code>'евая константа, которую можно использовать.</p>
 <h2><a class="header" href="#Наивный-способ-делать-type-based-dispatch-if-constexpr" id="Наивный-способ-делать-type-based-dispatch-if-constexpr">Наивный способ делать type-based dispatch. <code>if constexpr</code>.</a></h2>
 <p>Пример использования <code>&lt;type_traits&gt;</code>: хотим мы вызвать деструкторы всех элементов на отрезке:</p>
@@ -745,7 +745,7 @@ void destroy(T* first, T* last) {
 </code></pre>
 <p>Такая техника называется <em>tag-dispatching</em>, и она, несомненно, работает. Но есть у неё крупная проблема: когда у нас функции были как перегрузки, мы могли свободно добавлять в список перегрузок новые классы с новыми свойствами. А когда мы делаем это <code>if</code>'ами (хоть <code>if constexpr</code>, хоть <code>std::conditional_t</code>), новые классы с новыми свойствами не добавить.</p>
 <h2><a class="header" href="#sfinae" id="sfinae">SFINAE.</a></h2>
-<p>Есть другой способ сделать похожее, основанный на поведении компилятора при выведении шаблона?</p>
+<p>Есть другой способ сделать похожее, основанный на поведении компилятора при выведении шаблона:</p>
 <pre><code class="language-c++">template &lt;typename C&gt;
 void foo(C&amp;, typename C::iterator); // 1.
 
@@ -761,7 +761,7 @@ int main() {
 }
 </code></pre>
 <p>С виду всё хорошо, но давайте разберём, как работает компилятор на таком коде. Сначала производится вывод параметра, а потом — подстановка. В коде выше он видит, что <code>v</code> - это <code>vector&amp;</code>, а параметр - <code>C&amp;</code>, поэтому <code>C</code> — это <code>vector</code>. Он как бы декомпозирует типы и запускается от частей, а когда доходит до шаблонных параметров, понимает, какой тип здесь имелся в виду.</p>
-<p>Из depended имён выводить не можем:</p>
+<p>Из dependent имён выводить не можем:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
 struct mytype {
   typedef T type;
@@ -838,7 +838,7 @@ int main() {
 }
 </code></pre>
 <h2><a class="header" href="#Пара-слов-о-концептах" id="Пара-слов-о-концептах">Пара слов о концептах.</a></h2>
-<p>SFINAE — это длинно и неудобно, как можно было заметить. И есть вам очень не нравится, в C++20 есть <a href="./28_concepts.html">концепты</a>. Пример выше с их использованием вообще пишется на ура:</p>
+<p>SFINAE — это длинно и неудобно, как можно было заметить. И если вам очень не нравится, в C++20 есть <a href="./28_concepts.html">концепты</a>. Пример выше с их использованием вообще пишется на ура:</p>
 <pre><code class="language-c++">#include &lt;iterator&gt;
 template &lt;class T&gt;
 struct vector {
