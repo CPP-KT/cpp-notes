@@ -1,5 +1,5 @@
 # Undefined behaviour.
-- [Запись лекции](https://www.youtube.com/watch?v=nGsD8guQ_dQ)
+- [Запись лекции](https://youtu.be/1t7C-b01Dk4?si=D8YhY5PZSEdD4gy9)
 ---
 
 Если просто дать определение этой штуки, возникнет вопрос, на кой она нужна. Поэтому начнём мы с истории из жизни компиляторов.

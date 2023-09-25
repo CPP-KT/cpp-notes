@@ -1,11 +1,7 @@
 # Классы, абстракция данных
 - [Пример к лекции](https://github.com/sorokin/cpp-course/blob/gh-pages/demos/string-demo/main.cpp)
-- [Запись лекции №1](https://www.youtube.com/watch?v=4LkTiNYQYBU)
-- [Запись лекции №2](https://www.youtube.com/watch?v=kjJ-1-VsNRo)
----
-- [Пример к лекции](https://github.com/sorokin/cpp-course/blob/gh-pages/demos/string-demo/main.cpp)
-- [Запись лекции №3](https://www.youtube.com/watch?v=nI6NEPYPRXU)
-- [Запись лекции №4](https://www.youtube.com/watch?v=8JAp3tG6IrA)
+- [Запись лекции №1](https://youtu.be/_QxXyYqlUYs?si=C6O4nQwNOVPfKnFj)
+- [Запись лекции №2](https://youtu.be/ODv4Dot6rjY?si=OaEVJlNYBAONBc-X)
 ---
 
 ## Методы.

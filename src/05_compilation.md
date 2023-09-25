@@ -1,8 +1,9 @@
 # Процесс компиляции программ
-- [Запись лекции №1](https://www.youtube.com/watch?v=Fm-EmbQVrLE)
-- [Запись лекции №2](https://www.youtube.com/watch?v=w0G66pR3JuY)
-- [Запись лекции №3](https://www.youtube.com/watch?v=gsFYkmckcZs)
-- [Практика](https://www.youtube.com/watch?v=jZAWVxcHLKA)
+- [Запись лекции №1](https://youtu.be/GmlZPz8qJ8A?si=gLY1lWXdnwNynTqs)
+- [Запись лекции №2](https://youtu.be/mHRdkFu8MAE?si=lkSV5DbgtQ3DVUS8)
+- [Практика (Артем Котон)](https://youtu.be/QXh7dci_w_M?si=oTbsTgu0NxuA4GCc)
+- [Практика (Лев Довжик)](https://youtu.be/Uag-f4b4M14?si=v6ri8RkcvCGTdsFA)
+
 ---
 Зачем нам нужно это изучать? 
 - У студентов часто возникают с этим проблемы — когда компилятор пишет ошибку, а человек не понимает, что ему говорят.

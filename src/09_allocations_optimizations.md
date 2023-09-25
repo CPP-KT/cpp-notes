@@ -1,6 +1,6 @@
 # Механизмы ОС для аллокации памяти, аллокаторы памяти, small-object и copy-on-write оптимизации.
-- [Запись лекции №1](https://www.youtube.com/watch?v=oDPaXS9tKlw)
-- [Запись лекции №2](https://www.youtube.com/watch?v=i8uYAe0E4PU)
+- [Запись лекции №1](https://youtu.be/dI9ARGPc8B0?si=q_ACqU9b9lxZGngG)
+- [Практика (Егор Макаревич)](https://youtu.be/bczbJxcoty0?si=Lsk8SADJutawSnd2)
 ---
 — *Первую часть лекции лучше смотреть запись, так как там много профилирования и я не хочу вставлять это в конспект*\
 — Я хочу. И вставлю в отдельный файл.

@@ -1,8 +1,8 @@
 # Более точная (и оптимизированная) модель работы процессора.
 
 - [Слайды с лекции](slides/lecture-3.pdf)
-- [Запись лекции №1](https://www.youtube.com/watch?v=6vlNFxpSENs)
-- [Запись лекции №2](https://www.youtube.com/watch?v=DddjrdCrCF8)
+- [Запись лекции №1](https://youtu.be/_IN8qnFsFC4?si=0hrETYT65M_f-m0E&t=14709)
+- [Запись лекции №2](https://youtu.be/alfvWVwG8S4?si=8TcexJC2_JPInAYZ)
 ---
 > Optimize for data first, then code. Memory access is probably going to be your biggest bottleneck.
 ---

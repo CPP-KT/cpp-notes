@@ -1,6 +1,8 @@
 # Исключения, гарантии безопасности исключений, RAII
-- [Запись лекции №1](https://www.youtube.com/watch?v=R0tVZ1px5-Q)
-- [Запись лекции №2](https://www.youtube.com/watch?v=8PpW8qS2tEg)
+- [Запись лекции №1](https://youtu.be/ODv4Dot6rjY?si=s8zbeCHrllu5RmJ5&t=2306)
+- [Запись лекции №2](https://youtu.be/51O61jw7hDA?si=SVOdFN1vXUrOuDc1)
+- [Практика (Артем Котон)](https://youtu.be/VZBkKK82OlY?si=ZhWgRl0IiE6dw2tY)
+
 ---
 Как можно возвращать ошибку? Можно это делать с помощью error-кодов (так делали в C):
 ```c++

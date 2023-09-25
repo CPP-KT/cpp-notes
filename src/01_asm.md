@@ -1,8 +1,9 @@
 # Введение в ассемблер
 - [Слайды с лекции №1](slides/lecture-1j.pdf)
 - [Слайды с лекции №2](slides/lecture-2d.pdf)
-- [Запись лекции №1](https://www.youtube.com/watch?v=bTgtesThdSg)
-- [Запись лекции №2](https://www.youtube.com/watch?v=XY8xN1Ug1_k)
+- [Запись лекции №1](https://www.youtube.com/watch?v=IRYtjTU1Q1E&list=PLEqBXmHRUSc0yuPnpqcGsJCtm8JgaVcNS&index=1&ab_channel=IvanSorokin)
+- [Запись лекции №2](https://www.youtube.com/watch?v=GKRv9MOtZew&list=PLEqBXmHRUSc0yuPnpqcGsJCtm8JgaVcNS&index=2&ab_channel=IvanSorokin)
+- [Запись лекции №3](https://www.youtube.com/watch?v=d8dk0aopsOo&list=PLEqBXmHRUSc0yuPnpqcGsJCtm8JgaVcNS&index=3&ab_channel=IvanSorokin)
 ---
 ## Мотивация.
 На кой мы изучаем ассемблер и работу процессора в курсе по C++? А вот тому есть сразу несколько причин:

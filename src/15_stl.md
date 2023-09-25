@@ -1,5 +1,5 @@
-# Обзор STL.
-- [Запись лекции](https://www.youtube.com/watch?v=RidP1GbfFEA)
+# Обзор STL, итераторы.
+- [Запись лекции](https://youtu.be/RI-BJMPb2zI?si=ohZPZc13g8t3OV9C)
 
 ---
 Стандартные sequence containers:

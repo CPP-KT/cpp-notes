@@ -1,8 +1,8 @@
 # Шаблоны.
-- [Запись лекции №1](https://www.youtube.com/watch?v=AXl4_eZ1eis)
-- [Запись лекции №2](https://www.youtube.com/watch?v=DwDbH7pxzRA)
+- [Запись лекции №1](https://youtu.be/iXy_AJkQNB0?si=4prmuS27-fIpQnUh)
+- [Запись лекции №2](https://youtu.be/tXOVN3GWRXU?si=kp5wWyCVFJqcTrvl)
+- [Запись лекции №3](https://youtu.be/RI-BJMPb2zI?si=HonnsSFKv4opZQCq&t=8200)
 - [Практика](https://www.youtube.com/watch?v=CY7vxMSBork)
-- [Запись ещё одной лекции](https://www.youtube.com/watch?v=HQdf43h3B2o)
 ---
 
 ## Мотивация.
