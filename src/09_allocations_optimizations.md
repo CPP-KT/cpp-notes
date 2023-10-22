@@ -40,9 +40,9 @@ struct buffer {
 }
 
 static buffer* allocate_buffer(size_t capacity) {
-	return reinterpret_cast<buffer*>(
+	return static_cast<buffer*>(
 		operator new(
-			sizeof(buffer) + (capacity + 1) * sizeof(char)
+			sizeof(buffer) + capacity * sizeof(char)
 		)
 	);
 }
