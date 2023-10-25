@@ -126,14 +126,12 @@ using reference =	Reference;
 - `!=`
 - `*it` - получаем rvalue
 - `it -> x` - получаем rvalue
-- `it++`
 - `++it`
 - `*it++`
 
 А **output** итераторы — такие:
 - `*it =`
 - `++it`
-- `it++`
 - `*it++ =`
 
 Примеры таких итераторов — `std::istream_iterator` и `std::ostream_iterator` (**input** и **output** итераторы соответственно).
