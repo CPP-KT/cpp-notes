@@ -90,7 +90,21 @@ Cто́ит ли давать программу с `assert`'ами пользо
 
 ### Static_assert
 
-Еще есть static_assert, который используется для выполнения проверок во время компиляции. Если статическое утверждение не выполняется, то программа просто не компилируется. 
+Еще есть static_assert, который используется для выполнения проверок во время компиляции. Если static_assert не выполняется, то программа просто не компилируется. 
+
+```c++
+	template <typename T, size_t Size> 
+	class noEmptyContainer {
+		static_assert(Size > 0);
+		T data_[Size];
+	}
+    
+	int main() {
+		noEmptyContainer<int, 3> a1; // ок
+		noEmptyContainer<int, 0> a2; // ошибка компиляции 
+	}
+```
+
 
 ### Wide/narrow контракты
 
