@@ -88,21 +88,29 @@ int main() {
 
 Cто́ит ли давать программу с `assert`'ами пользователю? Если вы задались этим вопросом, скорее всего у вас недостаточно `assert`'ов в программе, ведь когда их достаточно, программа замедляется раза в 2.
 
-### Static_assert
+### `Static asserts`
 
-Еще есть static_assert, который используется для выполнения проверок во время компиляции. Если static_assert не выполняется, то программа просто не компилируется. 
+Еще есть `static_assert`, который используется для выполнения проверок во время компиляции. Если условие внутри `static_assert` не выполняется, то программа просто не компилируется. 
 
 ```c++
-	template <typename T, size_t Size> 
-	class noEmptyContainer {
-		static_assert(Size > 0);
-		T data_[Size];
-	}
+#include <cstdio>
+
+template <typename T, size_t Size>
+class NonEmptyContainer {
+    static_assert(Size > 0, "Size is 0");
+    T data_[Size];
+};
+
+int main() {
+   
+    NonEmptyContainer<int, 3> a1; // ок
+    static_assert(sizeof(a1) == sizeof(int) * 3); // ок
     
-	int main() {
-		noEmptyContainer<int, 3> a1; // ок
-		noEmptyContainer<int, 0> a2; // ошибка компиляции 
-	}
+    NonEmptyContainer<long long, 10> a2; // ок
+    static_assert(sizeof(a2) == sizeof(long long) * 10);// ок
+    
+    NonEmptyContainer<int, 0> a2; // ошибка компиляции
+}
 ```
 
 

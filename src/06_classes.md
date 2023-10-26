@@ -644,76 +644,73 @@ free(p);
 ```
 
 ### Идиома PImpl
-Представим, что у нас есть большой проект/библиотека и мы хотим как-то изменить заголовочный файл. Тогда надо перекомпилировать все файлы, которые зависят от него (его в том числе). А это будет занимать много времени, ведь даже при небольших изменениях приходится ждать, пока все перекомпилируется. Одним из решений этой проблемы стало использование идиомы PImpl. Ее идея в том, чтобы перенести приватные поля в отдельный класс и обращаться к ним через указатель. 
+Представим, что у нас есть большой проект/библиотека и мы хотим как-то изменить заголовочный файл. Тогда надо перекомпилировать все файлы, которые зависят от него. А это будет занимать много времени, ведь даже при небольших изменениях приходится ждать, пока всё перекомпилируется. Идиома PImpl – идиома, которая позволяет отделить интерфейс класса от его реализации. Её идея в том, чтобы перенести приватные поля в отдельный класс и обращаться к ним через указатель. 
 Пример: 
 
 ```c++
 // container.h
-
-class Container {
+struct Container {
 public:
     Container(size_t size);
-    Container(const Container& other);
-    
+    Container(const Container &other);
+
     ~Container();
-    
+
     size_t size();
+
 private:
-    class Impl;
-	std::unique_ptr<Impl> pimpl;
+    struct Impl;
+    std::unique_ptr<Impl> pimpl;
 };
 
-// impl.cpp 
-
+// container.cpp 
 struct Container::Impl {
-    Impl(size_t size) : size(size) {};
-    ~Impl();
+    Impl(size_t size) : size(size){}
     size_t size;
 };
 
 Container::Container(size_t size) : pimpl(new Impl(size)) {}
 Container::~Container() = default;
-Container::Container(const Container& other) : pimpl(new Impl(*other.pimpl)) {}
+Container::Container(const Container &other) : pimpl(new Impl(*other.pimpl)) {}
 size_t Container::size() {
     return pimpl->size;
 }
-```
 
-Теперь все изменения будут вноситься в impl.cpp и пользователю не надо перекомпилировать файлы.  
-Рассмотрим еще такой пример: 
+```
+Теперь все изменения будут вноситься в `container.cpp`, и пользователю не надо перекомпилировать другие единицы трансляции &mdash; только перелинковаться.
+
+Мы вынесли деструктор. А что будет, если так не сделать ?
+Рассмотрим такой пример: 
 
 ```c++ 
 // a.h
-struct mytype {
-    struct impl;
-private :
-    std::unique_ptr<impl> pimpl;
+struct Mytype {
+private:
+	struct Impl;
+    std::unique_ptr<Impl> pimpl;
 };
 
 //a.cpp
 #include a.h
-struct mytype::impl {
+struct Mytype::Impl {
     int foo;
     int bar;
 };
 
-
 // main.cpp
 int main() {
-    mytype x;
+    Mytype x;
 }
 ```
-У нас не будет компилироваться main. Ошибка в том, что unique_ptr пытается delet'ить incomplete тип. А значит ошибка в implicit member в a.h, а это связано с деструктором ~mytype(). Если мы объявим деструктор в a.cpp, то все скомпилируется, потому что так структура mytype станет complete. 
+У нас не будет компилироваться `main`. Ошибка в том, что `unique_ptr` пытается delet'ить incomplete тип. А значит ошибка в implicit member в `a.h`, а это связано с деструктором `~mytype()`. Если мы объявим деструктор в `a.cpp`, то все скомпилируется, потому что так структура `mytype` станет complete. 
 
 ```c++
 //a.cpp
 #include a.h
-struct mytype::impl {
+struct Mytype::Impl {
     int foo;
     int bar;
 };
-mytype::mytype() {}
-mytype::~mytype() {}
+mytype::Mytype() {}
+mytype::~Mytype() {}
 ```
-Зачем мы перетянули сюда еще и конструктор ? Это связано с тем, как генерится дефолтный конструтор. Нам кажется, что он пустой, но на самом деле такой конструтор вызывает конструктор member'ов.  
-
