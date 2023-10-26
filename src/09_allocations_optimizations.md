@@ -42,12 +42,14 @@ struct buffer {
 static buffer* allocate_buffer(size_t capacity) {
 	return static_cast<buffer*>(
 		operator new(
-			sizeof(buffer) + capacity * sizeof(char)
+			sizeof(buffer) + (capacity + 1) * sizeof(char)
 		)
 	);
 }
 ```
 Тут можно заметить такую штуку как `char chars[]`. Это нестандартное расширение [flexible array member](https://youtube.com/watch?v=IAdLwUXRUvg&t=898s). Вместо него при большом желании можно просто указатель использовать, но FAM экономит нам одну индирекцию.
+
+В вышеприведённом коде `sizeof(char)` умножается на `capacity + 1`, а не просто на `capacity`, так как для строк `capacity` часто хранится без учёта нуль-терминатора.
 
 Во всех методах класса нужно обработать счетчик ссылок (опустим этот момент) и функцию `unshare`:
 ```c++
