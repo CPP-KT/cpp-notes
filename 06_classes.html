@@ -711,6 +711,46 @@ delete[] p;
 p-&gt;~person();
 free(p);
 </code></pre>
+<h3><a class="header" href="#Идиома-pimpl" id="Идиома-pimpl">Идиома PImpl</a></h3>
+<p>Представим, что у нас есть большой проект/библиотека и мы хотим как-то изменить заголовочный файл. Тогда надо перекомпилировать все файлы, которые зависят от него. А это будет занимать много времени, ведь даже при небольших изменениях приходится ждать, пока всё перекомпилируется.
+На помощь приходит идиома PImpl, которая позволяет отделить интерфейс класса от его реализации. Её идея в том, чтобы перенести приватные поля в отдельный класс и обращаться к ним через указатель.
+Пример: </p>
+<pre><code class="language-c++">// container.h
+struct Container {
+public:
+    Container(size_t size);
+    Container(const Container &amp;other);
+
+    ~Container();
+
+    size_t size();
+
+private:
+    struct Impl;
+    std::unique_ptr&lt;Impl&gt; pimpl;
+};
+
+// container.cpp 
+struct Container::Impl {
+    Impl(size_t size) : size(size){}
+    size_t size;
+};
+
+Container::Container(size_t size) : pimpl(new Impl(size)) {}
+Container::~Container() = default;
+Container::Container(const Container &amp;other) : pimpl(new Impl(*other.pimpl)) {}
+size_t Container::size() {
+    return pimpl-&gt;size;
+}
+
+//main.cpp 
+int main() {
+    Container c;
+}
+</code></pre>
+<p>Теперь все изменения будут вноситься в <code>container.cpp</code> и пользователю не надо перекомпилировать другие единицы трансляции — только перелинковаться.</p>
+<p>Мы вынесли деструктор. А что будет, если так не сделать?
+Будет ошибка компиляции в <code>main.cpp</code>. При генерации дефолтного деструктора <code>Container</code> будет инстанцироваться деструктор <code>unique_ptr&lt;Impl&gt;</code>, который в свою очередь вызывает деструктор <code>Impl</code>, но <code>Impl</code> в этот момент incomplete, а значит непонятно, какой код генерировать в деструкторе <code>unique_ptr&lt;Impl&gt;</code>.</p>
 
                     </main>
 

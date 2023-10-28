@@ -2143,6 +2143,46 @@ delete[] p;
 p-&gt;~person();
 free(p);
 </code></pre>
+<h3><a class="header" href="#Идиома-pimpl" id="Идиома-pimpl">Идиома PImpl</a></h3>
+<p>Представим, что у нас есть большой проект/библиотека и мы хотим как-то изменить заголовочный файл. Тогда надо перекомпилировать все файлы, которые зависят от него. А это будет занимать много времени, ведь даже при небольших изменениях приходится ждать, пока всё перекомпилируется.
+На помощь приходит идиома PImpl, которая позволяет отделить интерфейс класса от его реализации. Её идея в том, чтобы перенести приватные поля в отдельный класс и обращаться к ним через указатель.
+Пример: </p>
+<pre><code class="language-c++">// container.h
+struct Container {
+public:
+    Container(size_t size);
+    Container(const Container &amp;other);
+
+    ~Container();
+
+    size_t size();
+
+private:
+    struct Impl;
+    std::unique_ptr&lt;Impl&gt; pimpl;
+};
+
+// container.cpp 
+struct Container::Impl {
+    Impl(size_t size) : size(size){}
+    size_t size;
+};
+
+Container::Container(size_t size) : pimpl(new Impl(size)) {}
+Container::~Container() = default;
+Container::Container(const Container &amp;other) : pimpl(new Impl(*other.pimpl)) {}
+size_t Container::size() {
+    return pimpl-&gt;size;
+}
+
+//main.cpp 
+int main() {
+    Container c;
+}
+</code></pre>
+<p>Теперь все изменения будут вноситься в <code>container.cpp</code> и пользователю не надо перекомпилировать другие единицы трансляции — только перелинковаться.</p>
+<p>Мы вынесли деструктор. А что будет, если так не сделать?
+Будет ошибка компиляции в <code>main.cpp</code>. При генерации дефолтного деструктора <code>Container</code> будет инстанцироваться деструктор <code>unique_ptr&lt;Impl&gt;</code>, который в свою очередь вызывает деструктор <code>Impl</code>, но <code>Impl</code> в этот момент incomplete, а значит непонятно, какой код генерировать в деструкторе <code>unique_ptr&lt;Impl&gt;</code>.</p>
 <h1><a class="header" href="#Дисклеймер" id="Дисклеймер">Дисклеймер.</a></h1>
 <p>Год от года темы этого раздела тасуются как попало. Я попытался их разбить логически (так, чтобы всё, имеющее отношение к виртуальным функциям, не было разделено на части, например), так что не удивляйтесь, если в вашем курсе темы будут в другом порядке разложены.</p>
 <h1><a class="header" href="#Наследование-и-виртуальные-функции" id="Наследование-и-виртуальные-функции">Наследование и виртуальные функции</a></h1>
@@ -3603,6 +3643,27 @@ int main() {
 <p>Тут ещё хуже — когда вы отключите <code>assert</code>'ы, они отключатся полностью, и <code>fclose</code> не выполнится.</p>
 <p>То, <strong>во что раскрывается <code>assert</code>, зависит от макроса <code>NDEBUG</code></strong>. Если он задан, то <code>assert</code>'ы исчезают. Поэтому, <strong>если вам нужно написать проверку чего-то сложного (скажем, вы хотите проверить, что значение, посчитанное разными способами, одинаковое), то напишите <code>#ifndef NDEBUG</code> и ехайте проверять всё, что вашей душе угодно</strong>.</p>
 <p>Cто́ит ли давать программу с <code>assert</code>'ами пользователю? Если вы задались этим вопросом, скорее всего у вас недостаточно <code>assert</code>'ов в программе, ведь когда их достаточно, программа замедляется раза в 2.</p>
+<h3><a class="header" href="#static-asserts" id="static-asserts">Static asserts</a></h3>
+<p>Еще есть <code>static_assert</code>, который используется для выполнения проверок во время компиляции. Если условие внутри <code>static_assert</code> не выполняется, то программа просто не компилируется. </p>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+
+template &lt;typename T, size_t Size&gt;
+class NonEmptyContainer {
+    static_assert(Size &gt; 0, &quot;Size is 0&quot;);
+    T data_[Size];
+};
+
+int main() {
+   
+    NonEmptyContainer&lt;int, 3&gt; a1; // ок
+    static_assert(sizeof(a1) == sizeof(int) * 3); // ок
+    
+    NonEmptyContainer&lt;long long, 10&gt; a2; // ок
+    static_assert(sizeof(a2) == sizeof(long long) * 10); // ок
+    
+    NonEmptyContainer&lt;int, 0&gt; a2; // ошибка компиляции
+}
+</code></pre>
 <h3><a class="header" href="#widenarrow-контракты" id="widenarrow-контракты">Wide/narrow контракты</a></h3>
 <p>Функции могут иметь широкий (wide) или узкий (narrow) контракт. Если поведение функции определено для любых входных данных, то считается, что у неё <strong>широкий</strong> контракт. Если у функции существуют входные данные, приводящие к UB, то её контракт <strong>узкий</strong>.</p>
 <p>Рассмотрим, к примеру, две функции класса <code>std::vector</code> — <code>operator[](size_t pos)</code> и <code>at(size_z pos)</code>. Обе функции возвращают <code>pos</code>-тый элемент вектора. При этом, у квадратных скобок будет узкий контракт — корректность индекса не проверяется, и вызов <code>a[a.size() + 10]</code> приведёт к UB. Если же <code>at(size_t pos)</code> подать некорректный индекс, то она бросит исключение. Для любого входа поведение определено, значит её контракт широкий.</p>

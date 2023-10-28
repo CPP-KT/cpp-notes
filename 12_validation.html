@@ -231,6 +231,27 @@ int main() {
 <p>Тут ещё хуже — когда вы отключите <code>assert</code>'ы, они отключатся полностью, и <code>fclose</code> не выполнится.</p>
 <p>То, <strong>во что раскрывается <code>assert</code>, зависит от макроса <code>NDEBUG</code></strong>. Если он задан, то <code>assert</code>'ы исчезают. Поэтому, <strong>если вам нужно написать проверку чего-то сложного (скажем, вы хотите проверить, что значение, посчитанное разными способами, одинаковое), то напишите <code>#ifndef NDEBUG</code> и ехайте проверять всё, что вашей душе угодно</strong>.</p>
 <p>Cто́ит ли давать программу с <code>assert</code>'ами пользователю? Если вы задались этим вопросом, скорее всего у вас недостаточно <code>assert</code>'ов в программе, ведь когда их достаточно, программа замедляется раза в 2.</p>
+<h3><a class="header" href="#static-asserts" id="static-asserts">Static asserts</a></h3>
+<p>Еще есть <code>static_assert</code>, который используется для выполнения проверок во время компиляции. Если условие внутри <code>static_assert</code> не выполняется, то программа просто не компилируется. </p>
+<pre><code class="language-c++">#include &lt;cstdio&gt;
+
+template &lt;typename T, size_t Size&gt;
+class NonEmptyContainer {
+    static_assert(Size &gt; 0, &quot;Size is 0&quot;);
+    T data_[Size];
+};
+
+int main() {
+   
+    NonEmptyContainer&lt;int, 3&gt; a1; // ок
+    static_assert(sizeof(a1) == sizeof(int) * 3); // ок
+    
+    NonEmptyContainer&lt;long long, 10&gt; a2; // ок
+    static_assert(sizeof(a2) == sizeof(long long) * 10); // ок
+    
+    NonEmptyContainer&lt;int, 0&gt; a2; // ошибка компиляции
+}
+</code></pre>
 <h3><a class="header" href="#widenarrow-контракты" id="widenarrow-контракты">Wide/narrow контракты</a></h3>
 <p>Функции могут иметь широкий (wide) или узкий (narrow) контракт. Если поведение функции определено для любых входных данных, то считается, что у неё <strong>широкий</strong> контракт. Если у функции существуют входные данные, приводящие к UB, то её контракт <strong>узкий</strong>.</p>
 <p>Рассмотрим, к примеру, две функции класса <code>std::vector</code> — <code>operator[](size_t pos)</code> и <code>at(size_z pos)</code>. Обе функции возвращают <code>pos</code>-тый элемент вектора. При этом, у квадратных скобок будет узкий контракт — корректность индекса не проверяется, и вызов <code>a[a.size() + 10]</code> приведёт к UB. Если же <code>at(size_t pos)</code> подать некорректный индекс, то она бросит исключение. Для любого входа поведение определено, значит её контракт широкий.</p>
