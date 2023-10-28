@@ -190,7 +190,7 @@
 }
 
 static buffer* allocate_buffer(size_t capacity) {
-	return reinterpret_cast&lt;buffer*&gt;(
+	return static_cast&lt;buffer*&gt;(
 		operator new(
 			sizeof(buffer) + (capacity + 1) * sizeof(char)
 		)
@@ -198,6 +198,7 @@ static buffer* allocate_buffer(size_t capacity) {
 }
 </code></pre>
 <p>Тут можно заметить такую штуку как <code>char chars[]</code>. Это нестандартное расширение <a href="https://youtube.com/watch?v=IAdLwUXRUvg&amp;t=898s">flexible array member</a>. Вместо него при большом желании можно просто указатель использовать, но FAM экономит нам одну индирекцию.</p>
+<p>В вышеприведённом коде <code>sizeof(char)</code> умножается на <code>capacity + 1</code>, а не просто на <code>capacity</code>, так как для строк <code>capacity</code> часто хранится без учёта нуль-терминатора.</p>
 <p>Во всех методах класса нужно обработать счетчик ссылок (опустим этот момент) и функцию <code>unshare</code>:</p>
 <pre><code class="language-c++">void my_string::unshare() {
 	buffer* new_data = allocate_buffer(size_ + 1);

@@ -255,26 +255,65 @@ using pointer = Pointer;
 using reference =	Reference;
 </code></pre>
 <p>Каждый контейнер предоставляет операции <code>begin(), end()</code>, где <code>begin()</code> ссылается на первый элемент, а <code>end()</code> на следующий за последним.</p>
-<p>Все итераторы поддерживают такие операции (итераторы, поддерживающие только такое, называются <em>forward</em>):</p>
+<p>Все итераторы делятся на 5 категорий:</p>
 <ul>
-<li><code>*it</code> - обратиться к текущему элементу</li>
-<li><code>++it</code> - перейти к следующему элементу</li>
-<li><code>!=</code></li>
-<li><code>==</code></li>
+<li><strong>input iterator</strong></li>
+<li><strong>output iterator</strong></li>
+<li><strong>forward iterator</strong></li>
+<li><strong>biderectional iterator</strong></li>
+<li><strong>random access iterator</strong></li>
 </ul>
-<p>Есть более слабые итераторы <em>input</em> и <em>output</em>, которые поддерживают такие же операции,
-но позволяют пройти по диапазону только один раз (например, поток ввода/вывода).</p>
-<p>Для некоторых контейнеров поддерживают <code>--it</code>, такие итераторы называются <em>bidirectional</em>. Такие итераторы, например, требует <em>std::reverse</em>.</p>
-<p>А в векторе, например, итераторы поддерживают ещё и следующие операции (такие итераторы называются <em>random access</em>):</p>
+<p>Рассмотрим каждую из этих категорий.</p>
+<p><strong>Forward</strong> итератор поддерживает такие операции:</p>
+<ul>
+<li><code>==</code></li>
+<li><code>!=</code></li>
+<li><code>*it</code></li>
+<li><code>it-&gt;x</code></li>
+<li><code>++it</code></li>
+<li><code>it++</code></li>
+<li><code>*it =</code></li>
+</ul>
+<p>Такие итераторы используются, к примеру, в <code>std::forward_list</code> и алгоритме <code>partition</code>.</p>
+<p><strong>Input</strong> и <strong>output</strong> итераторы, в отличие от <strong>forward</strong> итераторов, позволяют пройти по диапазону только один раз. При инкременте <strong>input</strong> и <strong>output</strong> итераторов все их копии инвалидируются.</p>
+<p>При <strong>инвалидации</strong> число операций, которые можно делать с итератором, ограничивается до минимума: его можно разрушить или присвоить ему другой итератор. К примеру, в <code>std::vector</code>'е после удаления некого элемента происходит инвалидация итераторов, указывающих на него или на любой элемент после него, а после добавления элемента, в случае, когда <code>size == capacity</code>, инвалидируются все итераторы.</p>
+<p><strong>Input</strong> итераторы позволяют читать данные, а <strong>output</strong> итераторы — записывать.</p>
+<p><strong>Input</strong> итераторы поддерживают такие операции:</p>
+<ul>
+<li><code>==</code></li>
+<li><code>!=</code></li>
+<li><code>*it</code> - получаем rvalue</li>
+<li><code>it-&gt;x</code> - получаем rvalue</li>
+<li><code>++it</code></li>
+<li><code>*it++</code></li>
+</ul>
+<p>А <strong>output</strong> итераторы — такие:</p>
+<ul>
+<li><code>*it =</code></li>
+<li><code>++it</code></li>
+<li><code>*it++ =</code></li>
+</ul>
+<p>Примеры таких итераторов — <code>std::istream_iterator</code> и <code>std::ostream_iterator</code> (<strong>input</strong> и <strong>output</strong> итераторы соответственно).</p>
+<p><strong>Bidirectional</strong> итераторы поддерживают те же операции, что и <strong>forward</strong> итераторы, но с помощью них также можно ходить по диапазону в обратном направлении, то есть они поддерживают декремент:</p>
+<ul>
+<li><code>--it</code></li>
+<li><code>it--</code></li>
+<li><code>*it--</code></li>
+</ul>
+<p>Такие итераторы, например, требует <code>std::reverse</code>.</p>
+<p><strong>Random access</strong> — самая мощная категория итераторов. Ко всем предыдущим поддерживающимся в итераторах операциям добавляются:</p>
 <ul>
 <li><code>it += n</code></li>
 <li><code>it -= n</code></li>
 <li><code>it + n</code></li>
 <li><code>n + it</code></li>
 <li><code>it - n</code></li>
-<li><code>it - it2</code></li>
+<li><code>it1 - it2</code></li>
+<li><code>it[n]</code></li>
 <li><code>&lt;, &gt;, &lt;=, &gt;=</code></li>
 </ul>
+<p><strong>Random access</strong> итераторы свойственны таким контейнерам, как <code>std::vector</code>, <code>std::array</code>. Указатели также являются <strong>random access</strong> итераторами (на самом деле даже <strong>contigious</strong>, описанными ниже). <strong>Random access</strong> итераторы требуются для функций, где необходимо уметь прыгать через n элементов: <em>сортировки, k-я порядковая статистика, бинарный поиск</em> и т.д.</p>
+<p>В C++20 появились <strong>contiguous</strong> итераторы. Они поддерживают все операции, поддерживаемые <strong>random access</strong> итераторами, и при этом гарантируют, что элементы хранятся в памяти последовательно.</p>
 <p>Все контейнеры, поддерживающие итераторы, позволяют обходить их от <code>begin()</code> до <code>end()</code>, но не во все можно вставить элемент в произвольное место.
 Это возможно, например, в векторе или листе, но в упорядоченных контейнерах должны сохраняться инварианты.</p>
 <p><strong>Про эффективность алгоритмов:</strong>
@@ -290,11 +329,14 @@ using reference =	Reference;
 Алгоритмы из STL чаще всего принимают пару итераторов (обычно начало и конец). Такие операции работают на <code>[first, last)</code>.
 То есть если передать <code>begin()</code> и <code>end()</code>, то алгоритм будет работать со всем контейнером целиком.</p>
 <p>Один из способов смотреть на итераторы - это думать, что они ссылаются на элементы. Другой - считать, что они ссылаются &quot;между&quot; элементами.
-Если смотреть на одни функции, то может казаться естественным первый способ, а для каких-то второй. Например, для реверс-итераторов логичнее второе представление.</p>
-<p>Тогда итератору <code>rbegin()</code> соответствует <code>end()</code>, а <code>rend()</code> это <code>begin()</code>. Реверс-итераторы позволяют пройти контейнер в обратную сторону.
-<code>.base()</code> по итератору выдает соответствующий ему реверс-итератор. Важно понимать, что <code>.base()</code> ссылается не на тот же элемент, а на соседний.
+Если смотреть на одни функции, то может казаться естественным первый способ, а для каких-то второй. Например, для ревёрс-итераторов логичнее второе представление.</p>
+<p>Ревёрс-итераторы позволяют пройти контейнер в обратную сторону. Итератору <code>rbegin()</code> соответствует <code>end()</code>, а <code>rend()</code> это <code>begin()</code>. 
+<code>.base()</code> по итератору выдает соответствующий ему ревёрс-итератор. Важно понимать, что <code>.base()</code> ссылается не на тот же элемент, а на соседний.
 <code>rbegin().base == end()</code>.</p>
 <p><img src="./images/reverse_iterators.png" alt="reverse iterators" /></p>
+<p>Теперь давайте посмотрим на ревёрс-итераторы, считая, что они ссылаются &quot;между&quot; элементами:</p>
+<p><img src="./images/reverse_iterators_vision.png" alt="reverse iterators vision" /></p>
+<p>В таком случае наглядно видно соотвествие <code>rbegin()</code> и <code>end()</code>, <code>rend()</code> и <code>begin()</code>.</p>
 <p><strong>Про бинарный поиск</strong> (далее итераторы ссылаются между элементами):</p>
 <p><code>lower_bound</code> и <code>upper_bound</code>, если элемент не существуют, возвращают, куда этот элемент можно вставить, не нарушив последовательности.
 Если же элемент находится, то <code>lower_bound</code> возвращает первую позицию, куда можно вставить, не нарушив порядок, а <code>upper_bound</code> - последнюю.</p>
