@@ -642,3 +642,48 @@ person* p = new person("Ivan", "Sorokin");
 p->~person();
 free(p);
 ```
+
+### Идиома PImpl
+Представим, что у нас есть большой проект/библиотека и мы хотим как-то изменить заголовочный файл. Тогда надо перекомпилировать все файлы, которые зависят от него. А это будет занимать много времени, ведь даже при небольших изменениях приходится ждать, пока всё перекомпилируется.
+На помощь приходит идиома PImpl, которая позволяет отделить интерфейс класса от его реализации. Её идея в том, чтобы перенести приватные поля в отдельный класс и обращаться к ним через указатель.
+Пример: 
+
+```c++
+// container.h
+struct Container {
+public:
+    Container(size_t size);
+    Container(const Container &other);
+
+    ~Container();
+
+    size_t size();
+
+private:
+    struct Impl;
+    std::unique_ptr<Impl> pimpl;
+};
+
+// container.cpp 
+struct Container::Impl {
+    Impl(size_t size) : size(size){}
+    size_t size;
+};
+
+Container::Container(size_t size) : pimpl(new Impl(size)) {}
+Container::~Container() = default;
+Container::Container(const Container &other) : pimpl(new Impl(*other.pimpl)) {}
+size_t Container::size() {
+    return pimpl->size;
+}
+
+//main.cpp 
+int main() {
+    Container c;
+}
+```
+
+Теперь все изменения будут вноситься в `container.cpp` и пользователю не надо перекомпилировать другие единицы трансляции &mdash; только перелинковаться.
+
+Мы вынесли деструктор. А что будет, если так не сделать?
+Будет ошибка компиляции в `main.cpp`. При генерации дефолтного деструктора `Container` будет инстанцироваться деструктор `unique_ptr<Impl>`, который в свою очередь вызывает деструктор `Impl`, но `Impl` в этот момент incomplete, а значит непонятно, какой код генерировать в деструкторе `unique_ptr<Impl>`.
