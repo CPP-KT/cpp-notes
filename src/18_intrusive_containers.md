@@ -1,6 +1,6 @@
 # Интрузивные контейнеры 
 
-В лекции часто упоминается статья ["Avoiding game crashes related to linked lists"](https://www.codeofhonor.com/blog/avoiding-game-crashes-related-to-linked-lists) про то, как в Starcarft применяли интрузивные списки, и статья [Intrusive linked lists in practice](https://www.data-structures-in-practice.com/intrusive-linked-lists/)
+В лекции часто упоминается статья ["Avoiding game crashes related to linked lists"](https://www.codeofhonor.com/blog/avoiding-game-crashes-related-to-linked-lists) про то, как в StarCraft применяли интрузивные списки, и статья [Intrusive linked lists in practice](https://www.data-structures-in-practice.com/intrusive-linked-lists/)
 - [Слайды с лекции](slides/intrusive.pdf)
 - [Запись лекции №1](https://www.youtube.com/watch?v=Kf7qkcaWetc)
 - [Разбор практики по intrusive_list](https://www.youtube.com/watch?v=fwPUzKDsQTA)
@@ -127,7 +127,7 @@ struct unit : list_element<all_units_tag>, list_element<selected_units_tag> {};
 
 В [proposal](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0406r1.html) в стандартную библиотеку использовался именно такой приём.
 
-Замечание: не обязательно типы тегов должны быть полными. Кроме того, их можно объявить прямо в объявлении `unit`.
+Замечание: необязательно типы тегов должны быть полными. Кроме того, их можно объявить прямо в объявлении `unit`.
 
 ```c++
 struct unit : list_element<struct all_units_tag>, list_element<struct selected_units_tag> {};

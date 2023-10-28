@@ -206,7 +206,7 @@ using reference =	Reference;
 
 ![reverse iterators vision](./images/reverse_iterators_vision.png)
 
-В таком случае наглядно видно соотвествие `rbegin()` и `end()`, `rend()` и `begin()`.
+В таком случае наглядно видно соответствие `rbegin()` и `end()`, `rend()` и `begin()`.
 
 **Про бинарный поиск** (далее итераторы ссылаются между элементами):
 
@@ -242,7 +242,5 @@ ptrdiff_t distance(RandomAccessIterator first, RandomAccessIterator last) {
 	return last - first;
 }
 ```
-Как проверить в первой реализации, что `last > first` и что они вообще из ондого контейнера? ~А никак~
+Как проверить в первой реализации, что `last > first` и что они вообще из одного контейнера? ~А никак~
 Обычно можно включить макрос, который включает проверки в контейнерах (например, ключ компиляции `-D_GLIBCXX_DEBUG`, здесь `-D` означает задефайнить макрос).
-
-
