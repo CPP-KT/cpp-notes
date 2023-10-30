@@ -160,7 +160,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#Интрузивные-контейнеры" id="Интрузивные-контейнеры">Интрузивные контейнеры</a></h1>
-<p>В лекции часто упоминается статья <a href="https://www.codeofhonor.com/blog/avoiding-game-crashes-related-to-linked-lists">&quot;Avoiding game crashes related to linked lists&quot;</a> про то, как в Starcarft применяли интрузивные списки, и статья <a href="https://www.data-structures-in-practice.com/intrusive-linked-lists/">Intrusive linked lists in practice</a></p>
+<p>В лекции часто упоминается статья <a href="https://www.codeofhonor.com/blog/avoiding-game-crashes-related-to-linked-lists">&quot;Avoiding game crashes related to linked lists&quot;</a> про то, как в StarCraft применяли интрузивные списки, и статья <a href="https://www.data-structures-in-practice.com/intrusive-linked-lists/">Intrusive linked lists in practice</a></p>
 <ul>
 <li><a href="slides/intrusive.pdf">Слайды с лекции</a></li>
 <li><a href="https://www.youtube.com/watch?v=Kf7qkcaWetc">Запись лекции №1</a></li>
@@ -252,7 +252,7 @@ struct selected_units_tag {};
 struct unit : list_element&lt;all_units_tag&gt;, list_element&lt;selected_units_tag&gt; {};
 </code></pre>
 <p>В <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0406r1.html">proposal</a> в стандартную библиотеку использовался именно такой приём.</p>
-<p>Замечание: не обязательно типы тегов должны быть полными. Кроме того, их можно объявить прямо в объявлении <code>unit</code>.</p>
+<p>Замечание: необязательно типы тегов должны быть полными. Кроме того, их можно объявить прямо в объявлении <code>unit</code>.</p>
 <pre><code class="language-c++">struct unit : list_element&lt;struct all_units_tag&gt;, list_element&lt;struct selected_units_tag&gt; {};
 </code></pre>
 <p>Реализация intrusive контейнеров есть в <a href="https://www.boost.org/doc/libs/1_71_0/doc/html/intrusive.html">библиотеке Boost</a>. Для контейнеров из буста можно задать разное поведение <code>list_element</code> при разрушении <code>unit</code>:</p>

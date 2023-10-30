@@ -175,7 +175,7 @@ int f() {
 int a = 42; // инициализируется в момент компиляции
 int b = f(); // инициализируется
 </code></pre>
-<p>Переменные <code>a</code> и <code>b</code> устроены по разному: <code>a</code> инициализируется на этапе компиляции, а под <code>b</code> просто резевируются 4 байта, а её инициализация происходит в момент старта программы.  Говорят, что переменная <code>a</code> инициализируется <em>статически</em>, a <code>b</code> - динамически.</p>
+<p>Переменные <code>a</code> и <code>b</code> устроены по разному: <code>a</code> инициализируется на этапе компиляции, а под <code>b</code> просто резервируются 4 байта, а её инициализация происходит в момент старта программы.  Говорят, что переменная <code>a</code> инициализируется <em>статически</em>, a <code>b</code> - динамически.</p>
 <p>Динамическая инициализация глобальных переменных происходит в момент запуска программы до входа в функцию <code>main</code>, соответственно, разрушаются они после выхода из <code>main</code>.</p>
 <p>Есть несколько причин, почему динамическая инициализация может быть нежелательна:</p>
 <ul>
@@ -244,8 +244,8 @@ struct variant {
 }
 </code></pre>
 <h2><a class="header" href="#if-constexpr" id="if-constexpr">if constexpr</a></h2>
-<p>Расмотрим реализацию <a href="https://github.com/sorokin/function">function</a>, которую мы делали на практике.</p>
-<p>В его имплементации использовался класс <code>type_descriptor</code> со SFINAE. Нам повезло, что критерий для объекта был только один (<code>fits_small_storage</code>), но если бы их было несколько, то это выглядело бы сильно хуже. Но даже в нашем случае это выглядит громоздко, например, мы  заводим функцию <code>initialize_storage</code>, которая используется только один раз.</p>
+<p>Рассмотрим реализацию <a href="https://github.com/sorokin/function">function</a>, которую мы делали на практике.</p>
+<p>В его имплементации использовался класс <code>type_descriptor</code> со SFINAE. Нам повезло, что критерий для объекта был только один (<code>fits_small_storage</code>), но если бы их было несколько, то это выглядело бы сильно хуже. Но даже в нашем случае это выглядит громоздко, например, мы заводим функцию <code>initialize_storage</code>, которая используется только один раз.</p>
 <p>Мы могли бы сделать это через <code>if</code>, но так получится не всегда:</p>
 <pre><code class="language-c++">struct mytype1 {
     static constexpr bool has_foo = true;
@@ -312,7 +312,7 @@ constexpr type_descriptor&lt;R, Args...&gt; compute_type_descriptor() {
 template &lt;template typename T, typename R, typename... Args&gt; 
 inline constexpr type_descriptor&lt;R, Args...&gt; type_descr_instance = compute_type_descriptor&lt;T, R, Args...&gt;(); 
 </code></pre>
-<p><em>inline нужен для того, чтобы во всех единицах трансляции эта глобальная переменная была общей, потому что по умолчанию у глобальных константных переменных внутренняя линковка</em></p>
+<p><em><code>inline</code> нужен для того, чтобы во всех единицах трансляции эта глобальная переменная была общей, потому что по умолчанию у глобальных константных переменных внутренняя линковка</em></p>
 <p>Тогда внутри <code>compute_type_descriptor</code> может быть следующая конструкция:</p>
 <pre><code class="language-c++">template &lt;typename T, typename R, typename... Args&gt;
 constexpr type_descriptor&lt;R, Args...&gt; compute_type_descriptor() {

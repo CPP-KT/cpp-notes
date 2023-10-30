@@ -366,7 +366,7 @@ std::shared_ptr&lt;T&gt; p2(p);
 <p>Такой код некорректен, так как у <code>p1</code> и <code>p2</code> разные счётчики ссылок, поэтому объект <code>*p</code> удалится дважды. Такая ситуация называется разделением (<em>split</em>) счётчика ссылок. Разделение счётчика ссылок - ошибка, поэтому в корректных программах оно возникать не должно.</p>
 <p>Чтобы не происходило разделение счётчика ссылок, не нужно оборачивать один сырой указатель в <code>shared_ptr</code> дважды. Использование <code>std::make_shared</code> или использование <code>std::enable_shared_from_this</code> также позволяет избежать разделения счётчика ссылок.</p>
 <h3><a class="header" href="#Настраиваемый-deleter-1" id="Настраиваемый-deleter-1">Настраиваемый deleter</a></h3>
-<p>Если в <code>shared_ptr</code>, например, похранить массив (или любой объект, созданный не с помощью <code>new</code>), то, по аналогии с <code>unique_ptr</code>, нам нужен <code>deleter</code>. Он может храниться, например, в памяти рядом с счётчиком ссылок.</p>
+<p>Если в <code>shared_ptr</code>, например, похранить массив (или любой объект, созданный не с помощью <code>new</code>), то, по аналогии с <code>unique_ptr</code>, нам нужен <code>deleter</code>. Он может храниться, например, в памяти рядом со счётчиком ссылок.</p>
 <p><img src="images/09.17_shared_ptr.png" alt="shared_ptr" /></p>
 <h3><a class="header" href="#aliasing-constructor" id="aliasing-constructor">Aliasing constructor</a></h3>
 <p>Иногда возникает желание ссылаться с помощью <code>shared_ptr</code> на объект и его мемберов.</p>
@@ -384,7 +384,7 @@ struct vehicle {
 std::shared_ptr&lt;vehicle&gt; v(new vehicle);
 std::shared_ptr&lt;wheel&gt; w(v, &amp;v-&gt;wheels[2]);
 </code></pre>
-<p>В таком случае оба указателя отвечают за удаление объекта <code>vehicle</code> (в зависимости от того, какой из указатель раньше будет разрушен), поэтому <code>deleter</code> у них общий, кроме того в управляющем блоке хранится <code>ptr</code> на исходный объект, чтобы передать его в <code>deleter</code>.</p>
+<p>В таком случае оба указателя отвечают за удаление объекта <code>vehicle</code> (в зависимости от того, какой из указателей раньше будет разрушен), поэтому <code>deleter</code> у них общий, кроме того в управляющем блоке хранится <code>ptr</code> на исходный объект, чтобы передать его в <code>deleter</code>.</p>
 <p><img src="images/09.17_aliasing.png" alt="shared_ptr" /></p>
 <p>Одно из применений такого конструктора - указатели в дереве. Пока будет существовать хотя бы один указатель на элемент дерева, всё дерево будет продолжать существовать.</p>
 <h3><a class="header" href="#stdmake_shared" id="stdmake_shared">std::make_shared</a></h3>
@@ -429,7 +429,7 @@ shared_ptr&lt;T&gt; make_shared(Args&amp;&amp;... args);
 </code></pre>
 <p>Реализация <code>enable_shared_from_this</code> хранит внутри <code>weak_ptr</code>, от которого создаётся <code>shared_ptr</code> при вызове <code>shared_from_this()</code>.</p>
 <p>Конструктор <code>shared_ptr(T*)</code> использует SFINAE-проверки для определения наследования от <code>enable_shared_from_this</code>, поэтому наследоваться нужно публично.</p>
-<p><code>shared_from_this()</code> можно вызывать только от previously shared объектов, поэтому нельзя вызывать её внутри конструктора и деструктора. Конструктор обычного <code>shared_ptr</code> для объектов, которые наследуются от <code>enable_shared_from_this</code>, &quot;включает&quot; возможность создавать shared_from_this. При вызове <code>std::shared_ptr(U*)</code> для указателя на тип U, у которого есть unambiguos and accessible базовый класс, который является специализацией <code>std::enable_shared_from_this</code>, выполняется следующее:</p>
+<p><code>shared_from_this()</code> можно вызывать только от previously shared объектов, поэтому нельзя вызывать её внутри конструктора и деструктора. Конструктор обычного <code>shared_ptr</code> для объектов, которые наследуются от <code>enable_shared_from_this</code>, &quot;включает&quot; возможность создавать shared_from_this. При вызове <code>std::shared_ptr(U*)</code> для указателя на тип U, у которого есть unambiguous and accessible базовый класс, который является специализацией <code>std::enable_shared_from_this</code>, выполняется следующее:</p>
 <pre><code class="language-c++">if (ptr != nullptr &amp;&amp; ptr-&gt;weak_this.expired())
   ptr-&gt;weak_this = std::shared_ptr&lt;std::remove_cv_t&lt;U&gt;&gt;(*this,
                                   const_cast&lt;std::remove_cv_t&lt;U&gt;*&gt;(ptr));

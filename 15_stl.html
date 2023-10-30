@@ -336,7 +336,7 @@ using reference =	Reference;
 <p><img src="./images/reverse_iterators.png" alt="reverse iterators" /></p>
 <p>Теперь давайте посмотрим на ревёрс-итераторы, считая, что они ссылаются &quot;между&quot; элементами:</p>
 <p><img src="./images/reverse_iterators_vision.png" alt="reverse iterators vision" /></p>
-<p>В таком случае наглядно видно соотвествие <code>rbegin()</code> и <code>end()</code>, <code>rend()</code> и <code>begin()</code>.</p>
+<p>В таком случае наглядно видно соответствие <code>rbegin()</code> и <code>end()</code>, <code>rend()</code> и <code>begin()</code>.</p>
 <p><strong>Про бинарный поиск</strong> (далее итераторы ссылаются между элементами):</p>
 <p><code>lower_bound</code> и <code>upper_bound</code>, если элемент не существуют, возвращают, куда этот элемент можно вставить, не нарушив последовательности.
 Если же элемент находится, то <code>lower_bound</code> возвращает первую позицию, куда можно вставить, не нарушив порядок, а <code>upper_bound</code> - последнюю.</p>
@@ -364,7 +364,7 @@ ptrdiff_t distance(RandomAccessIterator first, RandomAccessIterator last) {
 	return last - first;
 }
 </code></pre>
-<p>Как проверить в первой реализации, что <code>last &gt; first</code> и что они вообще из ондого контейнера? ~А никак~
+<p>Как проверить в первой реализации, что <code>last &gt; first</code> и что они вообще из одного контейнера? ~А никак~
 Обычно можно включить макрос, который включает проверки в контейнерах (например, ключ компиляции <code>-D_GLIBCXX_DEBUG</code>, здесь <code>-D</code> означает задефайнить макрос).</p>
 
                     </main>
