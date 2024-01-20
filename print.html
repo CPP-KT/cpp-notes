@@ -799,7 +799,7 @@ int64_t			uint64_t
 </tbody></table>
 <p>Разделение на мантиссу и экспоненту фиксировано в стандарте <a href="https://standards.ieee.org/standard/754-2019.html">IEEE-754</a></p>
 <p>Подробнее о них (про денормализованные числа, NaN, $\pm\infty$, отрицательный 0 и подобное) можно почитать на <a href="https://neerc.ifmo.ru/wiki/index.php?title=%D0%9F%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B5%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%87%D0%B8%D1%81%D0%B5%D0%BB">викиконспектах</a> или узнать в <a href="https://www.overleaf.com/read/hcmjjqmhwqzx">курсе архитектуры ЭВМ</a>.</p>
-<p>Стоит заметить, что из-за особенностей чисел с плавающей точкой (обычно из-за NaN'ов, бесконечностей и нулей разного знака) операции вида <code>0 * a</code> и <code>a - a</code> не могут быть заменены заменяются при компиляции на <code>0</code> (о части из них также можно почитать <a href="https://www.overleaf.com/read/hcmjjqmhwqzx">в приложенной ссылке на конспект по АрхЭВМ</a>). Но можно прописать <a href="http://gcc.gnu.org/wiki/FloatingPointMath">флаги компилятора, игнорирующие NaN и $\infty$</a> и тогда арифметические действия будут быстрее (но не будут соответствовать стандарту IEEE-754). Одним из примеров невозможности оптимизации является <code>if (a == a)</code>, что вернёт <code>false</code>, если <code>a</code> является NaN'ом:</p>
+<p>Стоит заметить, что из-за особенностей чисел с плавающей точкой (обычно из-за NaN'ов, бесконечностей и нулей разного знака) операции вида <code>0 * a</code> и <code>a - a</code> не могут быть заменены при компиляции на <code>0</code> (о части из них также можно почитать <a href="https://www.overleaf.com/read/hcmjjqmhwqzx">в приложенной ссылке на конспект по АрхЭВМ</a>). Но можно прописать <a href="http://gcc.gnu.org/wiki/FloatingPointMath">флаги компилятора, игнорирующие NaN и $\infty$</a> и тогда арифметические действия будут быстрее (но не будут соответствовать стандарту IEEE-754). Одним из примеров невозможности оптимизации является <code>if (a == a)</code>, что вернёт <code>false</code>, если <code>a</code> является NaN'ом:</p>
 <blockquote>
 <p><a href="https://www.itu.dk/%7Esestoft/bachelor/IEEE754_article.pdf">David Golberg, What Every Computer Scientist Should Know About Floating-Point Arithmetic</a></p>
 <p><a href="http://notabs.org/fpuaccuracy/">Intel overstates FPU accuracy</a></p>
@@ -2411,7 +2411,7 @@ int main() {
 	virtual ~vehicle() {}
 };
 </code></pre>
-<p>С точки зрения языка, <strong>вы не имеете права делать <code>delete</code> у базового класса, есть создали наследуемый и не пометили деструктор базового как <code>virtual</code></strong>. Если будете так делать — UB. <a href="07_inheritance.html#%D0%BC%D0%BD%D0%BE%D0%B6%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5-%D0%BD%D0%B0%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"><strong>Даже если все деструкторы тривиальные.</strong></a></p>
+<p>С точки зрения языка, <strong>вы не имеете права делать <code>delete</code> у базового класса, если создали наследуемый и не пометили деструктор базового как <code>virtual</code></strong>. Если будете так делать — UB. <a href="07_inheritance.html#%D0%BC%D0%BD%D0%BE%D0%B6%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B5-%D0%BD%D0%B0%D1%81%D0%BB%D0%B5%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5"><strong>Даже если все деструкторы тривиальные.</strong></a></p>
 <h3><a class="header" href="#Виртуальные-функции-и-параметры-по-умолчанию" id="Виртуальные-функции-и-параметры-по-умолчанию">Виртуальные функции и параметры по умолчанию.</a></h3>
 <p><strong>Параметры по умолчанию являются частью декларации, поэтому соответствуют статическому типу</strong>, даже если указать другие в наследнике:</p>
 <pre><code class="language-c++">#include &lt;string&gt;
@@ -4009,7 +4009,7 @@ set&lt;int&gt; a; // `C` = `default_comparer`.
 </li>
 <li><code>int b(a)</code>.
 <ul>
-<li>Определение переменный <code>b</code> типа <code>int</code> с конструктором от <code>a</code>.</li>
+<li>Определение переменной <code>b</code> типа <code>int</code> с конструктором от <code>a</code>.</li>
 <li>Объявление функции <code>b</code>, которая принимает тип <code>a</code> и возвращает <code>int</code>.</li>
 </ul>
 </li>
@@ -4757,7 +4757,7 @@ void test() {
 }
 
 int main() {
-	using ns:foo; // Можно делать декларацию всего, кроме других пространств имён.
+	using ns::foo; // Можно делать декларацию всего, кроме других пространств имён.
 
 	foo();
 }
@@ -5038,8 +5038,8 @@ int main() {
 <h2><a class="header" href="#Ещё-немного-про-static" id="Ещё-немного-про-static">Ещё немного про <code>static</code>.</a></h2>
 <pre><code class="language-c++">static void foo();     // Локальный для единицы трансляции, обсуждали.
 struct foo {
-	static void bar(); // Нет параметра `*this`, можно вызывать `foo:bar()`.
-	static int a;      // Как глобальная переменная, но с именем `foo:a`, хранится не в каждом экземпляре типа.
+	static void bar(); // Нет параметра `*this`, можно вызывать `foo::bar()`.
+	static int a;      // Как глобальная переменная, но с именем `foo::a`, хранится не в каждом экземпляре типа.
 };
 int foo() {
 	static int x = 0; // Создаётся при первом заходе в функцию, живёт до конца программы
@@ -7376,7 +7376,7 @@ void transfer(size_t to, size_t from, int amount) {
 }
 </code></pre>
 <p>Если функция <code>transfer</code> вызывается из нескольких потоков, то это считается UB. Может возникнуть следующая проблема: если вызывается <code>transfer(1, 2, 100)</code> из двух разных потоков, а <code>accounts[2] == 101</code>, то может возникнуть так, что они оба сначала проверят, что на счету достаточно денег, а потом вычтут по 100. Кроме того, нет никакой гарантии, что операция <code>-=</code> транслируется не в одну инструкцию, а в несколько, что тоже может вызвать проблему. В общем случае, такую проблему называют <em>race condition</em> (состояние гонки). </p>
-<p>Нам может помочь примитив синхронизации под названием <em>mutex</em> (от слов <em>mutual exclusion</em> - взаимное исключение). В стандартной библиотеке это класс <code>std::mutex</code> с двумя операциями: <code>lock</code> и <code>unlock</code>. У него может быть два состояния - разблокирован (по умолчанию при создании) и разблокирован. Вызов <code>lock</code> ждёт, пока <code>mutex</code> будет разблокирован, а потом блокирует его. Метод <code>unlock</code>, очевидно, разблокирует <code>mutex</code>. </p>
+<p>Нам может помочь примитив синхронизации под названием <em>mutex</em> (от слов <em>mutual exclusion</em> - взаимное исключение). В стандартной библиотеке это класс <code>std::mutex</code> с двумя операциями: <code>lock</code> и <code>unlock</code>. У него может быть два состояния - разблокирован (по умолчанию при создании) и заблокирован. Вызов <code>lock</code> ждёт, пока <code>mutex</code> будет разблокирован, а потом блокирует его. Метод <code>unlock</code>, очевидно, разблокирует <code>mutex</code>. </p>
 <pre><code class="language-c++">std::mutex m;
 std::array&lt;int, 1000&gt; accounts;
 
