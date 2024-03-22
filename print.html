@@ -7533,7 +7533,7 @@ void transfer(size_t to, size_t from, int amount) {
     int32_t old = accounts[from].load();
     do {
         if (old &lt; amount) {
-            throw std::runtime_error(&quot;insufficient funds&quot;)
+            throw std::runtime_error(&quot;insufficient funds&quot;);
         }
     } while (!accounts[from].compare_exchange_weak(old, old - amount));
     accounts[to].fetch_add(amount);
