@@ -18,6 +18,9 @@
 
 - [Презентация про ассемблер (введение)](slides/lecture-1j.pdf)
 - [Презентация про ассемблер (работа со стеком)](slides/lecture-2d.pdf)
+- [Презентация про введение в C++](slides/introduction-c-5.pdf)
+- [Презентация про линковку](slides/compilation-process-5.pdf)
+- [Презентация про классы](slides/classes-3.pdf)
 - [Презентация про процессор и оптимизации](slides/modern-15.pdf)
 - [Презентация про интрузивный список](slides/intrusive.pdf)
 - [Презентация про shared_ptr](slides/shared_ptr.pdf)
