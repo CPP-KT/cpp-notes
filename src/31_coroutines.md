@@ -192,7 +192,7 @@ struct task {
     struct promise_type {
         // Четыре обязательные функции:
         task get_return_object() noexcept {
-            return task{std::coroutine_handle<promise_type>::from_promise(*this);
+            return task{std::coroutine_handle<promise_type>::from_promise(*this)};
         }
 
         std::suspend_always initial_suspend() noexcept{
@@ -203,7 +203,7 @@ struct task {
             return std::suspend_always{};
         }
 
-        void unhandeled_exception() noexcept {}
+        void unhandled_exception() noexcept {}
     };
 
     std::coroutine_handle<promise_type> handle;
