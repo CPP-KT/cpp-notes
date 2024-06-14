@@ -90,7 +90,7 @@ g++ four.cpp -lsum -L. -Wl,-rpath=<путь_до_библиотеки> -o four
 
 Впрочем, есть ещё и третий путь — использовать CMake, который будет делать всю грязную работу за вас, если написать ему команду `add_library`.
 
-Полезная статья про динамические библиотеки — [How to write shared libraries, Ulrich Drepper](https://software.intel.com/sites/default/files/m/a/1/e/dsohowto.pdf).
+Полезная статья про динамические библиотеки — [How to write shared libraries, Ulrich Drepper](https://www.akkadia.org/drepper/dsohowto.pdf).
 
 Кстати, в Windows это работает иначе. В-нулевых, динамическая библиотека там называется не *shared object*, а *dynamic load library*. Во-первых, **DLL-ки сразу же ищутся в текущем каталоге**. Во-вторых, чтобы понять, что вы ссылаетесь на динамическую библиотеку, в Linux вы пишете *-L. -lsum*, а в Windows компиляция DLL создаёт вам специальный *.lib*-файл, который называется *import-библиотекой*, и с которым вы компилируете вашу программу, чтобы она сама поняла, откуда какие функции брать.
 
