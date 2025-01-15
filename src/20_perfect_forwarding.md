@@ -124,7 +124,7 @@ T&& forward(typename type_identity<T>::type& obj) {
 }
 ```
 
-Теперь T не будет выводиться, потому что тип это [nested-name-specifier](https://en.cppreference.com/w/cpp/language/template_argument_deduction#:~:text=nested%2Dname%2Dspecifier), то есть не указать T явно при вызове - ошибка компиляции. В STL вместо `type_identity` используется `remove_reference`. Так же есть перегрузка для rvalue (`T&&`), которая полезна, например, для форварда значения, возвращаемого функцией.
+Теперь `T` не будет выводиться, потому что тип это [nested-name-specifier](https://en.cppreference.com/w/cpp/language/template_argument_deduction#:~:text=nested%2Dname%2Dspecifier), то есть не указать T явно при вызове &mdash; ошибка компиляции. В STL вместо `type_identity` используется `remove_reference`. Также есть перегрузка для rvalue (`T&&`), которая полезна, например, для форварда значения, возвращаемого функцией.
 
 ## Variadic templates
 
