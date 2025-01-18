@@ -258,7 +258,7 @@ T&amp;&amp; forward(typename type_identity&lt;T&gt;::type&amp; obj) {
     return static_cast&lt;T&amp;&amp;&gt;(obj);
 }
 </code></pre>
-<p>В STL вместо <code>type_identity</code> используется <code>remove_reference</code>. Так же есть перегрузка для rvalue (<code>T&amp;&amp;</code>), которая полезна, например, для форварда значения, возвращаемого функцией.</p>
+<p>Теперь <code>T</code> не будет выводиться, потому что тип это <a href="https://en.cppreference.com/w/cpp/language/template_argument_deduction#:%7E:text=nested%2Dname%2Dspecifier">nested-name-specifier</a>, то есть не указать <code>T</code> явно при вызове — ошибка компиляции. В STL вместо <code>type_identity</code> используется <code>remove_reference</code>. Также есть перегрузка для rvalue (<code>T&amp;&amp;</code>), которая полезна, например, для форварда значения, возвращаемого функцией.</p>
 <h2><a class="header" href="#variadic-templates" id="variadic-templates">Variadic templates</a></h2>
 <p>Осталось понять, как делать функцию, принимающую произвольное число шаблонных параметров. Для этого в C++ сделали специальный синтаксис variadic шаблонов:</p>
 <pre><code class="language-c++">template &lt;typename... T&gt;
