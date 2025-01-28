@@ -169,7 +169,7 @@ auto f(bool flag) { // COMPILE ERROR
 ```c++
 struct nullptr_t {
     template <typename T>
-    opeartor T*() const {
+    operator T*() const {
         return 0;
     }
 }
