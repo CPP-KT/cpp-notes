@@ -296,12 +296,25 @@ int main() {
 
 Немного best practices о том, как надо делать `swap`:
 ```c++
+namespace my_lib {
+	struct big_integer {};
+	void swap(big_integer&, big_integer&) {// ... //}
+}
+
 template <class T>
 void foo(T a, T b) {
 	// ...
 	using std::swap;
 	swap(a, b);
 	// ...
+}
+
+int main() {
+	my_lib::big_integer a1, b1;
+	foo(a1, b1); // выбирается my_lib::swap
+
+	int a2, b2;
+	foo(a2, b2); // выбирается std::swap
 }
 ```
 Теперь у нас получается шаблонный `std::swap` и, возможно, есть не-шаблонный ADL.
