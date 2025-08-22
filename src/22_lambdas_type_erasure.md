@@ -25,9 +25,9 @@ struct less {
 // можно сделать класс со static-функцией, но это не даёт выигрыша
 // так как ABI устроен так, что пустые структуры можно не копировать
 
-int foo (vector& v) {
-    std::sort(v.begin(), v.end(), less<int>());
-    std::sort(v.begin(), v.end(), &int_less);
+void foo (vector& v) {
+    std::sort(v.begin(), v.end(), less<int>()); // 1.
+    std::sort(v.begin(), v.end(), &int_less); // 2.
 }
 ```
 
