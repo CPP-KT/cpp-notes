@@ -274,9 +274,9 @@ void write(T0 const& arg0, Ts const& ...args) {
 
 ## Fold Expressions
 
-В **C++17** появилась фича **Fold Expressions**, позволяющая сделать свёртку по элементам пака.
+В **C++17** появилась фича **Fold Expressions**, позволяющая сделать свёртку по элементам пака относительно бинарного оператора.
 
-Мотивирующий пример: попробуем научиться проверять, есть ли тип (T) в паке. Так как пак в C++ имеет вид lazy массива (То есть мы имеем право получить только Head и Tail), очевидна следующая реализация:
+Мотивирующий пример: попробуем научиться проверять, есть ли тип (T) в паке. Так как пак в C++ имеет вид lazy array (То есть мы имеем право получить только Head и Tail), очевидна следующая реализация:
 
 ```c++
 template <typename Type, typename... Pack>
@@ -284,18 +284,18 @@ struct have_type;
 
 template <typename Type, typename Head, typename... Tail>
 struct have_type<Type, Head, Tail...> {
-    static constexpr bool value == std::is_same_v<Type, Head> ||
+    static constexpr bool value = std::is_same_v<Type, Head> ||
          have_type<Type, Tail...>::value;
 //       ^^^^^^^^^^^^^^^^^^^^^^^^ инстанс нового шаблона
 };
 
 template <typename Type, typename Head>
 struct have_type<Type, Head> {
-    static constexpr bool value == std::is_same_v<Type, Head>;
+    static constexpr bool value = std::is_same_v<Type, Head>;
 };
 ```
 
-Чем плоха такая реализация? Предположим в паке N элементов, тогда компилятор будет проводит N инстансов шаблона `have_type`. Как можно это пофиксить? Вспомним, что `...` ставится там, где перечисляются элементы. В `fold expressions` это и используется. Тогда прошлый пример будет выглядеть так:
+Чем плоха такая реализация? Предположим в паке N элементов, тогда компилятор будет проводить N инстансов шаблона `have_type`. Как можно это пофиксить? Вспомним, что `...` ставится там, где перечисляются элементы. В Fold expressions это и используется. Тогда предыдущий пример можно переписать так:
 
 ```c++
 template <typename Type, typename... Pack>
@@ -303,11 +303,13 @@ struct have_type;
 
 template <typename Type, typename... Types>
 struct have_type<Type, Types...> {
-    static constexpr bool value == std::is_same_v<Type, Types> || ...;
+    static constexpr bool value = std::is_same_v<Type, Types> || ...;
 };
 ```
 
-Здесь мы как бы раскрываем пак с операцией и проводим свёртку в какой-то init. Подробнее про 'fold expressions' на [cppreference](https://en.cppreference.com/w/cpp/language/fold.html). 
+Чем это хорошо? 
+- Нет рекурсии.
+- Быстрее compile time, потому что меньше инстансов и у компилятора есть возможность делать оптимизации.
+- Легче читается и меньше кода.
 
-Чем это хорошо? `Fold expressions` выигрывает у использования lazy массивов ассимптотически относительно инстанса шаблонов (Для N типов в паке происходит log(N) инстансов вместо N), поэтому там, где можно её заюзать, лучше это сделать.
-
+Подробнее про Fold expressions на [cppreference](https://en.cppreference.com/w/cpp/language/fold.html). 
