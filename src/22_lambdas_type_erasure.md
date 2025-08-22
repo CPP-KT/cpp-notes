@@ -25,9 +25,9 @@ struct less {
 // можно сделать класс со static-функцией, но это не даёт выигрыша
 // так как ABI устроен так, что пустые структуры можно не копировать
 
-int foo (vector& v) {
-    std::sort(v.begin(), v.end(), less<int>());
-    std::sort(v.begin(), v.end(), &int_less);
+void foo (vector& v) {
+    std::sort(v.begin(), v.end(), less<int>()); // 1.
+    std::sort(v.begin(), v.end(), &int_less); // 2.
 }
 ```
 
@@ -375,7 +375,7 @@ auto bind(F f, Args... args) {
 }
 ```
 
-На смом деле, там [немного сложнее](https://en.cppreference.com/w/cpp/utility/functional/bind): можно закреплять конкретные аргументы, а остальные принимать при вызове.
+На самом деле, там [немного сложнее](https://en.cppreference.com/w/cpp/utility/functional/bind): можно закреплять конкретные аргументы, а остальные принимать при вызове.
 
 ### Рекурсивный вызов лямбд
 
