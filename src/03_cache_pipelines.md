@@ -154,7 +154,7 @@ void count_huffman_weights(char const* src, size_t size)
 
 ![Dependencies](./images/02.29_dependencies.png)
 
-Чтобы это пофиксить, можем сделать 8 разных массивов-счетчиков. Такая реализация используется в библиотеке *Zstandart*:
+Чтобы это пофиксить, можем сделать 8 разных массивов-счетчиков. Такая реализация [используется](https://github.com/facebook/zstd/blob/v1.5.7/lib/compress/hist.c#L76) в библиотеке *Zstd*:
 
 ```c++
 void count_huffman_weights_improved(char const* src, size_t size)
