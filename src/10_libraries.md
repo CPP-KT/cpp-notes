@@ -24,7 +24,7 @@ int main(){
 }
 ```
 ```c++
-// five
+// five.cpp
 #include <iostream>
 
 int sum(int a, int b);

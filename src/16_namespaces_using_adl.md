@@ -298,7 +298,7 @@ int main() {
 ```c++
 namespace my_lib {
 	struct big_integer {};
-	void swap(big_integer&, big_integer&) {// ... //}
+	void swap(big_integer&, big_integer&) {/* ... */}
 }
 
 template <class T>
