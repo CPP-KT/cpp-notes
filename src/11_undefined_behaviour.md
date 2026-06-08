@@ -17,7 +17,7 @@ void sum(float* res, float const* in, size_t n) {
 Научным языком ситуация с двумя ссылками на одно место называется *aliasing*.\
 Ещё один пример на ту же тему:
 ```c++
-void memcopy(char* dst, char const* src, size_t count) {
+void memcopy(char* dst, char const* src, size_t n) {
     for (size_t i = 0; i < n; i++)
         dst[i] = src[i];
 }

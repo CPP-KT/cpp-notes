@@ -118,7 +118,7 @@ struct vector<U*> {
 
 ### Выбор специализации.
 ```c++
-template <typename A, template B>
+template <typename A, typename B>
 struct my_type {};         // 1
 template <typename A>
 struct my_type<A, int> {}; // 2
@@ -544,7 +544,7 @@ extern template void foo<float>(float);
 template <class T>
 void destroy(T* first, T* last) {
 	if (!std::is_trivially_destructible_v<T>)
-		for (T* p = first, p != last; p++)
+		for (T* p = first; p != last; p++)
 			p->~T();
 }
 ```

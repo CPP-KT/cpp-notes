@@ -679,7 +679,7 @@ size_t Container::size() {
 
 //main.cpp 
 int main() {
-    Container c;
+    Container c(42);
 }
 ```
 
