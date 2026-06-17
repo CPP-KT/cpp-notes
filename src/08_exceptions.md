@@ -254,7 +254,7 @@ public:
 	T* operator->() {
 		return ptr;
 	}
-	T& get() {
+	T* get() {
 		return *ptr;
 	}
 
@@ -301,7 +301,7 @@ public:
 	void flush() {
 		int result = close(fd);
 		if (result != 0)
-			throw std::runtime_exception("File closing failed.");
+			throw std::runtime_error("File closing failed.");
 		fd = -1;
 	}
 
@@ -323,7 +323,7 @@ struct string {
 	// ...
 	string& operator=(const string& other) & {
 		if (this == &other)
-			return;
+			return *this;
 
 		operator delete(data);
 

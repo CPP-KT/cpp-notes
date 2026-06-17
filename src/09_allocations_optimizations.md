@@ -37,7 +37,7 @@
 struct buffer {
 	size_t ref_counter;
 	char chars[];
-}
+};
 
 static buffer* allocate_buffer(size_t capacity) {
 	return static_cast<buffer*>(

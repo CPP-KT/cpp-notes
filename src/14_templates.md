@@ -141,7 +141,7 @@ template <typename U>
 struct bar<U*> {}; // Указатель на что-то.
 
 template <typename R, typename A, typename B>
-struct my_type<R (*)(A, B)> {}; // Указатель на функцию.
+struct bar<R (*)(A, B)> {}; // Указатель на функцию.
 ```
 Здесь есть «указатель на что-то» и «указатель на функцию». Кажется, что второе более специализированно. Но как бы это формализовать? Да легко! Является ли произвольный указатель на функцию указателем? Да. А является ли произвольный указатель указателем на функцию? Нет. То есть **если мы всегда можем корректно подставить одну специализацию в другую, но не наоборот, то первая более специализированна**.
 
@@ -165,7 +165,7 @@ void baz(int*) {}
 
 ```c++
 int main() {
-	foo(nullptr);
+	baz(nullptr);
 }
 ```
 Давайте подумаем, работает ли это, если мы включим `ENABLE_TEMPLATE`. А вот не работает, потому что непонятно, чему равно `T`. А вот с перегрузкой всё работает (выбирается перегрузка). Почему это так работает, хочется спросить?
@@ -199,7 +199,7 @@ template <typename T>
 struct array<T, 0> { /*...*/ };
 
 array<int, 10> a;
-array<int, 0> a;
+array<int, 0> b;
 ```
 То же самое можно написать и для функций:
 ```c++
@@ -243,7 +243,7 @@ set<int> a; // `C` = `default_comparer`.
 Начнём немного издалека: если вы видели шаблонный код, то вам может показаться, что в случайных местах по нему раскиданы слова `typename` и `template`. Например, вот в таких
 примерах:
 ```c++
-	typename std::vector<T>::iterator it;
+	typename std::vector<T>::Iterator it;
 	// Вместо std::vector<T>::iterator it;
 	typename foo<T>::template bar<int> y;
 	// Вместо foo<T>::bar<int> y;
@@ -310,7 +310,7 @@ struct base {};
 template <typename T>
 struct derived : base<T> {
     void f() {
-        typename T::type() + 1; // Ошибка компиляции про подстановке (dependent).
+        typename T::type() + 1; // Ошибка компиляции при подстановке (dependent).
         arg1::type() + 1;       // Ошибка компиляции при разборе (non-dependent).
 
         x = 5;                  // Непонятно.
@@ -355,7 +355,7 @@ auto q = &swap<char>;
 ```c++
 // swap.h.
 template<typename T>
-int swap(T& a, T& b);
+void swap(T& a, T& b);
 ```
 ```c++
 // swap.cpp.
@@ -439,7 +439,7 @@ int main(){
 	return 0;
 }
 ```
-Без *main.cpp* компилируется, так как у `a` не вызывался деструктор, поэтому он не инстанцировался. С *main.cpp* компилятор генерирует деструктор, который вызывает деструкторы всех членов класса, а там `unigue_ptr<object>`, у которого при компиляции будет инстанцироваться деструктор. В `unique_ptr` есть специальная проверка, что если удаляется incomplete type (а у нас `object` именно таковой), то это ошибка.\
+Без *main.cpp* компилируется, так как у `a` не вызывался деструктор, поэтому он не инстанцировался. С *main.cpp* компилятор генерирует деструктор, который вызывает деструкторы всех членов класса, а там `unique_ptr<object>`, у которого при компиляции будет инстанцироваться деструктор. В `unique_ptr` есть специальная проверка, что если удаляется incomplete type (а у нас `object` именно таковой), то это ошибка.\
 Как решить проблему? Сделать объявление деструктора в *mytype.h*, а определить его там, где `object` — complete тип (то есть в *mytype.cpp*).
 
 Ещё пример:
@@ -490,7 +490,7 @@ struct basic_string {
 
 // ...
 template <class CharT>
-const CharT* basic_string<T>::c_str() { /*...*/ }
+const CharT* basic_string<CharT>::c_str() { /*...*/ }
 // ...
 ```
 ```c++
@@ -511,7 +511,7 @@ template const char* basic_string<char>::c_str();
 
 // ...
 template <class CharT>
-const CharT* basic_string<T>::c_str() { /*...*/ }
+const CharT* basic_string<CharT>::c_str() { /*...*/ }
 // ...
 ```
 Это *явное инстанцирование шаблона*, и является оно командой «прямо тут мне инстанцируйте то, что я попросил».
@@ -532,7 +532,7 @@ extern template void foo<float>(float);
 Самые простые свойства типов — `std::numeric_limits`. Это шаблонный класс, в который вы даёте численный тип, а он содержит миллион статических полей, которые для данного типа дают информацию о минимуме, максимуме или чём-то ещё.
 
 ## `<type_traits>`.
-Более сложные запросы к типу можно найти в заголовочном файле `<type_traits>`, где есть бесконечное количество шаблонных констант: `is_trivially_destructible_v`, `is_empty_v`, и прочих других. Какие-то из встроены в компилятор, какие-то вы можете реализовать сами (`is_signed_v`, например, можете запросто). 
+Более сложные запросы к типу можно найти в заголовочном файле `<type_traits>`, где есть бесконечное количество шаблонных констант: `is_trivially_destructible_v`, `is_empty_v`, и прочих других. Какие-то из них встроены в компилятор, какие-то вы можете реализовать сами (`is_signed_v`, например, можете запросто). 
 
 Как работают штуки из `type_traits`? И почему оканчиваются на `_v`? Дело в том, что до C++14 у вас не было шаблонных переменных (а по сути `is_empty_v` — шаблонная переменная и есть). Поэтому создали шаблонный класс `is_empty` со статическим полем `value`, в котором то, что вам нужно. А когда в С++14 такое появилось, вы смогли писать `is_empty_v`, и это уже реальная `bool`'евая константа, которую можно использовать.
 
@@ -646,7 +646,7 @@ void destroy(T* first, T* last) {
 	destroy_impl(first, last, tag());
 }
 ```
-такое уже есть, и называется `std::conditional`. А `typename std::conditional</*...*/>::type` также сокращается до `std::conditional_t`. . Итого наш пример выглядит так:
+такое уже есть, и называется `std::conditional`. А `typename std::conditional</*...*/>::type` также сокращается до `std::conditional_t`. Итого наш пример выглядит так:
 ```c++
 #include <type_traits>
 
@@ -732,7 +732,7 @@ template <class T>
 typename enable_if<!std::is_trivially_destructible_v<T>>::type
 destroy(T* first, T* last) {
 	if (!std::is_trivially_destructible_v<T>)
-		for (T* p = first, p != last; p++)
+		for (T* p = first; p != last; p++)
 			p->~T();
 }
 ```
@@ -766,7 +766,7 @@ struct vector {
 	std::enable_if_t<
 		std::is_base_of_v<
 			std::input_iterator_tag,
-			std::iterator_traits<InputIt>::category
+			std::iterator_traits<InputIt>::iterator_category
 		>
 	> assign(InputIt first, InputIt last);
 };
