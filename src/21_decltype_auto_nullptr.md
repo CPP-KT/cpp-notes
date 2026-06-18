@@ -8,7 +8,7 @@
 ```c++
 int f();
 ??? g() {
-    return f()
+    return f();
 }
 ```
 
@@ -172,7 +172,7 @@ struct nullptr_t {
     operator T*() const {
         return 0;
     }
-}
+};
 nullptr_t const nullptr;
 ```
 

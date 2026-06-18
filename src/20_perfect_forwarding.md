@@ -67,7 +67,7 @@ void g(T&& a) {
     f(a);
 }
 
-int main {
+int main() {
     g(42); // rvalue: T -> int, void g(int&&)
     int a;
     g(a); // lvalue: T -> int&, void g(int&)
@@ -88,10 +88,10 @@ void g(T&& a) {
     f(static_cast<T&&>(a));
 }
 
-int main {
+int main() {
     g(42); // rvalue: T -> int, void g(int&&), f(static_cast<int&&>(a))
     int a;
-    g(a); // lvalue: T -> int&, void g(int&), f(static_cst<int&>(a))
+    g(a); // lvalue: T -> int&, void g(int&), f(static_cast<int&>(a))
 }
 ```
 Библиотечная функция написана примерно так:
@@ -151,7 +151,7 @@ struct agg {
     int a;
     float b;
     char c;
-}
+};
 
 template <typename... V>
 void f(V... args) {

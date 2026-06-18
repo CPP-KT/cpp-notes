@@ -107,14 +107,15 @@ void g() {
 struct string {
     // ...
     string(string&& other) {
-        data = other.data; // копируем указатель вместо самих данных
-        other.data = nullptr;
-        size = other.size;
-        other.size = 0;
+        data_ = other.data_; // копируем указатель вместо самих данных
+        other.data_ = nullptr;
+        size_ = other.size_;
+        other.size_ = 0;
     }
-    private:
-    char* data;
-}
+private:
+    char* data_;
+    size_t size_;
+};
 ```
 
 Move в C++ называется "недеструктивным", так как объект остаётся валидным, просто в unspecified состоянии.
@@ -142,7 +143,7 @@ template<typename T>
 struct vector {
     void push_back(T const&);
     void push_back(T&&);
-}
+};
 ```
 
 В каждом месте, где делается `push_back` от rvalue, будет вызываться перегрузка именно для rvalue-ссылки.
@@ -153,10 +154,13 @@ struct vector {
 struct person {
     person(std::string&& name) {
         // здесь name - lvalue
-        // this.name = name; - простое копирование
-        this.name = std::move(name); // вызовет move-конструктор
+        // this -> name = name; - простое копирование
+        this -> name = std::move(name); // вызовет move-конструктор
     }
-}
+    
+private:
+    std::string name;
+};
 ```
 
 Что такое `std::move`? Это почти что `static_cast`. Её сигнатура похожа на следующее:
@@ -177,7 +181,11 @@ struct person {
     person(std::string name, std::string surname)
         : name(std::move(name)), 
     	  surname(std::move(surname)) {}
-}
+    
+private:
+    std::string name;
+    std::string surname;
+};
 ```
 
 Так мы получим нужно поведение за исключением того, что иногда move-конструктор вызовется лишний раз (когда делаем копию и вызываем move). Обычно это оптимизируется и не влияет на производительность, но при необходимости можно сделать разные перегрузки.
@@ -218,12 +226,12 @@ std::string foo() {
 
 ```c++
 struct mytype {};
-mytype lvalue;
+mytype lvalue_obj;
 mytype& lvalue();
 mytype prvalue();
 mytype&& xvalue(); // overloading: rvalue, copy elision: lvalue
 void test() {
-    mytype c = lvalue; // mytype(mytype)
+    mytype c = lvalue_obj; // mytype(mytype)
     mytype b = prvalue(); // copy elision
     mytype a = xvalue(); // mytype(mytype&&)
 }
@@ -239,10 +247,10 @@ mytype test2() {
 ```c++
 void foo() {
     mytype const& a = prvalue(); // объект живёт столько, сколько эта ссылка
-    mytype&& a = prvalue(); // аналогично продлевает время жизни
+    mytype&& b = prvalue(); // аналогично продлевает время жизни
     
-    mytype& a = lvalue(); // не продлевает
-    mytype&& a = xvalue(); // не продлевает
+    mytype& c = lvalue(); // не продлевает
+    mytype&& d = xvalue(); // не продлевает
 }
 ```
 
