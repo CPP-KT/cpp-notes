@@ -12,7 +12,7 @@
 
 #### Полезные ссылки:
 
-- [Сайт курса](https://cpp-kt.github.io/course/)
+- [Сайт курса](https://pages.ct.itmo.ru/cpp/course)
 
 #### Презентации и ссылки по материалу:
 
