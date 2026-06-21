@@ -105,9 +105,9 @@ void foo(char);
 int main() {
 	using n::foo;
 	using m::foo;
-	foo(42.0f); // m::foo.
-	foo(42);    // n::foo.
-	::foo('*');   //  ::foo.
+	foo(42.0f);  // m::foo.
+	foo(42);     // n::foo.
+	::foo('*');  //  ::foo.
 }
 ```
 Using-декларацию можно применять не только для пространств имён, но и для классов.
