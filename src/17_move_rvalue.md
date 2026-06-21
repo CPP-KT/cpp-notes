@@ -154,8 +154,8 @@ struct vector {
 struct person {
     person(std::string&& name) {
         // здесь name - lvalue
-        // this -> name = name; - простое копирование
-        this -> name = std::move(name); // вызовет move-конструктор
+        // this->name = name; - простое копирование
+        this->name = std::move(name); // вызовет move-конструктор
     }
     
 private:
@@ -231,9 +231,9 @@ mytype& lvalue();
 mytype prvalue();
 mytype&& xvalue(); // overloading: rvalue, copy elision: lvalue
 void test() {
-    mytype c = lvalue_obj; // mytype(mytype)
-    mytype b = prvalue(); // copy elision
-    mytype a = xvalue(); // mytype(mytype&&)
+    mytype a = lvalue_obj; // mytype(const mytype&)
+    mytype b = prvalue();  // copy elision
+    mytype c = xvalue();   // mytype(mytype&&)
 }
 mytype test2() {
     return xvalue(); 
