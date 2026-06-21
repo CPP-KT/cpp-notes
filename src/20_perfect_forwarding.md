@@ -271,3 +271,56 @@ void write(T0 const& arg0, Ts const& ...args) {
     write(args...);
 }
 ```
+
+## Fold Expressions
+
+В **C++17** появилась фича **Fold Expressions**, позволяющая сделать свёртку по элементам пака относительно бинарного оператора.
+
+Рассмотрим простой пример свёртки:
+
+```c++
+int sum(int... args) {
+    return (args + ...);
+}
+
+int foo() {
+    return sum(1, 2, 3, 4);
+}
+
+//Вызов функции sum(1, 2, 3, 4) раскроется в ((1 + 2) + 3) + 4
+``` 
+
+Мотивирующий пример для метапрограммирования: попробуем научиться проверять, есть ли тип (`T`) в паке. Так как в шаблонном паке мы не можем получить доступ к конкретному элементу (до C++26), а может только отделять первые несколько элементов `Head` и все остальные `Tail`, очевидна следующая реализация:
+
+```c++
+template <typename Type, typename... Pack>
+struct has_type;
+
+template <typename Type, typename Head, typename... Tail>
+struct has_type<Type, Head, Tail...> {
+    static constexpr bool value = std::is_same_v<Type, Head> ||
+         has_type<Type, Tail...>::value;
+//       ^^^^^^^^^^^^^^^^^^^^^^^^ инстанс специализации шаблона
+};
+
+template <typename Type, typename Head>
+struct has_type<Type, Head> {
+    static constexpr bool value = std::is_same_v<Type, Head>;
+};
+```
+
+Чем плоха такая реализация? Предположим в паке `N` элементов, тогда компилятор будет проводить `N` инстансов шаблона `has_type`. Как можно это пофиксить? Вспомним, что `...` ставится там, где перечисляются элементы. В `Fold expressions` это и используется. Тогда предыдущий пример можно переписать так:
+
+```c++
+template <typename Type, typename... Types>
+struct has_type {
+    static constexpr bool value = (std::is_same_v<Type, Types> || ...);
+};
+```
+
+Чем это хорошо? 
+- Нет рекурсии.
+- Быстрее время компиляции, потому что меньше инстансов и у компилятора есть возможность делать оптимизации.
+- Легче читается и меньше кода.
+
+Подробнее про Fold expressions на [cppreference](https://en.cppreference.com/w/cpp/language/fold.html). 
