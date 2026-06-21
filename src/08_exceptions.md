@@ -255,7 +255,7 @@ public:
 		return ptr;
 	}
 	T* get() {
-		return *ptr;
+		return ptr;
 	}
 
 	void reset(T* new_ptr = nullptr) {
