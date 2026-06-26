@@ -17,7 +17,7 @@ void sum(float* res, float const* in, size_t n) {
 Научным языком ситуация с двумя ссылками на одно место называется *aliasing*.\
 Ещё один пример на ту же тему:
 ```c++
-void memcopy(char* dst, char const* src, size_t count) {
+void memcopy(char* dst, char const* src, size_t n) {
     for (size_t i = 0; i < n; i++)
         dst[i] = src[i];
 }
@@ -110,8 +110,8 @@ void good()
 void bad()
 {
     int const a = 42;
-    int& ref = const_cast<int&>(ref1); // Это не UB. Это так, чтобы, например, можно было вызвать функцию, на которой ошибочно не поставили const
-    ref2 = 43; // UB, менять const переменную нельзя
+    int& ref = const_cast<int&>(a); // Это не UB. Это так, чтобы, например, можно было вызвать функцию, на которой ошибочно не поставили const
+    ref = 43; // UB, менять const переменную нельзя
 }
 ```
 Что же всё-таки будет, если мы пытаемся менять константу?

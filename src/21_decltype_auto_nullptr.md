@@ -8,7 +8,7 @@
 ```c++
 int f();
 ??? g() {
-    return f()
+    return f();
 }
 ```
 
@@ -169,10 +169,10 @@ auto f(bool flag) { // COMPILE ERROR
 ```c++
 struct nullptr_t {
     template <typename T>
-    opeartor T*() const {
+    operator T*() const {
         return 0;
     }
-}
+};
 nullptr_t const nullptr;
 ```
 

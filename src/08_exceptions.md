@@ -6,7 +6,7 @@
 ```c++
 // int — код ошибки.
 int do_something() {
-	FILE* file = fopen("1.txt");
+	FILE* file = fopen("1.txt", "r");
 	if (!file)
 		return FILE_NOT_FOUND_CODE; // Какая-то константа.
 	int err = file_interact(file);  // Некоторая функция, которая может завершиться с ошибкой.
@@ -49,12 +49,14 @@ struct base {
 	virtual std::string msg() const {
 		return "base";
 	}
-}
+};
+
 struct derived : base {
 	std::string msg() const override {
 		return "derived";
 	}
-}
+};
+
 int main() {
 	try {
 		throw derived();
@@ -77,7 +79,7 @@ int main() {
 	try {
 		throw D();
 	} catch (A const&) {
-		std::cout << "Caught A.\n".
+		std::cout << "Caught A.\n";
 	}
 }
 ```
@@ -252,8 +254,8 @@ public:
 	T* operator->() {
 		return ptr;
 	}
-	T& get() {
-		return *ptr;
+	T* get() {
+		return ptr;
 	}
 
 	void reset(T* new_ptr = nullptr) {
@@ -263,7 +265,7 @@ public:
 	T* release() {
 		T* result = ptr;
 		ptr = nullptr;
-		return result
+		return result;
 	}
 };
 ```
@@ -299,7 +301,7 @@ public:
 	void flush() {
 		int result = close(fd);
 		if (result != 0)
-			throw std::runtime_exception("File closing failed.");
+			throw std::runtime_error("File closing failed.");
 		fd = -1;
 	}
 
@@ -319,9 +321,9 @@ private:
 ```c++
 struct string {
 	// ...
-	string& operator=(const string&) & {
+	string& operator=(const string& other) & {
 		if (this == &other)
-			return;
+			return *this;
 
 		operator delete(data);
 

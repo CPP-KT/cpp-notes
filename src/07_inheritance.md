@@ -680,13 +680,13 @@ struct game_object {
 	virtual void render() = 0;
 	virtual void update() = 0;
 };
-struct billbord_object : virtual game_object {
+struct billboard_object : virtual game_object {
 	void render() override {/* ... */};
 };
 struct static_object : virtual game_object {
 	void update() override {/* ... */};
 };
-struct static_billboard : billbord_object, static_object
+struct static_billboard : billboard_object, static_object
 {};
 ```
 Но это ещё цветочки, на самом деле. Представьте, что у вас есть какой-то публичный базовый класс (например, `widget_painter`), и вы создаёте несколько **похожих** его наследников. А потом видите, что наследники похожи, их можно обобщить, и получить какую-то такую иерархию:

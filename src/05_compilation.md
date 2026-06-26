@@ -598,11 +598,11 @@ int main() {
 	*b = 1;      // Error.
 	b = nullptr; // ok.
 
-	int* const c;
+	int* const c = a;
 	*c = 1;      // ok.
 	c = nullptr; // Error.
 
-	const int* const d; // Синоним `int const* const d;`
+	const int* const d = a; // Синоним `int const* const d;`
 	*d = 1;      // Error.
 	d = nullptr; // Error.
 }
