@@ -687,29 +687,70 @@ int main() {
 <h2><a class="header" href="#Ещё-немного-best-practices" id="Ещё-немного-best-practices">Ещё немного best practices.</a></h2>
 <p>Давайте вот ещё на что посмотрим. Наш класс <code>string</code> вызывает в конструкторе по умолчанию аллокацию памяти. Так вот, вообще считается, что это кринж, так делать не надо.</p>
 <p>А ещё при присваивании C-строки в нашу строку мы сначала конструируем, а потом присваиваем, давайте вместо этого явно пропишем <code>operator=(const char*)</code>, и будет также меньше аллокаций.</p>
-<h2><a class="header" href="#new-и-delete" id="new-и-delete"><code>new</code> и <code>delete</code>.</a></h2>
-<p>Итак, мы обсудили, когда вызываются конструкторы и деструкторы. А если вы хотите вызывать их в произвольный момент, конструируя объект тогда, когда захочет пользователь? Тогда есть <code>new</code> и <code>delete</code>. Вы пишете <code>Type* p = new Type(...);</code> — это конструирует вам объект в куче, а <code>delete p;</code> разрушает вам этот объект.</p>
-<p>Как это работает? В C есть <code>malloc</code> и <code>free</code>, они выделяют память на куче в тот момент, когда вы её попросите (опять же, в рандомный момент). Выделение на куче, кстати, немного дороже, чем на стеке.</p>
-<pre><code class="language-c++">    void* p = malloc(42); // Выделяет 42 байта.
-    free(p); // Чистит память, выделенную ранее.
-    free(p); // Освобождать то, что уже освободил, нельзя.
+<h2><a class="header" href="#Аллокация-памяти-и-конструирование-объектов" id="Аллокация-памяти-и-конструирование-объектов">Аллокация памяти и конструирование объектов.</a></h2>
+<p>Итак, мы обсудили, когда вызываются конструкторы и деструкторы. А если вы хотите вызывать их в произвольный момент, конструируя объект тогда, когда захочет пользователь?</p>
+<p>Как это работает? В C есть <code>malloc</code> и <code>free</code>, они выделяют память на куче в тот момент, когда вы её попросите (опять же, в произвольный момент). Выделение на куче, кстати, немного дороже, чем на стеке. Ниже рассмотрим несколько способов, как выделить память в C++.</p>
+<ol>
+<li><code>malloc</code> и <code>free</code></li>
+</ol>
+<pre><code class="language-c++">void* p1 = std::malloc(42); // Выделяет 42 байта.
+std::free(p1);              // Освобождает память, выделенную ранее.
+std::free(p1);              // Освобождать то, что уже освободили нельзя.
 
-    free(nullptr); // Так можно, ничего не произойдет.
+std::free(nullptr)          // Вот так можно, ничего не произойдёт.
 </code></pre>
-<p>Двойной <code>free</code> вызывает UB или даже <a href="https://awakened1712.github.io/hacking/hacking-whatsapp-gif-rce/">уязвимость</a>.</p>
-<p>Разница между ними и <code>new</code>—<code>delete</code> (упрощённо) в том, что второй вариант гарантирует вызов конструкторов и деструкторов. И в большинстве <code>new</code> просто является комбинацией из <code>malloc</code>'а и <a href="https://en.cppreference.com/w/cpp/language/new#Placement_new">вызова конструктора на выделенной памяти</a>. Аналогично <code>delete</code> вызывает деструктор и <code>free</code>.</p>
-<p>Ещё есть <code>new[]</code> и <code>delete[]</code> — менеджмент массива. На всём массиве вызываются конструкторы по умолчанию:</p>
-<pre><code class="language-c++">person* p = new person(&quot;Ivan&quot;, &quot;Sorokin&quot;);
-delete p;
-
-person* p = new person[10];
-delete[] p;
+<p>Двойной <code>free</code> вызывает UB или даже <a href="https://awakened1712.github.io/hacking/hacking-whatsapp-gif-rce/">уязвимость</a>. Если же malloc вернул <code>nullptr</code>, то это означает, что память не выделилась.</p>
+<ol start="2">
+<li><code>operator new</code> и <code>operator delete</code></li>
+</ol>
+<pre><code class="language-c++">void* p2 = operator new(42); // Выделяет 42 байта. 
+operator delete(p2);         // Освобождает память, выделенную ранее.
 </code></pre>
-<p>При этом ни в коем случае <strong>нельзя освобождать объект другим способом, нежели он был выделен</strong>. Это в любом случае undefined behaviour, даже если, вроде как, не должно быть:</p>
-<pre><code class="language-c++">person* p = new person(&quot;Ivan&quot;, &quot;Sorokin&quot;);
+<p><code>operator new</code> почти тоже самое, что и <code>malloc</code>, однако, если память не выделилась, то бросает исключение.</p>
+<ol start="3">
+<li><code>new</code> и <code>delete</code></li>
+</ol>
+<pre><code class="language-c++">int* p3 = new int(42); // operator new + constructor
+delete(p3);            // destructor + operator delete
+</code></pre>
+<p>В отличие от предыдущих вариантов, <code>new</code> и <code>delete</code> вызывают конструктор и деструктор объекта соответственно. По сути <code>new</code> просто является комбинацией из <code>operator new</code> (про который выше) и <a href="https://en.cppreference.com/w/cpp/language/new#Placement_new">вызова конструктора на выделенной памяти</a> (про который ниже). Аналогично <code>delete</code> вызывает деструктор и <code>operator delete</code>.</p>
+<ol start="4">
+<li><code>new[]</code> и <code>delete[]</code></li>
+</ol>
+<pre><code class="language-c++">person* p4 = new person[10];
+delete[] p4;
+</code></pre>
+<p>Это <code>new</code> и <code>delete</code>, но операция массовая. На всём массиве вызываются конструкторы по умолчанию.</p>
+<p>При этом ни в коем случае <strong>нельзя освобождать объект другим способом, нежели он был выделен</strong>. Это в любом случае <strong>undefined behaviour</strong>:</p>
+<pre><code class="language-c++">void* p5 = std::malloc(42);
+operator delete(p5); // Освободили другим способом =&gt; получили UB
 
-p-&gt;~person();
-free(p);
+mytype* p6 = new mytype[10];
+delete p6; // Тоже освободили другим способом =&gt; опять получили UB
+</code></pre>
+<h3><a class="header" href="#placement-new" id="placement-new">Placement new</a></h3>
+<p>Выше рассмотрели: </p>
+<ol>
+<li>Способ выделить память и вызвать на ней конструктор (<code>new</code>)</li>
+<li>Способ только выделить память, не вызывая конструктор (<code>operator new</code>)</li>
+</ol>
+<p>Но есть также способ <strong>вызвать конструктор на уже выделенной памяти</strong>.</p>
+<p>Для этого служит <code>placement new</code> (размещающий <code>new</code>) — специальная форма вызова <code>new</code>, позволяющая дополнительным аргументом передать адрес, на котором будет вызван конструктор.</p>
+<pre><code class="language-C++">mytype* buffer = static_cast&lt;mytype*&gt;(operator new(...));
+
+for (size_t i = 0; i != 5; ++i) {
+	new(buffer + i) mytype(1., 2.);
+	// альтернативно:
+	// std::construct_at(buffer + i, 1., 2.);
+}
+
+for (size_t i = 5; i != 0; --i) {
+	buffer[i - 1].~mytype();
+	// альтернативно:
+	// std::destroy_at(buffer + i - 1);
+}
+
+operator delete(buffer);
 </code></pre>
 <h3><a class="header" href="#Идиома-pimpl" id="Идиома-pimpl">Идиома PImpl</a></h3>
 <p>Представим, что у нас есть большой проект/библиотека и мы хотим как-то изменить заголовочный файл. Тогда надо перекомпилировать все файлы, которые зависят от него. А это будет занимать много времени, ведь даже при небольших изменениях приходится ждать, пока всё перекомпилируется.
@@ -745,7 +786,7 @@ size_t Container::size() {
 
 //main.cpp 
 int main() {
-    Container c;
+    Container c(42);
 }
 </code></pre>
 <p>Теперь все изменения будут вноситься в <code>container.cpp</code> и пользователю не надо перекомпилировать другие единицы трансляции — только перелинковаться.</p>

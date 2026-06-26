@@ -260,7 +260,7 @@ struct vector&lt;U*&gt; {
 <p>Примечание: <strong>в шаблоны вы можете передавать всё что угодно</strong> (хоть <code>void</code>, хоть <code>int(int, int)</code> (функцию, даже не указатель на неё), хоть <code>char[]</code>). <strong>Но не любой класс обязан корректно работать с любым классом.</strong> Так <code>std::vector</code> не компилируется, если дать ему не перемещаемый тип, и не работает вполне корректно, если дать ему, ну, например, тип, который кидает исключение в деструкторе.</p>
 <p>Впрочем, у вас есть возможность явно указать, какие типы вы принимать не хотите. Двумя способами: <a href="#sfinae">SFINAE</a> и <a href="./28_concepts.html">концепты</a>.</p>
 <h3><a class="header" href="#Выбор-специализации" id="Выбор-специализации">Выбор специализации.</a></h3>
-<pre><code class="language-c++">template &lt;typename A, template B&gt;
+<pre><code class="language-c++">template &lt;typename A, typename B&gt;
 struct my_type {};         // 1
 template &lt;typename A&gt;
 struct my_type&lt;A, int&gt; {}; // 2
@@ -282,7 +282,7 @@ template &lt;typename U&gt;
 struct bar&lt;U*&gt; {}; // Указатель на что-то.
 
 template &lt;typename R, typename A, typename B&gt;
-struct my_type&lt;R (*)(A, B)&gt; {}; // Указатель на функцию.
+struct bar&lt;R (*)(A, B)&gt; {}; // Указатель на функцию.
 </code></pre>
 <p>Здесь есть «указатель на что-то» и «указатель на функцию». Кажется, что второе более специализированно. Но как бы это формализовать? Да легко! Является ли произвольный указатель на функцию указателем? Да. А является ли произвольный указатель указателем на функцию? Нет. То есть <strong>если мы всегда можем корректно подставить одну специализацию в другую, но не наоборот, то первая более специализированна</strong>.</p>
 <p>Вопрос: что делать, если шаблон от нескольких параметров зависит? Тут <strong>первая специализация более специализированна, чем вторая, если хотя бы по одному параметру она строго более специализированна, а по остальным — не менее</strong>.</p>
@@ -300,7 +300,7 @@ void baz(int*) {}
 </code></pre>
 <p>Чем отличаются две последних функции? Например, на таком коде:</p>
 <pre><code class="language-c++">int main() {
-	foo(nullptr);
+	baz(nullptr);
 }
 </code></pre>
 <p>Давайте подумаем, работает ли это, если мы включим <code>ENABLE_TEMPLATE</code>. А вот не работает, потому что непонятно, чему равно <code>T</code>. А вот с перегрузкой всё работает (выбирается перегрузка). Почему это так работает, хочется спросить?</p>
@@ -327,7 +327,7 @@ public:
 struct array&lt;T, 0&gt; { /*...*/ };
 
 array&lt;int, 10&gt; a;
-array&lt;int, 0&gt; a;
+array&lt;int, 0&gt; b;
 </code></pre>
 <p>То же самое можно написать и для функций:</p>
 <pre><code class="language-c++">template &lt;typename T, size_t N&gt;
@@ -434,7 +434,7 @@ struct base {};
 template &lt;typename T&gt;
 struct derived : base&lt;T&gt; {
     void f() {
-        typename T::type() + 1; // Ошибка компиляции про подстановке (dependent).
+        typename T::type() + 1; // Ошибка компиляции при подстановке (dependent).
         arg1::type() + 1;       // Ошибка компиляции при разборе (non-dependent).
 
         x = 5;                  // Непонятно.
@@ -468,7 +468,7 @@ auto q = &amp;swap&lt;char&gt;;
 <h3><a class="header" href="#Немного-про-разные-единицы-трансляции" id="Немного-про-разные-единицы-трансляции">Немного про разные единицы трансляции.</a></h3>
 <pre><code class="language-c++">// swap.h.
 template&lt;typename T&gt;
-int swap(T&amp; a, T&amp; b);
+void swap(T&amp; a, T&amp; b);
 </code></pre>
 <pre><code class="language-c++">// swap.cpp.
 template &lt;typename T&gt;
@@ -538,7 +538,7 @@ int main(){
 	return 0;
 }
 </code></pre>
-<p>Без <em>main.cpp</em> компилируется, так как у <code>a</code> не вызывался деструктор, поэтому он не инстанцировался. С <em>main.cpp</em> компилятор генерирует деструктор, который вызывает деструкторы всех членов класса, а там <code>unigue_ptr&lt;object&gt;</code>, у которого при компиляции будет инстанцироваться деструктор. В <code>unique_ptr</code> есть специальная проверка, что если удаляется incomplete type (а у нас <code>object</code> именно таковой), то это ошибка.<br />
+<p>Без <em>main.cpp</em> компилируется, так как у <code>a</code> не вызывался деструктор, поэтому он не инстанцировался. С <em>main.cpp</em> компилятор генерирует деструктор, который вызывает деструкторы всех членов класса, а там <code>unique_ptr&lt;object&gt;</code>, у которого при компиляции будет инстанцироваться деструктор. В <code>unique_ptr</code> есть специальная проверка, что если удаляется incomplete type (а у нас <code>object</code> именно таковой), то это ошибка.
 Как решить проблему? Сделать объявление деструктора в <em>mytype.h</em>, а определить его там, где <code>object</code> — complete тип (то есть в <em>mytype.cpp</em>).</p>
 <p>Ещё пример:</p>
 <pre><code class="language-c++">template &lt;typename T&gt;
@@ -580,7 +580,7 @@ struct basic_string {
 
 // ...
 template &lt;class CharT&gt;
-const CharT* basic_string&lt;T&gt;::c_str() { /*...*/ }
+const CharT* basic_string&lt;CharT&gt;::c_str() { /*...*/ }
 // ...
 </code></pre>
 <pre><code class="language-c++">// main.cpp
@@ -599,7 +599,7 @@ template const char* basic_string&lt;char&gt;::c_str();
 
 // ...
 template &lt;class CharT&gt;
-const CharT* basic_string&lt;T&gt;::c_str() { /*...*/ }
+const CharT* basic_string&lt;CharT&gt;::c_str() { /*...*/ }
 // ...
 </code></pre>
 <p>Это <em>явное инстанцирование шаблона</em>, и является оно командой «прямо тут мне инстанцируйте то, что я попросил».</p>
@@ -614,7 +614,7 @@ extern template void foo&lt;float&gt;(float);
 <h2><a class="header" href="#numeric_limits" id="numeric_limits"><code>&lt;numeric_limits&gt;</code></a></h2>
 <p>Самые простые свойства типов — <code>std::numeric_limits</code>. Это шаблонный класс, в который вы даёте численный тип, а он содержит миллион статических полей, которые для данного типа дают информацию о минимуме, максимуме или чём-то ещё.</p>
 <h2><a class="header" href="#type_traits" id="type_traits"><code>&lt;type_traits&gt;</code>.</a></h2>
-<p>Более сложные запросы к типу можно найти в заголовочном файле <code>&lt;type_traits&gt;</code>, где есть бесконечное количество шаблонных констант: <code>is_trivially_destructible_v</code>, <code>is_empty_v</code>, и прочих других. Какие-то из встроены в компилятор, какие-то вы можете реализовать сами (<code>is_signed_v</code>, например, можете запросто). </p>
+<p>Более сложные запросы к типу можно найти в заголовочном файле <code>&lt;type_traits&gt;</code>, где есть бесконечное количество шаблонных констант: <code>is_trivially_destructible_v</code>, <code>is_empty_v</code>, и прочих других. Какие-то из них встроены в компилятор, какие-то вы можете реализовать сами (<code>is_signed_v</code>, например, можете запросто). </p>
 <p>Как работают штуки из <code>type_traits</code>? И почему оканчиваются на <code>_v</code>? Дело в том, что до C++14 у вас не было шаблонных переменных (а по сути <code>is_empty_v</code> — шаблонная переменная и есть). Поэтому создали шаблонный класс <code>is_empty</code> со статическим полем <code>value</code>, в котором то, что вам нужно. А когда в С++14 такое появилось, вы смогли писать <code>is_empty_v</code>, и это уже реальная <code>bool</code>'евая константа, которую можно использовать.</p>
 <h2><a class="header" href="#Наивный-способ-делать-type-based-dispatch-if-constexpr" id="Наивный-способ-делать-type-based-dispatch-if-constexpr">Наивный способ делать type-based dispatch. <code>if constexpr</code>.</a></h2>
 <p>Пример использования <code>&lt;type_traits&gt;</code>: хотим мы вызвать деструкторы всех элементов на отрезке:</p>
@@ -623,7 +623,7 @@ extern template void foo&lt;float&gt;(float);
 template &lt;class T&gt;
 void destroy(T* first, T* last) {
 	if (!std::is_trivially_destructible_v&lt;T&gt;)
-		for (T* p = first, p != last; p++)
+		for (T* p = first; p != last; p++)
 			p-&gt;~T();
 }
 </code></pre>
@@ -719,7 +719,7 @@ void destroy(T* first, T* last) {
 	destroy_impl(first, last, tag());
 }
 </code></pre>
-<p>такое уже есть, и называется <code>std::conditional</code>. А <code>typename std::conditional&lt;/*...*/&gt;::type</code> также сокращается до <code>std::conditional_t</code>. . Итого наш пример выглядит так:</p>
+<p>такое уже есть, и называется <code>std::conditional</code>. А <code>typename std::conditional&lt;/*...*/&gt;::type</code> также сокращается до <code>std::conditional_t</code>. Итого наш пример выглядит так:</p>
 <pre><code class="language-c++">#include &lt;type_traits&gt;
 
 struct trivially_destructible_tag {};
@@ -796,7 +796,7 @@ template &lt;class T&gt;
 typename enable_if&lt;!std::is_trivially_destructible_v&lt;T&gt;&gt;::type
 destroy(T* first, T* last) {
 	if (!std::is_trivially_destructible_v&lt;T&gt;)
-		for (T* p = first, p != last; p++)
+		for (T* p = first; p != last; p++)
 			p-&gt;~T();
 }
 </code></pre>
@@ -827,7 +827,7 @@ struct vector {
 	std::enable_if_t&lt;
 		std::is_base_of_v&lt;
 			std::input_iterator_tag,
-			std::iterator_traits&lt;InputIt&gt;::category
+			std::iterator_traits&lt;InputIt&gt;::iterator_category
 		&gt;
 	&gt; assign(InputIt first, InputIt last);
 };

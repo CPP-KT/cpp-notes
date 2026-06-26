@@ -168,7 +168,7 @@
 <p>Иногда возвращаемый тип не хочется писать руками.</p>
 <pre><code class="language-c++">int f();
 ??? g() {
-    return f()
+    return f();
 }
 </code></pre>
 <p>В C++11 появилась конструкция, которая позволяет по выражению узнать его тип:</p>
@@ -281,10 +281,10 @@ int main() {
 <p>В C++11 появился отдельный тип <code>nullptr_t</code>, который может приводиться к любому указателю. Определено это примерно так:</p>
 <pre><code class="language-c++">struct nullptr_t {
     template &lt;typename T&gt;
-    opeartor T*() const {
+    operator T*() const {
         return 0;
     }
-}
+};
 nullptr_t const nullptr;
 </code></pre>
 <p>Единственное отличие в том, что в C++11 <code>nullptr</code> это keyword, встроенный в язык, а не глобальная переменная. Но к типу всё ещё можно обратиться через <code>decltype(nullptr)</code>, в стандартной библиотеке есть <code>std::nullptr_t</code>, который так и определён.</p>

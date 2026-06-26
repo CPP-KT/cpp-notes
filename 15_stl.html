@@ -260,7 +260,7 @@ using reference =	Reference;
 <li><strong>input iterator</strong></li>
 <li><strong>output iterator</strong></li>
 <li><strong>forward iterator</strong></li>
-<li><strong>biderectional iterator</strong></li>
+<li><strong>bidirectional iterator</strong></li>
 <li><strong>random access iterator</strong></li>
 </ul>
 <p>Рассмотрим каждую из этих категорий.</p>
@@ -312,7 +312,7 @@ using reference =	Reference;
 <li><code>it[n]</code></li>
 <li><code>&lt;, &gt;, &lt;=, &gt;=</code></li>
 </ul>
-<p><strong>Random access</strong> итераторы свойственны таким контейнерам, как <code>std::vector</code>, <code>std::array</code>. Указатели также являются <strong>random access</strong> итераторами (на самом деле даже <strong>contigious</strong>, описанными ниже). <strong>Random access</strong> итераторы требуются для функций, где необходимо уметь прыгать через n элементов: <em>сортировки, k-я порядковая статистика, бинарный поиск</em> и т.д.</p>
+<p><strong>Random access</strong> итераторы свойственны таким контейнерам, как <code>std::vector</code>, <code>std::array</code>. Указатели также являются <strong>random access</strong> итераторами (на самом деле даже <strong>contiguous</strong>, описанными ниже). <strong>Random access</strong> итераторы требуются для функций, где необходимо уметь прыгать через n элементов: <em>сортировки, k-я порядковая статистика, бинарный поиск</em> и т.д.</p>
 <p>В C++20 появились <strong>contiguous</strong> итераторы. Они поддерживают все операции, поддерживаемые <strong>random access</strong> итераторами, и при этом гарантируют, что элементы хранятся в памяти последовательно.</p>
 <p>Все контейнеры, поддерживающие итераторы, позволяют обходить их от <code>begin()</code> до <code>end()</code>, но не во все можно вставить элемент в произвольное место.
 Это возможно, например, в векторе или листе, но в упорядоченных контейнерах должны сохраняться инварианты.</p>

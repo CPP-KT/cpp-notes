@@ -240,14 +240,15 @@ void f(void* result) {
 <pre><code class="language-c++">struct string {
     // ...
     string(string&amp;&amp; other) {
-        data = other.data; // копируем указатель вместо самих данных
-        other.data = nullptr;
-        size = other.size;
-        other.size = 0;
+        data_ = other.data_; // копируем указатель вместо самих данных
+        other.data_ = nullptr;
+        size_ = other.size_;
+        other.size_ = 0;
     }
-    private:
-    char* data;
-}
+private:
+    char* data_;
+    size_t size_;
+};
 </code></pre>
 <p>Move в C++ называется &quot;недеструктивным&quot;, так как объект остаётся валидным, просто в unspecified состоянии.</p>
 <p>Для упрощения синтаксиса в язык были введены <em>rvalue-ссылки</em>, чтобы move оператор и конструктор срабатывали автоматически и не нужно было указывать это как-то явно.</p>
@@ -266,17 +267,20 @@ void f(void* result) {
 struct vector {
     void push_back(T const&amp;);
     void push_back(T&amp;&amp;);
-}
+};
 </code></pre>
 <p>В каждом месте, где делается <code>push_back</code> от rvalue, будет вызываться перегрузка именно для rvalue-ссылки.</p>
 <p>Важный принцип: именованные переменные они всегда lvalue, независимо от того, какой у неё тип. </p>
 <pre><code class="language-c++">struct person {
     person(std::string&amp;&amp; name) {
         // здесь name - lvalue
-        // this.name = name; - простое копирование
-        this.name = std::move(name); // вызовет move-конструктор
+        // this-&gt;name = name; - простое копирование
+        this-&gt;name = std::move(name); // вызовет move-конструктор
     }
-}
+    
+private:
+    std::string name;
+};
 </code></pre>
 <p>Что такое <code>std::move</code>? Это почти что <code>static_cast</code>. Её сигнатура похожа на следующее:</p>
 <pre><code class="language-c++">template&lt;typename T&gt;
@@ -290,7 +294,11 @@ T&amp;&amp; move(T&amp; obj) {
     person(std::string name, std::string surname)
         : name(std::move(name)), 
     	  surname(std::move(surname)) {}
-}
+    
+private:
+    std::string name;
+    std::string surname;
+};
 </code></pre>
 <p>Так мы получим нужно поведение за исключением того, что иногда move-конструктор вызовется лишний раз (когда делаем копию и вызываем move). Обычно это оптимизируется и не влияет на производительность, но при необходимости можно сделать разные перегрузки.</p>
 <p><strong>Не стоит использовать move там, где он не нужен</strong>:</p>
@@ -315,14 +323,14 @@ T&amp;&amp; move(T&amp; obj) {
 <p><code>prvalue</code> - то, что раньше мы называли <code>rvalue</code></p>
 <p><code>xvalue</code> - то, что для перегрузок <code>rvalue</code>, а для copy elision <code>glvalue</code></p>
 <pre><code class="language-c++">struct mytype {};
-mytype lvalue;
+mytype lvalue_obj;
 mytype&amp; lvalue();
 mytype prvalue();
 mytype&amp;&amp; xvalue(); // overloading: rvalue, copy elision: lvalue
 void test() {
-    mytype c = lvalue; // mytype(mytype)
-    mytype b = prvalue(); // copy elision
-    mytype a = xvalue(); // mytype(mytype&amp;&amp;)
+    mytype a = lvalue_obj; // mytype(const mytype&amp;)
+    mytype b = prvalue();  // copy elision
+    mytype c = xvalue();   // mytype(mytype&amp;&amp;)
 }
 mytype test2() {
     return xvalue(); 
@@ -332,10 +340,10 @@ mytype test2() {
 <p>В C++03 время жизни объекта, который биндится к <code>const&amp;</code>, продлевалось для rvalue. В C++11 xvalue ведут себя подобно lvalue: время жизни объекта продлить нельзя, так как мы его никак не контролируем.</p>
 <pre><code class="language-c++">void foo() {
     mytype const&amp; a = prvalue(); // объект живёт столько, сколько эта ссылка
-    mytype&amp;&amp; a = prvalue(); // аналогично продлевает время жизни
+    mytype&amp;&amp; b = prvalue(); // аналогично продлевает время жизни
     
-    mytype&amp; a = lvalue(); // не продлевает
-    mytype&amp;&amp; a = xvalue(); // не продлевает
+    mytype&amp; c = lvalue(); // не продлевает
+    mytype&amp;&amp; d = xvalue(); // не продлевает
 }
 </code></pre>
 

@@ -197,10 +197,10 @@
 <p><strong>Стандарт не приписывает конкретных размеров типа</strong>, гарантирует только, что не меньше некоторого размера. Размеры типов прописаны в ABI архитектуры.</p>
 <table><thead><tr><th align="center">Размер</th><th align="center">Стандарт</th><th align="center">32 bit</th><th align="center">win64</th><th align="center">linux64</th></tr></thead><tbody>
 <tr><td align="center"><code>char</code></td><td align="center">$1$ байт</td><td align="center">8</td><td align="center">8</td><td align="center">8</td></tr>
-<tr><td align="center"><code>short</code></td><td align="center">$\leqslant16$ бит</td><td align="center">16</td><td align="center">16</td><td align="center">16</td></tr>
-<tr><td align="center"><code>int</code></td><td align="center">$\leqslant16$ бит</td><td align="center">32</td><td align="center">32</td><td align="center">32</td></tr>
-<tr><td align="center"><code>long</code></td><td align="center">$\leqslant32$ бит</td><td align="center">32</td><td align="center">32</td><td align="center">64</td></tr>
-<tr><td align="center"><code>long long</code></td><td align="center">$\leqslant64$ бит</td><td align="center">64</td><td align="center">64</td><td align="center">64</td></tr>
+<tr><td align="center"><code>short</code></td><td align="center">$\geqslant16$ бит</td><td align="center">16</td><td align="center">16</td><td align="center">16</td></tr>
+<tr><td align="center"><code>int</code></td><td align="center">$\geqslant16$ бит</td><td align="center">32</td><td align="center">32</td><td align="center">32</td></tr>
+<tr><td align="center"><code>long</code></td><td align="center">$\geqslant32$ бит</td><td align="center">32</td><td align="center">32</td><td align="center">64</td></tr>
+<tr><td align="center"><code>long long</code></td><td align="center">$\geqslant64$ бит</td><td align="center">64</td><td align="center">64</td><td align="center">64</td></tr>
 </tbody></table>
 <p>Надо понимать, что C++ поддерживает системы, в которых байт не равен 8 битам. В частности, на <a href="https://en.cppreference.com/w/cpp/language/types#Character_types">cppreference</a> можно найти такую строку: «<em>Note: this allows the extreme case in which bytes are sized 64 bits, all types (including <code>char</code>) are 64 bits wide, and <code>sizeof</code> returns <code>1</code> for every type.</em>»</p>
 <h4><a class="header" href="#Символьные-типы" id="Символьные-типы">Символьные типы.</a></h4>
@@ -215,7 +215,7 @@ void foo(unsigned char) {} // Скомпилируется.
 </code></pre>
 <h4><a class="header" href="#Типы-с-фиксированным-размером" id="Типы-с-фиксированным-размером">Типы с фиксированным размером.</a></h4>
 <p>Несмотря на то, что стандарт не гарантирует ничего про размеры типов данных, <strong>существуют типы с фиксированным размером:</strong></p>
-<pre><code class="language-c++">#inlcude &lt;cstdint&gt;
+<pre><code class="language-c++">#include &lt;cstdint&gt;
 int8_t			uint8_t
 int16_t			uint16_t
 int32_t			uint32_t
@@ -246,7 +246,7 @@ int64_t			uint64_t
 <p>Подробнее о них (про денормализованные числа, NaN, $\pm\infty$, отрицательный 0 и подобное) можно почитать на <a href="https://neerc.ifmo.ru/wiki/index.php?title=%D0%9F%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2%D0%B5%D1%89%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%87%D0%B8%D1%81%D0%B5%D0%BB">викиконспектах</a> или узнать в <a href="https://www.overleaf.com/read/hcmjjqmhwqzx">курсе архитектуры ЭВМ</a>.</p>
 <p>Стоит заметить, что из-за особенностей чисел с плавающей точкой (обычно из-за NaN'ов, бесконечностей и нулей разного знака) операции вида <code>0 * a</code> и <code>a - a</code> не могут быть заменены при компиляции на <code>0</code> (о части из них также можно почитать <a href="https://www.overleaf.com/read/hcmjjqmhwqzx">в приложенной ссылке на конспект по АрхЭВМ</a>). Но можно прописать <a href="http://gcc.gnu.org/wiki/FloatingPointMath">флаги компилятора, игнорирующие NaN и $\infty$</a> и тогда арифметические действия будут быстрее (но не будут соответствовать стандарту IEEE-754). Одним из примеров невозможности оптимизации является <code>if (a == a)</code>, что вернёт <code>false</code>, если <code>a</code> является NaN'ом:</p>
 <blockquote>
-<p><a href="https://www.itu.dk/%7Esestoft/bachelor/IEEE754_article.pdf">David Golberg, What Every Computer Scientist Should Know About Floating-Point Arithmetic</a></p>
+<p><a href="https://www.itu.dk/%7Esestoft/bachelor/IEEE754_article.pdf">David Goldberg, What Every Computer Scientist Should Know About Floating-Point Arithmetic</a></p>
 <p><a href="http://notabs.org/fpuaccuracy/">Intel overstates FPU accuracy</a></p>
 </blockquote>
 <h3><a class="header" href="#Перечисляемый-тип" id="Перечисляемый-тип">Перечисляемый тип.</a></h3>
@@ -314,6 +314,7 @@ struct mytype2
 <p>Чтобы узнать, сколько места занимает структура (когда она лежит в массиве), есть <em>оператор <code>sizeof</code></em>. Использование: <code>sizeof(mytype1)</code>, возвращает в нашем случае <code>8</code>.</p>
 <p>А ещё есть <em>оператор <code>alignof</code></em>. Он возвращает <em>выравнивание</em> структуры. <em>Выравнивание</em> структуры — это число, на которое должен делиться тот адрес, по которому мы размещаем структуру. Использование: <code>alignof(mytype1)</code>, возвращает в нашем случае 4.</p>
 <p>Кстати, <code>sizeof</code> и <code>alignof</code> можно применять не только к типам, но и к значениям. Вызов этих функций от значения эквивалентен вызову от типа этого значения.</p>
+<p>https://cppinsights.io — сайт, где можно побаловаться с структурами.</p>
 <h3><a class="header" href="#Объединение" id="Объединение">Объединение.</a></h3>
 <p>У нас есть тип, которых хранит первое, <strong>И</strong> второе, <strong>И</strong> третье. А что, если мы хотим хранить строго одно из нескольких значений? Специально для этого есть <code>union</code>, который этим и занимается. Пока <code>struct</code> хранит следующее поле по смещению относительно предыдущего, у <code>union</code>'а всё хранится по одному смещению.</p>
 <p>Важно: <strong>никакой информации о том, что хранится в данный момент, <code>union</code> не знает</strong>. Если вас это устраивает, вас это устраивает, а иначе вам нужно связать <code>union</code> с <code>enum class</code> в одну структуру (обращение не в ту альтернативу <code>union</code>'а — undefined behaviour). И называется эта структура <code>std::variant</code>:)</p>
@@ -392,18 +393,18 @@ call RBX
 </code></pre>
 <p>В C и C++, разумеется, так тоже можно:</p>
 <pre><code class="language-c++">void func(int) {}
-void main()
+int main()
 {
 	void (*a)(int) = &amp;func;
-	(*p)(42);
+	(*a)(42);
 }
 </code></pre>
 <p>Это можно использовать для полиморфного поведения. Ещё сто́ит сказать, что <strong>указатель на функцию можно вызвать</strong>. И более того, <strong>функции неявно преобразуются в указатели на себя</strong>. Поэтому точно такой же код можно написать так:</p>
 <pre><code class="language-c++">void func(int) {}
-void main()
+int main()
 {
 	void (*a)(int) = func;
-	p(42);
+	a(42);
 }
 </code></pre>
 <p>Указатели на функции подчиняются тем же правилам приоритета, что массивы и обычные указатели. При этом <strong>декларатор указателя на функцию считается суффиксным</strong>.</p>
@@ -458,14 +459,14 @@ void main()
 </ul>
 <p>Ещё обычно у lvalue можно взять адрес, а у rvalue — нельзя.</p>
 <pre><code class="language-c++">&amp;a;          // ok.
-&amp;5;          // `5` — rvalue.
-&amp;&amp;a;         // `&amp;a` — rvalue.
+&amp;5;          // error, `5` — rvalue.
+&amp;&amp;a;         // error, `&amp;a` — rvalue.
 
 ++a;         // Увеличивает и **возвращает по ссылке**.
 a++;         // **Возвращает копию**, а потом увеличивает.
-a++++;       // `a++` - rvalue.
+a++++;       // error, `a++` - rvalue.
 ++++a;       // В C++ ok, в C — нет.
-++a++;       // `a++` — rvalue (суффиксный оператор имеет приоритет).
+++a++;       // error, `a++` — rvalue (суффиксный оператор имеет приоритет).
 +++a;        // `+a` — rvalue (лексер работает жадно, воспринимая это как `++(+a)`).
 
 a = 4;       // Присваивание возвращает **левый аргумент по ссылке**.
@@ -501,7 +502,7 @@ a = b = c;   // ok, `a = (b = c)`.
 того же типа.</p>
 <p>Нюансы проявляются в том, что будет, если складывать два <code>char</code>'а, например. Будет <code>int</code>. Потому что <strong>все арифметические операции с числами меньше <code>int</code>'а выполняются в типе <code>int</code></strong>. Более того, вам даже операции делать не надо, при вызове функции это преобразование также
 происходит.</p>
-<p>Поэтому, кстати, если вы хотите принимать в функцию все типы (чтобы они сохраняли численное значение), то вам хватит <code>int</code> и больше. Реализовать только <code>long long</code> и <code>unsigned long long</code> вы не можете, потому что <code>long</code>, например, не будет знать, куда ему конвертиться. А почему <code>char</code> и <code>short</code> будут? А потому что в языке есть 3 типа конверсий (<em>exact match</em>, <em>promotion</em> и <em>convertion</em>), каждый следующий хуже всех предыдущих, и если у вас есть два одинаково хороших варианта, то ошибка компиляции. Так вот конверсия из <code>short</code>'а в <code>int</code> — promotion, а <code>long</code> в <code>long long</code> или <code>unsigned long long</code> convertion'ы. Про всё это подробно можно почитать <a href="https://eel.is/c++draft/over.best.ics">тут</a>.</p>
+<p>Поэтому, кстати, если вы хотите принимать в функцию все типы (чтобы они сохраняли численное значение), то вам хватит <code>int</code> и больше. Реализовать только <code>long long</code> и <code>unsigned long long</code> вы не можете, потому что <code>long</code>, например, не будет знать, куда ему конвертиться. А почему <code>char</code> и <code>short</code> будут? А потому что в языке есть 3 типа конверсий (<em>exact match</em>, <em>promotion</em> и <em>conversion</em>), каждый следующий хуже всех предыдущих, и если у вас есть два одинаково хороших варианта, то ошибка компиляции. Так вот конверсия из <code>short</code>'а в <code>int</code> — promotion, а <code>long</code> в <code>long long</code> или <code>unsigned long long</code> conversion'ы. Про всё это подробно можно почитать <a href="https://eel.is/c++draft/over.best.ics">тут</a>.</p>
 <p>На дробных числах promotion также есть (из <code>float</code> в <code>double</code>), но все операции с <code>float</code>'ами во <code>float</code>'ах и осуществляются. Если вы совершаете <strong>операцию, один аргумент которой — целое число, а другой — число с плавающей точкой, то целое приводится к вещественному</strong>.</p>
 <!--![Image result for c++ types conversion explicit](https://www.cdn.geeksforgeeks.org/wp-content/uploads/Implicit-Type-Conversion-in-c.png) На мой взгляд, эта картинка скорее сбивает с толку, нежели помогает. -->
 

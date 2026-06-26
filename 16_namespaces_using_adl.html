@@ -225,7 +225,7 @@ void test() {
 int main() {
 	using ns::foo; // Можно делать декларацию всего, кроме других пространств имён.
 
-	foo();
+	foo(42);
 }
 </code></pre>
 <p>Using-декларация берёт сущность, на которую ссылаемся и как бы объявляет её ещё раз там, где вы находитесь. В частности, если вы напишете её в другом пространстве имён, она останется там:</p>
@@ -259,9 +259,9 @@ void foo(char);
 int main() {
 	using n::foo;
 	using m::foo;
-	foo(42.0f); // m::foo.
-	foo(42);    // n::foo.
-	foo('*');   //  ::foo.
+	foo(42.0f);  // m::foo.
+	foo(42);     // n::foo.
+	foo('*');    // n::foo.
 }
 </code></pre>
 <p>Using-декларацию можно применять не только для пространств имён, но и для классов.</p>
@@ -408,7 +408,7 @@ using namespace n1;
 
 int main() {
 	foo a; // В глобальном пространстве имён видно n1::foo и n2::foo, ambiguous.
-	n1::foo a; // Qualified lookup ищет сначала в самом пространстве, потом в inline-namespace'ах, и уже в конце идёт по using-директивам.
+	n1::foo b; // Qualified lookup ищет сначала в самом пространстве, потом в inline-namespace'ах, и уже в конце идёт по using-директивам.
 	           // Впрочем, про QNL лучше почитайте cppreference по ссылке выше, а мы тут UNL обсуждаем.
 }
 </code></pre>
@@ -428,7 +428,7 @@ int main() {
 }
 </code></pre>
 <p>Казалось бы, оператор <code>+</code> не должен находиться, как и <code>swap</code>. Если бы это работало так, то пришлось бы везде писать <code>my_lib::operator+</code> или делать <code>using</code>.</p>
-<p>Поэтому есть правило, которое называется <a href="https://en.cppreference.com/w/cpp/language/adl"><em>argument-depended lookup</em></a>. Когда мы вызываем функцию, она ищется не как описано выше, а учитывает типы параметров. Точнее, смотрит в то пространство имён, где написаны аргументы оператора. <strong>Для каждого аргумента производится поиск в его пространстве имён (и пространствах имён всех его баз)</strong>. Причём только в пространстве имён, не выше.</p>
+<p>Поэтому есть правило, которое называется <a href="https://en.cppreference.com/w/cpp/language/adl"><em>argument-dependent lookup</em></a>. Когда мы вызываем функцию, она ищется не как описано выше, а учитывает типы параметров. Точнее, смотрит в то пространство имён, где написаны аргументы оператора. <strong>Для каждого аргумента производится поиск в его пространстве имён (и пространствах имён всех его баз)</strong>. Причём только в пространстве имён, не выше.</p>
 <p>Немного best practices о том, как надо делать <code>swap</code>:</p>
 <pre><code class="language-c++">template &lt;class T&gt;
 void foo(T a, T b) {
@@ -456,7 +456,7 @@ struct my_type {
 	int a;
 };
 void foo() {
-	std::vector&lt;mytype&gt; v;
+	std::vector&lt;my_type&gt; v;
 	v.push_back(/*...*/);
 }
 </code></pre>
@@ -465,7 +465,7 @@ struct my_type {
 	int a, b;
 };
 void bar() {
-	std::vector&lt;mytype&gt; v;
+	std::vector&lt;my_type&gt; v;
 	v.push_back(/*...*/);
 }
 </code></pre>
@@ -516,7 +516,7 @@ int foo() {
 <p>Можно словить рекурсивную инициализацию, это UB, какие-то компиляторы выдают исключение, какие-то зацикливаются, какие-то выдают 0:</p>
 <pre><code class="language-c++">int&amp; f();
 int g() {
-	return f()
+	return f();
 }
 int&amp; f() {
 	static int x = g();

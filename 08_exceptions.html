@@ -168,7 +168,7 @@
 <p>Как можно возвращать ошибку? Можно это делать с помощью error-кодов (так делали в C):</p>
 <pre><code class="language-c++">// int — код ошибки.
 int do_something() {
-	FILE* file = fopen(&quot;1.txt&quot;);
+	FILE* file = fopen(&quot;1.txt&quot;, &quot;r&quot;);
 	if (!file)
 		return FILE_NOT_FOUND_CODE; // Какая-то константа.
 	int err = file_interact(file);  // Некоторая функция, которая может завершиться с ошибкой.
@@ -208,12 +208,14 @@ int do_something() {
 	virtual std::string msg() const {
 		return &quot;base&quot;;
 	}
-}
+};
+
 struct derived : base {
 	std::string msg() const override {
 		return &quot;derived&quot;;
 	}
-}
+};
+
 int main() {
 	try {
 		throw derived();
@@ -234,7 +236,7 @@ int main() {
 	try {
 		throw D();
 	} catch (A const&amp;) {
-		std::cout &lt;&lt; &quot;Caught A.\n&quot;.
+		std::cout &lt;&lt; &quot;Caught A.\n&quot;;
 	}
 }
 </code></pre>
@@ -386,8 +388,8 @@ public:
 	T* operator-&gt;() {
 		return ptr;
 	}
-	T&amp; get() {
-		return *ptr;
+	T* get() {
+		return ptr;
 	}
 
 	void reset(T* new_ptr = nullptr) {
@@ -397,7 +399,7 @@ public:
 	T* release() {
 		T* result = ptr;
 		ptr = nullptr;
-		return result
+		return result;
 	}
 };
 </code></pre>
@@ -428,7 +430,7 @@ public:
 	void flush() {
 		int result = close(fd);
 		if (result != 0)
-			throw std::runtime_exception(&quot;File closing failed.&quot;);
+			throw std::runtime_error(&quot;File closing failed.&quot;);
 		fd = -1;
 	}
 
@@ -446,9 +448,9 @@ private:
 <p>Уважаемые знатоки, внимание, вопрос. Через одну минуту найдите ошибку в следующем операторе присваивания для строк:</p>
 <pre><code class="language-c++">struct string {
 	// ...
-	string&amp; operator=(const string&amp;) &amp; {
+	string&amp; operator=(const string&amp; other) &amp; {
 		if (this == &amp;other)
-			return;
+			return *this;
 
 		operator delete(data);
 
